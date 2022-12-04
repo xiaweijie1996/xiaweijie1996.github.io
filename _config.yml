@@ -123,9 +123,6 @@ navigation_header:
 - title: Home
   url: /
 
-- title: Fork Alembic
-  url: https://github.com/daviddarnes/alembic
-
 - title: Elements
   url: /elements/  
 
