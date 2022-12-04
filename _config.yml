@@ -65,9 +65,9 @@ collections:
   posts:
     title: Posts # Needed for Siteleaf
     output: true
-    description: "My thoughts and ideas" # The post list page content
+    description: "Here is my thoughts, ideas and knowledges" # The post list page content
     feature_text: |
-      Welcome to the blog
+      ## Welcome to the blog
     feature_image: "https://picsum.photos/2560/600?image=866"
 
 # 6. Jekyll collections settings
@@ -141,11 +141,10 @@ navigation_footer:
   url: https://xiaweijie1996.github.io/
 
 social_links: # Appears in sidebar. Set the urls then uncomment and comment out as desired
-  Twitter: https://twitter.com/DavidDarnes
-  LinkedIn: https://www.linkedin.com/in/daviddarnes
-  GitHub: https://github.com/daviddarnes
-  link: https://darn.es
-  RSS: /feed.xml
+  Twitter: https://twitter.com/WeijieXia4
+  LinkedIn: https://www.linkedin.com/feed/
+  GitHub: https://github.com/xiaweijie1996
+
 
 sharing_links: # Appear at the bottom of single blog posts, add as desired. The value can be 'true' or the desired button colour
   Twitter: "#0d94e7"
