@@ -122,14 +122,15 @@ favicons: # Favicons are also used in the manifest file. Syntax is 'size: path'
 navigation_header:
 - title: Home
   url: /
-<div style='display: none'>
-哈哈我是注释，不会在浏览器中显示。
+
+<!--
+- title: Fork Alembic
+  url: https://github.com/daviddarnes/alembic
 
 - title: Elements
   url: /elements/
-- title: Fork Alembic
-  url: https://github.com/daviddarnes/alembic
-</div>
+-->
+
 
 - title: Blog
   url: /blog/
