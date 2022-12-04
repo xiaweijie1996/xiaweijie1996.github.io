@@ -1,8 +1,9 @@
 ---
-title: About Me
+title: About me
 feature_text: |
-   My story
+  ## My story
+  A reseacher, a traveler and reader
 feature_image: "https://picsum.photos/2560/600?image=873"
-excerpt: "A reseacher, A traveler and reader"
+excerpt: ""
 aside: true
 ---
