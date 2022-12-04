@@ -123,19 +123,20 @@ navigation_header:
 - title: Home
   url: /
 
-<!--
+<!-- 
 - title: Fork Alembic
   url: https://github.com/daviddarnes/alembic
 
 - title: Elements
-  url: /elements/
+  url: /elements/  
+- title: Categories
+  url: /categories/
 -->
 
 
 - title: Blog
   url: /blog/
-- title: Categories
-  url: /categories/
+
 - title: Search
   url: /search/
 
