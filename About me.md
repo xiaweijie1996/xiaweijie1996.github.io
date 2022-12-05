@@ -9,10 +9,10 @@ aside: true
 ---
 
 <img src="https://media-exp1.licdn.com/dms/image/D4D03AQE7uX2AJwOgWw/profile-displayphoto-shrink_800_800/0/1643229835687?e=1675900800&v=beta&t=c_GLHH0bS1t09uGHaIF1Gcr-HAGQvMA04DijBqRHdKE" width="217" align="left"/> 
-&emsp; &emsp; **Education Background**\
-&emsp; &emsp; *Phd*,*2022-now*, Delft University of Technology\
-&emsp; &emsp; *Msc*,*2020-2022*, KTH Royal Institute of Technology\
-&emsp; &emsp; *Msc*,*2020-2022*, Eindhoven University of Technology\
-&emsp; &emsp; *Training Program*,*2020-2022*, Esade Business School\
-&emsp; &emsp; *Bsc*,*2014-2018* Ocean University of China
+&emsp; **Education Background**\
+&emsp; *Phd*,*2022-now*, Delft University of Technology\
+&emsp; *Msc*,*2020-2022*, KTH Royal Institute of Technology\
+&emsp; *Msc*,*2020-2022*, Eindhoven University of Technology\
+&emsp; *Training Program*,*2020-2022*, Esade Business School\
+&emsp; *Bsc*,*2014-2018* Ocean University of China
 
