@@ -133,6 +133,9 @@ navigation_header:
 - title: Search
   url: /search/
 
+- title: Archive
+  url: /categories/
+
 navigation_footer:
 - title: Back to the home
   url: https://xiaweijie1996.github.io/
