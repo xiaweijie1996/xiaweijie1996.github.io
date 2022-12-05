@@ -130,11 +130,12 @@ navigation_header:
 - title: Blog
   url: /blog/
 
+- title: Archive
+  url: /categories/
+
 - title: Search
   url: /search/
 
-- title: Archive
-  url: /categories/
 
 navigation_footer:
 - title: Back to the home
