@@ -1,4 +1,4 @@
-![sss](https://media-exp1.licdn.com/dms/image/D4D03AQE7uX2AJwOgWw/profile-displayphoto-shrink_800_800/0/1643229835687?e=1675900800&v=beta&t=c_GLHH0bS1t09uGHaIF1Gcr-HAGQvMA04DijBqRHdKE)
+
 # [Alembic](https://alembic.darn.es/)
 [![Gem Version](https://badge.fury.io/rb/alembic-jekyll-theme.svg)](https://badge.fury.io/rb/alembic-jekyll-theme)
 
@@ -6,7 +6,7 @@
 
 ![Screenshot](https://raw.githubusercontent.com/daviddarnes/alembic/master/screenshot.png)
 
-[<img src="https://cdn.buymeacoffee.com/buttons/default-yellow.png" width="217"/>](https://buymeacoffee.com/daviddarnes#support)
+[<img src="" width="217"/>](https://buymeacoffee.com/daviddarnes#support)
 
 ## Contents
 - [About](#about)
