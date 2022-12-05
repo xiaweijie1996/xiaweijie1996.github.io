@@ -97,8 +97,8 @@ title: "Wejie Xia" # Site name or title, also used in jekyll-seo-tag
 logo: "/assets/logos/logo.svg" # Site logo, also used in jekyll-seo-tag
 description: "This is my personal website" # Site url, also used in jekyll-seo-tag
 baseurl: ""
-repo: "https://github.com/daviddarnes/alembic"
-email: "me@daviddarnes.com"
+repo: "https://github.com/xiaweijie1996"
+email: "W.Xia@tudelft.nl"
 # disqus: "alembic-1" # Blog post comments, uncomment the option and set the site ID from your Disqus account
 # date_format: "%-d %B %Y" # Blog post date formatting using placeholder formatting
 # google_analytics: ""
@@ -141,7 +141,7 @@ navigation_footer:
 
 social_links: # Appears in sidebar. Set the urls then uncomment and comment out as desired
   Twitter: https://twitter.com/WeijieXia4
-  LinkedIn: https://www.linkedin.com/feed/
+  LinkedIn: www.linkedin.com/in/weijie-xia-0bb095180
   GitHub: https://github.com/xiaweijie1996
 
 
