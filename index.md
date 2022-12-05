@@ -6,5 +6,5 @@ feature_text: |
 feature_image: "https://picsum.photos/1300/400?image=989"
 excerpt: ""
 ---
-Hi, I am Weijie, who is currently a PHD researcher in TU Delft. I usually document my study or share my life in this space. Nice to meet you :smiley:!
+Hi, I am Weijie, who is currently a PHD researcher at TU Delft under the supervision of Dr. Pedro P. Vergara and Prof. Dr. Peter Palensky. I usually document my study or share my life in this space. Nice to meet you :smiley:!
 
