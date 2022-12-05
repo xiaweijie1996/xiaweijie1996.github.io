@@ -72,8 +72,8 @@ collections:
 
 # 5. Collections
 collections:
-  My Life:
-    title: My Life # Needed for Siteleaf
+  My life:
+    title: My life # Needed for Siteleaf
     output: true
     description: "Here is my life" # The post list page content
     feature_text: |
@@ -136,8 +136,8 @@ navigation_header:
 - title: About me
   url: /About me/  
 
-- title: My Life
-  url: /My Life/
+- title: My life
+  url: /My life/
 
 - title: Blog
   url: /blog/
