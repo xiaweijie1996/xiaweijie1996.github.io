@@ -70,6 +70,16 @@ collections:
       ## Welcome to the blog
     feature_image: "https://picsum.photos/2560/600?image=866"
 
+# 5. Collections
+collections:
+  My Life:
+    title: My Life # Needed for Siteleaf
+    output: true
+    description: "Here is my life" # The post list page content
+    feature_text: |
+      ## Welcome to my life space
+    feature_image: "https://picsum.photos/2560/600?image=866"
+
 # 6. Jekyll collections settings
 defaults:
   -
@@ -126,8 +136,8 @@ navigation_header:
 - title: About me
   url: /About me/  
 
-- title: Categories
-  url: /categories/
+- title: My Life
+  url: /My Life/
 
 - title: Blog
   url: /blog/
