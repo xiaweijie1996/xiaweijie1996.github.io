@@ -13,6 +13,6 @@ aside: true
 &emsp;&emsp;&emsp; *Phd*, Delft University of Technology\
 &emsp;&emsp;&emsp; *Msc*, KTH Royal Institute of Technology\
 &emsp;&emsp;&emsp; *Msc*, Eindhoven University of Technology\
-&emsp;&emsp;&emsp; *Program*, Esade Business School\
+&emsp;&emsp;&emsp; *Integrated Program*, Esade Business School\
 &emsp;&emsp;&emsp; *Bsc*, Ocean University of China
 
