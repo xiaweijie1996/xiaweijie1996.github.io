@@ -1,5 +1,5 @@
 ---
-title: Hi, Welcome!
+title: Hi, Welcome👏!
 feature_text: |
   ## Weijie Xia
   Romain Rolland： "There is only one heroism in the world: to see the world as it is, and to love it."

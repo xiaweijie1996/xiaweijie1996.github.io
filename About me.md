@@ -16,3 +16,8 @@ aside: true
 &emsp;&emsp;&emsp; *Integrated Program*, Esade Business School\
 &emsp;&emsp;&emsp; *Bsc*, Ocean University of China
 
+I was born in China. In 2022, I started my Phd journey in TU delft. One of my dreams is to travel all over the world✈✈️.
+
+**The place I have been to:
+<img src="file:///C:/Users/weijiexia/Downloads/WeChat%20Image_20221206165952.png" width="610" align="center"/> 
+<center><font face="黑体" size=4>Small map mark tool recommendation: <a href="https://www.mapchart.net/index.html">MapChart</a> </font></center>
