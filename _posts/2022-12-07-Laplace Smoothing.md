@@ -18,11 +18,15 @@ To solve the zero probability problem mentioned above, Laplace, a french mathema
 For a random variable *z*, the range of *z* us https://latex.codecogs.com/gif.latex?\\{1,2,3,4..k-1,k\}, after *m* trials of observation, the reslut is https://latex.codecogs.com/gif.latex?\\{z^1,z^2,z^3...z^(m-1),z^(m)\}, The 
 maximum likelihood estimation for https://latex.codecogs.com/gif.latex?\z^j is:
 
-$$\varphi_{z=j}=\frac{\sum_{i=1}^{m}I\{z_i=j\}}{m}$$
+$$\varphi_{z=j}=\frac{\sum{i=1}^{m}I\{z_i=j\}}{m}$$
 
 The problem with https://latex.codecogs.com/gif.latex?\$$\varphi_{z=j} is if *j* does not happen in the experiment, then, the estimation of https://latex.codecogs.com/gif.latex?\$$\varphi_{z=j} will be https://latex.codecogs.com/gif.latex?\0.
  If apply Laplace Smoothing, the calculation will become:
 
 https://latex.codecogs.com/gif.latex?\$$\varphi_{z=j}=\frac{\sum_{i=1}^{m}I\{z_i=j\}+1}{m+k}$$
+
+<img src="http://chart.googleapis.com/chart?cht=tx&chl=\Large x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}" style="border:none;">
+
+<img src="https://latex.codecogs.com/png.latex? \Large x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}">
 
 
