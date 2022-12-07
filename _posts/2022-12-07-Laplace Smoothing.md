@@ -1,0 +1,17 @@
+---
+title: Application of Laplace Smoothing
+categories:
+- Statistics
+feature_image: "https://scontent-ams2-1.xx.fbcdn.net/v/t39.30808-6/318727714_1298950054279522_1327222508011670093_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=730e14&_nc_ohc=TnxHVTXAD_IAX-HmZVu&_nc_ht=scontent-ams2-1.xx&oh=00_AfBSzcy1lv2fJGWPylw7pRDyxpG_NNwrFmcdUXnopbawrg&oe=6394F523"
+---
+
+**Concept**
+
+When calculating the probability of a specific event $a$, if the evet $a$ never happened in the dataset $S$, the probability of $a$ will become 0, P(a)=0. However, P(a)=0 is obviously unreasonable since we can not say P(a)=0 only because
+we do not observe *a* in the dataset. The invention of **Laplace Smoothing** is to solve this problem.
+
+To solve the zero probability problem mentioned above, Laplace, a french mathematician, proposed a solution by adding 1 to estimate the probability of phenomena that have not occurred before.
+
+**Application in maximum likelihood estimation**
+
+For a random variable $z$, the range of $z$ us ${1,2,3,4..k-1,k}$
