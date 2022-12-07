@@ -14,6 +14,6 @@ To solve the zero probability problem mentioned above, Laplace, a french mathema
 
 **Application in maximum likelihood estimation**
 
-For a random variable $z$, the range of $z$ us $\{ 1,2,3,4..k-1,k\}$，after %m% trials of observation, the reslut is ${z^1,z^2,z^3...z^(k-1),z^(k)}$, The maximum likelihood estimation for $z^j$ is,
+For a random variable $z$, the range of $z$ us $\{1,2,3,4..k-1,k\}$，after %m% trials of observation, the reslut is ${z^1,z^2,z^3...z^(m-1),z^(m)}$, The maximum likelihood estimation for $z^j$ is,
 
-$\varphi$
+$$\varphi_{z=j}=\frac{\sum{i=1}{m}I(z_i=j)}{m}$$
