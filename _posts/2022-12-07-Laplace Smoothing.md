@@ -7,13 +7,13 @@ feature_image: "https://scontent-ams2-1.xx.fbcdn.net/v/t39.30808-6/318727714_129
 
 **Concept**
 
-When calculating the probability of a specific event $a$, if the evet $a$ never happened in the dataset $S$, the probability of $a$ will become 0, P(a)=0. However, P(a)=0 is obviously unreasonable since we can not say P(a)=0 only because
+When calculating the probability of a specific event *a*, if the evet *a* never happened in the dataset *S*, the probability of *a* will become *0*, *P(a)=0*. However, *P(a)=0* is obviously unreasonable since we can not say *P(a)=0* only because
 we do not observe *a* in the dataset. The invention of **Laplace Smoothing** is to solve this problem.
 
 To solve the zero probability problem mentioned above, Laplace, a french mathematician, proposed a solution by adding 1 to estimate the probability of phenomena that have not occurred before.
 
 **Application in maximum likelihood estimation**
 
-For a random variable $z$, the range of $z$ us $\{1,2,3,4..k-1,k\}$，after %m% trials of observation, the reslut is ${z^1,z^2,z^3...z^(m-1),z^(m)}$, The maximum likelihood estimation for $z^j$ is,
+For a random variable *z*, the range of *z* us https://latex.codecogs.com/gif.latex?\\\{1,2,3,4..k-1,k\}，after *m* trials of observation, the reslut is https://latex.codecogs.com/gif.latex?\\\{z^1,z^2,z^3...z^(m-1),z^(m)\}, The maximum likelihood estimation for https://latex.codecogs.com/gif.latex?\\z^j is,
 
-$$\varphi_{z=j}=\frac{\sum{i=1}{m}I(z_i=j)}{m}$$
+https://latex.codecogs.com/gif.latex?\\$$\varphi_{z=j}=\frac{\sum{i=1}{m}I(z_i=j)}{m}$$
