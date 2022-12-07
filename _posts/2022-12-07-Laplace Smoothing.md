@@ -28,7 +28,7 @@ To solve the zero probability problem mentioned above, Laplace, a french mathema
 For a random variable $z$, the range of $z$ us $\{1,2,3,4..k-1,k\}$, after *m* trials of observation, the reslut is $\{z^1,z^2,z^3...z^{m-1},z^{m}\}$, The 
 $z^j$ is:
 
-$$\varphi_{z=j}=\frac{\sum{i=1}^{m}I\{z_i=j\}}{m}$$
+$$\varphi_{z=j}=\frac{\sum_{i=1}^{m}I\{z_i=j\}}{m}$$
 
 The problem with $\varphi_{z=j}$ is if $j$ does not happen in the experiment, then, the estimation of $\varphi_{z=j}$ will be $0$.
  If apply Laplace Smoothing, the calculation will become:
@@ -46,3 +46,7 @@ If apply Laplace Smoothing, the calculation will become:
 $$P(c_{m+1}|c_{m}c_{m-1}...c_{2}c_{1})=\frac{c_{m+1}c_{m}...c_{2}c_{1}+1}{\sum_{c} \{count(cc_{m}c_{m-1}...c_{2}c_{1})+1\}}$$
 
 *Aside from adding 1, we could also add a \(0<a<=1\) instead of 1.*
+
+Reference:
+https://blog.csdn.net/weixin_44305332/article/details/118615826
+https://www.cnblogs.com/hbuwyg/p/13220804.html
