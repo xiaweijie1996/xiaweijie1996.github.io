@@ -8,7 +8,7 @@
 # 7. Site settings
 # 8. Site favicons & manifest icons
 # 9. Site navigation
-
+markdown: kramdown
 # 1. Files excluded from Jekyll builds
 exclude:
 - README.md
