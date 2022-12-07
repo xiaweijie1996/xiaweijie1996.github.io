@@ -30,14 +30,19 @@ $z^j$ is:
 
 $$\varphi_{z=j}=\frac{\sum{i=1}^{m}I\{z_i=j\}}{m}$$
 
-The problem with https://latex.codecogs.com/gif.latex?\$$\varphi_{z=j} is if *j* does not happen in the experiment, then, the estimation of $\varphi_{z=j}$ will be $0$.
+The problem with $\varphi_{z=j}$ is if $j$ does not happen in the experiment, then, the estimation of $\varphi_{z=j}$ will be $0$.
  If apply Laplace Smoothing, the calculation will become:
 
 $$\varphi_{z=j}=\frac{\sum_{i=1}^{m}I\{z_i=j\}+1}{m+k}$$
 
-# <img src="http://chart.googleapis.com/chart?cht=tx&chl=\Large x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}" style="border:none;">
-
 **Application in Markov chain**
 
 In general, the transition probability of a $m$-order Markov Chain is trained by:
-$$P(c_{m+1}|c_{m}c_{m-1}...c_2c_1)=\frac$$
+
+$$P(c_{m+1}|c_{m}c_{m-1}...c_{2}c_{1})=\frac{c_{m+1}c_{m}...c_{2}c_{1}}{\sum_{c} count(cc_{m}c_{m-1}...c_{2}c_{1})}$$
+
+If apply Laplace Smoothing, the calculation will become:
+
+$$P(c_{m+1}|c_{m}c_{m-1}...c_{2}c_{1})=\frac{c_{m+1}c_{m}...c_{2}c_{1}+1}{\sum_{c} \{count(cc_{m}c_{m-1}...c_{2}c_{1})+1\}}$$
+
+*Aside from adding 1, we could also add a \(0<a<=1\) instead of 1.*
