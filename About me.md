@@ -24,27 +24,17 @@ One of my dreams is to travel around the world :flight_departure:.
 <center><font face="黑体" size=4>Map marker tool recommendation: <a href="https://www.mapchart.net/index.html">MapChart</a> </font></center>
 
 **Contact**\
-*Email*  &emsp; W.xia@tudelft.nl\
+*Email*  &emsp;<font color=blue>W.xia@tudelft.nl</font>\
 *Social Platform*\
-
 [![alt text][1.1]][1]
 [![alt text][2.1]][2]
 [![alt text][3.1]][3]
-[![alt text][4.1]][4]
-[![alt text][5.1]][5]
-[![alt text][6.1]][6]
 
-[1.1]: http://i.imgur.com/tXSoThF.png (twitter icon with padding)
-[2.1]: http://i.imgur.com/P3YfQoD.png (facebook icon with padding)
-[3.1]: http://i.imgur.com/yCsTjba.png (google plus icon with padding)
-[4.1]: http://i.imgur.com/YckIOms.png (tumblr icon with padding)
-[5.1]: http://i.imgur.com/1AGmwO3.png (dribbble icon with padding)
-[6.1]: http://i.imgur.com/0o48UoR.png (github icon with padding)
+[1.1]: http://i.imgur.com/tXSoThF.png (Link)
+[2.1]: http://i.imgur.com/P3YfQoD.png (Github)
+[3.1]: http://i.imgur.com/yCsTjba.png (zhihu)
 
-[1]: http://www.twitter.com/carlsednaoui
-[2]: http://www.facebook.com/sednaoui
-[3]: https://plus.google.com/+CarlSednaoui
-[4]: http://carlsed.tumblr.com
-[5]: http://dribbble.com/carlsednaoui
-[6]: http://www.github.com/carlsednaoui
+[1]: www.linkedin.com/in/weijie-xia-0bb095180
+[2]: http://www.github.com/carlsednaoui
+[3]: https://github.com/xiaweijie1996
  
