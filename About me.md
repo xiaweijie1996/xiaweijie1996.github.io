@@ -25,7 +25,7 @@ One of my dreams is to travel around the world :flight_departure:.
 <center><font face="黑体" size=4>Map marker tool recommendation: <a href="https://www.mapchart.net/index.html">MapChart</a> </font></center>
 
 **Contact**\
-*Email：*  &emsp;<font color=blue>W.xia@tudelft.nl</font>\
+*Email：*<font color=blue>W.xia@tudelft.nl</font>\
 *Social Platform：*
 [![alt text][1.1]][1]
 [![alt text][2.1]][2]
