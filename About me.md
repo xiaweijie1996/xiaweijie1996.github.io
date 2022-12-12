@@ -25,17 +25,21 @@ One of my dreams is to travel around the world :flight_departure:.
 <center><font face="黑体" size=4>Map marker tool recommendation: <a href="https://www.mapchart.net/index.html">MapChart</a> </font></center>
 
 **Contact**\
-*Email：*<font color=blue>W.xia@tudelft.nl</font>\
+*Email：*  &emsp;<font color=blue>W.xia@tudelft.nl</font>\
 *Social Platform：*
 [![alt text][1.1]][1]
 [![alt text][2.1]][2]
 [![alt text][3.1]][3]
+[![alt text][4.1]][4]
 
-[1.1]: https://cdn-icons-png.flaticon.com/32/145/145807.png
-[2.1]: https://cdn-icons-png.flaticon.com/32/733/733553.png
-[3.1]: https://cdn-icons-png.flaticon.com/32/8462/8462199.png
+[1.1]: https://cdn-icons-png.flaticon.com/32/5968/5968764.png
+[2.1]: https://cdn-icons-png.flaticon.com/32/145/145807.png
+[3.1]: https://cdn-icons-png.flaticon.com/32/733/733553.png
+[4.1]: https://cdn-icons-png.flaticon.com/32/8462/8462199.png
 
-[1]: www.linkedin.com/in/weijie-xia-0bb095180
-[2]: https://github.com/xiaweijie1996
-[3]: https://www.zhihu.com/people/xia-yier-de-ren-zhi-ren-sheng
+[1]: https://www.facebook.com/xia.wind.9/
+[2]: www.linkedin.com/in/weijie-xia-0bb095180
+[3]: https://github.com/xiaweijie1996
+[4]: https://www.zhihu.com/people/xia-yier-de-ren-zhi-ren-sheng
+
  
