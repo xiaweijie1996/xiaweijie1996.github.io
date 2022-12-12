@@ -38,7 +38,7 @@ One of my dreams is to travel around the world :flight_departure:.
 [4.1]: https://cdn-icons-png.flaticon.com/32/8462/8462199.png
 
 [1]: https://www.facebook.com/xia.wind.9/
-[2]: www.linkedin.com/in/weijie-xia-0bb095180
+[2]: https://www.linkedin.com/in/weijie-xia-0bb095180/
 [3]: https://github.com/xiaweijie1996
 [4]: https://www.zhihu.com/people/xia-yier-de-ren-zhi-ren-sheng
 
