@@ -32,10 +32,10 @@ One of my dreams is to travel around the world :flight_departure:.
 [![alt text][3.1]][3]
 
 [1.1]: https://scontent-ams2-1.xx.fbcdn.net/v/t39.30808-6/319710059_1302383577269503_137714637045953664_n.jpg?stp=cp0_dst-jpg&_nc_cat=104&ccb=1-7&_nc_sid=730e14&_nc_ohc=rbXcUvvzEigAX9Id06h&_nc_ht=scontent-ams2-1.xx&oh=00_AfBxmqebKv9BHHe1qOLYxxN0zpPfz-dC6dE3yg64hILyEw&oe=639C36C2 (Link)
-[2.1]: https://scontent-ams2-1.xx.fbcdn.net/v/t39.30808-6/319521466_1302383583936169_4475363384483466829_n.jpg?stp=cp0_dst-jpg&_nc_cat=106&ccb=1-7&_nc_sid=730e14&_nc_ohc=QHqD2CGSLK8AX_XGYNJ&_nc_ht=scontent-ams2-1.xx&oh=00_AfBCX3qG2aP9rjOMOiVVwEUx0muIP-It7AS8VFJYV2QczA&oe=639ADFA1 (Github)
-[3.1]: https://scontent-ams4-1.xx.fbcdn.net/v/t39.30808-6/319666078_1302383580602836_5220306786505167118_n.jpg?stp=cp0_dst-jpg&_nc_cat=109&ccb=1-7&_nc_sid=730e14&_nc_ohc=-w2zgwDtN7kAX9af5jj&_nc_ht=scontent-ams4-1.xx&oh=00_AfDD9gip-Bke1WC_930Rs1PC-clI7DNsTJ24osQlIoj2mA&oe=639B7095 (zhihu)
+[2.1]: http://i.imgur.com/9I6NRUm.png
+[3.1]: https://cdn-icons-png.flaticon.com/512/4494/4494477.png
 
 [1]: www.linkedin.com/in/weijie-xia-0bb095180
-[2]: www.linkedin.com/in/weijie-xia-0bb095180
-[3]: https://github.com/xiaweijie1996
+[2]: https://github.com/xiaweijie1996
+[3]: https://www.zhihu.com/people/xia-yier-de-ren-zhi-ren-sheng
  
