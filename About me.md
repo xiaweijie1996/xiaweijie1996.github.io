@@ -26,7 +26,7 @@ One of my dreams is to travel around the world :flight_departure:.
 
 **Contact**\
 *Email：*  &emsp;<font color=blue>W.xia@tudelft.nl</font>\
-*Social Platform：*
+*Social Platform：*\
 [![alt text][1.1]][1]
 [![alt text][2.1]][2]
 [![alt text][3.1]][3]
@@ -37,5 +37,5 @@ One of my dreams is to travel around the world :flight_departure:.
 
 [1]: www.linkedin.com/in/weijie-xia-0bb095180
 [2]: https://github.com/xiaweijie1996
-[3]: https://github.com/xiaweijie1996
+[3]: https://www.zhihu.com/people/xia-yier-de-ren-zhi-ren-sheng
  
