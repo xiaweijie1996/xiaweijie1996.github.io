@@ -8,15 +8,13 @@ excerpt: ""
 aside: false
 ---
 
-<img src="https://media-exp1.licdn.com/dms/image/D4D03AQE7uX2AJwOgWw/profile-displayphoto-shrink_800_800/0/1643229835687?e=1675900800&v=beta&t=c_GLHH0bS1t09uGHaIF1Gcr-HAGQvMA04DijBqRHdKE" width="210" align="left"/> 
+|<img src="https://media-exp1.licdn.com/dms/image/D4D03AQE7uX2AJwOgWw/profile-displayphoto-shrink_800_800/0/1643229835687?e=1675900800&v=beta&t=c_GLHH0bS1t09uGHaIF1Gcr-HAGQvMA04DijBqRHdKE" width="210" align="left"/> |
 &emsp;&emsp;&emsp; **Education Background**\
 &emsp;&emsp;&emsp; *Phd*, Delft University of Technology\
 &emsp;&emsp;&emsp; *Msc*, KTH Royal Institute of Technology\
 &emsp;&emsp;&emsp; *Msc*, Eindhoven University of Technology\
 &emsp;&emsp;&emsp; *Integrated Program*, Esade Business School\
-&emsp;&emsp;&emsp; *Bsc*, Ocean University of China
-
-![test](https://media-exp1.licdn.com/dms/image/D4D03AQE7uX2AJwOgWw/profile-displayphoto-shrink_800_800/0/1643229835687?e=1675900800&v=beta&t=c_GLHH0bS1t09uGHaIF1Gcr-HAGQvMA04DijBqRHdKE)
+&emsp;&emsp;&emsp; *Bsc*, Ocean University of China|
 
 I was born in China. In 2022, I started my PhD journey in <a href="https://www.tudelft.nl/ewi/over-de-faculteit/afdelingen/electrical-sustainable-energy/intelligent-electrical-power-grids-iepg-group">IEPG group</a> at TU Delft. My research interests focus on the interdisciplinary areas of energy systems and machine learning. Additionally, I am also interested in statistics and theoretical physics. 
 One of my dreams is to travel around the world :flight_departure:.
