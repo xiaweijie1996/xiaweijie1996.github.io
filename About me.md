@@ -7,7 +7,13 @@ feature_image: "https://picsum.photos/2560/600?image=873"
 excerpt: ""
 aside: false
 ---
-<div align=center><img src="https://scontent-ams2-1.xx.fbcdn.net/v/t39.30808-6/319311504_808698114238270_930876251971719300_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=730e14&_nc_ohc=gf6KnVp6SWsAX81v2QE&_nc_ht=scontent-ams2-1.xx&oh=00_AfBcy1xqkMjG6eOw9vSfkTv5Kz5k1MxbzycU_49MgkiNpw&oe=639D4A0C" width="600"></div>
+<img src="https://media-exp1.licdn.com/dms/image/D4D03AQE7uX2AJwOgWw/profile-displayphoto-shrink_800_800/0/1643229835687?e=1675900800&v=beta&t=c_GLHH0bS1t09uGHaIF1Gcr-HAGQvMA04DijBqRHdKE" width="210" align="left"/>
+&emsp;&emsp;&emsp; **Education Background**\
+&emsp;&emsp;&emsp; *Phd*, Delft University of Technology\
+&emsp;&emsp;&emsp; *Msc*, KTH Royal Institute of Technology\
+&emsp;&emsp;&emsp; *Msc*, Eindhoven University of Technology\
+&emsp;&emsp;&emsp; *Integrated Program*, Esade Business School\
+&emsp;&emsp;&emsp; *Bsc*, Ocean University of China
 
 **About me**\
 I was born in China. In 2022, I started my PhD journey in <a href="https://www.tudelft.nl/ewi/over-de-faculteit/afdelingen/electrical-sustainable-energy/intelligent-electrical-power-grids-iepg-group">IEPG group</a> at TU Delft. My research interests focus on the interdisciplinary areas of energy systems and machine learning. Additionally, I am also interested in statistics and theoretical physics. 
