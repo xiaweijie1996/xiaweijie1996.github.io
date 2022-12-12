@@ -31,9 +31,9 @@ One of my dreams is to travel around the world :flight_departure:.
 [![alt text][2.1]][2]
 [![alt text][3.1]][3]
 
-[1.1]: https://cdn-icons-png.flaticon.com/24/145/145807.png (Link)
-[2.1]: https://cdn-icons-png.flaticon.com/24/733/733553.png (Github)
-[3.1]: https://cdn-icons-png.flaticon.com/24/8462/8462199.png (zhihu)
+[1.1]: https://cdn-icons-png.flaticon.com/32/145/145807.png (Link)
+[2.1]: https://cdn-icons-png.flaticon.com/32/733/733553.png (Github)
+[3.1]: https://cdn-icons-png.flaticon.com/32/8462/8462199.png (zhihu)
 
 [1]: www.linkedin.com/in/weijie-xia-0bb095180
 [2]: https://github.com/xiaweijie1996
