@@ -7,15 +7,15 @@ feature_image: "https://picsum.photos/2560/600?image=873"
 excerpt: ""
 aside: false
 ---
-
+ 
 <div class="parent">
   <div class="left">
-    <p><b>Education Background</b><br />
+    <p><b><font size=8>Education Background</b><br />
  	<i>Phd</i>, Delft University of Technology<br />
  	<i>Msc</i>, KTH Royal Institute of Technology<br />
 	<i>Msc</i>, Eindhoven University of Technology<br />
 	<i>Integrated Program</i>, Esade Business School<br />
-	<i>Bsc</i>, Ocean University of China</p>
+	<i>Bsc</i>, Ocean University of China</font></p>
   </div>
   <div class="right">
     <p><img src="https://media-exp1.licdn.com/dms/image/D4D03AQE7uX2AJwOgWw/profile-displayphoto-shrink_800_800/0/1643229835687?e=1675900800&v=beta&t=c_GLHH0bS1t09uGHaIF1Gcr-HAGQvMA04DijBqRHdKE" width="100" align="left"/></p>
