@@ -11,14 +11,14 @@ aside: false
 <table width="500" border="0"> 
 <tr>
 <td style="background-color:#FFFFFF;width:250px;">
-	<font face="黑体" size=4><i>Phd</i>, Delft University of Technology<br />
+	<font face="黑体" size=5><i>Phd</i>, Delft University of Technology<br />
 	<i>Msc</i>, KTH Royal Institute of Technology<br />
 	<i>Msc</i>, Eindhoven University of Technology<br />
 	<i>Integrated Program</i>, Esade Business School<br />
 	<i>Bsc</i>, Ocean University of China</font>
 </td>
 <td style="background-color#FFFFFF;height:250px;width:250px;">
-<img src="https://media-exp1.licdn.com/dms/image/D4D03AQE7uX2AJwOgWw/profile-displayphoto-shrink_800_800/0/1643229835687?e=1675900800&v=beta&t=c_GLHH0bS1t09uGHaIF1Gcr-HAGQvMA04DijBqRHdKE" width="200" align="right"/>
+<img src="https://media-exp1.licdn.com/dms/image/D4D03AQE7uX2AJwOgWw/profile-displayphoto-shrink_800_800/0/1643229835687?e=1675900800&v=beta&t=c_GLHH0bS1t09uGHaIF1Gcr-HAGQvMA04DijBqRHdKE" width="210" align="right"/>
 </td>
 </tr>
 </table>
