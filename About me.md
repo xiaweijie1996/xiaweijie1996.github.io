@@ -12,12 +12,12 @@ aside: false
 <tr>
 <td style="background-color:#FFFFFF;width:250px;">
 	<ul>
-	<font face="黑体" size=4>
-	<li><i>Phd</i>, Delft University of Technology</li>
-	<li><i>Msc</i>, KTH Royal Institute of Technology</li>
-	<li><i>Msc</i>, Eindhoven University of Technology</li>
-	<li><i>Integrated Program</i>, Esade Business School</li>
-	<li><i>Bsc</i>, Ocean University of China</font></li>
+	
+	<li><font face="黑体" size=4><i>Phd</i>, Delft University of Technology</font></li>
+	<li><font face="黑体" size=4><i>Msc</i>, KTH Royal Institute of Technology</font></li>
+	<li><font face="黑体" size=4><i>Msc</i>, Eindhoven University of Technology</font></li>
+	<li><font face="黑体" size=4><i>Integrated Program</i>, Esade Business School</font></li>
+	<li><font face="黑体" size=4><i>Bsc</i>, Ocean University of China</font></li>
 	<ul>
 </td>
 <td style="background-color#FFFFFF;height:250px;width:250px;">
