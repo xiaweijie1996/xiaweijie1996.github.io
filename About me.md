@@ -24,6 +24,7 @@ aside: false
 
 <br />
 
+<body>
 <table width="500" border="0">
 <tr>
 <td colspan="2">
@@ -44,7 +45,7 @@ aside: false
 <img src="https://media-exp1.licdn.com/dms/image/D4D03AQE7uX2AJwOgWw/profile-displayphoto-shrink_800_800/0/1643229835687?e=1675900800&v=beta&t=c_GLHH0bS1t09uGHaIF1Gcr-HAGQvMA04DijBqRHdKE" width="100" align="left"/></td>
 </tr>
 </table>
- 
+</body>
 <br />
 <br />
 **About me**\
