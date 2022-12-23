@@ -8,7 +8,6 @@ excerpt: ""
 aside: false
 ---
 
-
 <div class="parent">
   <div class="left">
     <p><b>Education Background</b><br />
@@ -19,18 +18,9 @@ aside: false
 	<i>Bsc</i>, Ocean University of China</p>
   </div>
   <div class="right">
-    <p><img src="https://media-exp1.licdn.com/dms/image/D4D03AQE7uX2AJwOgWw/profile-displayphoto-shrink_800_800/0/1643229835687?e=1675900800&v=beta&t=c_GLHH0bS1t09uGHaIF1Gcr-HAGQvMA04DijBqRHdKE" width="210" align="left"/></p>
-  
+    <p><img src="https://media-exp1.licdn.com/dms/image/D4D03AQE7uX2AJwOgWw/profile-displayphoto-shrink_800_800/0/1643229835687?e=1675900800&v=beta&t=c_GLHH0bS1t09uGHaIF1Gcr-HAGQvMA04DijBqRHdKE" width="150" align="left"/></p>
   </div>
 </div>
-
-<img src="https://media-exp1.licdn.com/dms/image/D4D03AQE7uX2AJwOgWw/profile-displayphoto-shrink_800_800/0/1643229835687?e=1675900800&v=beta&t=c_GLHH0bS1t09uGHaIF1Gcr-HAGQvMA04DijBqRHdKE" width="210" align="left"/>
-&emsp;&emsp;&emsp; **Education Background**\
-&emsp;&emsp;&emsp; *Phd*, Delft University of Technology\
-&emsp;&emsp;&emsp; *Msc*, KTH Royal Institute of Technology\
-&emsp;&emsp;&emsp; *Msc*, Eindhoven University of Technology\
-&emsp;&emsp;&emsp; *Integrated Program*, Esade Business School\
-&emsp;&emsp;&emsp; *Bsc*, Ocean University of China
 
 **About me**\
 I was born in China. In 2022, I started my PhD journey in <a href="https://www.tudelft.nl/ewi/over-de-faculteit/afdelingen/electrical-sustainable-energy/intelligent-electrical-power-grids-iepg-group">IEPG group</a> at TU Delft. My research interests focus on the interdisciplinary areas of energy systems and machine learning. Additionally, I am also interested in statistics and theoretical physics. 
