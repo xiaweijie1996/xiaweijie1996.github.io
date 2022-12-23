@@ -8,38 +8,21 @@ excerpt: ""
 aside: false
 ---
 
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-    <title>Insert title here</title>
-    <style>
-      .left {
-        float: left;
-        width: 300px;
-        height: 300px;
-        background-color: gray;
-        margin-right: -100%;
-      }
-      .right {
-        float: left;
-        width: 100%;
-      }
-      .right-content {
-        height: 300px;
-        margin-left: 310px;
-        background-color: black;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="left"></div>
-    <div class="right">
-      <div class="right-content"></div>
-    </div>
-  </body>
-</html>
+
+<div class="parent">
+  <div class="left">
+    <p><img src="https://media-exp1.licdn.com/dms/image/D4D03AQE7uX2AJwOgWw/profile-displayphoto-shrink_800_800/0/1643229835687?e=1675900800&v=beta&t=c_GLHH0bS1t09uGHaIF1Gcr-HAGQvMA04DijBqRHdKE" width="210" align="left"/></p>
+  </div>
+  <div class="right">
+    <p> **Education Background**\
+ 	*Phd*, Delft University of Technology\
+ 	*Msc*, KTH Royal Institute of Technology\
+	*Msc*, Eindhoven University of Technology\
+	*Integrated Program*, Esade Business School\
+	*Bsc*, Ocean University of China</p>
+  
+  </div>
+</div>
 
 <img src="https://media-exp1.licdn.com/dms/image/D4D03AQE7uX2AJwOgWw/profile-displayphoto-shrink_800_800/0/1643229835687?e=1675900800&v=beta&t=c_GLHH0bS1t09uGHaIF1Gcr-HAGQvMA04DijBqRHdKE" width="210" align="left"/>
 &emsp;&emsp;&emsp; **Education Background**\
