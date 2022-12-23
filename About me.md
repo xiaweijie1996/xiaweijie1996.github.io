@@ -11,7 +11,7 @@ aside: false
 <table width="500" border="0"> 
 <tr>
 <td style="background-color:#FFFFFF;width:250px;">
-	<font face="黑体" size=5><i>Phd</i>, Delft University of Technology<br />
+	<font face="黑体" size=4><i>Phd</i>, Delft University of Technology<br />
 	<i>Msc</i>, KTH Royal Institute of Technology<br />
 	<i>Msc</i>, Eindhoven University of Technology<br />
 	<i>Integrated Program</i>, Esade Business School<br />
