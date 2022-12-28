@@ -1,6 +1,3 @@
-$$\varphi_{z=j}=\frac{\sum{i=1}{m}I(z_i=j)}{m}$$
-# [Alembic](https://alembic.darn.es/)
-[![Gem Version](https://badge.fury.io/rb/alembic-jekyll-theme.svg)](https://badge.fury.io/rb/alembic-jekyll-theme)
 
 ⚗ A Jekyll boilerplate theme designed to be a starting point for any Jekyll website.
 
