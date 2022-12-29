@@ -17,22 +17,19 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
     </script>
 </head>
 
-<font face="黑体" size=4><b>Content</b></font>
+</br>
+<p><span style="font-family: 黑体; font-size: large;"><strong>Content</strong></span></p>
 <ul>
-<li><a style="color: grey;" href="#math"><font face="黑体" size=4>Mathematical background</font></a></li>
+<li><a style="color: grey;" href="#math"><span style="font-family: 黑体; font-size: large;">Mathematical background</span></a></li>
 <ul>
-<li><a style="color: grey;" href="#math1"><font face="黑体" size=4>Entropy</font></a></li>
-<li><a style="color: grey;" href="#math2"><font face="黑体" size=4>Cross entropy</font></a></li>
-<li><a style="color: grey;" href="#math3"><font face="黑体" size=4>Kullback–Leibler divergence</font></a></li>
-<li><a style="color: grey;" href="#math4"><font face="黑体" size=4>Jensen–Shannon divergence</font></a></li>
+<li><a style="color: grey;" href="#math1"><span style="font-family: 黑体; font-size: large;">Entropy and cross entropy</span></a></li>
+<li><a style="color: grey;" href="#math3"><span style="font-family: 黑体; font-size: large;">Kullback&ndash;Leibler divergence</span></a></li>
+<li><a style="color: grey;" href="#math4"><span style="font-family: 黑体; font-size: large;">Jensen&ndash;Shannon divergence</span></a></li>
 </ul>
-<li><a style="color: grey;" href="#GAN"><font face="黑体" size=4>Original GANs</font></a></li>
-<li><a style="color: grey;" href="#GAN"><font face="黑体" size=4>Original GANs</font></a></li>
-<li><a style="color: grey;" href="#S"><font face="黑体" size=4>Solutions to problems of original GAN</font></a></li>
+<li><a style="color: grey;" href="#GAN"><span style="font-family: 黑体; font-size: large;">Original GANs</span></a></li>
+<li><a style="color: grey;" href="#S"><span style="font-family: 黑体; font-size: large;">Solutions to problems of original GAN</span></a></li>
 </ul>
-
-<p>Generative adversarial networks (GAN) has shown great capacity to be a generative model, this articles will explain the maths of GANs.</p>
-
-<p style="color: black"><a name="math">Mathematical background</a><p>
-
-
+<p>Generative adversarial networks (GAN) have shown great capacity in different applications. This article will explain the maths of GANs.</p>
+<p style="color: black;"><strong><a name="math"></a>Mathematical background</strong></p>
+<p style="color: black;">Let us first go through all the mathematical knowledge necessary for understanding GANs.</p>
+<p style="color: black;"><strong><a name="math1"></a>Entropy</strong></p>
