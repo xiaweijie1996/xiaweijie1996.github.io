@@ -26,7 +26,7 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
     <tr>
         <td>
 
-	<p style="padding-left: 40px;color: black"><a href="#math"><font face="黑体" size=4>Mathematical background</font></a><P>
+	<p style="color: black"><a href="#math"><font face="黑体" size=4>Mathematical background</font></a><P>
 	<br/>
 	<p style="padding-left: 40px;color: black"><a href="#math1"><font face="黑体" size=4>Entropy</font></a><p>
 	<br/>
@@ -43,9 +43,9 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
     <tr>
         <td>
 
-	<p style="padding-left: 40px;color: black"><font face="黑体" size=4><a href="#anhui">Original GANs</font></a><P>
+	<p style="color: black"><font face="黑体" size=4><a href="#anhui">Original GANs</font></a><P>
 	<br/>
-	<p style="padding-left: 40px;color: black"><a href="#math1"><font face="黑体" size=4>JProblem of original GAN</font></a><p>
+	<p style="padding-left: 40px;color: black"><a href="#math1"><font face="黑体" size=4>Problems of original GAN</font></a><p>
 	<br/>
 
 	</td>
