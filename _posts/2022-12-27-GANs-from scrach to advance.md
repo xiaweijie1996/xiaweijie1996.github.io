@@ -23,9 +23,10 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
     <title>lol.cn</title>
 </head>
     <body bgcolor="white">
-    <h1>目录：</h1>
+    <h1><font face="黑体" size=4><b>content</b></front></h1>
     <div>
-        <a href="#id-1">第一章</a>
+        <font face="黑体" size=4>
+	<a href="#id-1">第一章</a>
             <br />
         <a href="#id-2">第二章</a>
             <br />
@@ -33,9 +34,10 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
             <br />
         <a href="#id-4">第四章</a>
             <br />
+	</front>
     </div>
     <h1>内容：</h1>
-    <div id="id-1" style="height:700px;background-color:yellow;">
+    <div id="id-1" style="height:700px;background-color:white;">
         <p>
            第一章的内容：吧啦吧啦。。。。。
             <br />
@@ -44,7 +46,7 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
             。。。。。。。。。。。。。。。。
         </p>
     </div>
-    <div id="id-2" style="height:700px;background-color:blue;">
+    <div id="id-2" style="background-color:white;">
         <p>
             第二章的内容：吧啦吧啦。。。。。
             <br />
@@ -53,7 +55,7 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
             。。。。。。。。。。。。。。。。
         </p>
     </div>
-    <div id="id-3" style="height:700px;background-color:red;">
+    <div id="id-3" style="height:700px;background-color:white;">
         <p>
             第三章的内容：吧啦吧啦。。。。。
             <br />
@@ -62,7 +64,7 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
             。。。。。。。。。。。。。。。。
         </p>
     </div>
-    <div id="id-4" style="height:700px;background-color:green;">
+    <div id="id-4" style="height:700px;background-color:white;">
         <p>
             第四章的内容：吧啦吧啦。。。。。
             <br />
