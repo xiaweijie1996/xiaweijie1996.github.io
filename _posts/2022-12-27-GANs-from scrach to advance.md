@@ -17,63 +17,13 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
     </script>
 </head>
 
-<html lang="zh-cn">
-    <head>
-    <meta http-equiv="content-type" content="text/html;charset=UTF-8">
-    <title>lol.cn</title>
-</head>
-    <body bgcolor="white">
-    <h1><font face="黑体" size=4><b>content</b></front></h1>
-    <div>
-        <font face="黑体" size=4>
-	<a href="#id-1">Mathnmatic background</a>
-            <br />
-        <a href="#id-2">Original GAN</a>
-            <br />
-        <a href="#id-3">Wasserstein GAN</a>
-            <br />
-        <a href="#id-4">Other GANs</a>
-            <br />
-	</front>
-    </div>
-    <h1>内容：</h1>
-    <div id="id-1" style="height:700px;background-color:white;">
-        <p>
-           第一章的内容：吧啦吧啦。。。。。
-            <br />
-            。。。。。。。。。。。。。。。。
-            <br />
-            。。。。。。。。。。。。。。。。
-        </p>
-    </div>
-    <div id="id-2" style="background-color:white;">
-        <p>
-            第二章的内容：吧啦吧啦。。。。。
-            <br />
-            。。。。。。。。。。。。。。。。
-            <br />
-            。。。。。。。。。。。。。。。。
-        </p>
-    </div>
-    <div id="id-3" style="height:700px;background-color:white;">
-        <p>
-            第三章的内容：吧啦吧啦。。。。。
-            <br />
-            。。。。。。。。。。。。。。。。
-            <br />
-            。。。。。。。。。。。。。。。。
-        </p>
-    </div>
-    <div id="id-4" style="height:700px;background-color:white;">
-        <p>
-            第四章的内容：吧啦吧啦。。。。。
-            <br />
-            。。。。。。。。。。。。。。。。
-            <br />
-            。。。。。。。。。。。。。。。。
-        </p>
-    </div>
- 
-</body>
-</html>
+<br/>
+<b>Content</b>
+<a href="#math">Mathnmatic background</a>
+<br/ >
+<a href="#anhui">Original GANs</a>
+<br/ >
 
+<a name="math">Mathnmatic background</a></div> 
+
+<div>安徽省简介.............</div>
