@@ -17,15 +17,34 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
     </script>
 </head>
 
-<br/>
-<b>Content</b>
-<br/>
-<a href="#math">Mathnmatic background</a>
-<br/>
-	<a href="#math1">&nbsp;&nbsp; Entropy</a>
-<br/>
-<a href="#anhui">Original GANs</a>
-<br/>
+
+<table border="1">
+    <tr>
+        <td><font face="黑体" size=4><b>Content</b></font></td>
+    </tr>
+
+    <tr>
+        <td>
+	<a href="#math">Mathnmatic background</a>
+	<br/>
+	<a href="#math1">&nbsp;&nbsp;·Entropy</a>
+	<br/>
+	</td>
+    </tr>
+
+    <tr>
+        <td>
+	<a href="#anhui">Original GANs</a>
+	</td>
+    </tr>
+
+    <tr>
+        <td>$h$</td>
+    </tr>
+  
+</table>
+
+
 .<br/>
 .<br/><br/>
 .<br/>
