@@ -26,13 +26,13 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
     <h1><font face="黑体" size=4><b>content</b></front></h1>
     <div>
         <font face="黑体" size=4>
-	<a href="#id-1">第一章</a>
+	<a href="#id-1">Mathnmatic background</a>
             <br />
-        <a href="#id-2">第二章</a>
+        <a href="#id-2">Original GAN</a>
             <br />
-        <a href="#id-3">第三章</a>
+        <a href="#id-3">Wasserstein GAN</a>
             <br />
-        <a href="#id-4">第四章</a>
+        <a href="#id-4">Other GANs</a>
             <br />
 	</front>
     </div>
