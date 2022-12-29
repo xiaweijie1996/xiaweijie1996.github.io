@@ -18,7 +18,7 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
 </head>
 
 
-<table border="1">
+<table  style="border-collapse: collapse; width: 100%;" border="1">
     <tr>
         <td><font face="黑体" size=4><b>Content</b></font></td>
     </tr>
