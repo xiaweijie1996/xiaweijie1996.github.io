@@ -30,6 +30,7 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
 <li><a style="color: grey;" href="#GAN"><span style="font-family: 黑体; font-size: large;">Original GANs</span></a></li>
 <li><a style="color: grey;" href="#S"><span style="font-family: 黑体; font-size: large;">Solutions to problems of original GAN</span></a></li>
 </ul>
+<hr />
 <p>Generative adversarial networks (GAN) have shown great capacity in different applications. This article will explain the maths of GANs.</p>
 <p style="color: black;"><strong><a name="math"></a>Mathematical background</strong></p>
 <p style="color: black;">Let us first go through all the mathematical knowledge necessary for understanding GANs.</p>
@@ -38,11 +39,15 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
 <p style="color: black;">$$H(X) = \sum_{x \in X}-p(x)log_{2}(p(x)) = \mathbb{E}[-log(p(X))]$$</p>
 <p style="color: black;">Where $-log_{2}(p(x))$ is the number of bits to know an event.</p>
 <p style="color: black;">The entropy of event $A$ is the amount of information we need to know to decrease the uncertainty to $0$. However, $H(X)$ usually represents the best scenario. For example, if a new traveller wants to walk from the Delft train station to the TU Delft campus, he or she may have many options. If he randomly chooses one option, this option is highly likely not the shortest way to go, which means that in reality, we usually need more bits of information $H(q,p)$ than $H(X)$. $H(q,p)$ is essentially cross-entropy. The cross-entropy is defined as:</p>
-<p style="color: black;">$$H(p,q)=\sum_{x \in X}-p(x)log_{s}(q(x))=\mathbb{E}_{x~p(X)}[-log(q(X))]$$</p>
+<p style="color: black;">$$H(p,q)=\sum_{x \in X}-p(x)log_{s}(q(x))=\mathbb{E}_{x \sim p(X)}[-log(q(X))]$$</p>
 <p style="color: black;">Where $p(x)$ represents a real distribution and $q(x)$ represents the distribution we want to use to estimate the real distribution. The cross-entropy is always larger than entropy unless $p(x)=q(x)$</p>
 <p style="color: black;"><strong><a name="math2"></a>Kullback&ndash;Leibler divergence</strong></p>
 <p style="color: black;">Kullback&ndash;Leibler divergence (KL divergence) measures the "distance" between the cross-entropy and entropy. KL divergence is defined as:</p>
-<p style="color: black;">$$\begin{equation*} \begin{aligned} D_{KL}(P||Q)=H(P,Q)-H(P) &amp;=\sum_{x \in X}-p(x)log_{s}(q(x))- \sum_{x \in X}-p(x)log_{2}(p(x))\\ &amp;= \sum_{x \in X}p(x)log_{2}(\frac{p(x)}{q(x)})&nbsp; \end{aligned} \end{equation*}$$</p>
-<p style="color: black;">Where D_{KL}(P||Q) is KL divergence, $P, Q$ represent the real distribution and unreal distribution, respectively.</p>
+<p style="color: black;">$$ \begin{align*} D_{KL}(P||Q)=H(P,Q)-H(P) &amp;=\sum_{x \in X}-p(x)log_{s}(q(x))- \sum_{x \in X}-p(x)log_{2}(p(x))\\ &amp;= \sum_{x \in X}p(x)log_{2}(\frac{p(x)}{q(x)})&nbsp; \end{align*}$$</p>
+<p style="color: black;">Where $D_{KL}(P||Q)$ is KL divergence, $P, Q$ represent the real distribution and unreal distribution, respectively.</p>
+<p style="color: black;">Note: KL divergence is not asymmetry, which means $D_{KL}(P||Q) \neq D_{KL}(Q||P)$</p>
+<p style="color: black;"><strong><a name="math3"></a>Jensen&ndash;Shannon divergence</strong></p>
+<p style="color: black;">&nbsp;</p>
+<p style="color: black;">&nbsp;</p>
 <p style="color: black;">&nbsp;</p>
 <p style="color: black;">&nbsp;</p>
