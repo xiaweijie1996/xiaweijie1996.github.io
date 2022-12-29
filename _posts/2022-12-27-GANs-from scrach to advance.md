@@ -19,7 +19,7 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
 
 <p>Generative adversarial networks (GAN) has shown great capacity to be a generative model, this articles will explain the maths of GANs.</p>
 
-<table  style="border-collapse: collapse; width: 100%;" border="1">
+<table border="1">
     <tr>
         <td><font face="黑体" size=4><b>Content</b></font></td>
     </tr>
