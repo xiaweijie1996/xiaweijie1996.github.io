@@ -34,5 +34,5 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
 <p style="color: black;">Let us first go through all the mathematical knowledge necessary for understanding GANs.</p>
 <p style="color: black;"><strong><a name="math1"></a>Entropy and cross-entropy</strong></p>
 <p style="color: black;">Entropy (in information theory) is the average number of bits of information we need to know about the event. if we know a event $A$ will definitely happen, which means $P(A=True)=1$, then, we the entropy is $0$ as we already know the result. Likewise, if the probability of $A$ happening is $p$, then we can say there is "randomness or chaos" in this event. The smaller the $p$, the larger the "randomness" and the entropy. The entropy is defined:</p>
-$$H(S) = \sum_{x \in X}-p(x)log(p(x))$$
+$$H(S) = \sum_{x \in X}-p(x)log(p(x)) = \mathbb{E}[-log(p(X))]$$
 <p style="color: black;">where $-log(p(x))$ is the number of bits to know an event.</p>
