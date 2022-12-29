@@ -25,21 +25,41 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
 
     <tr>
         <td>
-	<a href="#math"><font face="黑体" size=4>Mathematical background</font></a>
+
+	<p style="padding-left: 40px;color: black"><a href="#math"><font face="黑体" size=4>Mathematical background</font></a><P>
 	<br/>
 	<p style="padding-left: 40px;color: black"><a href="#math1"><font face="黑体" size=4>Entropy</font></a><p>
 	<br/>
+	<p style="padding-left: 40px;color: black"><a href="#math1"><font face="黑体" size=4>Cross entropy</font></a><p>
+	<br/>
+	<p style="padding-left: 40px;color: black"><a href="#math1"><font face="黑体" size=4>Kullback–Leibler divergence</font></a><p>
+	<br/>
+	<p style="padding-left: 40px;color: black"><a href="#math1"><font face="黑体" size=4>Jensen–Shannon divergence</font></a><p>
+	<br/>
+
 	</td>
     </tr>
 
     <tr>
         <td>
-	<a href="#anhui">Original GANs</a>
+
+	<p style="padding-left: 40px;color: black"><font face="黑体" size=4><a href="#anhui">Original GANs</font></a><P>
+	<br/>
+	<p style="padding-left: 40px;color: black"><a href="#math1"><font face="黑体" size=4>JProblem of original GAN</font></a><p>
+	<br/>
+
 	</td>
     </tr>
 
-    <tr>
-        <td>$h$</td>
+    <tr>	
+	<td>
+
+	<p style="color: black"><font face="黑体" size=4><a href="#anhui">Solutions to problems of original GAN</font></a><P>
+	<br/>
+	<p style="padding-left: 40px;color: black"><a href="#math1"><font face="黑体" size=4>Wasserstein GAN</font></a><p>
+	<br/>
+	
+	</td>
     </tr>
   
 </table>
