@@ -17,7 +17,7 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
         });
     </script>
 </head>
-
+<hr />
 <p><span style="font-family: 黑体; font-size: large;"><strong>Content</strong></span></p>
 <ul>
 <li><a style="color: grey;" href="#math"><span style="font-family: 黑体; font-size: large;">Mathematical background</span></a>
