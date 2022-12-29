@@ -17,6 +17,7 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
         });
     </script>
 </head>
+
 <p><span style="font-family: 黑体; font-size: large;"><strong>Content</strong></span></p>
 <ul>
 <li><a style="color: grey;" href="#math"><span style="font-family: 黑体; font-size: large;">Mathematical background</span></a>
@@ -49,7 +50,7 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
 <p style="color: black;"><strong><a name="math3"></a>Jensen&ndash;Shannon divergence</strong></p>
 <p style="color: black;">Jensen&ndash;Shannon divergence (JS divergence) is similar to KL divergence and is another way to measure the difference between two distributions. JS divergence is defined as:</p>
 <p style="color: black;">$$\begin{align*} JSD(P||Q)=\frac{1}{2}D_{KL}(P||\frac{P+Q}{2})+\frac{1}{2}D_{KL}(Q||\frac{P+Q}{2}) \\ &amp;=\frac{1}{2}[\sum p(x)log_{2}\frac{2p(x)}{p(x)+q(x)}+\sum p(x)log_{2}\frac{2p(x)}{p(x)+q(x)}] \\ &amp;=\frac{1}{2}[\sum p(x)log_{2}\frac{p(x)}{p(x)+q(x)}+\sum p(x)log_{2}\frac{p(x)}{p(x)+q(x)}]+log_{2}2 \end{align*}$$</p>
-<p style="color: black;">Note: JS divergence is asymmetry, which means $D_{KL}(P||Q) = D_{KL}(Q||P)$</p>
+<p style="color: black;">Note: JS divergence is asymmetry, which means $JSD(P||Q) = JSD(Q||P)$</p>
 <p style="color: black;"><strong><a name="math4"></a>Manifold (not necessary)</strong></p>
 <p style="color: black;">In mathematics, a manifold is a topological space that locally resembles Euclidean space near each point. More precisely, an n-dimensional manifold, or n-manifold for short, is a topological space with the property that each point has a neighbourhood that is homeomorphic to an open subset of n-dimensional Euclidean space.</p>
 <p style="color: black;">When we describe a circle or a sphere in the cartesian coordinate system, we realize that we need many points to describe these objects, which looks redundant. Could we find a way to save our "energy"? for example, when we describe a circle, we need two dimensions, which are (x,y). however, if we use polar coordinates to describe a circle or sphere, we only need one dimension which is the radius.&nbsp; Later, we will discuss that the data we used to train GANs can be considered as manifolds of a high-dimension object in a low-dimension, which, consequently, leads to a problem in training.</p>
