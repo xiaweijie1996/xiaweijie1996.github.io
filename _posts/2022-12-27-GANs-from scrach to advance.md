@@ -22,9 +22,9 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
 <ul>
 <li><a style="color: grey;" href="#math"><span style="font-family: 黑体; font-size: large;">Mathematical background</span></a></li>
 <ul>
-<li><a style="color: grey;" href="#math1"><span style="font-family: 黑体; font-size: large;">Entropy and cross entropy</span></a></li>
-<li><a style="color: grey;" href="#math3"><span style="font-family: 黑体; font-size: large;">Kullback&ndash;Leibler divergence</span></a></li>
-<li><a style="color: grey;" href="#math4"><span style="font-family: 黑体; font-size: large;">Jensen&ndash;Shannon divergence</span></a></li>
+<li><a style="color: grey;" href="#math1"><span style="font-family: 黑体; font-size: large;">&emsp; &emsp; Entropy and cross entropy</span></a></li>
+<li><a style="color: grey;" href="#math3"><span style="font-family: 黑体; font-size: large;">&emsp; &emsp; Kullback&ndash;Leibler divergence</span></a></li>
+<li><a style="color: grey;" href="#math4"><span style="font-family: 黑体; font-size: large;">&emsp; &emsp; Jensen&ndash;Shannon divergence</span></a></li>
 </ul>
 <li><a style="color: grey;" href="#GAN"><span style="font-family: 黑体; font-size: large;">Original GANs</span></a></li>
 <li><a style="color: grey;" href="#S"><span style="font-family: 黑体; font-size: large;">Solutions to problems of original GAN</span></a></li>
