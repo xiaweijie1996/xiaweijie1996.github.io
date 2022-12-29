@@ -25,9 +25,9 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
 
     <tr>
         <td>
-	<a href="#math">Mathnmatic background</a>
+	<a href="#math"><font face="黑体" size=4>Mathnmatic background</font></a>
 	<br/>
-	<a href="#math1">&nbsp;&nbsp;·Entropy</a>
+	<p style="padding-left: 40px;"><a href="#math1"><font face="黑体" size=4>·Entropy</font></a><p>
 	<br/>
 	</td>
     </tr>
@@ -45,49 +45,6 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
 </table>
 
 
-.<br/>
-.<br/><br/>
-.<br/>
-.<br/>
-.<br/>
-.<br/><br/>
-.
-.
-.
-.<br/>
-.<br/><br/>
-.<br/>
-.<br/>
-.<br/>
-.<br/><br/.<br/>
-.<br/><br/>
-.<br/>
-.<br/>
-.<br/>
-.<br/><br/.<br/>
-.<br/><br/>
-.<br/>
-.<br/>
-.<br/>
-.<br/><br/.<br/>
-.<br/><br/>
-.<br/>
-.<br/>
-.<br/>
-.<br/><br/>
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
 <a name="math">Mathnmatic background</a>
 
-<div>安徽省简介.............</div>
+<div>Gan</div>
