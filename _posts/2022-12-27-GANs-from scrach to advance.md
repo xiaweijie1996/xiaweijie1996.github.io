@@ -25,9 +25,9 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
 
     <tr>
         <td>
-	<a href="#math"><font face="黑体" size=4>Mathnmatic background</font></a>
+	<a href="#math"><font face="黑体" size=4>Mathematical background</font></a>
 	<br/>
-	<p style="padding-left: 40px;"><a href="#math1"><font face="黑体" size=4>·Entropy</font></a><p>
+	<p style="padding-left: 40px;color: black"><a href="#math1"><font face="黑体" size=4>Entropy</font></a><p>
 	<br/>
 	</td>
     </tr>
@@ -45,6 +45,6 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
 </table>
 
 
-<a name="math">Mathnmatic background</a>
+<p style="color: black"><a name="math">Mathematical background</a><p>
 
 <div>Gan</div>
