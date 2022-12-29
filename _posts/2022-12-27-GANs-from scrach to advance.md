@@ -17,7 +17,6 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
         });
     </script>
 </head>
-
 <p><span style="font-family: 黑体; font-size: large;"><strong>Content</strong></span></p>
 <ul>
 <li><a style="color: grey;" href="#math"><span style="font-family: 黑体; font-size: large;">Mathematical background</span></a>
@@ -36,18 +35,20 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
 <p style="color: black;">Let us first go through all the mathematical knowledge necessary for understanding GANs.</p>
 <p style="color: black;"><strong><a name="math1"></a>Entropy and cross-entropy</strong></p>
 <p style="color: black;"><span style="text-decoration: underline;">Entropy (in information theory) is the average number of bits of information we need to know about the even</span>t. if we know a event $A$ will definitely happen, which means $P(A=True)=1$, then, we the entropy is $0$ as we already know the result. Likewise, if the probability of $A$ happening is $p$, then we can say there is "randomness" in this event. The smaller the $p$, the larger the "randomness" and the entropy. The entropy is defined as:</p>
-<p style="color: black;">$$H(X) = \sum_{x \in X}-p(x)log_{2}(p(x)) = \mathbb{E}[-log(p(X))]$$</p>
+<p style="color: black;">$$H(p) = \sum_{x \in X}-p(x)log_{2}(p(x)) = \mathbb{E}[-log(p(X))]$$</p>
 <p style="color: black;">Where $-log_{2}(p(x))$ is the number of bits to know an event.</p>
-<p style="color: black;">The entropy of event $A$ is the amount of information we need to know to decrease the uncertainty to $0$. However, $H(X)$ usually represents the best scenario. For example, if a new traveller wants to walk from the Delft train station to the TU Delft campus, he or she may have many options. If he randomly chooses one option, this option is highly likely not the shortest way to go, which means that in reality, we usually need more bits of information $H(q,p)$ than $H(X)$. $H(q,p)$ is essentially cross-entropy. The cross-entropy is defined as:</p>
+<p style="color: black;">The entropy of event $A$ is the amount of information we need to know to decrease the uncertainty to $0$. However, $H(p)$ usually represents the best scenario. For example, if a new traveller wants to walk from the Delft train station to the TU Delft campus, he or she may have many options. If he randomly chooses one option, this option is highly likely not the shortest way to go, which means that in reality, we usually need more bits of information $H(q,p)$ than $H(p)$. $H(q,p)$ is essentially cross-entropy. The cross-entropy is defined as:</p>
 <p style="color: black;">$$H(p,q)=\sum_{x \in X}-p(x)log_{s}(q(x))=\mathbb{E}_{x \sim p(X)}[-log(q(X))]$$</p>
 <p style="color: black;">Where $p(x)$ represents a real distribution and $q(x)$ represents the distribution we want to use to estimate the real distribution. The cross-entropy is always larger than entropy unless $p(x)=q(x)$</p>
 <p style="color: black;"><strong><a name="math2"></a>Kullback&ndash;Leibler divergence</strong></p>
 <p style="color: black;">Kullback&ndash;Leibler divergence (KL divergence) measures the "distance" between the cross-entropy and entropy. KL divergence is defined as:</p>
 <p style="color: black;">$$ \begin{align*} D_{KL}(P||Q)=H(P,Q)-H(P) &amp;=\sum_{x \in X}-p(x)log_{s}(q(x))- \sum_{x \in X}-p(x)log_{2}(p(x))\\ &amp;= \sum_{x \in X}p(x)log_{2}(\frac{p(x)}{q(x)})&nbsp; \end{align*}$$</p>
-<p style="color: black;">Where $D_{KL}(P||Q)$ is KL divergence, $P, Q$ represent the real distribution and unreal distribution, respectively.</p>
+<p style="color: black;">Where $D_{KL}(P||Q)$ is KL divergence, $P, Q$ represent the real distribution and unreal distribution, respectively. By subtracting H(Q) from H(P||Q), KL divergence kind finds the "extra information" needed if we apply $Q$ which is not the real distribution.</p>
 <p style="color: black;">Note: KL divergence is not asymmetry, which means $D_{KL}(P||Q) \neq D_{KL}(Q||P)$</p>
 <p style="color: black;"><strong><a name="math3"></a>Jensen&ndash;Shannon divergence</strong></p>
-<p style="color: black;">&nbsp;</p>
+<p style="color: black;">Jensen&ndash;Shannon divergence (JS divergence) is similar to KL divergence and is another way to measure the difference between two distributions. JS divergence is defined as:</p>
+<p style="color: black;">$$\begin{align*}JSD(P||Q)&amp;=\frac{1}{2}D_{KL}(P||\frac{P+Q}{2})+\frac{1}{2}D_{KL}(Q||\frac{P+Q}{2}) &amp;=\frac{1}{2}[\sum p(x)log_{2}\frac{2p(x)}{p(x)+q(x)}+\sum p(x)log_{2}\frac{2p(x)}{p(x)+q(x)}] &amp;=\frac{1}{2}[\sum p(x)log_{2}\frac{p(x)}{p(x)+q(x)}+\sum p(x)log_{2}\frac{p(x)}{p(x)+q(x)}]+log_{2}2\end{align*}$$</p>
+<p style="color: black;">Note: JS divergence is asymmetry, which means $D_{KL}(P||Q) = D_{KL}(Q||P)$</p>
 <p style="color: black;">&nbsp;</p>
 <p style="color: black;">&nbsp;</p>
 <p style="color: black;">&nbsp;</p>
