@@ -5,6 +5,7 @@ categories:
 - Machine Learning
 feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
 ---
+
 <head>
     <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
     <script type="text/x-mathjax-config">
@@ -17,8 +18,7 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
     </script>
 </head>
 
-</br>
-<p><span style="font-family: 黑体; font-size: large;"><strong>Content</strong></span></p>
+<span style="font-family: 黑体; font-size: large;"><strong>Content</strong></span>
 <ul>
 <li><a style="color: grey;" href="#math"><span style="font-family: 黑体; font-size: large;">Mathematical background</span></a></li>
 <ul>
