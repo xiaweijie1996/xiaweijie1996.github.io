@@ -21,6 +21,8 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
 <b>Content</b>
 <a href="#math">Mathnmatic background</a>
 <br/ >
+	<a href="#math1">&nbsp;&nbsp; Entropy</a>
+<br/>
 <a href="#anhui">Original GANs</a>
 <br/ >
 
