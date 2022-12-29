@@ -34,6 +34,10 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
 <p style="color: black;"><strong><a name="math"></a>Mathematical background</strong></p>
 <p style="color: black;">Let us first go through all the mathematical knowledge necessary for understanding GANs.</p>
 <p style="color: black;"><strong><a name="math1"></a>Entropy and cross-entropy</strong></p>
-<p style="color: black;">Entropy (in information theory) is the average number of bits of information we need to know about the event. if we know a event $A$ will definitely happen, which means $P(A=True)=1$, then, we the entropy is $0$ as we already know the result. Likewise, if the probability of $A$ happening is $p$, then we can say there is "randomness or chaos" in this event. The smaller the $p$, the larger the "randomness" and the entropy. The entropy is defined:</p>
-<p style="color: black;">$$H(S) = \sum_{x \in X}-p(x)log(p(x)) = \mathbb{E}[-log(p(X))]$$</p>
-<p style="color: black;">where $-log(p(x))$ is the number of bits to know an event.</p>
+<p style="color: black;"><span style="text-decoration: underline;">Entropy (in information theory) is the average number of bits of information we need to know about the even</span>t. if we know a event $A$ will definitely happen, which means $P(A=True)=1$, then, we the entropy is $0$ as we already know the result. Likewise, if the probability of $A$ happening is $p$, then we can say there is "randomness" in this event. The smaller the $p$, the larger the "randomness" and the entropy. The entropy is defined:</p>
+<p style="color: black;">$$H(X) = \sum_{x \in X}-p(x)log_{2}(p(x)) = \mathbb{E}[-log(p(X))]$$</p>
+<p style="color: black;">where $-log_{2}(p(x))$ is the number of bits to know an event.</p>
+<p style="color: black;">The entropy of event $A$ is the amount of information we need to know to decrease the uncertainty to $0$. However, $H(X)$ usually represents the best scenario. For example, if a new traveller wants to walk from the Delft train station to the TU Delft campus, he or she may have many options. If he randomly chooses one option, this option is highly likely not the shortest way to go, which means that in reality, we usually need more bits of information $H(q,p)$ than $H(X)$. $H(q,p)$ is essentially cross-entropy. The cross-entropy is defined:</p>
+<p style="color: black;">$$H(p,q)=\sum_{x \in X}-p(x)log_{s}(q(x))=\mathbb{E}_{x~p(X)}[-log(q(X))]$$</p>
+<p style="color: black;">&nbsp;</p>
+<p style="color: black;">&nbsp;</p>
