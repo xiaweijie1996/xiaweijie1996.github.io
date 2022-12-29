@@ -19,13 +19,56 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
 
 <br/>
 <b>Content</b>
+<br/>
 <a href="#math">Mathnmatic background</a>
-<br/ >
+<br/>
 	<a href="#math1">&nbsp;&nbsp; Entropy</a>
 <br/>
 <a href="#anhui">Original GANs</a>
-<br/ >
-
-<a name="math">Mathnmatic background</a></div> 
+<br/>
+.<br/>
+.<br/><br/>
+.<br/>
+.<br/>
+.<br/>
+.<br/><br/>
+.
+.
+.
+.<br/>
+.<br/><br/>
+.<br/>
+.<br/>
+.<br/>
+.<br/><br/.<br/>
+.<br/><br/>
+.<br/>
+.<br/>
+.<br/>
+.<br/><br/.<br/>
+.<br/><br/>
+.<br/>
+.<br/>
+.<br/>
+.<br/><br/.<br/>
+.<br/><br/>
+.<br/>
+.<br/>
+.<br/>
+.<br/><br/>
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+<a name="math">Mathnmatic background</a>
 
 <div>安徽省简介.............</div>
