@@ -62,6 +62,7 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
 <p style="color: black;">In mathematics, a manifold is a topological space that locally resembles Euclidean space near each point. More precisely, an n-dimensional manifold, or n-manifold for short, is a topological space with the property that each point has a neighbourhood that is homeomorphic to an open subset of n-dimensional Euclidean space.</p>
 <p style="color: black;">When we describe a circle or a sphere in the cartesian coordinate system, we realize that we need many points to describe these objects, which looks redundant. Could we find a way to save our "energy"? for example, when we describe a circle, we need two dimensions, which are (x,y). however, if we use polar coordinates to describe a circle or sphere, we only need one dimension which is the radius.&nbsp; Later, we will discuss that the data we used to train GANs can be considered as manifolds of a high-dimension object in a low-dimension, which, consequently, leads to a problem in training.</p>
 
+
 <p style="color: black;"><strong><a name="GAN"></a>Original GANs</strong></p>
 <p style="color: black;">Basic GANs consist of two components:</p>
 <p style="color: black;">1- Generator $G$, which is responsible for generating data.</p>
@@ -76,4 +77,6 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
 <p style="color: black; text-align: left;"><span style="color: #000000;">Assuming we sample ${x_1,x_2,...,x_n}$ data from the read distribution. Then, the likelihood of generating the same samples by the generator is:</span></p>
 <p style="color: black; text-align: left;"><span style="color: #000000;">$$p=\prod \limits_{i=1}^n p(x_i; \theta)$$</span></p>
 <p style="color: black; text-align: left;"><span style="color: #000000;">And now, if we want to find the best generator, we need to find $\theta^*$ which maximises the likelihood.</span></p>
-<p style="color: black; text-align: left;"><span style="color: #000000;">$$ \begin{align*} \theta^* &amp;= arg\max_{\theta}\prod \limits_{i=1}^n p(x_i; \theta)\\&amp;=arg \max_{\theta} log(\prod \limits_{i=1}^n p(x_i; \theta))\\ &amp;=arg \max_{\theta} \sum_{i=1}^{n}log(p(x_i; \theta))\\ &amp;\approx arg\max_{\theta} \mathbb{E}_{x \sim p_{real}(x)}[log(p(x_i;\theta))]&nbsp; \end{aligen}$$</span></p>
+<p style="color: black; text-align: left;"><span style="color: #000000;">$$ \begin{align*} \theta^* &amp;= arg\max_{\theta}\prod \limits_{i=1}^n p(x_i; \theta)\\&amp;=arg \max_{\theta} log(\prod \limits_{i=1}^n p(x_i; \theta))\\ &amp;=arg \max_{\theta} \sum_{i=1}^{n}log(p(x_i; \theta))\\ &amp;\approx arg\max_{\theta} \mathbb{E}_{x \sim p_{real}(x)}[log(p(x_i;\theta))]&nbsp; &amp;=1 \end{align*}$$</span></p>
+<p style="color: black; text-align: left;">&nbsp;</p>
+<p style="color: black; text-align: left;">&nbsp;</p>
