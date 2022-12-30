@@ -51,7 +51,7 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
 <p style="color: black;">Where $-log_{2}(p(x))$ is the number of bits to know an event.</p>
 <p style="color: black;">The entropy of event $A$ is the amount of information we need to know to decrease the uncertainty to $0$. However, $H(p)$ usually represents the best scenario. For example, if a new traveller wants to walk from the Delft train station to the TU Delft campus, he or she may have many options. If he randomly chooses one option, this option is highly likely not the shortest way to go, which means that in reality, we usually need more bits of information $H(q,p)$ than $H(p)$. $H(q,p)$ is essentially cross-entropy. The cross-entropy is defined as:</p>
 <p style="color: black;">$$H(p,q)=\sum_{x \in X}-p(x)log_{s}(q(x))=\mathbb{E}_{x \sim p(X)}[-log(q(X))]$$</p>
-<p style="color: black;">Where $p(x)$ represents a real distribution and $q(x)$ represents the distribution we want to use to estimate the real distribution. The cross-entropy is always larger than entropy unless $p(x)=q(x)$</p>
+<p style="color: black;">Where $p(x)$ represents a real distribution and $q(x)$ represents the distribution we want to use to estimate the real distribution. The cross-entropy is always larger than entropy unless $p(x)=q(x)$</p>.
 <p style="color: black;"><strong><a name="math2"></a>Kullback&ndash;Leibler divergence</strong></p>
 <p style="color: black;">Kullback&ndash;Leibler divergence (KL divergence) measures the "distance" between the cross-entropy and entropy. KL divergence is defined as:</p>
 <p style="color: black;">$$ \begin{align*} D_{KL}(P||Q) &amp;=H(P,Q)-H(P) \\ &amp;=\sum_{x \in X}-p(x)log_{s}(q(x))- \sum_{x \in X}-p(x)log_{2}(p(x))\\ &amp;= \sum_{x \in X}p(x)log_{2}(\frac{p(x)}{q(x)})&nbsp; \end{align*}$$</p>
@@ -73,7 +73,7 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
 <p style="color: black;"><img style="display: block; margin-left: auto; margin-right: auto;" src="https://sthalles.github.io/assets/dcgan/GANs.png" alt="Structure of GANs" width="512" height="223" /></p>
 <p style="color: black; text-align: center;"><span style="color: #808080;">Fig. 1 Structure of GANs</span></p>
 <p style="color: black; text-align: left;"><span style="color: #000000;">In the training process, $G$ and $D$ will compete with each other and reduce the loss which is defined as:</span></p>
-<p style="color: black; text-align: left;"><span style="color: #000000;">$$ \begin{align*}&nbsp; \min_{G}\max_{D} L(G,D) &amp;= \frac{1}{N}\sum log(x)+\frac{1}{N}\sum log (1-D(G(z))) \\ &amp;= \mathbb{E}_{x \sim p_{real}(x)}[log(x)]+\mathbb{E}_{z \sim p_{z}(z)}[log(1-D(G(Z)))] \\ &amp;= \mathbb{E}_{x \sim p_{real}(x)}[log(x)]+\mathbb{E}_{x \sim p_{gen}(x)}[log(1-D(x)] \end{align*}$$</span></p>
+<p style="color: black; text-align: left;"><span style="color: #000000;">$$ \begin{align*}&nbsp; \min_{G}\max_{D} L(G,D) &amp;= \frac{1}{N}\sum log(D(x))+\frac{1}{N}\sum log (1-D(G(z))) \\ &amp;= \mathbb{E}_{x \sim p_{real}(x)}[log(D(x))]+\mathbb{E}_{z \sim p_{z}(z)}[log(1-D(G(Z)))] \\ &amp;= \mathbb{E}_{x \sim p_{real}(x)}[log(D(x))]+\mathbb{E}_{x \sim p_{gen}(x)}[log(1-D(x)] \end{align*}$$</span></p>
 <p style="color: black; text-align: left;"><span style="color: #000000;">Where $z$ is the noise of a specific distribution (eg, unique distribution, normal distribution). $N$ is the number of samples, $p_{real}(x)$ is the real distribution of the data, $p_{gen}(x)$ is the distribution of generated data.</span></p>
 <p style="color: black; text-align: left;"><span style="color: #000000;"><strong><a name="GAN1"></a>Maximum likelihood estimation of generator</strong></span></p>
 <p style="color: black; text-align: left;"><span style="color: #000000;">Given a real distribution $p_{real}(x)$, we have generated distribution $p_{gen}(x; \theta)$, $\theta$ are parameters of generator. What we want is to make $p_{gen}(x; theta)$ as close to $p_{real}(x)$ as possible.&nbsp;</span></p>
@@ -87,5 +87,16 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
 <p style="color: black; text-align: left;">$$\begin{align*} arg\max_{\theta} \mathbb{E}_{x \sim p_{real}(x)}[log(p(x_i;\theta)] &amp;= arg\max_{\theta} \int_{x}p_{real}(x)log(p(x_i;\theta)dx\\ &amp;= arg\max_{\theta} \int_{x}p_{real}(x)log(p(x_i;\theta)dx- \underbrace{\int_x p_{real}(x)log(p_{real}(x))dx}_{constant}\\ &amp;= arg\min_{\theta} D_{KL}(p_{real}(x)||p_{gen}(x; \theta)) \end{align*}$$</p>
 <p style="color: black; text-align: left;">This means the generator $G$ is essentially minimizing the KL divergence of the real distribution and distribution of generated data. The best $\theta$ is the $\theta$ which leds to the lowest KL divergence.</p>
 <p style="color: black; text-align: left;"><span style="color: #000000;"><strong><a name="GAN2"></a>JS divergence in the discriminator</strong></span></p>
+<p style="color: black; text-align: left;">we now know that the $G$ is trying to minminze the KL divergence, let us also take a deeper look at $D$. The objective of $G$ is to maximize the $L(G,D)$.</p>
+<p style="color: black; text-align: left;">$$\begin{align*} L(G,D)&amp;=\mathbb{E}_{x \sim p_{real}(x)}[log(x)]+\mathbb{E}_{x \sim p_{gen}(x)}[log(1-D(x)] \\ &amp;= \int_{x}p_{real}(x)log(D(x))dx+\int_{x}p_{gen}(x)log(1-D(x))dx\\&nbsp;&amp;= underbrace{\int_{x}[p_{real}(x)log(D(x))+p_{gen}(x)log(1-D(x))]dx}_{f(D)} \end{align*}$$</p>
+<p style="color: black; text-align: left;">Because if $f(x)&gt;g(x)$, we can get $\int f(x) &gt; \int g(x)$, so, optimize $L(G,D)$ is essentially optimize $f(D)$.</p>
+<p style="color: black; text-align: left;">$$f(D)=p_{real}(x)log(D)+p_{gen}(x)log(1-D)$$</p>
+<p style="color: black; text-align: left;">To find $D^*$ which maximize $f(D)$:</p>
+<p style="color: black; text-align: left;">$$\frac{df(D)}{dD}=0 $$</p>
+<p style="color: black; text-align: left;">$$\Rightarrow p_{real}(x)&times;\frac{1}{D}-p_{gen}(x)\frac{1}{1-D} $$</p>
+<p style="color: black; text-align: left;">$$\Rightarrow D^*=\frac{p_{real}(x)}{p_{real}(x)+p_{gen}(x)}, 0&lt;D^*&lt;1 $$</p>
+<p style="color: black; text-align: left;">Substitute $D^*$ into $L(G,D)$:</p>
+<p style="color: black; text-align: left;">$$L(G,D)=$$</p>
+<p style="color: black; text-align: left;">&nbsp;</p>
 <p style="color: black; text-align: left;">&nbsp;</p>
 <p style="color: black; text-align: left;">&nbsp;</p>
