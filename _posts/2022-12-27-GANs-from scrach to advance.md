@@ -32,7 +32,11 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
 <li><a style="color: grey;" href="#math4"><span style="font-family: 黑体; font-size: large;">Manifold</span></a></li>
 </ul>
 </li>
-<li><a style="color: grey;" href="#GAN"><span style="font-family: 黑体; font-size: large;">Original GANs</span></a></li>
+<li><a style="color: grey;" href="#GAN"><span style="font-family: 黑体; font-size: large;">Original GANs</span></a>
+<ul>
+<li><a style="color: grey;" href="#GAN1"><span style="font-family: 黑体; font-size: large;">Maximum likelihood estimation of generator</span></a></li>
+</ul>
+</li>
 <li><a style="color: grey;" href="#S"><span style="font-family: 黑体; font-size: large;">Solutions to problems of original GAN</span></a></li>
 </ul>
 <p>&nbsp;</p>
