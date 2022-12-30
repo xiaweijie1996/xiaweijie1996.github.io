@@ -23,6 +23,7 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
 <p>Until now, there are more than 400 types of GANs which you can find in <a href="https://github.com/hindupuravinash/the-gan-zoo">GAN ZOO</a>.</p>
 <hr />
 <p><strong>Content</strong></p>
+
 <ul>
 <li><a style="color: grey;" href="#math"><span style="font-family: 黑体; font-size: large;">Mathematical background</span></a>
 <ul>
@@ -35,10 +36,12 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
 <li><a style="color: grey;" href="#GAN"><span style="font-family: 黑体; font-size: large;">Original GANs</span></a>
 <ul>
 <li><a style="color: grey;" href="#GAN1"><span style="font-family: 黑体; font-size: large;">Maximum likelihood estimation of generator</span></a></li>
+<li><a style="color: grey;" href="#GAN2"><span style="font-family: 黑体; font-size: large;">JS divergence in the discriminator</span></a></li>
 </ul>
 </li>
 <li><a style="color: grey;" href="#S"><span style="font-family: 黑体; font-size: large;">Solutions to problems of original GAN</span></a></li>
 </ul>
+
 <p>&nbsp;</p>
 <p style="color: black;"><strong><a name="math"></a>Mathematical background</strong></p>
 <p style="color: black;">Let us first go through all the mathematical knowledge necessary for understanding GANs.</p>
