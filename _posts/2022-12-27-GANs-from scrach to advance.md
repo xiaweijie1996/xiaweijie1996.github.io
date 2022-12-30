@@ -88,13 +88,13 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
 <p style="color: black; text-align: left;">This means the generator $G$ is essentially minimizing the KL divergence of the real distribution and distribution of generated data. The best $\theta$ is the $\theta$ which leds to the lowest KL divergence.</p>
 <p style="color: black; text-align: left;"><span style="color: #000000;"><strong><a name="GAN2"></a>JS divergence in the discriminator</strong></span></p>
 <p style="color: black; text-align: left;">we now know that the $G$ is trying to minminze the KL divergence, let us also take a deeper look at $D$. The objective of $G$ is to maximize the $L(G,D)$.</p>
-<p style="color: black; text-align: left;">$$\begin{align*} L(G,D)&amp;=\mathbb{E}_{x \sim p_{real}(x)}[log(x)]+\mathbb{E}_{x \sim p_{gen}(x)}[log(1-D(x)] \\ &amp;= \int_{x}p_{real}(x)log(D(x))dx+\int_{x}p_{gen}(x)log(1-D(x))dx\\&nbsp;&amp;= underbrace{\int_{x}[p_{real}(x)log(D(x))+p_{gen}(x)log(1-D(x))]dx}_{f(D)} \end{align*}$$</p>
+<p style="color: black; text-align: left;">$$\begin{align*} L(G,D)&amp;=\mathbb{E}_{x \sim p_{real}(x)}[log(x)]+\mathbb{E}_{x \sim p_{gen}(x)}[log(1-D(x)] \\ &amp;= \int_{x}p_{real}(x)log(D(x))dx+\int_{x}p_{gen}(x)log(1-D(x))dx\\ &amp;= \underbrace{\int_{x}[p_{real}(x)log(D(x))+p_{gen}(x)log(1-D(x))]dx}_{f(D)} \end{align*}$$</p>
 <p style="color: black; text-align: left;">Because if $f(x)&gt;g(x)$, we can get $\int f(x) &gt; \int g(x)$, so, optimize $L(G,D)$ is essentially optimize $f(D)$.</p>
 <p style="color: black; text-align: left;">$$f(D)=p_{real}(x)log(D)+p_{gen}(x)log(1-D)$$</p>
 <p style="color: black; text-align: left;">To find $D^*$ which maximize $f(D)$:</p>
 <p style="color: black; text-align: left;">$$\frac{df(D)}{dD}=0 $$</p>
 <p style="color: black; text-align: left;">$$\Rightarrow p_{real}(x)&times;\frac{1}{D}-p_{gen}(x)\frac{1}{1-D} $$</p>
-<p style="color: black; text-align: left;">$$\Rightarrow D^*=\frac{p_{real}(x)}{p_{real}(x)+p_{gen}(x)}, 0&lt;D^*&lt;1 $$</p>
+<p style="color: black; text-align: left;">$$\Rightarrow D^*=\frac{p_{real}(x)}{p_{real}(x)+p_{gen}(x)}, (0&lt;D^*&lt;1) $$</p>
 <p style="color: black; text-align: left;">Substitute $D^*$ into $L(G,D)$:</p>
 <p style="color: black; text-align: left;">$$L(G,D)=$$</p>
 <p style="color: black; text-align: left;">&nbsp;</p>
