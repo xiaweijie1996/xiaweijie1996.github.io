@@ -37,6 +37,7 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
 <ul>
 <li><a style="color: grey;" href="#GAN1"><span style="font-family: 黑体; font-size: large;">Maximum likelihood estimation of generator</span></a></li>
 <li><a style="color: grey;" href="#GAN2"><span style="font-family: 黑体; font-size: large;">JS divergence in the discriminator</span></a></li>
+<li><a style="color: grey;" href="#GAN3"><span style="font-family: 黑体; font-size: large;">Problem with JS and KL divergence</span></a></li>
 </ul>
 </li>
 <li><a style="color: grey;" href="#S"><span style="font-family: 黑体; font-size: large;">Solutions to problems of original GAN</span></a></li>
@@ -51,7 +52,7 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
 <p style="color: black;">Where $-log_{2}(p(x))$ is the number of bits to know an event.</p>
 <p style="color: black;">The entropy of event $A$ is the amount of information we need to know to decrease the uncertainty to $0$. However, $H(p)$ usually represents the best scenario. For example, if a new traveller wants to walk from the Delft train station to the TU Delft campus, he or she may have many options. If he randomly chooses one option, this option is highly likely not the shortest way to go, which means that in reality, we usually need more bits of information $H(q,p)$ than $H(p)$. $H(q,p)$ is essentially cross-entropy. The cross-entropy is defined as:</p>
 <p style="color: black;">$$H(p,q)=\sum_{x \in X}-p(x)log_{s}(q(x))=\mathbb{E}_{x \sim p(X)}[-log(q(X))]$$</p>
-<p style="color: black;">Where $p(x)$ represents a real distribution and $q(x)$ represents the distribution we want to use to estimate the real distribution. The cross-entropy is always larger than entropy unless $p(x)=q(x)$</p>.
+<p style="color: black;">Where $p(x)$ represents a real distribution and $q(x)$ represents the distribution we want to use to estimate the real distribution. The cross-entropy is always larger than entropy unless $p(x)=q(x)$.</p>
 <p style="color: black;"><strong><a name="math2"></a>Kullback&ndash;Leibler divergence</strong></p>
 <p style="color: black;">Kullback&ndash;Leibler divergence (KL divergence) measures the "distance" between the cross-entropy and entropy. KL divergence is defined as:</p>
 <p style="color: black;">$$ \begin{align*} D_{KL}(P||Q) &amp;=H(P,Q)-H(P) \\ &amp;=\sum_{x \in X}-p(x)log_{s}(q(x))- \sum_{x \in X}-p(x)log_{2}(p(x))\\ &amp;= \sum_{x \in X}p(x)log_{2}(\frac{p(x)}{q(x)})&nbsp; \end{align*}$$</p>
@@ -97,6 +98,18 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
 <p style="color: black; text-align: left;">$$\Rightarrow D^*=\frac{p_{real}(x)}{p_{real}(x)+p_{gen}(x)}, (0&lt;D^*&lt;1) $$</p>
 <p style="color: black; text-align: left;">Substitute $D^*$ into $L(G,D)$:</p>
 <p style="color: black; text-align: left;">$$\begin{align*}L(G,D) &amp;=\int_{x}p_{real}(x)log(D(x))dx+\int_{x}p_{gen}(x)log(1-D(x))dx \\ &amp;=\int_{x}p_{real}(x)log[\frac{p_{real}(x)}{p_{real}(x)+p_{gen}(x)}]dx+\int_{x}p_{gen}(x)log[1-\frac{p_{real}(x)}{p_{real}(x)+p_{gen}(x)}]dx \\ &amp;=-2log2+D_{KL}(p_{real}(x)||\frac{p_{real}(x)}{p_{real}(x)+p_{gen}(x)})+D_{KL}(p_{gen}(x)||\frac{p_{real}(x)}{p_{real}(x)+p_{gen}(x)})\\ &amp;=-2log2+2JSD(p_{real}(x)||p_{gen}(x))\end{align*}$$</p>
+<p style="color: black; text-align: left;">Utill now we realize that the $D$ is trying to maximize the JS divergence.</p>
+
+
+<p style="color: black; text-align: left;"><span style="color: #000000;"><strong><a name="GAN3"></a>Problem with JS and KL divergence</strong></span></p>
+<p style="color: black; text-align: left;">Maybe, you already realized that the maximum value of KL divergence is 1, which means when two distribution is "very very different" and "very different", the KL divergence is always approximately equal to 1. The gradient will disappear, which makes the algorithm not work.</p>
+<p style="color: black; text-align: left;">Same to JS divergence, when two distributions are "very very different" and "very different", or more explicitly, when two distributions do not overlap, The gradient will disappear.</p>
+<p style="color: black; text-align: left;"><img style="display: block; margin-left: auto; margin-right: auto;" src="https://img-blog.csdnimg.cn/20200501154147675.png" alt="" width="569" height="213" /></p>
+<p style="color: black; text-align: center;"><span style="color: #808080;">Fig2. Two distribution without overlap</span></p>
+<p style="color: black; text-align: left;"><span style="color: #000000;">From the figure above when $x&gt;5, p_{r}(x) \approx 0$, when $x&lt;5, p_{g}(x) \approx 0$, then for $x \in \mathbb{R}$ JS divergence is:</span></p>
+<p style="color: black; text-align: left;"><span style="color: #000000;">$$\underbrace{\frac{1}{2}[\sum p(x)log_{2}\frac{p(x)}{p(x)+q(x)}+\sum p(x)log_{2}\frac{p(x)}{p(x)+q(x)}]}_{Value is 0 forx \in \mathbb{R} }+log_{2}2=log_{2}2$$</span></p>
 <p style="color: black; text-align: left;">&nbsp;</p>
-<p style="color: black; text-align: left;">&nbsp;</p>
-<p style="color: black; text-align: left;">&nbsp;</p>
+
+
+
+
