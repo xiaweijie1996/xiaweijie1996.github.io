@@ -20,7 +20,7 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
 
 
 <p>Generative adversarial networks (GANs) have shown great capacity in different applications. Compared with other generative models like VAE, Flow-based models, GANs usually show the highest quality in generated results. This article will discuss the maths behind the GANs and will try to describe the development of GANs technique from original algorithms to the most advanced algorithms.</p>
-<p>Until now, there are more than 400 types of GANs which you can find in &lt;a href="https://github.com/hindupuravinash/the-gan-zoo"&gt;GAN ZOO&lt;/a&gt;.</p>
+<p>Until now, there are more than 400 types of GANs which you can find in <a href="https://github.com/hindupuravinash/the-gan-zoo">GAN ZOO</a>.</p>
 <hr />
 <p><span style="font-family: 黑体; font-size: large;"><strong>Content</strong></span></p>
 <ul>
