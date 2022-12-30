@@ -77,6 +77,10 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
 <p style="color: black; text-align: left;"><span style="color: #000000;">Assuming we sample ${x_1,x_2,...,x_n}$ data from the read distribution. Then, the likelihood of generating the same samples by the generator is:</span></p>
 <p style="color: black; text-align: left;"><span style="color: #000000;">$$p=\prod \limits_{i=1}^n p(x_i; \theta)$$</span></p>
 <p style="color: black; text-align: left;"><span style="color: #000000;">And now, if we want to find the best generator, we need to find $\theta^*$ which maximises the likelihood.</span></p>
-<p style="color: black; text-align: left;"><span style="color: #000000;">$$ \begin{align*} \theta^* &amp;= arg\max_{\theta}\prod \limits_{i=1}^n p(x_i; \theta)\\&amp;=arg \max_{\theta} log(\prod \limits_{i=1}^n p(x_i; \theta))\\ &amp;=arg \max_{\theta} \sum_{i=1}^{n}log(p(x_i; \theta))\\ &amp;\approx arg\max_{\theta} \mathbb{E}_{x \sim p_{real}(x)}[log(p(x_i;\theta))]&nbsp; &amp;=1 \end{align*}$$</span></p>
+<p style="color: black; text-align: left;"><span style="color: #000000;">$$ \begin{align*} \theta^* &amp;= arg\max_{\theta}\prod \limits_{i=1}^n p(x_i; \theta)\\&amp;=arg \max_{\theta} log(\prod \limits_{i=1}^n p(x_i; \theta))\\ &amp;=arg \max_{\theta} \sum_{i=1}^{n}log(p(x_i; \theta))\\ &amp;\approx arg\max_{\theta} \mathbb{E}_{x \sim p_{real}(x)}[log(p(x_i;\theta))]&nbsp; \end{align*}$$</span></p>
+<p style="color: black; text-align: left;">For the derivation of the last step, if you randomly pick $M$ samples from $N$ samples, we have similar expectations, that is:</p>
+<p style="color: black; text-align: left;">$$\frac{1}{M} \sum_{i=1}^M f(x_i) \approx \frac{1}{N} \sum_{j=1}^N f(x_j) $$</p>
+<p style="color: black; text-align: left;">Let us continue our derivation:&nbsp;</p>
+<p style="color: black; text-align: left;">$$\begin{align*} <span style="color: #000000;">arg\max_{\theta} \mathbb{E}_{x \sim p_{real}(x)}[log(p(x_i;\theta)] &amp;= \int_{x}p_{real}(x)log(p(x_i;\theta)dx\\ &amp;= \int_{x}p_{real}(x)log(p(x_i;\theta)dx- \underbrace{\int_x p_{real}(x)log(p_{real}(x))dx}_{constant}&amp;=D_{KL}(p_{real}(x)||p(x; \theta)) \end{align*}</span>$$</p>
 <p style="color: black; text-align: left;">&nbsp;</p>
 <p style="color: black; text-align: left;">&nbsp;</p>
