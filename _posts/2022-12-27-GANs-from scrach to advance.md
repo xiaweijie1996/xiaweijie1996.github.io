@@ -17,6 +17,10 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
         });
     </script>
 </head>
+
+
+<p>Generative adversarial networks (GANs) have shown great capacity in different applications. Compared with other generative models like VAE, Flow-based models, GANs usually show the highest quality in generated results. This article will discuss the maths behind the GANs and will try to describe the development of GANs technique from original algorithms to the most advanced algorithms.</p>
+<p>Until now, there are more than 400 types of GANs which you can find in &lt;a href="https://github.com/hindupuravinash/the-gan-zoo"&gt;GAN ZOO&lt;/a&gt;.</p>
 <hr />
 <p><span style="font-family: 黑体; font-size: large;"><strong>Content</strong></span></p>
 <ul>
@@ -31,8 +35,7 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
 <li><a style="color: grey;" href="#GAN"><span style="font-family: 黑体; font-size: large;">Original GANs</span></a></li>
 <li><a style="color: grey;" href="#S"><span style="font-family: 黑体; font-size: large;">Solutions to problems of original GAN</span></a></li>
 </ul>
-<hr />
-<p>Generative adversarial networks (GAN) have shown great capacity in different applications. This article will explain the maths of GANs.</p>
+<p>&nbsp;</p>
 <p style="color: black;"><strong><a name="math"></a>Mathematical background</strong></p>
 <p style="color: black;">Let us first go through all the mathematical knowledge necessary for understanding GANs.</p>
 <p style="color: black;"><strong><a name="math1"></a>Entropy and cross-entropy</strong></p>
@@ -44,7 +47,7 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
 <p style="color: black;">Where $p(x)$ represents a real distribution and $q(x)$ represents the distribution we want to use to estimate the real distribution. The cross-entropy is always larger than entropy unless $p(x)=q(x)$</p>
 <p style="color: black;"><strong><a name="math2"></a>Kullback&ndash;Leibler divergence</strong></p>
 <p style="color: black;">Kullback&ndash;Leibler divergence (KL divergence) measures the "distance" between the cross-entropy and entropy. KL divergence is defined as:</p>
-<p style="color: black;">$$ \begin{align*} D_{KL}(P||Q)=H(P,Q)-H(P) &amp;=\sum_{x \in X}-p(x)log_{s}(q(x))- \sum_{x \in X}-p(x)log_{2}(p(x))\\ &amp;= \sum_{x \in X}p(x)log_{2}(\frac{p(x)}{q(x)})&nbsp; \end{align*}$$</p>
+<p style="color: black;">$$ \begin{align*} D_{KL}(P||Q) &amp;=H(P,Q)-H(P) &amp;=\sum_{x \in X}-p(x)log_{s}(q(x))- \sum_{x \in X}-p(x)log_{2}(p(x))\\ &amp;= \sum_{x \in X}p(x)log_{2}(\frac{p(x)}{q(x)})&nbsp; \end{align*}$$</p>
 <p style="color: black;">Where $D_{KL}(P||Q)$ is KL divergence, $P, Q$ represent the real distribution and unreal distribution, respectively. By subtracting H(Q) from H(P||Q), KL divergence kind finds the "extra information" needed if we apply $Q$ which is not the real distribution.</p>
 <p style="color: black;">Note: KL divergence is not asymmetry, which means $D_{KL}(P||Q) \neq D_{KL}(Q||P)$</p>
 <p style="color: black;"><strong><a name="math3"></a>Jensen&ndash;Shannon divergence</strong></p>
