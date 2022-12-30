@@ -105,9 +105,19 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
 <p style="color: black; text-align: left;">Maybe, you already realized that the maximum value of KL divergence is 1, which means when two distribution is "very very different" and "very different", the KL divergence is always approximately equal to 1. The gradient will disappear, which makes the algorithm not work.</p>
 <p style="color: black; text-align: left;">Same to JS divergence, when two distributions are "very very different" and "very different", or more explicitly, when two distributions do not overlap, The gradient will disappear.</p>
 <p style="color: black; text-align: left;"><img style="display: block; margin-left: auto; margin-right: auto;" src="https://img-blog.csdnimg.cn/20200501154147675.png" alt="" width="569" height="213" /></p>
-<p style="color: black; text-align: center;"><span style="color: #808080;">Fig2. Two distribution without overlap</span></p>
+<p style="color: black; text-align: center;"><span style="color: #808080;">Fig2. Two distributions without overlap</span></p>
 <p style="color: black; text-align: left;"><span style="color: #000000;">From the figure above when $x&gt;5, p_{r}(x) \approx 0$, when $x&lt;5, p_{g}(x) \approx 0$, then for $x \in \mathbb{R}$ JS divergence is:</span></p>
-<p style="color: black; text-align: left;"><span style="color: #000000;">$$\underbrace{\frac{1}{2}[\sum p(x)log_{2}\frac{p(x)}{p(x)+q(x)}+\sum p(x)log_{2}\frac{p(x)}{p(x)+q(x)}]}_{Value is 0 forx \in \mathbb{R} }+log_{2}2=log_{2}2$$</span></p>
+<p style="color: black; text-align: left;"><span style="color: #000000;">$$\underbrace{\frac{1}{2}[\sum p(x)log_{2}\frac{p(x)}{p(x)+q(x)}+\sum p(x)log_{2}\frac{p(x)}{p(x)+q(x)}]}_{ 0 \ for \ x \in \mathbb{R} }+log_{2}2=log_{2}2$$</span></p>
+<p style="color: black; text-align: left;">The problems of KL and JS divergence make GANs hard to train. There are two ways to understand why this problem happens:</p>
+<p style="color: black; text-align: left;"><img style="display: block; margin-left: auto; margin-right: auto;" src="https://www.math.net/img/a/geometry/planes/intersecting-planes/intersecting-planes.png" alt="" /></p>
+<p style="color: black; text-align: center;"><span style="color: #808080;">Fig3. Overlap of p and q in 3D space can be ignored</span></p>
+<p style="color: black; text-align: left;">&nbsp;<strong>1-</strong> Both $p_{real}(x), p_{gen}(x)$ can be considered to lie in the low dimensional manifolds, which means this is no overlap or the overlap can be ignored. Fig 3 shows what it looks like.</p>
+<p style="color: black; text-align: left;"><img style="display: block; margin-left: auto; margin-right: auto;" src="https://i.postimg.cc/15g2L6w6/We-Chat-Image-20221231003840.jpg" alt="" width="220" height="141" /></p>
+<p style="color: black; text-align: center;"><span style="color: #808080;">Fig3. Theoretical overlap of two distributions</span></p>
+<p style="color: black; text-align: left;"><strong>2- </strong>Even though two distributions might overlap theoretically, in reality, we can only sample a limited amount of data. In this case, the sampled data might not overlap, as Fig3 shows.</p>
+<p style="color: black; text-align: left;">&nbsp;</p>
+<p style="color: black; text-align: left;">&nbsp;</p>
+<p style="color: black; text-align: left;">&nbsp;</p>
 <p style="color: black; text-align: left;">&nbsp;</p>
 
 
