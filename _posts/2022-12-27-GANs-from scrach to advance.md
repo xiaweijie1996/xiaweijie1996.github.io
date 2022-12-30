@@ -122,7 +122,7 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
 <p style="color: black; text-align: left;"><img style="display: block; margin-left: auto; margin-right: auto;" src="https://i.postimg.cc/15g2L6w6/We-Chat-Image-20221231003840.jpg" alt="" width="220" height="141" /></p>
 <p style="color: black; text-align: center;"><span style="color: #808080;">Fig4. Theoretical overlap of two distributions</span></p>
 <p style="color: black; text-align: left;"><strong>2- </strong>Even though two distributions might overlap theoretically, in reality, we can only sample a limited amount of data. In this case, the sampled data might not overlap, as Fig3 shows.</p>
-<p style="color: black; text-align: left;"><span style="color: #000000;"><strong><a name="S"></a>Problem with JS and KL divergence</strong></span></p>
+<p style="color: black; text-align: left;"><span style="color: #000000;"><strong><a name="S"></a>Solutions to problems of original GAN</strong></span></p>
 <p style="color: black; text-align: left;">&nbsp;</p>
 <p style="color: black; text-align: left;">&nbsp;</p>
 <p style="color: black; text-align: left;">&nbsp;</p>
