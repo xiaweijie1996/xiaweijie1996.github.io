@@ -57,6 +57,12 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
 <p style="color: black;"><strong><a name="math4"></a>Manifold (not necessary)</strong></p>
 <p style="color: black;">In mathematics, a manifold is a topological space that locally resembles Euclidean space near each point. More precisely, an n-dimensional manifold, or n-manifold for short, is a topological space with the property that each point has a neighbourhood that is homeomorphic to an open subset of n-dimensional Euclidean space.</p>
 <p style="color: black;">When we describe a circle or a sphere in the cartesian coordinate system, we realize that we need many points to describe these objects, which looks redundant. Could we find a way to save our "energy"? for example, when we describe a circle, we need two dimensions, which are (x,y). however, if we use polar coordinates to describe a circle or sphere, we only need one dimension which is the radius.&nbsp; Later, we will discuss that the data we used to train GANs can be considered as manifolds of a high-dimension object in a low-dimension, which, consequently, leads to a problem in training.</p>
-<p style="color: black;">&nbsp;</p>
-<p style="color: black;">&nbsp;</p>
-<p style="color: black;">&nbsp;</p>
+<p style="color: black;"><strong><a name="GAN"></a>Original GANs</strong></p>
+<p style="color: black;">Basic GANs consist of two components:</p>
+<p style="color: black;">1- Generator $G$, which is responsible for generating data.</p>
+<p style="color: black;">2- Discriminator $D$, which is responsible for grading the generated data.</p>
+<p style="color: black;"><img style="display: block; margin-left: auto; margin-right: auto;" src="https://sthalles.github.io/assets/dcgan/GANs.png" alt="Structure of GANs" width="512" height="223" /></p>
+<p style="color: black; text-align: center;"><span style="color: #808080;">Fig. 1 Structure of GANs</span></p>
+<p style="color: black; text-align: left;"><span style="color: #000000;">In the training process, $G$ and $D$ will compete with each other and reduce the loss which is defined as:</span></p>
+<p style="color: black; text-align: left;"><span style="color: #000000;">$$ \begin{align*}&nbsp; \min_{G}\max_{D} L(G,D) &amp;= frac{1}{N}\sum log(x)+frac{1}{N}\sum log (1-D(G(z))) \\ </span><span style="color: #000000;">&amp;= \mathbb{E}_{x \sim p_{real}(x)}[log(x)]+\mathbb{E}_{z \sim p_{z}(z)}[log(1-D(G(Z)))] \\ </span><span style="color: #000000;">&amp;= \mathbb{E}_{x \sim p_{real}(x)}[log(x)]+\mathbb{E}_{x \sim p_{gen}(x)}[log(1-D(x)] </span><span style="color: #000000;">\end{align*}$$</span></p>
+<p style="color: black; text-align: left;"><span style="color: #000000;">Where $</span><span style="color: #000000;">z$ is the noise of a specific distribution (eg, unique distribution, normal distribution). $N$ is the number of samples, $p_{real}(x)$ is the real distribution of the data, $p_{gen}(x)$ is the distribution of generated data.</span></p>
