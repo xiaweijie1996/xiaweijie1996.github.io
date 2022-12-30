@@ -82,6 +82,7 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
 <p style="color: black; text-align: left;">$$\frac{1}{M} \sum_{i=1}^M f(x_i) \approx \frac{1}{N} \sum_{j=1}^N f(x_j) $$</p>
 <p style="color: black; text-align: left;">Let us continue our derivation:&nbsp;</p>
 <p style="color: black; text-align: left;">$$\begin{align*} arg\max_{\theta} \mathbb{E}_{x \sim p_{real}(x)}[log(p(x_i;\theta)] &amp;= arg\max_{\theta} \int_{x}p_{real}(x)log(p(x_i;\theta)dx\\ &amp;= arg\max_{\theta} \int_{x}p_{real}(x)log(p(x_i;\theta)dx- \underbrace{\int_x p_{real}(x)log(p_{real}(x))dx}_{constant}\\ &amp;= arg\min_{\theta} D_{KL}(p_{real}(x)||p_{gen}(x; \theta)) \end{align*}$$</p>
-<p style="color: black; text-align: left;">This means&nbsp;</p>
+<p style="color: black; text-align: left;">This means the generator $G$ is essentially minimizing the KL divergence of the real distribution and distribution of generated data. The best $\theta$ is the $\theta$ which leds to the lowest KL divergence.</p>
+<p style="color: black; text-align: left;"><span style="color: #000000;"><strong><a name="GAN2"></a>JS divergence in the discriminator</strong></span></p>
 <p style="color: black; text-align: left;">&nbsp;</p>
 <p style="color: black; text-align: left;">&nbsp;</p>
