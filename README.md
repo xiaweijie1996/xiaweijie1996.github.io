@@ -1,10 +1,4 @@
 
-⚗ A Jekyll boilerplate theme designed to be a starting point for any Jekyll website.
-
-![Screenshot](https://raw.githubusercontent.com/daviddarnes/alembic/master/screenshot.png)
-
-[<img src="" width="217"/>](https://buymeacoffee.com/daviddarnes#support)
-
 ## Contents
 - [About](#about)
 - [Features](#features)
