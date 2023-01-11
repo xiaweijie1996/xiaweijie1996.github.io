@@ -127,7 +127,7 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
 <p style="color: black; text-align: left;"><span style="color: #000000;">In this section, we will discuss the solutions to the problems mentioned above.</span></p>
 <p style="color: black; text-align: left;"><span style="color: #000000;"><strong><a name="S1"></a>f-GAN</strong></span></p>
 <p style="color: black; text-align: left;">The definition of f-divergence is:</p>
-<p>$$D_f(P||Q)=\int_{x}q(x)f(\frac{p(x)}{q(x)})$$</p>
+<p>$$D_f(P||Q)=\int_{x}q(x)f(\frac{p(x)}{q(x)})dx$$</p>
 <p style="color: black; text-align: left;">The following conditions have to be satisfied:</p>
 <ul>
 <li>$f$ is convex</li>
@@ -140,9 +140,9 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
 <p>$$f^*(t)= \max_{x \in dom(f)} {xt-f(x)} \Leftrightarrow f(x)= \max_{t \in dom(f^*)} {xt-f^*(t)} $$</p>
 <p>$$\begin{align*} D_f(P||Q) &amp;=\int_{x}q(x)f(\frac{p(x)}{q(x)}) \\ &amp;= \int_{x} q(x) (\max_{t \in dom(f^*)} {\frac{p(x)}{d(x)}t-f^*(t)}) \end{align*}$$</p>
 <p>Because:</p>
-<p>$$\begin{align*} D_f(P||Q) &amp;\geq \int_{x} q(x)(\frac{p(x)}{d(x)}D(x)-f(D(x))))\end{align*}\\ &amp;= \int_{x} p(x)D(x)dx-\int_{x}q(x)f^*(D(x)) \end{align*}$$</p>
+<p>$$\begin{align*} D_f(P||Q) &amp;\geq \int_{x} q(x)(\frac{p(x)}{d(x)}D(x)-f(D(x)))) \\ &amp;= \int_{x} p(x)D(x)dx-\int_{x}q(x)f^*(D(x)) \end{align*}$$</p>
 <p>Then:</p>
-<p>$$\begin{align*} D_f(P||Q) \approx \max_{D} int_{x} p(x)D(x)dx-\int_{x}q(x)f^*(D(x)) \\ &amp;= \max_{D} {\mathbb{E}_{x \in P}[D(x)]-\mathbb{E}_{x \in Q}[f^*(D(x)]) }\\end{align*}$$</p>
+<p>$$\begin{align*} D_f(P||Q) \approx \max_{D} int_{x} p(x)D(x)dx-\int_{x}q(x)f^*(D(x)) \\ &amp;= \max_{D} {\mathbb{E}_{x \in P}[D(x)]-\mathbb{E}_{x \in Q}[f^*(D(x)]) } \end{align*}$$</p>
 <p>Table below summarize the $f^*$ that can be used:</p>
 <p><img src="https://i.postimg.cc/PxHfwP6c/We-Chat-Image-20230111191250.jpg" alt="" /></p>
-
+<p>&nbsp;</p>
