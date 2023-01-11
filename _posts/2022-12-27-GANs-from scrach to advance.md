@@ -137,7 +137,7 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
 <p>Every convex function has its conjugate function $f^*$ ($(f^*)^*=f$):</p>
 <p>$$f^*(t)= \max_{x \in dom(f)} {xt-f(x)}$$</p>
 <p>where dom(f) is the domain of $f$. Then I can get an equivalent formula：</p>
-<p>$$f^*(t)= \max_{x \in dom(f)} {xt-f(x)} \Leftrightarrow f(x)= \max_{t \in dom(f^*)} {xt-f^*(t)} $$</p>
+<p>$$f^*(t)= \max_{x \in dom(f)} (xt-f(x)) \Leftrightarrow f(x)= \max_{t \in dom(f^*)} (xt-f^*(t)) $$</p>
 <p>$$\begin{align*} D_f(P||Q) &amp;=\int_{x}q(x)f(\frac{p(x)}{q(x)}) \\ &amp;= \int_{x} q(x) [\max_{t \in dom(f^*)}(\frac{p(x)}{d(x)}t-f^*(t))] \end{align*}$$</p>
 <p>Because:</p>
 <p>$$\begin{align*} D_f(P||Q) &amp;\geq \int_{x} q(x)(\frac{p(x)}{d(x)}D(x)-f(D(x)))dx \\ &amp;= \int_{x} p(x)D(x)dx-\int_{x}q(x)f^*(D(x))dx \end{align*}$$</p>
