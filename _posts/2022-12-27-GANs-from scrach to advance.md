@@ -101,7 +101,7 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
 <p style="color: black; text-align: left;">$$f(D)=p_{real}(x)log(D)+p_{gen}(x)log(1-D)$$</p>
 <p style="color: black; text-align: left;">To find $D^*$ which maximize $f(D)$:</p>
 <p style="color: black; text-align: left;">$$\frac{df(D)}{dD}=0 $$</p>
-<p style="color: black; text-align: left;">$$\Rightarrow p_{real}(x)&times;\frac{1}{D}-p_{gen}(x)\frac{1}{1-D} $$</p>
+<p style="color: black; text-align: left;">$$\Rightarrow p_{real}(x)&times;\frac{1}{D}-p_{gen}(x)\frac{1}{1-D}=0 $$</p>
 <p style="color: black; text-align: left;">$$\Rightarrow D^*=\frac{p_{real}(x)}{p_{real}(x)+p_{gen}(x)}, (0&lt;D^*&lt;1) $$</p>
 <p style="color: black; text-align: left;">Substitute $D^*$ into $L(G,D)$:</p>
 <p style="color: black; text-align: left;">$$\begin{align*}L(G,D) &amp;=\int_{x}p_{real}(x)log(D(x))dx+\int_{x}p_{gen}(x)log(1-D(x))dx \\ &amp;=\int_{x}p_{real}(x)log[\frac{p_{real}(x)}{p_{real}(x)+p_{gen}(x)}]dx+\int_{x}p_{gen}(x)log[1-\frac{p_{real}(x)}{p_{real}(x)+p_{gen}(x)}]dx \\ &amp;=-2log2+D_{KL}(p_{real}(x)||\frac{p_{real}(x)}{p_{real}(x)+p_{gen}(x)})+D_{KL}(p_{gen}(x)||\frac{p_{real}(x)}{p_{real}(x)+p_{gen}(x)})\\ &amp;=-2log2+2JSD(p_{real}(x)||p_{gen}(x))\end{align*}$$</p>
@@ -122,11 +122,27 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
 <p style="color: black; text-align: left;"><img style="display: block; margin-left: auto; margin-right: auto;" src="https://i.postimg.cc/15g2L6w6/We-Chat-Image-20221231003840.jpg" alt="" width="220" height="141" /></p>
 <p style="color: black; text-align: center;"><span style="color: #808080;">Fig4. Theoretical overlap of two distributions</span></p>
 <p style="color: black; text-align: left;"><strong>2- </strong>Even though two distributions might overlap theoretically, in reality, we can only sample a limited amount of data. In this case, the sampled data might not overlap, as Fig3 shows.</p>
+
 <p style="color: black; text-align: left;"><span style="color: #000000;"><strong><a name="S"></a>Solutions to problems of original GAN</strong></span></p>
-<p style="color: black; text-align: left;">&nbsp;</p>
-<p style="color: black; text-align: left;">&nbsp;</p>
-<p style="color: black; text-align: left;">&nbsp;</p>
-update soon...
-
-
+<p style="color: black; text-align: left;"><span style="color: #000000;">In this section, we will discuss the solutions to the problems mentioned above.</span></p>
+<p style="color: black; text-align: left;"><span style="color: #000000;"><strong><a name="S"></a>f-GAN</strong></span></p>
+<p style="color: black; text-align: left;">The definition of f-divergence is:</p>
+<p>$$D_f(P||Q)=\int_{x}q(x)f(\frac{p(x)}{q(x)})$$</p>
+<p style="color: black; text-align: left;">The following conditions have to be satisfied:</p>
+<ul>
+<li>$f$ is convex</li>
+<li>f(1)=0</li>
+</ul>
+<p>Based on this definition, if $f(x)=xlogx$, the f-divergence is KL divergence.</p>
+<p>Every convex function has its conjugate function $f^*$ ($(f^*)^*=f$):</p>
+<p>$$f^*(t)= \max_{x \in dom(f)} {xt-f(x)}$$</p>
+<p>where dom(f) is the domain of $f$. Then I can get an equivalent formula：</p>
+<p>$$f^*(t)= \max_{x \in dom(f)} {xt-f(x)} \Leftrightarrow f(x)= \max_{t \in dom(f^*)} {xt-f^*(t)} $$</p>
+<p>$$\begin{align*} D_f(P||Q) &amp;=\int_{x}q(x)f(\frac{p(x)}{q(x)}) \\ &amp;= \int_{x} q(x) (\max_{t \in dom(f^*)} {\frac{p(x)}{d(x)}t-f^*(t)}) \end{align*}$$</p>
+<p>Because:</p>
+<p>$$\begin{align*} D_f(P||Q) &amp;\geq \int_{x} q(x)(\frac{p(x)}{d(x)}D(x)-f(D(x))))\end{align*}\\ &amp;= \int_{x} p(x)D(x)dx-\int_{x}q(x)f^*(D(x)) \end{align*}$$</p>
+<p>Then:</p>
+<p>$$\begin{align*} D_f(P||Q) \approx \max_{D} int_{x} p(x)D(x)dx-\int_{x}q(x)f^*(D(x)) \\ &amp;= \max_{D} {\mathbb{E}_{x \in P}[D(x)]-\mathbb{E}_{x \in Q}[f^*(D(x)]) }\\end{align*}$$</p>
+<p>Table below summarize the $f^*$ that can be used:</p>
+<p><img src="https://i.postimg.cc/PxHfwP6c/We-Chat-Image-20230111191250.jpg" alt="" /></p>
 
