@@ -125,7 +125,7 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
 
 <p style="color: black; text-align: left;"><span style="color: #000000;"><strong><a name="S"></a>Solutions to problems of original GAN</strong></span></p>
 <p style="color: black; text-align: left;"><span style="color: #000000;">In this section, we will discuss the solutions to the problems mentioned above.</span></p>
-<p style="color: black; text-align: left;"><span style="color: #000000;"><strong><a name="S"></a>f-GAN</strong></span></p>
+<p style="color: black; text-align: left;"><span style="color: #000000;"><strong><a name="S1"></a>f-GAN</strong></span></p>
 <p style="color: black; text-align: left;">The definition of f-divergence is:</p>
 <p>$$D_f(P||Q)=\int_{x}q(x)f(\frac{p(x)}{q(x)})$$</p>
 <p style="color: black; text-align: left;">The following conditions have to be satisfied:</p>
