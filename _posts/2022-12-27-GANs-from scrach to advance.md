@@ -145,3 +145,5 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
 <p>Table below summarize the $f^*$ that can be used:</p>
 <p><img src="https://i.postimg.cc/PxHfwP6c/We-Chat-Image-20230111191250.jpg" alt="" /></p>
 <p>&nbsp;</p>
+
+Updata soon
