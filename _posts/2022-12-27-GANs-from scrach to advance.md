@@ -138,12 +138,15 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
 <p>$$f^*(t)= \max_{x \in dom(f)} {xt-f(x)}$$</p>
 <p>where dom(f) is the domain of $f$. Then I can get an equivalent formula：</p>
 <p>$$f^*(t)= \max_{x \in dom(f)} (xt-f(x)) \Leftrightarrow f(x)= \max_{t \in dom(f^*)} (xt-f^*(t)) $$</p>
-<p>$$\begin{align*} D_f(P||Q) &amp;=\int_{x}q(x)f(\frac{p(x)}{q(x)}) \\ &amp;= \int_{x} q(x) [\max_{t \in dom(f^*)}(\frac{p(x)}{d(x)}t-f^*(t))] \end{align*}$$</p>
+<p>$$\begin{align*} D_f(P||Q) &amp;=\int_{x}q(x)f(\frac{p(x)}{q(x)})dx \\ &amp;= \int_{x} q(x) [\max_{t \in dom(f^*)}(\frac{p(x)}{d(x)}t-f^*(t))]dx \end{align*}$$</p>
 <p>Because:</p>
 <p>$$\begin{align*} D_f(P||Q) &amp;\geq \int_{x} q(x)(\frac{p(x)}{d(x)}D(x)-f(D(x)))dx \\ &amp;= \int_{x} p(x)D(x)dx-\int_{x}q(x)f^*(D(x))dx \end{align*}$$</p>
 <p>Then:$$\begin{align*} D_f(P||Q) &amp;\approx \max_{D} \int_{x} p(x)D(x)dx-\int_{x}q(x)f^*(D(x))dx \\ &amp;= \max_{D} {\mathbb{E}_{x \in P}[D(x)]-\mathbb{E}_{x \in Q}[f^*(D(x))] } \end{align*}$$</p>
 <p>Table below summarize the $f^*$ that can be used:</p>
 <p><img src="https://i.postimg.cc/PxHfwP6c/We-Chat-Image-20230111191250.jpg" alt="" /></p>
 <p>&nbsp;</p>
+<p style="color: black; text-align: left;"><span style="color: #000000;"><strong><a name="S2"></a>Wasserstein GAN</strong></span></p>
+To understand WGAN, we need first to understand Wasserstein distance, also known as Earth moving distance. Let $\mathcal{X}$ be a compact metric set, say the space of images $[0, 1]^d$, and let $\Sigma$ denote the set of all the Borel subsets of $\mathcal{X}$. Let $Prob(\mathcal{X})$ denote the space of probability measures defined on $\mathcal{X}$. We can now define elementary distances and divergences between two distributions $\mathbb{P}_r, \mathbb{P}_g \in Prob(\mathcal{X})$:  
+
 
 Updata soon
