@@ -160,7 +160,7 @@ To understand WGAN, we need first to understand Wasserstein distance, also known
 <p>$$|f(x_1)-f(x_2)| \leq K|x_1-x_2|$$&nbsp;</p>
 
 <p>Besides the original version of WGAN, there is an improved version called WGAN-GP. Because&nbsp; $D \in 1-Lipschitz $ is equivalent to:</p>
-<p>$$D \in 1-Lipschitz \Longleftrightarrows ||\bigtriangledown_{x}D(x)||\leq 1, for all x$$</p>
-<p>$$\Longrightarrow W(\mathbb{P}_r, \mathbb{P}_g) \approx \max_{D} [\mathbb{E}_{x \sim \mathbb{P}_r}[f(x)]- \mathbb{E}_{x \sim \mathbb{P}_{\theta}}[f(x)] -\lambda \mathbb{E}_{x \sim P_{penalty}}[\max(0, ||\bigtriangledown_{x}D(x)||-1)]]$$</p>
+<p>$$D \in 1-Lipschitz \leftrightarrow ||\bigtriangledown_{x}D(x)||\leq 1, for all x$$</p>
+<p>$$\rightarrow W(\mathbb{P}_r, \mathbb{P}_g) \approx \max_{D} [\mathbb{E}_{x \sim \mathbb{P}_r}[f(x)]- \mathbb{E}_{x \sim \mathbb{P}_{\theta}}[f(x)] -\lambda \mathbb{E}_{x \sim P_{penalty}}[\max(0, ||\bigtriangledown_{x}D(x)||-1)]]$$</p>
 <p>Where $P_{penalty}$ is a distribution sampled between $\mathbb{P}_r$ and $\mathbb{P}_g$.</p>
 <p><img src="https://i.postimg.cc/DZ1fdzvn/We-Chat-Image-20230113155754.jpg" alt="" /></p>
