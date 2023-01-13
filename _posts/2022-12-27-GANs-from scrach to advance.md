@@ -47,7 +47,6 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
 <li><a style="color: grey;" href="#S3"><span style="font-family: 黑体; font-size: large;">Other solutions</span></a></li>
 </ul>
 </li>
-<li><a style="color: grey;" href="#O"><span style="font-family: 黑体; font-size: large;">Other types of GANs</span></a></li>
 </ul>
 
 <p>&nbsp;</p>
@@ -158,9 +157,33 @@ To understand WGAN, we need first to understand Wasserstein distance, also known
 <p>$$\max_{||f||_{L} \leq 1} [\mathbb{E}_{x \sim \mathbb{P}_r}[f(x)]- \mathbb{E}_{x \sim \mathbb{P}_{\theta}}[f(x)]]$$</p>
 <p>Function $f$ is called $K-Lipschitz$ continuous if there exists a real constant $K&ge;0$ such that, for all $x_1,x_2 \in \mathbb{R}$:</p>
 <p>$$|f(x_1)-f(x_2)| \leq K|x_1-x_2|$$&nbsp;</p>
-
 <p>Besides the original version of WGAN, there is an improved version called WGAN-GP. Because&nbsp; $D \in 1-Lipschitz $ is equivalent to:</p>
 <p>$$D \in 1-Lipschitz \leftrightarrow ||\bigtriangledown_{x}D(x)||\leq 1, for \, all\, x$$</p>
 <p>$$\rightarrow W(\mathbb{P}_r, \mathbb{P}_g) \approx \max_{D} [\mathbb{E}_{x \sim \mathbb{P}_r}[f(x)]- \mathbb{E}_{x \sim \mathbb{P}_{\theta}}[f(x)] -\lambda \mathbb{E}_{x \sim P_{penalty}}[\max(0, ||\bigtriangledown_{x}D(x)||-1)]]$$</p>
 <p>Where $P_{penalty}$ is a distribution sampled between $\mathbb{P}_r$ and $\mathbb{P}_g$.</p>
 <p><img src="https://i.postimg.cc/DZ1fdzvn/We-Chat-Image-20230113155754.jpg" alt="" /></p>
+
+<p style="color: black; text-align: left;"><span style="color: #000000;"><strong><a name="S3"></a>Other solutions</strong></span></p>
+<p>Below are some tricks that can be used in GAN:</p>
+<ul>
+<li>
+<p>Feature Matching: Feature matching suggests optimizing the discriminator to inspect whether the generator&rsquo;s output matches the expected statistics of the real samples.</p>
+</li>
+<li>
+<p>Minibatch Discrimination: With minibatch discrimination, the discriminator is able to digest the relationship between training data points in one batch, instead of processing each point independently.</p>
+</li>
+<li>
+<p>One-sided Label Smoothing: When feeding the discriminator, instead of providing 1 and 0 labels, use soften values such as 0.9 and 0.1. It is shown to reduce the networks' vulnerability.</p>
+</li>
+<li>For more tricks: <a href="http://papers.nips.cc/paper/6125-improved-techniques-for-training-gans.pdf">&ldquo;Improve Techniques for Training GANs&rdquo;</a></li>
+</ul>
+<p>&nbsp;</p>
+<p><strong>Reference:</strong></p>
+<ol>
+<li>Gulrajani, Ishaan, et al. "Improved training of wasserstein gans."&nbsp;<em>Advances in neural information processing systems</em>&nbsp;30 (2017).</li>
+<li>Goodfellow, Ian, et al. "Generative adversarial networks."&nbsp;<em>Communications of the ACM</em>&nbsp;63.11 (2020): 139-144.</li>
+<li>M. Arjovsky, S. Chintala, and L. Bottou. Wasserstein gan. arXiv preprint arXiv:1701.07875,<br />2017.</li>
+<li><a href="https://lilianweng.github.io/posts/2017-08-20-gan/">https://lilianweng.github.io/posts/2017-08-20-gan/</a></li>
+<li><a href="https://speech.ee.ntu.edu.tw/~tlkagk/courses/MLDS_2018/Lecture/WGAN%20(v2).pdf">https://speech.ee.ntu.edu.tw/~tlkagk/courses/MLDS_2018/Lecture/WGAN%20(v2).pdf</a></li>
+</ol>
+<p>&nbsp;</p>
