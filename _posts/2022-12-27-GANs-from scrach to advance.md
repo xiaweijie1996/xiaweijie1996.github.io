@@ -147,7 +147,7 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
 <p style="color: black; text-align: left;"><span style="color: #000000;"><strong><a name="S2"></a>Wasserstein GAN</strong></span></p>
 To understand WGAN, we need first to understand Wasserstein distance, also known as Earth moving distance. Let $\mathcal{X}$ be a compact metric set, say the space of images $[0, 1]^d$, and let $\Sigma$ denote the set of all the Borel subsets of $\mathcal{X}$. Let $Prob(\mathcal{X})$ denote the space of probability measures defined on $\mathcal{X}$. We can now define elementary distances and divergences between two distributions $\mathbb{P}_r, \mathbb{P}_g \in Prob(\mathcal{X})$:  
 <ul>
-<li>Total variation distance: $$\delte (\mathbb{P}_r, \mathbb{P}_g)=\sup_{A \in \Sigma}(\mathbb{P}_r(A)-\mathbb{P}_g(A)$$</li>
+<li>Total variation distance: $$\delta (\mathbb{P}_r, \mathbb{P}_g)=\sup_{A \in \Sigma}(\mathbb{P}_r(A)-\mathbb{P}_g(A)$$</li>
 <li>KL distance:$$D_{KL}(\mathbb{P}_r||\mathbb{P}_g)=\int_{x} \frac{\mathbb{P}_r(x)}{\mathbb{P}_g(x)}\mathbb{P}_r(x)d\mu (x)$$</li>
 <li>JS distance: $$JS(\mathbb{P}_r||\mathbb{P}_g)=D_{KL}(\mathbb{P}_r||\mathbb{P}_m)+\mathbb{P}_m||\mathbb{P}_g)$$</li>
 <li>Earth Moving distance: $$W(\mathbb{P}_r, \mathbb{P}_g)=\inf_{\gamma \in \prod(\mathbb{P}_r||\mathbb{P}_g)} \mathbb{E}_{(x,y) \sim \gamma}[||x-y||]$$where $\prod (\mathbb{P}_r || \mathbb{P}_g)$ is the set of all joint distributions $\gamma (x, y)$ whose marginals are respectively $\mathbb{P}_r$ and $\mathbb{P}_g$. Intuitively, $\gamma (x, y)$ indicates how much &ldquo;mass&rdquo; must be transported from $x$ to $y$ in order to transform the distributions $\mathbb{P}_r$ into the distribution $\mathbb{P}_g$.</li>
@@ -156,7 +156,8 @@ To understand WGAN, we need first to understand Wasserstein distance, also known
 <p>$$W(\mathbb{P}_r, \mathbb{P}_g)=\sup_{||f||_{L} \leq 1} [\mathbb{E}_{x \sim \mathbb{P}_r}[f(x)]- \mathbb{E}_{x \sim \mathbb{P}_{\theta}}[f(x)]]$$</p>
 <p>The equation above can be considered to be equivalent to：</p>
 <p>$$\max_{||f||_{L} \leq 1} [\mathbb{E}_{x \sim \mathbb{P}_r}[f(x)]- \mathbb{E}_{x \sim \mathbb{P}_{\theta}}[f(x)]]$$</p>
-
+<p>Function $f$ is called $K-Lipschitz$ continuous if there exists a real constant $K&ge;0$ such that, for all $x_1,x_2 \in \mathbb{R}$:</p>
+<p>$$|f(x_1)-f(x_2)| \leq K|x_1-x_2|$$&nbsp;</p>
 
 
 Updata soon
