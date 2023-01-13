@@ -144,9 +144,13 @@ feature_image: "https://i.postimg.cc/Njyh1G9r/wallhaven-e7qzrw-2560x600.png"
 <p>Then:$$\begin{align*} D_f(P||Q) &amp;\approx \max_{D} \int_{x} p(x)D(x)dx-\int_{x}q(x)f^*(D(x))dx \\ &amp;= \max_{D} {\mathbb{E}_{x \in P}[D(x)]-\mathbb{E}_{x \in Q}[f^*(D(x))] } \end{align*}$$</p>
 <p>Table below summarize the $f^*$ that can be used:</p>
 <p><img src="https://i.postimg.cc/PxHfwP6c/We-Chat-Image-20230111191250.jpg" alt="" /></p>
-<p>&nbsp;</p>
 <p style="color: black; text-align: left;"><span style="color: #000000;"><strong><a name="S2"></a>Wasserstein GAN</strong></span></p>
 To understand WGAN, we need first to understand Wasserstein distance, also known as Earth moving distance. Let $\mathcal{X}$ be a compact metric set, say the space of images $[0, 1]^d$, and let $\Sigma$ denote the set of all the Borel subsets of $\mathcal{X}$. Let $Prob(\mathcal{X})$ denote the space of probability measures defined on $\mathcal{X}$. We can now define elementary distances and divergences between two distributions $\mathbb{P}_r, \mathbb{P}_g \in Prob(\mathcal{X})$:  
-
+<ul>
+<li>Total variation distance: $$\delt (mathbb{P}_r, \mathbb{P}_g)=\sup_{A \in \Sigma}(mathbb{P}_r(A)-\mathbb{P}_g)(A)$$</li>
+<li>KL distance:$$D_{KL}(mathbb{P}_r||\mathbb{P}_g)=\int_{x} \frac{mathbb{P}_r(x)}{mathbb{P}_g(x)}mathbb{P}_r(x)d\mu (x)$$</li>
+<li>JS distance: $$JS(mathbb{P}_r||\mathbb{P}_g)=D_{KL}(mathbb{P}_r||\mathbb{P}_m)+mathbb{P}_m||\mathbb{P}_g)$$</li>
+<li>Earth Moving distance: $$W(mathbb{P}_r, \mathbb{P}_g)=\inf_{\gamma \in \prod(mathbb{P}_r||\mathbb{P}_g)} \mathbb{E}_{(x,y) \sim \gamma}[||x-y||]$$</li>
+</ul>
 
 Updata soon
