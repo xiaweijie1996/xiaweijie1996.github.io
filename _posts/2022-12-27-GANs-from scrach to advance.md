@@ -152,7 +152,7 @@ To understand WGAN, we need first to understand Wasserstein distance, also known
 <li>JS distance: $$JS(\mathbb{P}_r||\mathbb{P}_g)=D_{KL}(\mathbb{P}_r||\mathbb{P}_m)+D_{KL}(\mathbb{P}_m||\mathbb{P}_g)$$</li>
 <li>Earth Moving distance: $$W(\mathbb{P}_r, \mathbb{P}_g)=\inf_{\gamma \in \prod(\mathbb{P}_r||\mathbb{P}_g)} \mathbb{E}_{(x,y) \sim \gamma}[||x-y||]$$where $\prod (\mathbb{P}_r || \mathbb{P}_g)$ is the set of all joint distributions $\gamma (x, y)$ whose marginals are respectively $\mathbb{P}_r$ and $\mathbb{P}_g$. Intuitively, $\gamma (x, y)$ indicates how much &ldquo;mass&rdquo; must be transported from $x$ to $y$ in order to transform the distributions $\mathbb{P}_r$ into the distribution $\mathbb{P}_g$.</li>
 </ul>
-<p>Earth shows better properties when optimized than JS divergence. However, the infimum is highly intractable. For this reason, the problem can be transformed according to $Kantorovich-Rubinstein\duality$:</p>
+<p>Earth shows better properties when optimized than JS divergence. However, the infimum is highly intractable. For this reason, the problem can be transformed according to $Kantorovich-Rubinstein\,duality$:</p>
 <p>$$W(\mathbb{P}_r, \mathbb{P}_g)=\sup_{||f||_{L} \leq 1} [\mathbb{E}_{x \sim \mathbb{P}_r}[f(x)]- \mathbb{E}_{x \sim \mathbb{P}_{\theta}}[f(x)]]$$</p>
 <p>The equation above can be considered to be equivalent to：</p>
 <p>$$\max_{||f||_{L} \leq 1} [\mathbb{E}_{x \sim \mathbb{P}_r}[f(x)]- \mathbb{E}_{x \sim \mathbb{P}_{\theta}}[f(x)]]$$</p>
@@ -160,7 +160,7 @@ To understand WGAN, we need first to understand Wasserstein distance, also known
 <p>$$|f(x_1)-f(x_2)| \leq K|x_1-x_2|$$&nbsp;</p>
 
 <p>Besides the original version of WGAN, there is an improved version called WGAN-GP. Because&nbsp; $D \in 1-Lipschitz $ is equivalent to:</p>
-<p>$$D \in 1-Lipschitz \leftrightarrow ||\bigtriangledown_{x}D(x)||\leq 1, for\all\x$$</p>
+<p>$$D \in 1-Lipschitz \leftrightarrow ||\bigtriangledown_{x}D(x)||\leq 1, for \, all\, x$$</p>
 <p>$$\rightarrow W(\mathbb{P}_r, \mathbb{P}_g) \approx \max_{D} [\mathbb{E}_{x \sim \mathbb{P}_r}[f(x)]- \mathbb{E}_{x \sim \mathbb{P}_{\theta}}[f(x)] -\lambda \mathbb{E}_{x \sim P_{penalty}}[\max(0, ||\bigtriangledown_{x}D(x)||-1)]]$$</p>
 <p>Where $P_{penalty}$ is a distribution sampled between $\mathbb{P}_r$ and $\mathbb{P}_g$.</p>
 <p><img src="https://i.postimg.cc/DZ1fdzvn/We-Chat-Image-20230113155754.jpg" alt="" /></p>
