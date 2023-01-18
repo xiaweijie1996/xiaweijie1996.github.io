@@ -24,15 +24,14 @@ aside: false
 </tr>
 </tbody>
 </table>
-<p>&nbsp;</p>
 
 **About me**\
 I was born in China. In 2022, I started my PhD journey in <a href="https://www.tudelft.nl/ewi/over-de-faculteit/afdelingen/electrical-sustainable-energy/intelligent-electrical-power-grids-iepg-group">IEPG group</a> at TU Delft. My research interests focus on the interdisciplinary areas of energy systems and machine learning. Additionally, I am also interested in statistics and theoretical physics. 
 One of my dreams is to travel around the world :flight_departure:.
 
-**Where I've been：**\
-<p><br /><img style="display: block; margin-left: auto; margin-right: auto;" src="https://i.postimg.cc/X7s3sMMp/318478292-1298026027705258-8509271587284893906-n.jpg" width="810" align="center" /></p>
-<p style="text-align: center;"><span style="font-family: 黑体; font-size: small;">Map Mark tool recommendation <a href="https://www.mapchart.net/index.html">Mapchart</a></span></p>
+**Where I've been：**
+<p><br /><img style="display: block; margin-left: auto; margin-right: auto;" src="https://i.postimg.cc/X7s3sMMp/318478292-1298026027705258-8509271587284893906-n.jpg" width="1000" align="center" /></p>
+<p style="text-align: center;"><span style="font-family: 黑体; font-size: medium;">Map Mark tool recommendation <a href="https://www.mapchart.net/index.html">Mapchart</a></span></p>
 
 **Contact**\
 *Email：*  &emsp;<font color=blue>W.xia@tudelft.nl</font>\
