@@ -38,6 +38,13 @@ One of my dreams is to travel around the world :flight_departure:.
 <p style="text-align: center;"><span style="font-family: 黑体; font-size: medium;">Map Mark tool recommendation <a href="https://www.mapchart.net/index.html">Mapchart</a></span>
 <br>
 
+<p><strong>Contact</strong></p>
+<p><em>Email</em>: <a href="mailto:W.xia@tudelft.nl">W.xia@tudelft.nl</a></p>
+<p><em>Social Platform:&nbsp;<a href="https://www.facebook.com/xia.wind.9/"><img src="https://cdn-icons-png.flaticon.com/32/5968/5968764.png" alt="" width="25" height="25" /> </a></em></p>
+<p>&nbsp;</p>
+
+<br>
+<br>
 **Contact**\
 *Email：*  &emsp;<font color=blue>W.xia@tudelft.nl</font>\
 *Social Platform：*
