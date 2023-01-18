@@ -8,17 +8,17 @@ excerpt: ""
 aside: false
 ---
 <p><strong>Education Background</strong></p>
-<table style="width: 1000px;" border="0" width="5500">
+<table style="width: 900px;" border="0" width="500">
 <tbody>
 <tr>
 <td style="background-color: #ffffff; width: 407px;">
 <p><span style="font-family: 黑体; font-size: large;">◆<em>Phd</em>, Delft University of Technology</span></p>
-<p><br /><span style="font-family: 黑体; font-size: large;">◆<em>Msc</em>, KTH Royal Institute of Technology</span></p>
-<p><br /><span style="font-family: 黑体; font-size: large;">◆<em>Msc</em>, Eindhoven University of Technology</span></p>
-<p><br /><span style="font-family: 黑体; font-size: large;">◆<em>Integrated Program</em>, Esade Business School</span></p>
-<p><br /><span style="font-family: 黑体; font-size: large;">◆<em>Bsc</em>, Ocean University of China</span></p>
+<p><span style="font-family: 黑体; font-size: large;">◆<em>Msc</em>, KTH Royal Institute of Technology</span></p>
+<p><span style="font-family: 黑体; font-size: large;">◆<em>Msc</em>, Eindhoven University of Technology</span></p>
+<p><span style="font-family: 黑体; font-size: large;">◆<em>Integrated Program</em>, Esade Business School</span></p>
+<p><span style="font-family: 黑体; font-size: large;">◆<em>Bsc</em>, Ocean University of China</span></p>
 </td>
-<td style="height: 250px; width: 274px;"><img style="float: right;" src="https://media-exp1.licdn.com/dms/image/D4D03AQE7uX2AJwOgWw/profile-displayphoto-shrink_800_800/0/1643229835687?e=1675900800&amp;v=beta&amp;t=c_GLHH0bS1t09uGHaIF1Gcr-HAGQvMA04DijBqRHdKE" width="274" height="274" align="right" /></td>
+<td style="height: 250px; width: 274px;"><img style="float: right;" src="https://media-exp1.licdn.com/dms/image/D4D03AQE7uX2AJwOgWw/profile-displayphoto-shrink_800_800/0/1643229835687?e=1675900800&amp;v=beta&amp;t=c_GLHH0bS1t09uGHaIF1Gcr-HAGQvMA04DijBqRHdKE" width="235" height="235" align="right" /></td>
 </tr>
 </tbody>
 </table>
