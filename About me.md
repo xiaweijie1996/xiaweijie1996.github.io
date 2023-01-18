@@ -8,19 +8,13 @@ excerpt: ""
 aside: false
 ---
 <b>Education Background</b><br />
-<table width="500" border="0"> 
+<table style="width: 610px;" border="0" width="500">
+<tbody>
 <tr>
-<td style="background-color:#FFFFFF;width:250px;">
-<font face="黑体" size=4>◆<i>Phd</i>, Delft University of Technology</font><br />
-<font face="黑体" size=4>◆<i>Msc</i>, KTH Royal Institute of Technology</font><br />
-<font face="黑体" size=4>◆<i>Msc</i>, Eindhoven University of Technology</font><br />
-<font face="黑体" size=4>◆<i>Integrated Program</i>, Esade Business School</font><br />
-<font face="黑体" size=4>◆<i>Bsc</i>, Ocean University of China</font><br />
-</td>
-<td style="background-color#FFFFFF;height:250px;width:250px;">
-<img src="https://media-exp1.licdn.com/dms/image/D4D03AQE7uX2AJwOgWw/profile-displayphoto-shrink_800_800/0/1643229835687?e=1675900800&v=beta&t=c_GLHH0bS1t09uGHaIF1Gcr-HAGQvMA04DijBqRHdKE" width="210" align="right"/>
-</td>
+<td style="background-color: #ffffff; width: 225.828px;"><span style="font-family: 黑体; font-size: large;">◆<em>Phd</em>, Delft University of Technology</span><br /><span style="font-family: 黑体; font-size: large;">◆<em>Msc</em>, KTH Royal Institute of Technology</span><br /><span style="font-family: 黑体; font-size: large;">◆<em>Msc</em>, Eindhoven University of Technology</span><br /><span style="font-family: 黑体; font-size: large;">◆<em>Integrated Program</em>, Esade Business School</span><br /><span style="font-family: 黑体; font-size: large;">◆<em>Bsc</em>, Ocean University of China</span></td>
+<td style="height: 250px; width: 368.172px;"><img style="float: left;" src="https://media-exp1.licdn.com/dms/image/D4D03AQE7uX2AJwOgWw/profile-displayphoto-shrink_800_800/0/1643229835687?e=1675900800&amp;v=beta&amp;t=c_GLHH0bS1t09uGHaIF1Gcr-HAGQvMA04DijBqRHdKE" width="258" height="258" align="right" /></td>
 </tr>
+</tbody>
 </table>
  
 <br />
@@ -31,7 +25,7 @@ One of my dreams is to travel around the world :flight_departure:.
 
 **Where I've been：**\
 <img src="https://i.postimg.cc/X7s3sMMp/318478292-1298026027705258-8509271587284893906-n.jpg" width="810" align="center"/> 
-<center><font face="黑体" size=4>Map marker tool recommendation: <a href="https://www.mapchart.net/index.html">MapChart</a> </font></center>
+<p><br /><img src="https://i.postimg.cc/X7s3sMMp/318478292-1298026027705258-8509271587284893906-n.jpg" width="810" align="center" /></p>
 
 **Contact**\
 *Email：*  &emsp;<font color=blue>W.xia@tudelft.nl</font>\
