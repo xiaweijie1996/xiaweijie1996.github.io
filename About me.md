@@ -7,11 +7,11 @@ feature_image: "https://picsum.photos/2560/600?image=873"
 excerpt: ""
 aside: false
 ---
-<p><strong>Education Background</strong></p>
 <table style="width: 900px; height: 176px;" border="0" width="500">
 <tbody>
 <tr style="height: 176px;">
 <td style="background-color: #ffffff; width: 528.062px; height: 176px;">
+<p><span style="font-family: 黑体; font-size: large;"><strong>Education Background</strong></span></p>
 <ul style="list-style-type: square;">
 <li style="text-align: left;"><span style="font-family: 黑体; font-size: large;"><em>Phd</em>, Delft University of Technology</span></li>
 <li style="text-align: left;"><span style="font-family: 黑体; font-size: large;"><em>Msc, </em>KTH Royal Institute of Technology</span></li>
@@ -29,7 +29,7 @@ aside: false
 I was born in China. In 2022, I started my PhD journey in <a href="https://www.tudelft.nl/ewi/over-de-faculteit/afdelingen/electrical-sustainable-energy/intelligent-electrical-power-grids-iepg-group">IEPG group</a> at TU Delft. My research interests focus on the interdisciplinary areas of energy systems and machine learning. Additionally, I am also interested in statistics and theoretical physics. 
 One of my dreams is to travel around the world :flight_departure:.
 
-**Where I've been：**
+<b>Where I've been：</b>
 <p><br /><img style="display: block; margin-left: auto; margin-right: auto;" src="https://i.postimg.cc/X7s3sMMp/318478292-1298026027705258-8509271587284893906-n.jpg" width="1000" align="center" /></p>
 <p style="text-align: center;"><span style="font-family: 黑体; font-size: medium;">Map Mark tool recommendation <a href="https://www.mapchart.net/index.html">Mapchart</a></span></p>
 
