@@ -8,7 +8,6 @@ excerpt: ""
 aside: false
 ---
 <b>Education Background</b>
-<p><span style="font-family: 黑体; font-size: large;"><strong>Education Background</strong></span></p>
 <table style="width: 900px; height: 176px;" border="0" width="500">
 <tbody>
 <tr style="height: 176px;">
@@ -38,7 +37,8 @@ One of my dreams is to travel around the world :flight_departure:.
 <img style="display: block; margin-left: auto; margin-right: auto;" src="https://i.postimg.cc/X7s3sMMp/318478292-1298026027705258-8509271587284893906-n.jpg" width="1000" align="center" />
 <p style="text-align: center;"><span style="font-family: 黑体; font-size: medium;">Map Mark tool recommendation <a href="https://www.mapchart.net/index.html">Mapchart</a></span>
 <br>
-**Contact**
+
+**Contact**\
 *Email：*  &emsp;<font color=blue>W.xia@tudelft.nl</font>\
 *Social Platform：*
 [![alt text][1.1]][1]
