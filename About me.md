@@ -40,8 +40,7 @@ One of my dreams is to travel around the world :flight_departure:.
 
 <p><strong>Contact</strong></p>
 <p><em>Email</em>: <a href="mailto:W.xia@tudelft.nl">W.xia@tudelft.nl</a></p>
-<p><em>Social Platform:&nbsp;<a href="https://www.facebook.com/xia.wind.9/"><img src="https://cdn-icons-png.flaticon.com/32/5968/5968764.png" alt="" width="25" height="25" /> </a></em></p>
-<p>&nbsp;</p>
+<p><em>Social Platform:&nbsp;<a href="https://www.facebook.com/xia.wind.9/"><img src="https://cdn-icons-png.flaticon.com/32/5968/5968764.png" alt="" width="25" height="25" /></a>&nbsp; &nbsp;<a href="https://www.linkedin.com/in/weijie-xia-0bb095180/"><img src="https://cdn-icons-png.flaticon.com/32/145/145807.png" alt="" width="25" height="25" /></a>&nbsp; &nbsp;<a href="https://github.com/xiaweijie1996"><img src="https://cdn-icons-png.flaticon.com/32/733/733553.png" alt="" width="25" height="25" /></a>a&gt;&nbsp; &nbsp;<a href="https://www.zhihu.com/people/xia-yier-de-ren-zhi-ren-sheng"><img src="https://cdn-icons-png.flaticon.com/32/8462/8462199.png" alt="" width="25" height="25" /></a></em></p>
 
 <br>
 <br>
