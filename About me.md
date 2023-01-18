@@ -8,15 +8,15 @@ excerpt: ""
 aside: false
 ---
 <b>Education Background</b>
+<p><span style="font-family: 黑体; font-size: large;"><strong>Education Background</strong></span></p>
 <table style="width: 900px; height: 176px;" border="0" width="500">
 <tbody>
 <tr style="height: 176px;">
 <td style="background-color: #ffffff; width: 528.062px; height: 176px;">
-<p>&nbsp;</p>
 <ul>
 <li style="list-style-type: none;">
-<ul style="list-style-type: square;">
-<li style="text-align: left;"><span style="font-family: 黑体; font-size: large;"><em>Phd</em>, Delft University of Technology</span></li>
+<ul>
+<li><span style="font-family: 黑体; font-size: large;"><em>Phd</em>, Delft University of Technology</span></li>
 <li style="text-align: left;"><span style="font-family: 黑体; font-size: large;"><em>Msc, </em>KTH Royal Institute of Technology</span></li>
 <li style="text-align: left;"><span style="font-family: 黑体; font-size: large;"><em>Msc, </em>Eindhoven University of Technology</span></li>
 <li style="text-align: left;"><span style="font-family: 黑体; font-size: large;"><em>Integrated Program, </em>Esade Business School</span></li>
