@@ -19,7 +19,6 @@ feature_image: "https://i.postimg.cc/wBgmqWcX/wallhaven-kx98xd.jpg"
 </head>
 
 <p>In this article, I would like to discuss the Expectation maximization algorithm (EM) and its related application in Gaussian mixture models (GMMs).</p>
-<p>&nbsp;</p>
 <hr style="filter: alpha(opacity=100,finishopacity=0,style=3);" size="3" width="80%" />
 <p><strong>Content</strong></p>
 <ul>
@@ -35,7 +34,9 @@ feature_image: "https://i.postimg.cc/wBgmqWcX/wallhaven-kx98xd.jpg"
 <p>An example:</p>
 <p>If there are three coins, which are $A,B,C$. The probability of the coins coming up heads are $\pi,p,q$, respectively. Conducting the following experiment: First toss coin $A$, if the result is head up, then toss $B$, otherwise, toss $C$. If the result of the second toss is heads, then record 1. Otherwise, record 0. Repeat experiment $n$ times. if $n=10$, we observe the result:</p>
 <p>$$1,1,0,1,0,0,1,0,1,1$$</p>
-<p>Assuming we can only observe the results of the second toss, then, how do we estimate the probability that the toss is heads?</p>
+<p>Assuming we can only observe the results of the second toss, how do we estimate the probability that the toss is heads?</p>
+<p>Answer:</p>
+<p>$$\begin{align*}&nbsp; P(y|\theta) &amp;=\sum_z P(y,z|theta) \\ &amp;= \sum_z P(z|theta)P(y|z,\theta)\\ &amp;= \pi p^{y}(1-p)^{1-y}+(1-\pi)q^{y}(1-q)^{1-y} \end{align*}$$</p>
 <p>&nbsp;</p>
 
 updata soon...
