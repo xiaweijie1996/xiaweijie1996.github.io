@@ -82,15 +82,24 @@ feature_image: "https://i.postimg.cc/wBgmqWcX/wallhaven-kx98xd.jpg"
 <h3>Convergence of EM Algorithm</h3>
 <p>EM algorithm provides a method to estimate the maximum likelihood of probability models with hidden variables. we have proof that the EM algorithm is able to optimize the lower bound of the likelihood. But there is still a problem we have not considered, which is the convergence of the EM algorithm.</p>
 <p>According the EM algorithm, we know that the $P(Y|\theta^{(i)}), \,i=[1,2,3,...]$ is nondecreasing. which means:</p>
-<p>$$P(Y|\theta^{(i+1)})\geqP(Y|\theta^{(i)})$$</p>
+<p>$$P(Y|\theta^{(i+1)})\geq P(Y|\theta^{(i)})$$</p>
 <p>Because:</p>
 <p>$$P(Y|\theta)=\frac{P(Y,Z|\theta)}{P(Z|Y,\theta)}$$</p>
-<p>$$\rightarrow \log P(Y|\theta)=\log\frac{P(Y,Z|\theta)}-\log {P(Z|Y,\theta)}$$</p>
+<p>$$\rightarrow \log P(Y|\theta)=\log{P(Y,Z|\theta)}-\log {P(Z|Y,\theta)}$$</p>
 <p>Define $H(\theta,\theta^{(i)}),Q'(\theta,\theta^{(i)})$ :<br />$$H(\theta,\theta^{(i)})=\sum_{Z} \log P(Z|Y,\theta)P(Z|Y,\theta)$$</p>
 <p>$$Q'(\theta,\theta^{(i)})=\sum_{Z} \log P(Y,Z|\theta)P(Z|Y,\theta)$$</p>
 <p>Then the log-likelihood can be written as:</p>
 <p>$$\log P(Y|\theta)=Q'(\theta,\theta^{(i)})-h(\theta,\theta^{(i)})$$</p>
 <p>Then:</p>
-<p>$$\begin{align*} \log P(Y|\theta^{(i+1)})-\log P(Y|\theta^{(i+1)})&amp;\\ &amp;=\left [ Q'(\theta,\theta^{(i+1)})-Q'(\theta,\theta^{(i)})\right]-\left[h(\theta,\theta^{(i+1)})-h(\theta,\theta^{(i)}) \right\]&nbsp; \end{align*}$$</p>
+<p>$$ \log P(Y|\theta^{(i+1)})-\log P(Y|\theta^{(i+1)}) \\ =\left [ Q'(\theta,\theta^{(i+1)})-Q'(\theta,\theta^{(i)})\right]-\left[H(\theta,\theta^{(i+1)})-H(\theta,\theta^{(i)}) \right\]&nbsp; $$</p>
+<p>For the first part of the equation above, obviously, we have the following:</p>
+<p>$$Q'(\theta,\theta^{(i+1)})-Q'(\theta,\theta^{(i)})\geq 0$$</p>
+<p>For the second part:</p>
+<p>$$\begin{align*} H(\theta,\theta^{(i+1)})-H(\theta,\theta^{(i)}) \end{align*}$$</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
 
 updata soon...
