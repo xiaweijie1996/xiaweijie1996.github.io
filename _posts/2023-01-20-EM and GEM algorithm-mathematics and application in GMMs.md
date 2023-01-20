@@ -55,8 +55,8 @@ feature_image: "https://i.postimg.cc/wBgmqWcX/wallhaven-kx98xd.jpg"
 <li>M step: find $\theta$ which gives the smallest $Q(\theta,\theta^{(i)})$:$$\theta^{(i+1)} = \arg \max_{\theta} lQ(\theta,\theta^{(i)})$$</li>
 <li>Repeat steps (2) and (3) until convergence, the stop condition is usually a small positive number $\epsilon$</li>
 </ol>
-<p><strong>Definition: </strong>&nbsp;$Q function$ is the expectation of log-likelihood of $\log P(Z|Y,\theta)$ for $Z$ with the distribution of $P(Z|Y,\theta^{(i)})$ when knowing $Y, \theta^{(I)}$.</p>
-<p>$$Q(\theta,\theta^{(i)}) &amp;=\mathbb{E_{z}} \left[P(Z,Y|\theta)P(Z|Y,\theta^{(i)}) \right]$$\</p>
+<p><strong>Definition: </strong>&nbsp;$Q\,\, function$ is the expectation of log-likelihood of $\log P(Z|Y,\theta)$ for $Z$ with the distribution of $P(Z|Y,\theta^{(i)})$ when knowing $Y, \theta^{(I)}$.</p>
+<p>$$Q(\theta,\theta^{(i)}) =\mathbb{E_{z}} \left[P(Z,Y|\theta)P(Z|Y,\theta^{(i)}) \right]$$</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
