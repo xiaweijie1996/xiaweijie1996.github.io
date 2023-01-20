@@ -43,7 +43,7 @@ feature_image: "https://i.postimg.cc/wBgmqWcX/wallhaven-kx98xd.jpg"
 <p>Using $Y=(Y_1,...,Y_n)^{T}$ represents the observable results, and&nbsp; $Z=(Z_1,...,Z_n)^{T}$ reprents the unobservable results. The likelihood function of the observable data is:</p>
 <p>$$\begin{align*}&nbsp; P(Y|\theta) &amp;= \sum_{Z} P(Z|\theta)P(Y|Z,\theta) \\ &amp;=\prod_{Z} \pi p^{y}(1-p)^{1-y}+(1-\pi)q^{y}(1-q)^{1-y} \end{align*}$$</p>
 <p>Then the method is to find the maximum likelihood estimation:</p>
-<p>$$\hat{\theta} = \arg \max_{\theta} log P(Y|\theta)$$</p>
+<p>$$\hat{\theta} = \arg \max_{\theta} \log P(Y|\theta)$$</p>
 <p>The method randomly selects the initial value and then does the iteration. However, the different initial values will get different results. <strong>The EM algorithm is sensitive to the initial values.</strong>&nbsp;</p>
 <p>Usually, $Y$ is used to represent the data of observable variables, $Z$ represents the data of hidden variables. $(Y,Z)$ together is called complete-data, and $Y$ is called incompleted-data. The distribution of $Y$ is P(Y|\theta), log-likelihood is &nbsp;$\log P(Y|\theta)$. The joint distribution of $(Y,Z)$ is $P(X,Y|\theta)$, and the log-likelihood is $\log P(X,Y|\theta)$.</p>
 <p><strong>Algorithm EM</strong></p>
@@ -52,7 +52,7 @@ feature_image: "https://i.postimg.cc/wBgmqWcX/wallhaven-kx98xd.jpg"
 <ol>
 <li>Select the initial values $\theta^0$.</li>
 <li>E step: Using $\theta^i$ as the approximation of $\theta$ in (i+1) iteration, compute:$$\begin{align*} Q(\theta,\theta^{(i)}) &amp;=\mathbb{E_{z}} \left[P(Z,Y|\theta)P(Z|Y,\theta^{(i)}) \right] \\&amp;= \sum_{Z} P(Z,Y|\theta)P(Z|Y,\theta^{(i)}) \end{align*}$$</li>
-<li>M step: find $\theta$ which gives the smallest $Q(\theta,\theta^{(i)})$:$$\theta^{(i+1)} = \arg \max_{\theta} lQ(\theta,\theta^{(i)})$$</li>
+<li>M step: find $\theta$ which gives the smallest $Q(\theta,\theta^{(i)})$:$$\theta^{(i+1)} = \arg \max_{\theta} Q(\theta,\theta^{(i)})$$</li>
 <li>Repeat steps (2) and (3) until convergence, the stop condition is usually a small positive number $\epsilon$</li>
 </ol>
 <p><strong>Definition: </strong>&nbsp;$Q\,\, function$ is the expectation of log-likelihood of $\log P(Z|Y,\theta)$ for $Z$ with the distribution of $P(Z|Y,\theta^{(i)})$ when knowing $Y, \theta^{(I)}$.</p>
