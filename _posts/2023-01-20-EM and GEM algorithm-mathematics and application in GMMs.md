@@ -70,11 +70,11 @@ feature_image: "https://i.postimg.cc/wBgmqWcX/wallhaven-kx98xd.jpg"
 <p>$$\begin{align*} L(\theta)-L(\theta^{(i)})&amp;=\log (\sum_{Z} P(Y|Z,\theta^{(i)}) \frac{P(Y|Z,\theta)P(Z|\theta)}{P(Y|Z,\theta^{(i)})})- \log P(Y|\theta^{(i)})\\ &amp;\geq \sum_{Z} P(Z|Y,\theta^{(i)}) \log( \frac{P(Y|Z,\theta)P(Z|\theta)}{P(Y|Z,\theta^{(i)})})-\log P(Y|\theta^{(i)}) \\ &amp;= \sum_{Z} P(Z|Y,\theta^{(i)}) \log(\frac{P(Y|Z,\theta)P(Z|\theta)}{P(Y|Z,\theta^{(i)}P(Y|\theta^{(i)})}) \end{align*} $$</p>
 <p>Note:$\sum_{Z} P(Z|Y,\theta^{(i)})=1$</p>
 <p>Define $B \,\, function$:</p>
-<p>$$B(\theta,\theta^{(i)})=L(\theta^{(i)})+\sum_{Z} P(Z|Y,\theta^{(i)}) \log(\frac{P(Y|Z,\theta)P(Z|\theta)}{P(Y|Z,\theta^{(i)}P(Y|\theta^{(i)})})$$</p>
+<p>$$B(\theta,\theta^{(i)})=L(\theta^{(i)})+\sum_{Z} P(Z|Y,\theta^{(i)}) \log(\frac{P(Y|Z,\theta)P(Z|\theta)}{P(Y|Z,\theta^{(i)})P(Y|\theta^{(i)})})$$</p>
 <p>$$\rightarrow L(\theta) \geq B(\theta,\theta^{(i)})$$</p>
 <p>That means $B(\theta,\theta^{(i)})$ is the lower bound of the $L(\theta)$, and we could know that $L(\theta^{(i)})=B(\theta^{(i)},\theta^{(i)})$.</p>
 <p>Therefore, we want to find a $\theta^{(i+1)}$ which maximize the $B(\theta,\theta^{(i)})$:</p>
-<p>$$\begin{align*}\theta^{(i)} &amp;=\arg \max_{\theta}B(\theta,\theta^{(i)})\\ &amp;=\arg \max_{\theta} (L(\theta^{(i)})+\sum_{Z} P(Z|Y,\theta^{(i)}) \log(\frac{P(Y|Z,\theta)P(Z|\theta)}{P(Y|Z,\theta^{(i)}P(Y|\theta^{(i)})}))\\&amp;= \arg \max_{\theta}(\sum_{Z} P(Y|Z,\theta)P(Z|\theta))\\ &amp;= \arg \max_{\theta}(\sum_{Z} P(Y,Z|\theta)) \\ &amp;=\arg \max_{\theta} Q(\theta,\theta^{(i)}) \end{align*}$$</p>
+<p>$$\begin{align*}\theta^{(i)} &amp;=\arg \max_{\theta}B(\theta,\theta^{(i)})\\ &amp;=\arg \max_{\theta} (L(\theta^{(i)})+\sum_{Z} P(Z|Y,\theta^{(i)}) \log(\frac{P(Y|Z,\theta)P(Z|\theta)}{P(Y|Z,\theta^{(i)})P(Y|\theta^{(i)})}))\\&amp;= \arg \max_{\theta}(\sum_{Z} P(Y|Z,\theta)P(Z|\theta))\\ &amp;= \arg \max_{\theta}(\sum_{Z} P(Y,Z|\theta)) \\ &amp;=\arg \max_{\theta} Q(\theta,\theta^{(i)}) \end{align*}$$</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
