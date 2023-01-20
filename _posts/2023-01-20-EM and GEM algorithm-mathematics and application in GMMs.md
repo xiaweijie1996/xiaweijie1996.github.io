@@ -24,6 +24,7 @@ feature_image: "https://i.postimg.cc/wBgmqWcX/wallhaven-kx98xd.jpg"
 <p><strong>Content</strong></p>
 <ul>
 <li>Introduction to EM algorithm</li>
+<li>EM algorithm derivation</li>
 <li>Convergence of EM Algorithm</li>
 <li>EM algorithm in GMMs</li>
 <li>General EM</li>
@@ -52,16 +53,12 @@ feature_image: "https://i.postimg.cc/wBgmqWcX/wallhaven-kx98xd.jpg"
 <li>Select the initial values $\theta^0$.</li>
 <li>E step: Using $\theta^i$ as the approximation of $\theta$ in (i+1) iteration, compute:$$\begin{align*} Q(\theta,\theta^{(i)}) &amp;=\mathbb{E_{z}} \left[P(Z,Y|\theta)P(Z|Y,\theta^{(i)}) \right] \\&amp;= \sum_{Z} P(Z,Y|\theta)P(Z|Y,\theta^{(i)}) end{align*}$$</li>
 <li>M step: find $\theta$ which gives the smallest $Q(\theta,\theta^{(i)})$:$$\theta^{(i+1)} = \arg \max_{\theta} lQ(\theta,\theta^{(i)})$$</li>
-<li>Repeat steps (2) and (3) until convergence.</li>
+<li>Repeat steps (2) and (3) until convergence, the stop condition is usually a small positive number $\epsilon$</li>
 </ol>
-<p><strong>Definition: </strong>For complete-data</p>
+<p><strong>Definition: </strong>&nbsp;$Q function$ is the expectation of log-likelihood of $\log P(Z|Y,\theta)$ for $Z$ with the distribution of $P(Z|Y,\theta^{(i)})$ when knowing $Y, \theta^{(I)}$.</p>
+<p>$$Q(\theta,\theta^{(i)}) &amp;=\mathbb{E_{z}} \left[P(Z,Y|\theta)P(Z|Y,\theta^{(i)}) \right]$$\</p>
 <p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
+
 
 
 updata soon...
