@@ -66,7 +66,8 @@ feature_image: "https://i.postimg.cc/wBgmqWcX/wallhaven-kx98xd.jpg"
 <p>Actually, the EM algorithm approaches the maximum likelihood by iteration. Assuming after i iteration, $\theta^{(i)}$ is the estimated parameters. we hope $L(\theta)&gt;L(\theta^{(i)})$.The difference between $L(\theta)$ and $L(\theta^{(i)})$ is：</p>
 <p>$$L(\theta)-L(\theta^{(i)})= \log (\sum_{Z} P(Y|Z,\theta)P(Z|\theta))-\log P(Y|\theta^{(i)})$$</p>
 <p>According to Jensen inequality (See Jensen inequality at the end):</p>
-<p>$$L(\theta)-L(\theta^{(i)})$$</p>
+<p>$$\begin{align*} L(\theta)-L(\theta^{(i)})&amp;=\log (\sum_{Z} P(Y|Z,\theta^{(i)}) \frac{P(Y|Z,\theta)P(Z|\theta)}{P(Y|Z,\theta^{(i)})}- \log P(Y|\theta^{(i)})\end{align*} \\ &amp;\geq \sum_{Z} P(Y|Z,\theta^{(i)} \log(&nbsp;\frac{P(Y|Z,\theta)P(Z|\theta)}{P(Y|Z,\theta^{(i)})})-\log P(Y|\theta^{(i)})) \\ &amp;= \sum_{Z} P(Y|Z,\theta^{(i)} \log(\frac{P(Y|Z,\theta)P(Z|\theta)}{P(Y|Z,\theta^{(i)}P(Y|\theta^{(i)})})$$</p>
+<p>Note:</p>
 
 
 
