@@ -1,5 +1,5 @@
 ---
-title: GANs-From scrach to advanced
+title: GANs-from scrach to advanced
 categories:
 - Generative model
 - Machine Learning
