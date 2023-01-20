@@ -36,10 +36,12 @@ feature_image: "https://i.postimg.cc/wBgmqWcX/wallhaven-kx98xd.jpg"
 <p>$$1,1,0,1,0,0,1,0,1,1$$</p>
 <p>Assuming we can only observe the results of the second toss, how do we estimate the probability that the toss is heads?</p>
 <p>Answer:</p>
-<p>$$\begin{align*}&nbsp; P(y|\theta) &amp;=\sum_z P(y,z|theta) \\ &amp;= \sum_z P(z|theta)P(y|z,\theta)\\ &amp;= \pi p^{y}(1-p)^{1-y}+(1-\pi)q^{y}(1-q)^{1-y} \end{align*}$$</p>
+<p>$$\begin{align*}&nbsp; P(y|\theta) &amp;=\sum_z P(y,z|\theta) \\ &amp;= \sum_z P(z|\theta)P(y|z,\theta)\\ &amp;= \pi p^{y}(1-p)^{1-y}+(1-\pi)q^{y}(1-q)^{1-y} \end{align*}$$</p>
 <p>Where $y$ is the observable variable, its value is $1$ or $0$. $z$ is the hidden variable which represents the toss result of $A$, $$\theta=(\pi, p, q)$$ is the parameters of the probability model.&nbsp;</p>
 <p>Using $Y=(Y_1,...,Y_n)^{T}$ represents the observable results, and&nbsp; $Z=(Z_1,...,Z_n)^{T}$ reprents the unobservable results. The likelihood function of the observable data is:</p>
 <p>$$begin{align*}&nbsp; P(Y|\theta)&amp;=\sum_{Z} P(Z|\theta)P(Y|Z, \theta) \\ &amp;=\prod_{Z}\pi p^{y}(1-p)^{1-y}+(1-\pi)q^{y}(1-q)^{1-y} &nbsp; \end{align*}$$</p>
+<p>Then the method is to find the maximum likelihood estimation:</p>
+<p>$$\hat{\theta} = \arg max_{\theta} log P(Y|\theta)$$</p>
 <p>&nbsp;</p>
 
 updata soon...
