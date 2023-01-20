@@ -59,7 +59,6 @@ feature_image: "https://i.postimg.cc/wBgmqWcX/wallhaven-kx98xd.jpg"
 <p> $$Q(\theta,\theta^{(i)}) =\mathbb{E_{z}} \left[P(Z,Y|\theta)P(Z|Y,\theta^{(i)}) \right]$$</p>
 
 
-
 <h3>EM algorithm derivation</h3>
 <p>We have discussed the EM algorithm, but why EM algorithm can realize the maximum likelihood estimation for the probability model with hidden variables? we will discuss in this section.</p>
 <p>Our goal is to maximize the likelihood, which is:</p>
@@ -67,7 +66,7 @@ feature_image: "https://i.postimg.cc/wBgmqWcX/wallhaven-kx98xd.jpg"
 <p>Actually, the EM algorithm approaches the maximum likelihood by iteration. Assuming after i iteration, $\theta^{(i)}$ is the estimated parameters. we hope $L(\theta)&gt;L(\theta^{(i)})$.The difference between $L(\theta)$ and $L(\theta^{(i)})$ is：</p>
 <p>$$L(\theta)-L(\theta^{(i)})= \log (\sum_{Z} P(Y|Z,\theta)P(Z|\theta))-\log P(Y|\theta^{(i)})$$</p>
 <p>According to Jensen inequality (See Jensen inequality at the end):</p>
-<p>$$\begin{align*} L(\theta)-L(\theta^{(i)})&amp;=\log (\sum_{Z} P(Y|Z,\theta^{(i)}) \frac{P(Y|Z,\theta)P(Z|\theta)}{P(Y|Z,\theta^{(i)})}- \log P(Y|\theta^{(i)})\\ &amp;\geq \sum_{Z} P(Z|Y,\theta^{(i)}) \log( \frac{P(Y|Z,\theta)P(Z|\theta)}{P(Y|Z,\theta^{(i)})})-\log P(Y|\theta^{(i)})) \\ &amp;= \sum_{Z} P(Z|Y,\theta^{(i)}) \log(\frac{P(Y|Z,\theta)P(Z|\theta)}{P(Y|Z,\theta^{(i)}P(Y|\theta^{(i)})}) \end{align*} $$</p>
+<p>$$\begin{align*} L(\theta)-L(\theta^{(i)})&amp;=\log (\sum_{Z} P(Y|Z,\theta^{(i)}) \frac{P(Y|Z,\theta)P(Z|\theta)}{P(Y|Z,\theta^{(i)})})- \log P(Y|\theta^{(i)})\\ &amp;\geq \sum_{Z} P(Z|Y,\theta^{(i)}) \log( \frac{P(Y|Z,\theta)P(Z|\theta)}{P(Y|Z,\theta^{(i)})})-\log P(Y|\theta^{(i)}) \\ &amp;= \sum_{Z} P(Z|Y,\theta^{(i)}) \log(\frac{P(Y|Z,\theta)P(Z|\theta)}{P(Y|Z,\theta^{(i)}P(Y|\theta^{(i)})}) \end{align*} $$</p>
 <p>Note:$\sum_{Z} P(Z|Y,\theta^{(i)})=1$</p>
 
 
