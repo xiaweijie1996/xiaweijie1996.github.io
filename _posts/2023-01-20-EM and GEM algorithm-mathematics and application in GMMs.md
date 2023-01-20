@@ -18,6 +18,7 @@ feature_image: "https://i.postimg.cc/wBgmqWcX/wallhaven-kx98xd.jpg"
     </script>
 </head>
 
+
 <p>In this article, I would like to discuss the Expectation maximization algorithm (EM) and its related application in Gaussian mixture models (GMMs).</p>
 <hr style="filter: alpha(opacity=100,finishopacity=0,style=3);" size="3" width="80%" />
 <p><strong>Content</strong></p>
@@ -43,6 +44,7 @@ feature_image: "https://i.postimg.cc/wBgmqWcX/wallhaven-kx98xd.jpg"
 <p>Then the method is to find the maximum likelihood estimation:</p>
 <p>$$\hat{\theta} = \arg \max_{\theta} log P(Y|\theta)$$</p>
 <p>The method randomly selects the initial value and then does the iteration. However, the different initial values will get different results. <strong>The EM algorithm is sensitive to the initial values.</strong>&nbsp;</p>
+<p>Usually, $Y$ is used to represent the data of observable variables, $Z$ represents the data of hidden variables. $(Y,Z)$ together is called complete-data, and $Y$ is called incompleted-data. The distribution of $Y$ is P(Y|\theta), log-likelihood is &nbsp;$\logP(Y|\theta)$. The joint distribution of $(Y,Z)$ is P(X,Y|\theta), and the log-likelihood is $\logP(X,Y|\theta)$.</p>
 <p>&nbsp;</p>
 
 
