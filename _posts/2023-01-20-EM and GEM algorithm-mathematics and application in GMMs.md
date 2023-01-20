@@ -74,9 +74,23 @@ feature_image: "https://i.postimg.cc/wBgmqWcX/wallhaven-kx98xd.jpg"
 <p>$$\rightarrow L(\theta) \geq B(\theta,\theta^{(i)})$$</p>
 <p>That means $B(\theta,\theta^{(i)})$ is the lower bound of the $L(\theta)$, and we could know that $L(\theta^{(i)})=B(\theta^{(i)},\theta^{(i)})$.</p>
 <p>Therefore, we want to find a $\theta^{(i+1)}$ which maximize the $B(\theta,\theta^{(i)})$:</p>
-<p>$$\begin{align*}\theta^{(i)} &amp;=\arg \max_{\theta}B(\theta,\theta^{(i)})\\ &amp;=\arg \max_{\theta} (L(\theta^{(i)})+\sum_{Z} P(Z|Y,\theta^{(i)}) \log(\frac{P(Y|Z,\theta)P(Z|\theta)}{P(Y|Z,\theta^{(i)})P(Y|\theta^{(i)})}))\\&amp;= \arg \max_{\theta}(\sum_{Z} P(Y|Z,\theta)P(Z|\theta))\\ &amp;= \arg \max_{\theta}(\sum_{Z} P(Y,Z|\theta)) \\ &amp;=\arg \max_{\theta} Q(\theta,\theta^{(i)}) \end{align*}$$</p>
+<p>$$\begin{align*}\theta^{(i+1)} &amp;=\arg \max_{\theta}B(\theta,\theta^{(i)})\\ &amp;=\arg \max_{\theta} (L(\theta^{(i)})+\sum_{Z} P(Z|Y,\theta^{(i)}) \log(\frac{P(Y|Z,\theta)P(Z|\theta)}{P(Y|Z,\theta^{(i)})P(Y|\theta^{(i)})}))\\&amp;= \arg \max_{\theta}(\sum_{Z} P(Y|Z,\theta)P(Z|\theta))\\ &amp;= \arg \max_{\theta}(\sum_{Z} P(Y,Z|\theta)) \\ &amp;=\arg \max_{\theta} Q(\theta,\theta^{(i)}) \end{align*}$$</p>
 <p>We now have proof that, by maximizing $Q\,\, funciton$, we essentially maximize the $B\,\,function$, which is the lower bound of the $L(\theta)$, and indirectly maximizing the $L(\theta)$. The figure below shows how $L(\theta)$ increases with the lower bound.</p>
 <p><img style="display: block; margin-left: auto; margin-right: auto;" src="https://i.postimg.cc/Y07ZWZN8/We-Chat-Image-20230121003101.jpg" alt="EM algorithm optimization" width="528" height="380" /></p>
 
+
+<h3>Convergence of EM Algorithm</h3>
+<p>EM algorithm provides a method to estimate the maximum likelihood of probability models with hidden variables. we have proof that the EM algorithm is able to optimize the lower bound of the likelihood. But there is still a problem we have not considered, which is the convergence of the EM algorithm.</p>
+<p>According the EM algorithm, we know that the $P(Y|\theta^{(i)}), \,i=[1,2,3,...]$ is nondecreasing. which means:</p>
+<p>$$P(Y|\theta^{(i+1)})\geqP(Y|\theta^{(i)})$$</p>
+<p>Because:</p>
+<p>$$P(Y|\theta)=\frac{P(Y,Z|\theta)}{P(Z|Y,\theta)}$$</p>
+<p>$$\rightarrow \log P(Y|\theta)=\log\frac{P(Y,Z|\theta)}-\log {P(Z|Y,\theta)}$$</p>
+<p>Define $H(\theta,\theta^{(i)}),Q'(\theta,\theta^{(i)})$ :<br />$$H(\theta,\theta^{(i)})=\sum_{Z} \log P(Z|Y,\theta)P(Z|Y,\theta)$$</p>
+<p>$$Q'(\theta,\theta^{(i)})=\sum_{Z} \log P(Y,Z|\theta)P(Z|Y,\theta)$$</p>
+<p>Then the log-likelihood can be written as:</p>
+<p>$$\log P(Y|\theta)=Q'(\theta,\theta^{(i)})-h(\theta,\theta^{(i)})$$</p>
+<p>Then:</p>
+<p>$$\begin{align*} \log P(Y|\theta^{(i+1)})-\log P(Y|\theta^{(i+1)})&amp;\\ &amp;=\left [ Q'(\theta,\theta^{(i+1)})-Q'(\theta,\theta^{(i)})\right]-\left[h(\theta,\theta^{(i+1)})-h(\theta,\theta^{(i)}) \right\]&nbsp; \end{align*}$$</p>
 
 updata soon...
