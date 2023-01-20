@@ -55,10 +55,19 @@ feature_image: "https://i.postimg.cc/wBgmqWcX/wallhaven-kx98xd.jpg"
 <li>M step: find $\theta$ which gives the smallest $Q(\theta,\theta^{(i)})$:$$\theta^{(i+1)} = \arg \max_{\theta} Q(\theta,\theta^{(i)})$$</li>
 <li>Repeat steps (2) and (3) until convergence, the stop condition is usually a small positive number $\epsilon$</li>
 </ol>
-<p><strong>Definition: </strong>&nbsp;$Q\,\, function$ is the expectation of log-likelihood of $\log P(Z|Y,\theta)$ for $Z$ with the distribution of $P(Z|Y,\theta^{(i)})$ when knowing $Y, \theta^{(I)}$.</p>
-<p>$$Q(\theta,\theta^{(i)}) =\mathbb{E_{z}} \left[P(Z,Y|\theta)P(Z|Y,\theta^{(i)}) \right]$$</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
+<p><strong>Definition: </strong>&nbsp;$Q\,\, function$ is the expectation of log-likelihood of $\log P(Z|Y,\theta)$ for $Z$ with the distribution of $P(Z|Y,\theta^{(i)})$ when knowing $Y, \theta^{(i)}$.</p> $$Q(\theta,\theta^{(i)}) =\mathbb{E_{z}} \left[P(Z,Y|\theta)P(Z|Y,\theta^{(i)}) \right]$$
+
+
+
+<h3>EM algorithm derivation</h3>
+<p>We have discussed the EM algorithm, but why EM algorithm can realize the maximum likelihood estimation for the probability model with hidden variables? we will discuss in this section.</p>
+<p>Our goal is to maximize the likelihood, which is:</p>
+<p>$$L(\theta)=\log P(Y|\theta) \log P(Y,Z|\theta)= \log (\sum_{Z} P(Y|Z,\theta)P(Z|\theta))$$</p>
+<p>Actually, the EM algorithm approaches the maximum likelihood by iteration. Assuming after i iteration, $\theta^{(i)}$ is the estimated parameters. we hope $L(\theta)&gt;L(\theta^{(i)})$.The difference between $L(\theta)$ and $L(\theta^{(i)})$ is：</p>
+<p>$$L(\theta)-L(\theta^{(i)})= \log (\sum_{Z} P(Y|Z,\theta)P(Z|\theta))-\log P(Y|\theta^{(i)})$$</p>
+<p>According to Jensen inequality (See Jensen inequality at the end):</p>
+<p>$$L(\theta)-L(\theta^{(i)})$$</p>
+
+
 
 updata soon...
