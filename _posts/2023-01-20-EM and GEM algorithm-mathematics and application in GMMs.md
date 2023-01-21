@@ -78,7 +78,6 @@ feature_image: "https://i.postimg.cc/wBgmqWcX/wallhaven-kx98xd.jpg"
 <p>We now have proof that, by maximizing $Q\,\, funciton$, we essentially maximize the $B\,\,function$, which is the lower bound of the $L(\theta)$, and indirectly maximizing the $L(\theta)$. The figure below shows how $L(\theta)$ increases with the lower bound.</p>
 <p><img style="display: block; margin-left: auto; margin-right: auto;" src="https://i.postimg.cc/Y07ZWZN8/We-Chat-Image-20230121003101.jpg" alt="EM algorithm optimization" width="528" height="380" /></p>
 
-
 <h3>Convergence of EM Algorithm</h3>
 <p>EM algorithm provides a method to estimate the maximum likelihood of probability models with hidden variables. we have proof that the EM algorithm is able to optimize the lower bound of the likelihood. But there is still a problem we have not considered, which is the convergence of the EM algorithm.</p>
 <p>According the EM algorithm, we know that the $P(Y|\theta^{(i)}), \,i=[1,2,3,...]$ is nondecreasing. which means:</p>
@@ -86,8 +85,8 @@ feature_image: "https://i.postimg.cc/wBgmqWcX/wallhaven-kx98xd.jpg"
 <p>Because:</p>
 <p>$$P(Y|\theta)=\frac{P(Y,Z|\theta)}{P(Z|Y,\theta)}$$</p>
 <p>$$\rightarrow \log P(Y|\theta)=\log{P(Y,Z|\theta)}-\log {P(Z|Y,\theta)}$$</p>
-<p>Define $H(\theta,\theta^{(i)}),Q'(\theta,\theta^{(i)})$ :<br />$$H(\theta,\theta^{(i)})=\sum_{Z} \log P(Z|Y,\theta)P(Z|Y,\theta)$$</p>
-<p>$$Q'(\theta,\theta^{(i)})=\sum_{Z} \log P(Y,Z|\theta)P(Z|Y,\theta)$$</p>
+<p>Define $H(\theta,\theta^{(i)}),Q'(\theta,\theta^{(i)})$ :<br />$$H(\theta,\theta^{(i)})=\sum_{Z} \log P(Z|Y,\theta)P(Z|Y,\theta)^{(i)}$$</p>
+<p>$$Q'(\theta,\theta^{(i)})=\sum_{Z} \log P(Y,Z|\theta)P(Z|Y,\theta^{(i)})$$</p>
 <p>Then the log-likelihood can be written as:</p>
 <p>$$\log P(Y|\theta)=Q'(\theta,\theta^{(i)})-h(\theta,\theta^{(i)})$$</p>
 <p>Then:</p>
@@ -95,8 +94,9 @@ feature_image: "https://i.postimg.cc/wBgmqWcX/wallhaven-kx98xd.jpg"
 <p>For the first part of the equation above, obviously, we have the following:</p>
 <p>$$Q'(\theta,\theta^{(i+1)})-Q'(\theta,\theta^{(i)})\geq 0$$</p>
 <p>For the second part:</p>
-<p>$$\begin{align*} H(\theta,\theta^{(i+1)})-H(\theta,\theta^{(i)}) \end{align*}$$</p>
-<p>&nbsp;</p>
+<p>$$\begin{align*} H(\theta,\theta^{(i+1)})-H(\theta,\theta^{(i)}) &amp;=\sum_{Z} (\log\frac{P(Z|Y,\theta^{(i+1)})}{P(Z|Y,\theta^{(i)})}P(Z|\theta^{(i)})) \\&nbsp; &amp; \leq \log(\sum_{Z} \frac{P(Z|Y,\theta^{(i+1)})}{P(Z|Y,\theta^{(i)})}P(Z|\theta^{(i)}) \\ &amp;= \log(\sum_{Z}P(Z|Y,\theta^{(i+1)})) =0 \end{align*}$$</p>
+<p>Note: Jensen inequality is used in the derivation.</p>
+<p>$$\log P(Y|\theta^{(i+1)})-\log P(Y|\theta^{(i+1)}) \\ = \overbrace{\left [ Q'(\theta,\theta^{(i+1)})-Q'(\theta,\theta^{(i)})\right]}^{&gt;0}-\underbrace{\left[H(\theta,\theta^{(i+1)})-H(\theta,\theta^{(i)})}_{&lt;0} \right\] \geq 0 $$</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
