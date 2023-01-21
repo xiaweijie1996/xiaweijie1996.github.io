@@ -97,6 +97,7 @@ feature_image: "https://i.postimg.cc/wBgmqWcX/wallhaven-kx98xd.jpg"
 <p>$$\begin{align*} H(\theta,\theta^{(i+1)})-H(\theta,\theta^{(i)}) &amp;=\sum_{Z} (\log\frac{P(Z|Y,\theta^{(i+1)})}{P(Z|Y,\theta^{(i)})}P(Z|\theta^{(i)})) \\&nbsp; &amp; \leq \log(\sum_{Z} \frac{P(Z|Y,\theta^{(i+1)})}{P(Z|Y,\theta^{(i)})}P(Z|\theta^{(i)}) \\ &amp;= \log(\sum_{Z}P(Z|Y,\theta^{(i+1)})) =0 \end{align*}$$</p>
 <p>Note: Jensen inequality is used in the derivation.</p>
 <p>$$\log P(Y|\theta^{(i+1)})-\log P(Y|\theta^{(i+1)}) \\ = \overbrace{\left [ Q'(\theta,\theta^{(i+1)})-Q'(\theta,\theta^{(i)})\right]}^{&gt;0}-\underbrace{\left[H(\theta,\theta^{(i+1)})-H(\theta,\theta^{(i)}) \right] }_{&lt;0}\geq 0$$</p>
+<p>If $P(Y|\theta)$ has upper boundary, then the $L(\theta^{(i)})$ will converge to a specific value.</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
