@@ -90,13 +90,13 @@ feature_image: "https://i.postimg.cc/wBgmqWcX/wallhaven-kx98xd.jpg"
 <p>Then the log-likelihood can be written as:</p>
 <p>$$\log P(Y|\theta)=Q'(\theta,\theta^{(i)})-h(\theta,\theta^{(i)})$$</p>
 <p>Then:</p>
-<p>$$ \log P(Y|\theta^{(i+1)})-\log P(Y|\theta^{(i+1)}) \\ =\left [ Q'(\theta,\theta^{(i+1)})-Q'(\theta,\theta^{(i)})\right]-\left[H(\theta,\theta^{(i+1)})-H(\theta,\theta^{(i)}) \right\]&nbsp; $$</p>
+<p>$$ \log P(Y|\theta^{(i+1)})-\log P(Y|\theta^{(i+1)}) \\ =\left [ Q'(\theta,\theta^{(i+1)})-Q'(\theta,\theta^{(i)})\right]-\left[H(\theta,\theta^{(i+1)})-H(\theta,\theta^{(i)}) \right]&nbsp;$$</p>
 <p>For the first part of the equation above, obviously, we have the following:</p>
 <p>$$Q'(\theta,\theta^{(i+1)})-Q'(\theta,\theta^{(i)})\geq 0$$</p>
 <p>For the second part:</p>
 <p>$$\begin{align*} H(\theta,\theta^{(i+1)})-H(\theta,\theta^{(i)}) &amp;=\sum_{Z} (\log\frac{P(Z|Y,\theta^{(i+1)})}{P(Z|Y,\theta^{(i)})}P(Z|\theta^{(i)})) \\&nbsp; &amp; \leq \log(\sum_{Z} \frac{P(Z|Y,\theta^{(i+1)})}{P(Z|Y,\theta^{(i)})}P(Z|\theta^{(i)}) \\ &amp;= \log(\sum_{Z}P(Z|Y,\theta^{(i+1)})) =0 \end{align*}$$</p>
 <p>Note: Jensen inequality is used in the derivation.</p>
-<p>$$\log P(Y|\theta^{(i+1)})-\log P(Y|\theta^{(i+1)}) \\ = \overbrace{\left [ Q'(\theta,\theta^{(i+1)})-Q'(\theta,\theta^{(i)})\right]}^{&gt;0}-\underbrace{\left[H(\theta,\theta^{(i+1)})-H(\theta,\theta^{(i)})}_{&lt;0} \right\] \geq 0 $$</p>
+<p>$$\log P(Y|\theta^{(i+1)})-\log P(Y|\theta^{(i+1)}) \\ = \overbrace{\left [ Q'(\theta,\theta^{(i+1)})-Q'(\theta,\theta^{(i)})\right]}^{&gt;0}-\underbrace{\left[H(\theta,\theta^{(i+1)})-H(\theta,\theta^{(i)}) \right] }_{&lt;0}\geq 0$$</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
