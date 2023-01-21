@@ -105,9 +105,10 @@ feature_image: "https://i.postimg.cc/wBgmqWcX/wallhaven-kx98xd.jpg"
 <p>Definition of GMMs: Gaussian mixture model refers to the probability model that has the following distribution:</p>
 <p>$$P(y|\theta)=\sum_{k=1}^{K} \alpha_{k} \phi(y|\theta_k)$$</p>
 <p>where $\alpha_k$ is the coefficient, $\alpha_k \geq 0, \sum_{k=1}^{K} \alpha_k =1$, and $\theta_k =(\mu_k,\sigma_{k}^2)$ is the parameters of the kth model:</p>
-<p>$$\phi(y|\theta_k)=\frac{1}{\sqrt{2 \pi} \sigma_k} \exp(-frac{(y-\mu_k)^2}{2\sigma^2})$$</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
+<p>$$\phi(y|\theta_k)=\frac{1}{\sqrt{2 \pi} \sigma_k} \exp(-\frac{(y-\mu_k)^2}{2\sigma^2})$$</p>
+<p>We can imagine an experiment in which we first choose a Gaussian distribution model according to $\alpha$ and then generate the observable data $y$ by sampling data from the Gaussian distribution model selected in the previous step.</p>
+<p>Assuming the observable variable is $y_i, i \in \left[ 1,2,...,N \right]$. The unobservable variable is $\gamma_{jk}$, $k \in \left[ 1,2,...,N \right]$ is the number of Gaussian distribution models, the value of $\gamma_{jk}$ is:</p>
+<p>$$ \gamma_{jk}=\left\{ \begin{aligned} &amp; 1, the \,data\,of\, y_j\, comes\,from\,kth\,model&nbsp; \\ 0, otherwise \end{aligned} \right. $$</p>
 
 
 updata soon...
