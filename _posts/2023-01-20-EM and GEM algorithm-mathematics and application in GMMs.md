@@ -108,7 +108,7 @@ feature_image: "https://i.postimg.cc/wBgmqWcX/wallhaven-kx98xd.jpg"
 <p>$$\phi(y|\theta_k)=\frac{1}{\sqrt{2 \pi} \sigma_k} \exp(-\frac{(y-\mu_k)^2}{2\sigma^2})$$</p>
 <p>We can imagine an experiment in which we first choose a Gaussian distribution model according to $\alpha$ and then generate the observable data $y$ by sampling data from the Gaussian distribution model selected in the previous step.</p>
 <p>Assuming the observable variable is $y_i, i \in \left[ 1,2,...,N \right]$. The unobservable variable is $\gamma_{jk}$, $k \in \left[ 1,2,...,N \right]$ is the number of Gaussian distribution models, the value of $\gamma_{jk}$ is:</p>
-<p>$$ \gamma_{jk}=\left\{ \begin{aligned}1, the \,data\,of\, y_j\, comes\,from\,model\, k&nbsp; \\ 0, otherwise \end{aligned} \right.\\ j=1,2,..N \,\,\, k=1,2,3,..N $$</p>
+<p>$$ \gamma_{jk}=\left\{ \begin{aligned}&amp; 1, the \,data\,of\, y_j\, comes\,from\,model\, k&nbsp; \\&nbsp; &amp; 0, otherwise \end{aligned} \right.\\ j=1,2,..N \,\,\, k=1,2,3,..N $$</p>
 <p>&nbsp;</p>
 
 updata soon...
