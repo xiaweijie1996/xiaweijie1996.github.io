@@ -109,6 +109,10 @@ feature_image: "https://i.postimg.cc/wBgmqWcX/wallhaven-kx98xd.jpg"
 <p>We can imagine an experiment in which we first choose a Gaussian distribution model according to $\alpha$ and then generate the observable data $y$ by sampling data from the Gaussian distribution model selected in the previous step.</p>
 <p>Assuming the observable variable is $y_i, i \in \left[ 1,2,...,N \right]$. The unobservable variable is $\gamma_{jk}$, $k \in \left[ 1,2,...,N \right]$ is the number of Gaussian distribution models, the value of $\gamma_{jk}$ is:</p>
 <p>$$ \gamma_{jk}=\left\{ \begin{aligned}&amp; 1, the \,data\,of\, y_j\, comes\,from\,model\, k&nbsp; \\&nbsp; &amp; 0, otherwise \end{aligned} \right.\\ j=1,2,..N \,\,\, k=1,2,3,..N $$</p>
+<p>With the observable data and unobservable data, the completed data is:</p>
+<p>$$(y_j, \gamma_{j1},\gamma_{j2},..,\gamma_{jk}), \,\,\,j \in \left[1,2,..N&nbsp; \right\]$$</p>
+<p>The maximum likelihood function of completed data:</p>
+<p>$$\begin{align*}&nbsp; P(y,\gamma|\theta) &amp;=\prod_{j=1}^{N} P(y_j, \gamma_{j1},\gamma_{j2},..,\gamma_{jk}|\theta) \\&amp;=\prod_{k=1}^{k} \prod_{j=1}^{N} \left[ \alpha_k \phi_k(y_j|\theta_k) \right]^\gamma_{jk}\\ &amp;=\prod_{k=1}^{k} \alpha^{k]^{n_k} \prod_{j=1}^{N}&nbsp; \left[ \phi_k(y_j|\theta_k) \right]^\gamma_{jk}\end{align*}$$</p>
 <p>&nbsp;</p>
 
 updata soon...
