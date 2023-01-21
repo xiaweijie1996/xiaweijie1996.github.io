@@ -51,7 +51,7 @@ feature_image: "https://i.postimg.cc/wBgmqWcX/wallhaven-kx98xd.jpg"
 <p>Input: $Y,Z,P(Z|Y,\theta),P(Y,Z|\theta)$</p>
 <p>Output: $\theta$</p>
 <ol>
-<li>Select the initial values $\theta^^{(0)}$.</li>
+<li>Select the initial values $\theta^{(0)}$.</li>
 <li>E step: Using $\theta^{(i)}$ as the approximation of $\theta$ in (i+1) iteration, compute:$$\begin{align*} Q(\theta,\theta^{(i)}) &amp;=\mathbb{E_{z}} \left[P(Z,Y|\theta)P(Z|Y,\theta^{(i)}) \right] \\&amp;= \sum_{Z} P(Z,Y|\theta)P(Z|Y,\theta^{(i)}) \end{align*}$$</li>
 <li>M step: find $\theta$ which gives the smallest $Q(\theta,\theta^{(i)})$:$$\theta^{(i+1)} = \arg \max_{\theta} Q(\theta,\theta^{(i)})$$</li>
 <li>Repeat steps (2) and (3) until convergence, the stop condition is usually a small positive number $\epsilon$</li>
@@ -98,7 +98,14 @@ feature_image: "https://i.postimg.cc/wBgmqWcX/wallhaven-kx98xd.jpg"
 <p>Note: Jensen inequality is used in the derivation.</p>
 <p>$$\log P(Y|\theta^{(i+1)})-\log P(Y|\theta^{(i+1)}) \\ = \overbrace{\left [ Q'(\theta,\theta^{(i+1)})-Q'(\theta,\theta^{(i)})\right]}^{&gt;0}-\underbrace{\left[H(\theta,\theta^{(i+1)})-H(\theta,\theta^{(i)}) \right] }_{&lt;0}\geq 0$$</p>
 <p>If $P(Y|\theta)$ has upper boundary, then the $L(\theta^{(i)})$ will converge to a specific value.</p>
-<p>&nbsp;</p>
+
+
+<h3>EM algorithm in GMMs</h3>
+<p>One important application of EM algorithm is GMMs.</p>
+<p>Definition of GMMs: Gaussian mixture model refers to the probability model that has the following distribution:</p>
+<p>$$P(y|\theta)=\sum_{k=1}^{K} \alpha_{k} \phi(y|\theta_k)$$</p>
+<p>where $\alpha_k$ is the coefficient, $\alpha_k \geq 0, \sum_{k=1}^{K} \alpha_k =1$, and $\theta_k =(\mu_k,\sigma_{k}^2)$ is the parameters of the kth model:</p>
+<p>$$\phi(y|\theta_k)=\frac{1}{\sqrt{2 \pi} \sigma_k} \exp(-frac{(y-\mu_k)^2}{2\sigma^2})$$</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 
