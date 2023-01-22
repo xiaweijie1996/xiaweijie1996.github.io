@@ -121,12 +121,26 @@ feature_image: "https://i.postimg.cc/wBgmqWcX/wallhaven-kx98xd.jpg"
 <h3>General EM alorithm</h3>
 <p>Assuming the&nbsp; distribution of hidden variable $Z$ is $ \widetilde{P}(Z)$, we define a $F\,\, function$ below:</p>
 <p>$$F(\widetilde{P}(Z),\theta)=\mathbb{E} \left[\log P(Y,Z|\theta)+H(\widetilde{P}) \right]$$</p>
-<p>where $H(\widetilde{P})=-\mathbb{E}_{\widetilde{P}}[\log P(Z)]$ is the entropy of $\widetilde{P}(Z)$.</p>
+<p>where $H(\widetilde{P})=-\mathbb{E}_{\widetilde{P}}[\log \widetilde{P}(Z)]$ is the entropy of $\widetilde{P}(Z)$.</p>
 <p>For fixed value of $\theta$, existing a $\widetilde{P_{\theta}}(Z)$ which maximizes the value of $F\,\, function%.</p>
 <p>Proof:</p>
 <p>Introducing Lagrange function：</p>
 <p>$$L=\mathbb{E}_{\widetilde{P_{\theta}}} \log P(Z,Y|\theta)- \mathbb{E}_{\widetilde{P_{\theta}}} \log\widetilde{P_{\theta}}(Z)+\lambda(1-\sum_{Z} P(Z)) $$</p>
 <p>Note: $\sum_{Z} P(Z)=1$</p>
+<p>Compute the derivative:</p>
+<p>$$\frac{\partial L}{\partial \widetile{P}(Z)}=\log P(Y,Z|\theta)-log \widetile{P}(Z)-1-\lambda$$.</p>
+<p>When $\frac{\partial L}{\partial \widetile{P}(Z)}=0$, we get the maximum value:</p>
+<p>$$\lambda=\log P(Y,Z|\theta)-\log \widetile{P}(Z)-1 \\ \rightarrow \frac{P(Y,Z|\theta)}{\widetile{P_{\theta}(Z)}}=e^{1+\lambda} \\ $$</p>
+<p>Therefore, we know $\widetile{P}(Z)=P(Z|Y,\theta)$ gives the biggest $F$ when $\theta$ is fixed.</p>
+<p><strong>GEM algorithm</strong></p>
+<p>Input: Observable data, $F\,\,Function$</p>
+<p>Output: Model parameters</p>
+<ol>
+<li>Initializing $\theta^{(0)}$.</li>
+<li>Fix $\theta^{(i)}$, compute the $\widetile{P}^{i+1}(Z)$ which maximize the $H(\widetile{P},\theta^{(i)})$.</li>
+<li>Fix $\widetile{P}^{i+1}(Z)$, find $\theta^{(i+1)}$ which maximize the $H(\widetile{P}^{i+1},\theta)$.</li>
+<li>Repeat (3) and (4) until converge.</li>
+</ol>
 <p>&nbsp;</p>
 
 
