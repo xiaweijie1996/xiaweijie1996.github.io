@@ -128,17 +128,17 @@ feature_image: "https://i.postimg.cc/wBgmqWcX/wallhaven-kx98xd.jpg"
 <p>$$L=\mathbb{E}_{\widetilde{P_{\theta}}} \log P(Z,Y|\theta)- \mathbb{E}_{\widetilde{P_{\theta}}} \log\widetilde{P_{\theta}}(Z)+\lambda(1-\sum_{Z} P(Z)) $$</p>
 <p>Note: $\sum_{Z} P(Z)=1$</p>
 <p>Compute the derivative:</p>
-<p>$$\frac{\partial L}{\partial \widetide{P}(Z)}=\log P(Y,Z|\theta)-log \widetide{P}(Z)-1-\lambda$$.</p>
-<p>When $\frac{\partial L}{\partial \widetide{P}(Z)}=0$, we get the maximum value:</p>
-<p>$$\lambda=\log P(Y,Z|\theta)-\log \widetide{P}(Z)-1 \\ \rightarrow \frac{P(Y,Z|\theta)}{\widetide{P_{\theta}(Z)}}=e^{1+\lambda} \\ $$</p>
-<p>Therefore, we know $\widetide{P}(Z)=P(Z|Y,\theta)$ gives the biggest $F$ when $\theta$ is fixed.</p>
+<p>$$\frac{\partial L}{\partial \widetilde{P}(Z)}=\log P(Y,Z|\theta)-log \widetilde{P}(Z)-1-\lambda$$.</p>
+<p>When $\frac{\partial L}{\partial \widetilde{P}(Z)}=0$, we get the maximum value:</p>
+<p>$$\lambda=\log P(Y,Z|\theta)-\log \widetilde{P}(Z)-1 \\ \rightarrow \frac{P(Y,Z|\theta)}{\widetilde{P_{\theta}(Z)}}=e^{1+\lambda} \\ $$</p>
+<p>Therefore, we know $\widetilde{P}(Z)=P(Z|Y,\theta)$ gives the biggest $F$ when $\theta$ is fixed.</p>
 <p><strong>GEM algorithm</strong></p>
 <p>Input: Observable data, $F\,\,Function$</p>
 <p>Output: Model parameters</p>
 <ol>
 <li>Initializing $\theta^{(0)}$.</li>
-<li>Fix $\theta^{(i)}$, compute the $\widetide{P}^{i+1}(Z)$ which maximize the $H(\widetide{P},\theta^{(i)})$.</li>
-<li>Fix $\widetide{P}^{i+1}(Z)$, find $\theta^{(i+1)}$ which maximize the $H(\widetide{P}^{i+1},\theta)$.</li>
+<li>Fix $\theta^{(i)}$, compute the $\widetilde{P}^{i+1}(Z)$ which maximize the $H(\widetilde{P},\theta^{(i)})$.</li>
+<li>Fix $\widetilde{P}^{i+1}(Z)$, find $\theta^{(i+1)}$ which maximize the $H(\widetilde{P}^{i+1},\theta)$.</li>
 <li>Repeat (3) and (4) until converge.</li>
 </ol>
 <p>&nbsp;</p>
