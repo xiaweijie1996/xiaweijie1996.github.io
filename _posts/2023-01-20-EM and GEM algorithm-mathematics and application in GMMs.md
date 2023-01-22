@@ -112,8 +112,9 @@ feature_image: "https://i.postimg.cc/wBgmqWcX/wallhaven-kx98xd.jpg"
 <p>With the observable data and unobservable data, the completed data is:</p>
 <p>$$(y_j, \gamma_{j1},\gamma_{j2},..,\gamma_{jk}), \,\,\,j \in \left[1,2,..N&nbsp; \right]$$</p>
 <p>The maximum likelihood function of completed data:</p>
-<p>$$\begin{align*}&nbsp; P(y,\gamma|\theta) &amp;=\prod_{j=1}^{N} P(y_j, \gamma_{j1},\gamma_{j2},..,\gamma_{jk}|\theta) \\&amp;=\prod_{k=1}^{k} \prod_{j=1}^{N} \left[ \alpha_k \phi_k(y_j|\theta_k) \right]^\gamma_{jk}\\ &amp;=\prod_{k=1}^{k} \alpha^{k]^{n_k} \prod_{j=1}^{N}\phi_k(y_j|\theta_k) \\ &amp;= \prod_{k=1}^{k} \alpha^{k]^{n_k} \prod_{j=1}^{N} \left[ \frac{1}{\sqrt{2 \pi} \sigma_k} \exp(-\frac{(y-\mu_k)^2}{2\sigma^2}) \right]^\gamma_{jk}\end{align*}$$</p>
+<p>$$\begin{align*}&nbsp; <br />P(y,\gamma|\theta) &amp;=\prod_{j=1}^{N} P(y_j, \gamma_{j1},\gamma_{j2},..,\gamma_{jk}|\theta) \\&amp;=\prod_{k=1}^{k} \prod_{j=1}^{N} \left[ \alpha_k \phi_k(y_j|\theta_k) \right]^\gamma_{jk}\\ &amp;=\prod_{k=1}^{k} {\alpha_{k}}^{n_k} \prod_{j=1}^{N}\phi_k(y_j|\theta_k) \\ &amp;= \prod_{k=1}^{k} {\alpha_{k}^{n_k} \prod_{j=1}^{N} \left[ \frac{1}{\sqrt{2 \pi} \sigma_k} \exp(-\frac{(y-\mu_k)^2}{2\sigma^2}) \right]^{\gamma_{jk}}\end{align*}$$</p>
 <p>where $n_k=\sum_{j=1}{N}\gamma_{jk}, \sum_{k=1}^{K} n_k=1$</p>
-<p>&nbsp;</p>
+
+
 
 updata soon...
