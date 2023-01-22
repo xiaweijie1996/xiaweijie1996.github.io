@@ -102,10 +102,20 @@ feature_image: "https://i.postimg.cc/wBgmqWcX/wallhaven-kx98xd.jpg"
 <p>Then, by substituting $\mathbb{E}(\gamma_{jk}|y,\theta)$, we get:</p>
 <p>$$Q(\theta,\theta^{(i)})=\sum_{k=1}^{K}\left[\sum_{j=1}^{N}n_k \log \alpha_k + \sum_{j=1}^{N}\bar{\gamma_{jk}} \left[\log (\frac{1}{\sqrt{2\pi}})-\log\sigma_k-\frac{1}{2{\sigma_k}^2}(y_j-\mu_k)^2 \right] \right]$$</p>
 <p>M step:</p>
-<p>To find the $\theta$, which maximizes the $Q$, we only need to compute the partial derivative of $Q$ to $\alpha, \mu, \sigma^2$ with the constrain $\sum_{k=1}{K}\alpha_k =1$. After computation, we can get the following:</p>
+<p>To find the $\theta$, which maximizes the $Q$, we only need to compute the partial derivative of $Q$ to $\alpha, \mu, \sigma^2$ with the constrain $\sum_{k=1}^{K}\alpha_k =1$. After computation, we can get the following:</p>
 <p>$$\bar{\mu_k}=\frac{\sum_{j=1}^{N}\bar{\gamma_{jk}}y_i}{\sum_{j=1}^{N}\bar{\gamma_{jk}}}$$</p>
 <p>$$\bar{\sigma^2_k}=\frac{\sum_{j=1}^{N}\bar{\gamma_{jk}}(y_i-\mu_k)^2}{\sum_{j=1}^{N}\bar{\gamma_{jk}}}$$</p>
-<p>$$\alpha_k=\frac{n_k}{N}=\frac{\sum_{j=1}^{N}\gamma_{jk}}{N}$$</p>
+<p>$$\bar{\alpha_k}=\frac{n_k}{N}=\frac{\sum_{j=1}^{N}\gamma_{jk}}{N}$$</p>
+<p><strong>GMM parameters estimation using EM algorithm</strong></p>
+<p>Input: Observable data $y_1,...y_N$, GMM</p>
+<p>Oputput: GMM parameters</p>
+<ul>
+<li>Intilizate all parameters $\theta^{(0)}$</li>
+<li>E step: Compute $\gamma_{jk}$ based on $\theta^{(i)}$.</li>
+<li>M step: Comupte the $\bar{\mu_k},\bar{\sigma^2_k},\bar{\alpha_k}$</li>
+<li>Repet step $2,3$ until convergence.</li>
+</ul>
+<p>&nbsp;</p>
 <p>&nbsp;</p>
 
 updata soon...
