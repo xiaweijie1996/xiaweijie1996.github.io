@@ -115,7 +115,7 @@ feature_image: "https://i.postimg.cc/wBgmqWcX/wallhaven-kx98xd.jpg"
 <p>$$\begin{align*}&nbsp; P(y,\gamma|\theta) &amp;=\prod_{j=1}^{N} P(y_j, \gamma_{j1},\gamma_{j2},..,\gamma_{jk}|\theta) \\&amp;=\prod_{k=1}^{k} \prod_{j=1}^{N} \left[ \alpha_k \phi_k(y_j|\theta_k) \right]^\gamma_{jk}\\ &amp;=\prod_{k=1}^{k} {\alpha_{k}}^{n_k} \prod_{j=1}^{N}\phi_k(y_j|\theta_k) \\ &amp;= \prod_{k=1}^{k} {\alpha_{k}^{n_k} \prod_{j=1}^{N} \left[ \frac{1}{\sqrt{2 \pi} \sigma_k} \exp(-\frac{(y-\mu_k)^2}{2\sigma^2}) \right]^{\gamma_{jk}}\end{align*}$$</p>
 <p>where $n_k=\sum_{j=1}{N}\gamma_{jk}, \sum_{k=1}^{K} n_k=1$.</p>
 <p>Then, the log of the likelihood function of completed data is：</p>
-<p>$$\log P(y,\gamma|\theta)=$$</p>
+<p>$$\log P(y,\gamma|\theta)=\sum_{k=1}^{K}\left[n_k \alpha_k + \sum_{j=1}^{N}\gamma_{jk} \log (\frac{1}{\sqrt{2\pi}})-\log\sigma_k-\frac{1}{2{\sigma_k}^2}(y_j-\mu_k)^2 \right]$$</p>
 
 
 
