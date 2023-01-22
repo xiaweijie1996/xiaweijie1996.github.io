@@ -78,29 +78,29 @@ feature_image: "https://i.postimg.cc/wBgmqWcX/wallhaven-kx98xd.jpg"
 <p>We now have proof that, by maximizing $Q\,\, funciton$, we essentially maximize the $B\,\,function$, which is the lower bound of the $L(\theta)$, and indirectly maximizing the $L(\theta)$. The figure below shows how $L(\theta)$ increases with the lower bound.</p>
 <p><img style="display: block; margin-left: auto; margin-right: auto;" src="https://i.postimg.cc/Y07ZWZN8/We-Chat-Image-20230121003101.jpg" alt="EM algorithm optimization" width="528" height="380" /></p>
 
-<h3>Convergence of EM Algorithm</h3>
-<p>EM algorithm provides a method to estimate the maximum likelihood of probability models with hidden variables. we have proof that the EM algorithm is able to optimize the lower bound of the likelihood. But there is still a problem we have not considered, which is the convergence of the EM algorithm.</p>
-<p>According the EM algorithm, we know that the $P(Y|\theta^{(i)}), \,i=[1,2,3,...]$ is nondecreasing. which means:</p>
-<p>$$P(Y|\theta^{(i+1)})\geq P(Y|\theta^{(i)})$$</p>
-<p>Because:</p>
-<p>$$P(Y|\theta)=\frac{P(Y,Z|\theta)}{P(Z|Y,\theta)}$$</p>
-<p>$$\rightarrow \log P(Y|\theta)=\log{P(Y,Z|\theta)}-\log {P(Z|Y,\theta)}$$</p>
-<p>Define $H(\theta,\theta^{(i)}),Q'(\theta,\theta^{(i)})$ :<br />$$H(\theta,\theta^{(i)})=\sum_{Z} \log P(Z|Y,\theta)P(Z|Y,\theta)^{(i)}$$</p>
-<p>$$Q'(\theta,\theta^{(i)})=\sum_{Z} \log P(Y,Z|\theta)P(Z|Y,\theta^{(i)})$$</p>
-<p>Then the log-likelihood can be written as:</p>
-<p>$$\log P(Y|\theta)=Q'(\theta,\theta^{(i)})-h(\theta,\theta^{(i)})$$</p>
-<p>Then:</p>
-<p>$$ \log P(Y|\theta^{(i+1)})-\log P(Y|\theta^{(i+1)}) \\ =\left [ Q'(\theta,\theta^{(i+1)})-Q'(\theta,\theta^{(i)})\right]-\left[H(\theta,\theta^{(i+1)})-H(\theta,\theta^{(i)}) \right]&nbsp;$$</p>
-<p>For the first part of the equation above, obviously, we have the following:</p>
-<p>$$Q'(\theta,\theta^{(i+1)})-Q'(\theta,\theta^{(i)})\geq 0$$</p>
-<p>For the second part:</p>
-<p>$$\begin{align*} H(\theta,\theta^{(i+1)})-H(\theta,\theta^{(i)}) &amp;=\sum_{Z} (\log\frac{P(Z|Y,\theta^{(i+1)})}{P(Z|Y,\theta^{(i)})}P(Z|\theta^{(i)})) \\&nbsp; &amp; \leq \log(\sum_{Z} \frac{P(Z|Y,\theta^{(i+1)})}{P(Z|Y,\theta^{(i)})}P(Z|\theta^{(i)}) \\ &amp;= \log(\sum_{Z}P(Z|Y,\theta^{(i+1)})) =0 \end{align*}$$</p>
-<p>Note: Jensen inequality is used in the derivation.</p>
-<p>$$\log P(Y|\theta^{(i+1)})-\log P(Y|\theta^{(i+1)}) \\ = \overbrace{\left [ Q'(\theta,\theta^{(i+1)})-Q'(\theta,\theta^{(i)})\right]}^{&gt;0}-\underbrace{\left[H(\theta,\theta^{(i+1)})-H(\theta,\theta^{(i)}) \right] }_{&lt;0}\geq 0$$</p>
-<p>If $P(Y|\theta)$ has upper boundary, then the $L(\theta^{(i)})$ will converge to a specific value.</p>
 
-
-$$Q(\theta,\theta^{(i)})=\mathbb{E} \left[\log P(y,\gamma|\theta) \right] \\ = \mathbb{E}\left\{\sum_{k=1}^{K}\left[n_k \log \alpha_k + \sum_{j=1}^{N}\gamma_{jk} \left[\log (\frac{1}{\sqrt{2\pi}})-\log\sigma_k-\frac{1}{2{\sigma_k}^2}(y_j-\mu_k)^2 \right] \right] \right\} \\=\sum_{k=1}^{K}\left[\sum_{j=1}^{N}\mathbb{E}(\gamma_{jk}) \log \alpha_k + \sum_{j=1}^{N}\mathbb{E}(\gamma_{jk}) \left[\log (\frac{1}{\sqrt{2\pi}})-\log\sigma_k-\frac{1}{2{\sigma_k}^2}(y_j-\mu_k)^2 \right] \right]$$
-
+<h3>EM algorithm in GMMs</h3>
+<p>One important application of EM algorithm is GMMs.</p>
+<p>Definition of GMMs: Gaussian mixture model refers to the probability model that has the following distribution:</p>
+<p>$$P(y|\theta)=\sum_{k=1}^{K} \alpha_{k} \phi(y|\theta_k)$$</p>
+<p>where $\alpha_k$ is the coefficient, $\alpha_k \geq 0, \sum_{k=1}^{K} \alpha_k =1$, and $\theta_k =(\mu_k,\sigma_{k}^2)$ is the parameters of the kth model:</p>
+<p>$$\phi(y|\theta_k)=\frac{1}{\sqrt{2 \pi} \sigma_k} \exp(-\frac{(y-\mu_k)^2}{2\sigma^2})$$</p>
+<p>We can imagine an experiment in which we first choose a Gaussian distribution model according to $\alpha$ and then generate the observable data $y$ by sampling data from the Gaussian distribution model selected in the previous step.</p>
+<p>Assuming the observable variable is $y_i, i \in \left[ 1,2,...,N \right]$. The unobservable variable is $\gamma_{jk}$, $k \in \left[ 1,2,...,N \right]$ is the number of Gaussian distribution models, the value of $\gamma_{jk}$ is:</p>
+<p>$$ \gamma_{jk}=\left\{ \begin{aligned}&amp; 1, the \,data\,of\, y_j\, comes\,from\,model\, k&nbsp; \\&nbsp; &amp; 0, otherwise \end{aligned} \right.\\ j=1,2,..N \,\,\, k=1,2,3,..N $$</p>
+<p>With the observable data and unobservable data, the completed data is:</p>
+<p>$$(y_j, \gamma_{j1},\gamma_{j2},..,\gamma_{jk}), \,\,\,j \in \left[1,2,..N&nbsp; \right]$$</p>
+<p>The maximum likelihood function of completed data:</p>
+<p>$$P(y,\gamma|\theta) = \prod_{j=1}^{N} P(y_j, \gamma_{j1},\gamma_{j2},..,\gamma_{jk}|\theta) \\ =\prod_{k=1}^{k} \prod_{j=1}^{N} \left[ \alpha_k \phi_k(y_j|\theta_k) \right]^{\gamma_{jk}}\\ =\prod_{k=1}^{k} {\alpha_{k}}^{n_k} \prod_{j=1}^{N}\phi_k(y_j|\theta_k)\\ =&nbsp;\prod_{k=1}^{k} {\alpha_{k}}^{n_k} \prod_{j=1}^{N} \left[ \frac{1}{\sqrt{2 \pi} \sigma_k} \exp(-\frac{(y-\mu_k)^2}{2\sigma^2}) \right]^{\gamma_{jk}} $$</p>
+<p>where $n_k=\sum_{j=1}{N}\gamma_{jk}, \sum_{k=1}^{K} n_k=1$.</p>
+<p>Then, the log of the likelihood function of completed data is：</p>
+<p>$$\log P(y,\gamma|\theta)=\sum_{k=1}^{K}\left[n_k \log \alpha_k + \sum_{j=1}^{N}\gamma_{jk} \left[\log (\frac{1}{\sqrt{2\pi}})-\log\sigma_k-\frac{1}{2{\sigma_k}^2}(y_j-\mu_k)^2 \right] \right]$$</p>
+<p>Let's start using the EM algorithm:</p>
+<p>E step:<br />$$Q(\theta,\theta^{(i)})=\mathbb{E} \left[\log P(y,\gamma|\theta) \right] \\ = \mathbb{E}\left\{\sum_{k=1}^{K}\left[n_k \log \alpha_k + \sum_{j=1}^{N}\gamma_{jk} \left[\log (\frac{1}{\sqrt{2\pi}})-\log\sigma_k-\frac{1}{2{\sigma_k}^2}(y_j-\mu_k)^2 \right] \right] \right\} \\=\sum_{k=1}^{K}\left[\sum_{j=1}^{N}\mathbb{E}(\gamma_{jk}) \log \alpha_k + \sum_{j=1}^{N}\mathbb{E}(\gamma_{jk}) \left[\log (\frac{1}{\sqrt{2\pi}})-\log\sigma_k-\frac{1}{2{\sigma_k}^2}(y_j-\mu_k)^2 \right] \right]$$</p>
+<p>&nbsp;</p>
+<p>Line separate:::::</p>
+<p>$$P(y,\gamma|\theta) =\prod_{j=1}^{N} P(y_j, \gamma_{j1},\gamma_{j2},..,\gamma_{jk}|\theta) \\=\prod_{k=1}^{k} \prod_{j=1}^{N} \left[ \alpha_k \phi_k(y_j|\theta_k) \right]^\gamma_{jk}\\ =\prod_{k=1}^{k} {\alpha_{k}}^{n_k} \prod_{j=1}^{N}\phi_k(y_j|\theta_k) \\ = \prod_{k=1}^{k} {\alpha_{k}^{n_k} \prod_{j=1}^{N} \left[ \frac{1}{\sqrt{2 \pi} \sigma_k} \exp(-\frac{(y-\mu_k)^2}{2\sigma^2}) \right]^{\gamma_{jk}}$$</p>
+<p>&nbsp;</p>
+<p>$$Q(\theta,\theta^{(i)})=\mathbb{E}\left[\log P(y,\gamma|\theta) \right] \\ = \mathbb{E}\left{\sum_{k=1}^{K}\left[n_k \log \alpha_k + \sum_{j=1}^{N}\gamma_{jk} \left[\log (\frac{1}{\sqrt{2\pi}})-\log\sigma_k-\frac{1}{2{\sigma_k}^2}(y_j-\mu_k)^2 \right] \right] \right}\\=\sum_{k=1}^{K}\left[\sum_{j=1}^{N}\mathbb{E}(\gamma_{jk}) \log \alpha_k + \sum_{j=1}^{N}\mathbb{E}(\gamma_{jk}) \left[\log (\frac{1}{\sqrt{2\pi}})-\log\sigma_k-\frac{1}{2{\sigma_k}^2}(y_j-\mu_k)^2 \right] \right]$$</p>
 
 updata soon...
