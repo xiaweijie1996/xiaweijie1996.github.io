@@ -150,7 +150,3 @@ feature_image: "https://i.postimg.cc/wBgmqWcX/wallhaven-kx98xd.jpg"
 <p>In the context of probability theory, it is generally stated in the following form: if X is a random variable and &phi; is a convex function, then:</p>
 <p>$$\varphi (\mathbb{E}[X] \leq \mathbb{E}[\varphi(X)])$$</p>
 
-
-
-
-updata soon...
