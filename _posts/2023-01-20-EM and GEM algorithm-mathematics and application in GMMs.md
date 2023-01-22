@@ -116,9 +116,10 @@ feature_image: "https://i.postimg.cc/wBgmqWcX/wallhaven-kx98xd.jpg"
 <p>where $n_k=\sum_{j=1}{N}\gamma_{jk}, \sum_{k=1}^{K} n_k=1$.</p>
 <p>Then, the log of the likelihood function of completed data is：</p>
 <p>$$\log P(y,\gamma|\theta)=\sum_{k=1}^{K}\left[n_k \log \alpha_k + \sum_{j=1}^{N}\gamma_{jk} \left[\log (\frac{1}{\sqrt{2\pi}})-\log\sigma_k-\frac{1}{2{\sigma_k}^2}(y_j-\mu_k)^2 \right] \right]$$</p>
+<p>Let start using EM algorithm:</p>
+<p>E step:<br />$$Q(\theta,\theta^{(i)})=\mathbb{E}\left[\log P(y,\gamma|\theta) \right] \\ = \mathbb{E}\left{\sum_{k=1}^{K}\left[n_k \log \alpha_k + \sum_{j=1}^{N}\gamma_{jk} \left[\log (\frac{1}{\sqrt{2\pi}})-\log\sigma_k-\frac{1}{2{\sigma_k}^2}(y_j-\mu_k)^2 \right] \right] \right}\\=\sum_{k=1}^{K}\left[\sum_{j=1}^{N}\mathbb{E}(\gamma_{jk}) \log \alpha_k + \sum_{j=1}^{N}\mathbb{E}(\gamma_{jk}) \left[\log (\frac{1}{\sqrt{2\pi}})-\log\sigma_k-\frac{1}{2{\sigma_k}^2}(y_j-\mu_k)^2 \right] \right]$$</p>
 <p>&nbsp;</p>
 <p>$$P(y,\gamma|\theta) =\prod_{j=1}^{N} P(y_j, \gamma_{j1},\gamma_{j2},..,\gamma_{jk}|\theta) \\=\prod_{k=1}^{k} \prod_{j=1}^{N} \left[ \alpha_k \phi_k(y_j|\theta_k) \right]^\gamma_{jk}\\ =\prod_{k=1}^{k} {\alpha_{k}}^{n_k} \prod_{j=1}^{N}\phi_k(y_j|\theta_k) \\ = \prod_{k=1}^{k} {\alpha_{k}^{n_k} \prod_{j=1}^{N} \left[ \frac{1}{\sqrt{2 \pi} \sigma_k} \exp(-\frac{(y-\mu_k)^2}{2\sigma^2}) \right]^{\gamma_{jk}}$$</p>
-
 
 
 updata soon...
