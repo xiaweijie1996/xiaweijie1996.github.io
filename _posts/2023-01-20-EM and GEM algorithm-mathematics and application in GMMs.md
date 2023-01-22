@@ -100,30 +100,7 @@ feature_image: "https://i.postimg.cc/wBgmqWcX/wallhaven-kx98xd.jpg"
 <p>If $P(Y|\theta)$ has upper boundary, then the $L(\theta^{(i)})$ will converge to a specific value.</p>
 
 
-<h3>EM algorithm in GMMs</h3>
-<p>One important application of EM algorithm is GMMs.</p>
-<p>Definition of GMMs: Gaussian mixture model refers to the probability model that has the following distribution:</p>
-<p>$$P(y|\theta)=\sum_{k=1}^{K} \alpha_{k} \phi(y|\theta_k)$$</p>
-<p>where $\alpha_k$ is the coefficient, $\alpha_k \geq 0, \sum_{k=1}^{K} \alpha_k =1$, and $\theta_k =(\mu_k,\sigma_{k}^2)$ is the parameters of the kth model:</p>
-<p>$$\phi(y|\theta_k)=\frac{1}{\sqrt{2 \pi} \sigma_k} \exp(-\frac{(y-\mu_k)^2}{2\sigma^2})$$</p>
-<p>We can imagine an experiment in which we first choose a Gaussian distribution model according to $\alpha$ and then generate the observable data $y$ by sampling data from the Gaussian distribution model selected in the previous step.</p>
-<p>Assuming the observable variable is $y_i, i \in \left[ 1,2,...,N \right]$. The unobservable variable is $\gamma_{jk}$, $k \in \left[ 1,2,...,N \right]$ is the number of Gaussian distribution models, the value of $\gamma_{jk}$ is:</p>
-<p>$$ \gamma_{jk}=\left\{ \begin{aligned}&amp; 1, the \,data\,of\, y_j\, comes\,from\,model\, k&nbsp; \\&nbsp; &amp; 0, otherwise \end{aligned} \right.\\ j=1,2,..N \,\,\, k=1,2,3,..N $$</p>
-<p>With the observable data and unobservable data, the completed data is:</p>
-<p>$$(y_j, \gamma_{j1},\gamma_{j2},..,\gamma_{jk}), \,\,\,j \in \left[1,2,..N&nbsp; \right]$$</p>
-<p>The maximum likelihood function of completed data:</p>
-<p>$$P(y,\gamma|\theta) = \prod_{j=1}^{N} P(y_j, \gamma_{j1},\gamma_{j2},..,\gamma_{jk}|\theta) \\ =\prod_{k=1}^{k} \prod_{j=1}^{N} \left[ \alpha_k \phi_k(y_j|\theta_k) \right]^{\gamma_{jk}}\\ =\prod_{k=1}^{k} {\alpha_{k}}^{n_k} \prod_{j=1}^{N}\phi_k(y_j|\theta_k)\\ =&nbsp;\prod_{k=1}^{k} {\alpha_{k}^{n_k} \prod_{j=1}^{N} \left[ \frac{1}{\sqrt{2 \pi} \sigma_k} \exp(-\frac{(y-\mu_k)^2}{2\sigma^2}) \right]^{\gamma_{jk}} $$</p>
-<p>where $n_k=\sum_{j=1}{N}\gamma_{jk}, \sum_{k=1}^{K} n_k=1$.</p>
-<p>Then, the log of the likelihood function of completed data is：</p>
-<p>$$\log P(y,\gamma|\theta)=\sum_{k=1}^{K}\left[n_k \log \alpha_k + \sum_{j=1}^{N}\gamma_{jk} \left[\log (\frac{1}{\sqrt{2\pi}})-\log\sigma_k-\frac{1}{2{\sigma_k}^2}(y_j-\mu_k)^2 \right] \right]$$</p>
-<p>Let's start using the EM algorithm:</p>
-<p>E step:<br />$$Q(\theta,\theta^{(i)})=\mathbb{E}\left[\log P(y,\gamma|\theta) \right] \\ = \mathbb{E}\left{\sum_{k=1}^{K}\left[n_k \log \alpha_k + \sum_{j=1}^{N}\gamma_{jk} \left[\log (\frac{1}{\sqrt{2\pi}})-\log\sigma_k-\frac{1}{2{\sigma_k}^2}(y_j-\mu_k)^2 \right] \right] \right}$$</p>
-<p>&nbsp;</p>
-<p>\\=\sum_{k=1}^{K}\left[\sum_{j=1}^{N}\mathbb{E}(\gamma_{jk}) \log \alpha_k + \sum_{j=1}^{N}\mathbb{E}(\gamma_{jk}) \left[\log (\frac{1}{\sqrt{2\pi}})-\log\sigma_k-\frac{1}{2{\sigma_k}^2}(y_j-\mu_k)^2 \right] \right]$$</p>
-<p>&nbsp;</p>
-<p>Line separate:::::</p>
-<p>$$P(y,\gamma|\theta) =\prod_{j=1}^{N} P(y_j, \gamma_{j1},\gamma_{j2},..,\gamma_{jk}|\theta) \\=\prod_{k=1}^{k} \prod_{j=1}^{N} \left[ \alpha_k \phi_k(y_j|\theta_k) \right]^\gamma_{jk}\\ =\prod_{k=1}^{k} {\alpha_{k}}^{n_k} \prod_{j=1}^{N}\phi_k(y_j|\theta_k) \\ = \prod_{k=1}^{k} {\alpha_{k}^{n_k} \prod_{j=1}^{N} \left[ \frac{1}{\sqrt{2 \pi} \sigma_k} \exp(-\frac{(y-\mu_k)^2}{2\sigma^2}) \right]^{\gamma_{jk}}$$</p>
-<p>&nbsp;</p>
-<p>$$Q(\theta,\theta^{(i)})=\mathbb{E}\left[\log P(y,\gamma|\theta) \right] \\ = \mathbb{E}\left{\sum_{k=1}^{K}\left[n_k \log \alpha_k + \sum_{j=1}^{N}\gamma_{jk} \left[\log (\frac{1}{\sqrt{2\pi}})-\log\sigma_k-\frac{1}{2{\sigma_k}^2}(y_j-\mu_k)^2 \right] \right] \right}\\=\sum_{k=1}^{K}\left[\sum_{j=1}^{N}\mathbb{E}(\gamma_{jk}) \log \alpha_k + \sum_{j=1}^{N}\mathbb{E}(\gamma_{jk}) \left[\log (\frac{1}{\sqrt{2\pi}})-\log\sigma_k-\frac{1}{2{\sigma_k}^2}(y_j-\mu_k)^2 \right] \right]$$</p>
+$$Q(\theta,\theta^{(i)})=\mathbb{E} \left[\log P(y,\gamma|\theta) \right] \\ = \mathbb{E}\left\{\sum_{k=1}^{K}\left[n_k \log \alpha_k + \sum_{j=1}^{N}\gamma_{jk} \left[\log (\frac{1}{\sqrt{2\pi}})-\log\sigma_k-\frac{1}{2{\sigma_k}^2}(y_j-\mu_k)^2 \right] \right] \right\} \\=\sum_{k=1}^{K}\left[\sum_{j=1}^{N}\mathbb{E}(\gamma_{jk}) \log \alpha_k + \sum_{j=1}^{N}\mathbb{E}(\gamma_{jk}) \left[\log (\frac{1}{\sqrt{2\pi}})-\log\sigma_k-\frac{1}{2{\sigma_k}^2}(y_j-\mu_k)^2 \right] \right]$$
+
 
 updata soon...
