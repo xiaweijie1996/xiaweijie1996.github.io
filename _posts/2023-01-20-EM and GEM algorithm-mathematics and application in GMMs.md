@@ -79,6 +79,7 @@ feature_image: "https://i.postimg.cc/wBgmqWcX/wallhaven-kx98xd.jpg"
 <p><img style="display: block; margin-left: auto; margin-right: auto;" src="https://i.postimg.cc/Y07ZWZN8/We-Chat-Image-20230121003101.jpg" alt="EM algorithm optimization" width="528" height="380" /></p>
 
 
+
 <h3>EM algorithm in GMMs</h3>
 <p>One important application of EM algorithm is GMMs.</p>
 <p>Definition of GMMs: Gaussian mixture model refers to the probability model that has the following distribution:</p>
@@ -109,12 +110,12 @@ feature_image: "https://i.postimg.cc/wBgmqWcX/wallhaven-kx98xd.jpg"
 <p><strong>GMM parameters estimation using EM algorithm</strong></p>
 <p>Input: Observable data $y_1,...y_N$, GMM</p>
 <p>Oputput: GMM parameters</p>
-<ul>
+<ol>
 <li>Intilizate all parameters $\theta^{(0)}$</li>
 <li>E step: Compute $\gamma_{jk}$ based on $\theta^{(i)}$.</li>
 <li>M step: Comupte the $\bar{\mu_k},\bar{\sigma^2_k},\bar{\alpha_k}$</li>
 <li>Repet step $2,3$ until convergence.</li>
-</ul>
+</ol>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 
