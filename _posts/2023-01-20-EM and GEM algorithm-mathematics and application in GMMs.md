@@ -100,6 +100,6 @@ feature_image: "https://i.postimg.cc/wBgmqWcX/wallhaven-kx98xd.jpg"
 <p>Where the value of $\mathbb{E}(\gamma_{jk}|y,\theta)$ is:</p>
 <p>$$\begin{align*} \bar{\gamma_{jk}} &amp;= \mathbb{E}(\gamma_{jk}|y,\theta) \\ &amp;= P(\gamma_{jk}=1|y,\theta) \\ &amp;=\frac{P(\gamma_{jk}=1|y,\theta)}{\sum_{k=1}^{K}P(\gamma_{jk}=1,y_j|\theta)} \\ &amp;=\frac{P(\gamma_{jk}=1|y,\theta)P(\gamma_{jk}|\theta)}{\sum_{k=1}^{K}P(\gamma_{jk}=1,y_j|\theta)P(\gamma_{jk}|\theta)} \\ &amp;= \frac{\alpha_k \phi(j_i|\theta_k)}{\sum_{k=1}^{K}\alpha_k \phi(y_j|\theta_k)} \end{align*}$$</p>
 <p>Then, by substituting $\mathbb{E}(\gamma_{jk}|y,\theta)$, we get:</p>
-
+<p>$$Q(\theta,\theta^{(i)})=\sum_{k=1}^{K}\left[\sum_{j=1}^{N}n_k \log \alpha_k + \sum_{j=1}^{N}\bar{\gamma_{jk})} \left[\log (\frac{1}{\sqrt{2\pi}})-\log\sigma_k-\frac{1}{2{\sigma_k}^2}(y_j-\mu_k)^2 \right] \right]$$</p>
 
 updata soon...
