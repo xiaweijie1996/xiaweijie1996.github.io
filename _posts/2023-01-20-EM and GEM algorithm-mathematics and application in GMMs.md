@@ -130,7 +130,7 @@ feature_image: "https://i.postimg.cc/wBgmqWcX/wallhaven-kx98xd.jpg"
 <p>Compute the derivative:</p>
 <p>$$\frac{\partial L}{\partial \widetilde{P}(Z)}=\log P(Y,Z|\theta)-log \widetilde{P}(Z)-1-\lambda$$.</p>
 <p>When $\frac{\partial L}{\partial \widetilde{P}(Z)}=0$, we get the maximum value:</p>
-<p>$$\lambda=\log P(Y,Z|\theta)-\log \widetilde{P}(Z)-1 \\ \rightarrow \frac{P(Y,Z|\theta)}{\widetilde{P_{\theta}(Z)}}=e^{1+\lambda} \\ $$</p>
+<p>$$\lambda=\log P(Y,Z|\theta)-\log \widetilde{P}(Z)-1 \\ \rightarrow \frac{P(Y,Z|\theta)}{\widetilde{P_{\theta}}}(Z)=e^{1+\lambda} \\ $$</p>
 <p>Therefore, we know $\widetilde{P}(Z)=P(Z|Y,\theta)$ gives the biggest $F$ when $\theta$ is fixed.</p>
 <p><strong>GEM algorithm</strong></p>
 <p>Input: Observable data, $F\,\,Function$</p>
@@ -141,8 +141,14 @@ feature_image: "https://i.postimg.cc/wBgmqWcX/wallhaven-kx98xd.jpg"
 <li>Fix $\widetilde{P}^{i+1}(Z)$, find $\theta^{(i+1)}$ which maximize the $H(\widetilde{P}^{i+1},\theta)$.</li>
 <li>Repeat (3) and (4) until converge.</li>
 </ol>
-<p>&nbsp;</p>
 
+
+<h3>Appendix: Jensen inequality</h3>
+<p>Jensen's inequality generalizes the statement that the secant line of a convex function lies above the graph of the function, which is Jensen's inequality for two points: the secant line consists of weighted means of the convex function (for $t \in [0,1]$):</p>
+<p>Thus, $Jensen's\,\, inequality$ is:</p>
+<p>$$f(tx_1+(1-t)x_2)\geq tf(x_1)+(1-t)f(x_2)$$</p>
+<p>In the context of probability theory, it is generally stated in the following form: if X is a random variable and &phi; is a convex function, then:</p>
+<p>$$\varphi (\mathbb{E}[X] \leq \mathbb{E}[\varphi(X)])$$</p>
 
 
 
