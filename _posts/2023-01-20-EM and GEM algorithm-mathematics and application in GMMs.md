@@ -97,10 +97,9 @@ feature_image: "https://i.postimg.cc/wBgmqWcX/wallhaven-kx98xd.jpg"
 <p>$$\log P(y,\gamma|\theta)=\sum_{k=1}^{K}\left[n_k \log \alpha_k + \sum_{j=1}^{N}\gamma_{jk} \left[\log (\frac{1}{\sqrt{2\pi}})-\log\sigma_k-\frac{1}{2{\sigma_k}^2}(y_j-\mu_k)^2 \right] \right]$$</p>
 <p>Let's start using the EM algorithm:</p>
 <p>E step:<br />$$Q(\theta,\theta^{(i)})=\mathbb{E} \left[\log P(y,\gamma|\theta) \right] \\ = \mathbb{E}\left\{\sum_{k=1}^{K}\left[n_k \log \alpha_k + \sum_{j=1}^{N}\gamma_{jk} \left[\log (\frac{1}{\sqrt{2\pi}})-\log\sigma_k-\frac{1}{2{\sigma_k}^2}(y_j-\mu_k)^2 \right] \right] \right\} \\=\sum_{k=1}^{K}\left[\sum_{j=1}^{N}\mathbb{E}(\gamma_{jk}) \log \alpha_k + \sum_{j=1}^{N}\mathbb{E}(\gamma_{jk}) \left[\log (\frac{1}{\sqrt{2\pi}})-\log\sigma_k-\frac{1}{2{\sigma_k}^2}(y_j-\mu_k)^2 \right] \right]$$</p>
-<p>&nbsp;</p>
-<p>Line separate:::::</p>
-<p>$$P(y,\gamma|\theta) =\prod_{j=1}^{N} P(y_j, \gamma_{j1},\gamma_{j2},..,\gamma_{jk}|\theta) \\=\prod_{k=1}^{k} \prod_{j=1}^{N} \left[ \alpha_k \phi_k(y_j|\theta_k) \right]^\gamma_{jk}\\ =\prod_{k=1}^{k} {\alpha_{k}}^{n_k} \prod_{j=1}^{N}\phi_k(y_j|\theta_k) \\ = \prod_{k=1}^{k} {\alpha_{k}^{n_k} \prod_{j=1}^{N} \left[ \frac{1}{\sqrt{2 \pi} \sigma_k} \exp(-\frac{(y-\mu_k)^2}{2\sigma^2}) \right]^{\gamma_{jk}}$$</p>
-<p>&nbsp;</p>
-<p>$$Q(\theta,\theta^{(i)})=\mathbb{E}\left[\log P(y,\gamma|\theta) \right] \\ = \mathbb{E}\left{\sum_{k=1}^{K}\left[n_k \log \alpha_k + \sum_{j=1}^{N}\gamma_{jk} \left[\log (\frac{1}{\sqrt{2\pi}})-\log\sigma_k-\frac{1}{2{\sigma_k}^2}(y_j-\mu_k)^2 \right] \right] \right}\\=\sum_{k=1}^{K}\left[\sum_{j=1}^{N}\mathbb{E}(\gamma_{jk}) \log \alpha_k + \sum_{j=1}^{N}\mathbb{E}(\gamma_{jk}) \left[\log (\frac{1}{\sqrt{2\pi}})-\log\sigma_k-\frac{1}{2{\sigma_k}^2}(y_j-\mu_k)^2 \right] \right]$$</p>
+<p>Where the value of $\mathbb{E}(\gamma_{jk}|y,\theta)$ is:</p>
+<p>$$\begin{align*} \bar{\gamma_{jk}} &amp;= \mathbb{E}(\gamma_{jk}|y,\theta) \\ &amp;= P(\gamma_{jk}=1|y,\theta) \\ &amp;=\frac{P(\gamma_{jk}=1|y,\theta)}{\sum_{k=1}^{K}P(\gamma_{jk}=1,y_j|\theta)} \\ &amp;=\frac{P(\gamma_{jk}=1|y,\theta)P(\gamma_{jk}|\theta)}{\sum_{k=1}^{K}P(\gamma_{jk}=1,y_j|\theta)P(\gamma_{jk}|\theta)} \\ &amp;= \frac{\alpha_k \phi(j_i|\theta_k)}{\sum_{k=1}^{K}\alpha_k \phi(y_j|\theta_k)} \end{align*}$$</p>
+<p>Then, by substituting $\mathbb{E}(\gamma_{jk}|y,\theta)$, we get:</p>
+
 
 updata soon...
