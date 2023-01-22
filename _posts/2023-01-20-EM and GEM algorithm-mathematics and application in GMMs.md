@@ -103,7 +103,7 @@ feature_image: "https://i.postimg.cc/wBgmqWcX/wallhaven-kx98xd.jpg"
 <p>$$Q(\theta,\theta^{(i)})=\sum_{k=1}^{K}\left[\sum_{j=1}^{N}n_k \log \alpha_k + \sum_{j=1}^{N}\bar{\gamma_{jk}} \left[\log (\frac{1}{\sqrt{2\pi}})-\log\sigma_k-\frac{1}{2{\sigma_k}^2}(y_j-\mu_k)^2 \right] \right]$$</p>
 <p>M step:</p>
 <p>To find the $\theta$, which maximizes the $Q$, we only need to compute the partial derivative of $Q$ to $\alpha, \mu, \sigma^2$ with the constrain $\sum_{k=1}{K}\alpha_k =1$. After computation, we can get the following:</p>
-<p>$\bar{\mu_k}=\frac{\sum_{j=1}^{N}\bar{\gamma_{jk}}y_i}{\sum_{j=1}^{N}\bar{\gamma_{jk}}}$$</p>
+<p>$$\bar{\mu_k}=\frac{\sum_{j=1}^{N}\bar{\gamma_{jk}}y_i}{\sum_{j=1}^{N}\bar{\gamma_{jk}}}$$</p>
 <p>$$\bar{\sigma^2_k}=\frac{\sum_{j=1}^{N}\bar{\gamma_{jk}}(y_i-\mu_k)^2}{\sum_{j=1}^{N}\bar{\gamma_{jk}}}$$</p>
 <p>$$\alpha_k=\frac{n_k}{N}=\frac{\sum_{j=1}^{N}\gamma_{jk}}{N}$$</p>
 <p>&nbsp;</p>
