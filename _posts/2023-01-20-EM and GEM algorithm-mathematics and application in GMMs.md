@@ -119,13 +119,13 @@ feature_image: "https://i.postimg.cc/wBgmqWcX/wallhaven-kx98xd.jpg"
 
 
 <h3>General EM alorithm</h3>
-<p>Assuming the&nbsp; distribution of hidden variable $Z$ is $ \widetilde{P(Z)}$, we define a $F\,\, function$ below:</p>
+<p>Assuming the&nbsp; distribution of hidden variable $Z$ is $ \widetilde{P}(Z)$, we define a $F\,\, function$ below:</p>
 <p>$$F(\widetilde{P}(Z),\theta)=\mathbb{E} \left[\log P(Y,Z|\theta)+H(\widetilde{P}) \right]$$</p>
-<p>where $H(\widetilde{P})=-\mathbb{E}_{\widetilde{P}}[\log P(Z)]$ is the entropy of $\widetilde{P(Z)}$.</p>
-<p>For fixed value of $\theta$, existing a $\widetilde{P_{theta}}(Z)$ which maximizes the value of $F\,\, function%.</p>
+<p>where $H(\widetilde{P})=-\mathbb{E}_{\widetilde{P}}[\log P(Z)]$ is the entropy of $\widetilde{P}(Z)$.</p>
+<p>For fixed value of $\theta$, existing a $\widetilde{P_{\theta}}(Z)$ which maximizes the value of $F\,\, function%.</p>
 <p>Proof:</p>
 <p>Introducing Lagrange function：</p>
-<p>$$L=\mathbb{E}_{\widetilde{P_{\theta}}} \log P(Z,Y|\theta)- \mathbb{E}_{\widetilde{P_{theta}}} \log\widetilde{P_{theta}}(Z)+\lambda(1-\sum_{Z} P(Z)) $$</p>
+<p>$$L=\mathbb{E}_{\widetilde{P_{\theta}}} \log P(Z,Y|\theta)- \mathbb{E}_{\widetilde{P_{\theta}}} \log\widetilde{P_{\theta}}(Z)+\lambda(1-\sum_{Z} P(Z)) $$</p>
 <p>Note: $\sum_{Z} P(Z)=1$</p>
 <p>&nbsp;</p>
 
