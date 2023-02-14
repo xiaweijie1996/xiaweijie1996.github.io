@@ -50,11 +50,10 @@ feature_image: "https://i.postimg.cc/wBgmqWcX/wallhaven-kx98xd.jpg"
 <p>$$L_I(G,Q)=\mathbb{E}_{c \sim P(c), x \sim G(z,c)}[logQ(c|x)]+H(c) \leq I(c;G(z,c))$$</p>
 <p>Then adding $L_I(G,Q)$ variational regulation to original minimax function:</p>
 <p>$$\min \max V_I(D,G)=\mathbb{E}_{x \sim P_{data}}[LogD(x)]+\mathbb{E}_{z \sim noise}[log(1-D(G(z)))]-\lambda L_I(G,Q)$$</p>
-<p>$V_I(D,G)$ actual define a infoGAN.</p>
+<p>$V_I(D,G)$ then actually define a infoGAN.</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
+
 waiting to updata
 
 
