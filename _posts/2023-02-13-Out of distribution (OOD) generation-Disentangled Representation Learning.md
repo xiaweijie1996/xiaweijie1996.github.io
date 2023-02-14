@@ -1,9 +1,9 @@
 ---
-title: Out of distribution (OOD)-Disentangled Representation Learning 
+title: Out of distribution (OOD) generation-Disentangled Representation Learning 
 categories:
 - Generative model
 - Machine Learning
-feature_image: "https://i.postimg.cc/wBgmqWcX/wallhaven-kx98xd.jpg"
+feature_image: "https://i.postimg.cc/90b8d1jW/wallhaven-9mjoy1.jpg"
 ---
 
 <head>
