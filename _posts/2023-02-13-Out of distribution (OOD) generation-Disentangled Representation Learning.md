@@ -39,3 +39,12 @@ feature_image: "https://i.postimg.cc/wBgmqWcX/wallhaven-kx98xd.jpg"
 <p>$$H(\mathbf{x}|\mathbf{y})=\sum_{y\in Y}p(y)H(\mathbf{x}|y) =\sum_{y\in Y}p(y)\sum_{x \in X}-log(p(x|y))=-\sum_{y\in Y}\sum_{x \in X}p(y)log(p(x|y))$$</p>
 <p>Substitute conditional entropy in mutual information:</p>
 <p>$$ \begin{align*} I(\mathbf{x},\mathbf{y})&amp;=H(\mathbf{x})-H(\mathbf{x}|\mathbf{y})\\&amp;=\sum_{y\in Y}\sum_{x \in X}p(y)log(p(x|y))+H(X)\\ &amp;=\mathbb{E}_{y \sim p(y)}[\mathbb{E}_{x \sim p(x)}log(p(x|y))]+H(X)\\&amp;=\mathbb{E}_{y \in p(y)}[\mathbb{E}_{x \sim p(x)}log(p(x|y))+\mathbb{E}_{x \sim p(x)}q(x|y)-\mathbb{E}_{x \sim p(x)}q(x|y)]+H(X)\\&nbsp; &amp;=\mathbb{E}_{y \in p(y)}[\overbrace{D_{KL}(p(&middot;|x)||q(&middot;|x))}^{\leq 0}+\mathbb{E}_{x \sim p(x)}q(x|y)]+H(X) \leq \mathbb{E}_{y \in p(y)}[\mathbb{E}_{x \sim p(x)}q(x|y)]+H(X) \end{algin*}&nbsp; $$</p>
+
+\begin{align*}
+  A &= B + C \\
+    &= C + D + C \\
+    &= 2C + D
+\end{align*}
+
+
+
