@@ -36,4 +36,6 @@ feature_image: "https://i.postimg.cc/wBgmqWcX/wallhaven-kx98xd.jpg"
 <p>Mutual information is defined as:</p>
 <p>$$I(\mathbb{x},\mathbb{y})=H(\mathbb{x})-H(\mathbb{x}|\mathbb{y})$$</p>
 <p>Where $H(&middot;)$ is the entropy. $H(\mathbb{x}|\mathbb{y})$ are conditional entropies.</p>
-<p>$$\begin{align*} H(\mathbb{x})-H(\mathbb{x}|\mathbb{y})&amp;=\sum_{y\in Y}p(y)H(\mathbb{x}|y)&amp;=\sum_{y\in Y}p(y)\sum_{x \in X}-\log(p(x|y))=-\sum_{y\in Y}\sum_{x \in X}p(y)\log(p(x|y))\end{algin*}$$</p>
+<p>$$\begin{align*} H(\mathbf{x}|\mathbf{y})&amp;=\sum_{y\in Y}p(y)H(\mathbf{x}|y) \\&amp;=\sum_{y\in Y}p(y)\sum_{x \in X}-log(p(x|y))\\&amp;=-\sum_{y\in Y}\sum_{x \in X}p(y)log(p(x|y))\end{algin*}$$</p>
+<p>Substitute conditional entropy in mutual information:</p>
+<p>$$ \begin{align*} I(\mathbf{x},\mathbf{y})&amp;=H(\mathbf{x})-H(\mathbf{x}|\mathbf{y})\\&amp;=\sum_{y\in Y}\sum_{x \in X}p(y)log(p(x|y))+H(X)\\ &amp;=\mathbb{E}_{y \sim p(y)}[\mathbb{E}_{x \sim p(x)}log(p(x|y))]+H(X)\\&amp;=\mathbb{E}_{y \in p(y)}[\mathbb{E}_{x \sim p(x)}log(p(x|y))+\mathbb{E}_{x \sim p(x)}q(x|y)-\mathbb{E}_{x \sim p(x)}q(x|y)]+H(X)\\&nbsp; &amp;=\mathbb{E}_{y \in p(y)}[D_{KL}(p(&middot;|x)||q(&middot;|x))+\mathbb{E}_{x \sim p(x)}q(x|y)]+H(X)\end{algin*}$$</p>
