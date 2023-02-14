@@ -38,6 +38,8 @@ feature_image: "https://i.postimg.cc/wBgmqWcX/wallhaven-kx98xd.jpg"
 <p>Where $H(&middot;)$ is the entropy. $H(\mathbb{x}|\mathbb{y})$ are conditional entropies.</p>
 <p>$$H(\mathbf{x}|\mathbf{y})=\sum_{y\in Y}p(y)H(\mathbf{x}|y) =\sum_{y\in Y}p(y)\sum_{x \in X}-log(p(x|y))=-\sum_{y\in Y}\sum_{x \in X}p(y)log(p(x|y))$$</p>
 <p>Substitute conditional entropy in mutual information:</p>
-<p>$$ \begin{align*}<br />I(\mathbf{x},\mathbf{y})&amp;=H(\mathbf{x})-H(\mathbf{x}|\mathbf{y})\\&amp;=\sum_{y\in Y}\sum_{x \in X}p(y)log(p(x|y))+H(X)\\ &amp;=\mathbb{E}_{y \sim p(y)}[\mathbb{E}_{x \sim p(x)}log(p(x|y))]+H(X)\\&amp;=\mathbb{E}_{y \in p(y)}[\mathbb{E}_{x \sim p(x)}log(p(x|y))+\mathbb{E}_{x \sim p(x)}log(q(x|y))-\mathbb{E}_{x \sim p(x)}log(q(x|y))]+H(X)\\&nbsp; &amp;=\mathbb{E}_{y \in p(y)}[\overbrace{D_{KL}(p(&middot;|x)||q(&middot;|x))}^{\geq 0}+\mathbb{E}_{x \sim p(x)}log(q(x|y))]+H(X)\\ &amp;\geq \mathbb{E}_{y \in p(y)}[\mathbb{E}_{x \sim p(x)}q(x|y)]+H(X)\end{align*} $$</p>
-
+<p>$$ \begin{align*}<br />I(\mathbf{x},\mathbf{y})&amp;=H(\mathbf{x})-H(\mathbf{x}|\mathbf{y})\\&amp;=\sum_{y\in Y}\sum_{x \in X}p(y)log(p(x|y))+H(\mathbf{x})\\ &amp;=\mathbb{E}_{y \sim p(y)}[\mathbb{E}_{x \sim p(x)}log(p(x|y))]+H(\mathbf{x})\\&amp;=\mathbb{E}_{y \in p(y)}[\mathbb{E}_{x \sim p(x)}log(p(x|y))+\mathbb{E}_{x \sim p(x)}log(q(x|y))-\mathbb{E}_{x \sim p(x)}log(q(x|y))]+H(\mathbf{x})\\&nbsp; &amp;=\mathbb{E}_{y \in p(y)}[\overbrace{D_{KL}(p(&middot;|x)||q(&middot;|x))}^{\geq 0}+\mathbb{E}_{x \sim p(x)}log(q(x|y))]+H(\mathbf{x})\\ &amp;\geq \mathbb{E}_{y \in p(y)}[\mathbb{E}_{x \sim p(x)}q(x|y)]+H(\mathbf{x})\end{align*} $$</p>
+<p>Where $q$ is a variational distribution $q(x|y) \in Q$, for which we know the parameters.</p>
+<p>$\mathbb{E}_{y \in p(y)}[\mathbb{E}_{x \sim p(x)}q(x|y)]+H(\mathbf{x})$ is the lower bound of $I(X,Y)$.</p>
+<p>&nbsp;</p>
 
