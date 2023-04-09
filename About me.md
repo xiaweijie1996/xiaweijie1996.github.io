@@ -1,43 +1,39 @@
 ---
-title: 
-feature_text: |
-  ## My story
-  I hope I can be a researcher, a traveller and a reader.
-feature_image: "https://picsum.photos/2560/600?image=873"
-excerpt: ""
-aside: false
+layout: page
+title: About me
+permalink: /about/
 ---
-<b>Education Background</b>
-<table style="width: 900px; height: 176px;" border="0" width="500">
-<tbody>
-<tr style="height: 176px;">
-<td style="background-color: #ffffff; width: 528.062px; height: 176px;">
-<ul>
-<li style="list-style-type: none;">
-<ul>
-<li><span style="font-family: 黑体; font-size: large;"><em>Phd</em>, Delft University of Technology</span></li>
-<li style="text-align: left;"><span style="font-family: 黑体; font-size: large;"><em>Msc, </em>KTH Royal Institute of Technology</span></li>
-<li style="text-align: left;"><span style="font-family: 黑体; font-size: large;"><em>Msc, </em>Eindhoven University of Technology</span></li>
-<li style="text-align: left;"><span style="font-family: 黑体; font-size: large;"><em>Integrated Program, </em>Esade Business School</span></li>
-<li style="text-align: left;"><span style="font-family: 黑体; font-size: large;"><em>Bsc</em>, Ocean University of China</span></li>
-</ul>
-</li>
-</ul>
-</td>
-<td style="height: 176px; width: 355.938px;"><img style="float: right;" src="https://media.licdn.com/dms/image/D4D03AQE7uX2AJwOgWw/profile-displayphoto-shrink_800_800/0/1643229835687?e=1681344000&v=beta&t=aL796DYTSqUQox17WTe46ZZsonqBghNYk8jFF1XUoNc" width="235" height="235" align="right" /></td>
-</tr>
-</tbody>
-</table>
-<br>
-**About me**\
-I was born in China. In 2022, I started my PhD journey in <a href="https://www.tudelft.nl/ewi/over-de-faculteit/afdelingen/electrical-sustainable-energy/intelligent-electrical-power-grids-iepg-group">IEPG group</a> at TU Delft. My research interests focus on the interdisciplinary areas of energy systems and machine learning. Additionally, I am also interested in statistics and theoretical physics. 
+
+# Education Background
+
+|                               |                                            |
+|-------------------------------|--------------------------------------------|
+| **PhD**                       | Delft University of Technology             |
+| **MSc**                       | KTH Royal Institute of Technology          |
+| **MSc**                       | Eindhoven University of Technology         |
+| **Integrated Program**        | Esade Business School                      |
+| **BSc**                       | Ocean University of China                  |
+
+![Weijie Xia](https://media.licdn.com/dms/image/D4D03AQE7uX2AJwOgWw/profile-displayphoto-shrink_800_800/0/1643229835687?e=1681344000&v=beta&t=aL796DYTSqUQox17WTe46ZZsonqBghNYk8jFF1XUoNc)
+
+## About me
+
+I was born in China. In 2022, I started my PhD journey in [IEPG group](https://www.tudelft.nl/ewi/over-de-faculteit/afdelingen/electrical-sustainable-energy/intelligent-electrical-power-grids-iepg-group) at TU Delft. My research interests focus on the interdisciplinary areas of energy systems and machine learning. Additionally, I am also interested in statistics and theoretical physics.
+
 One of my dreams is to travel around the world :flight_departure:.
 
-<b>Where I've been：</b><br>
-<img style="display: block; margin-left: auto; margin-right: auto;" src="https://i.postimg.cc/X7s3sMMp/318478292-1298026027705258-8509271587284893906-n.jpg" width="1000" align="center" />
-<p style="text-align: center;"><span style="font-family: 黑体; font-size: medium;">Map Mark tool recommendation <a href="https://www.mapchart.net/index.html">Mapchart</a></span>
-<br>
+## Where I've been
 
-<p><strong>Contact</strong></p>
-<p><em>Email</em>: <a href="mailto:W.xia@tudelft.nl">W.xia@tudelft.nl</a></p>
-<p><em>Social Platform:&nbsp;&nbsp;<a href="https://www.facebook.com/xia.wind.9/"><img src="https://cdn-icons-png.flaticon.com/32/5968/5968764.png" alt="" width="25" height="25" /></a>&nbsp; &nbsp;<a href="https://www.linkedin.com/in/weijie-xia-0bb095180/"><img src="https://cdn-icons-png.flaticon.com/32/145/145807.png" alt="" width="25" height="25" /></a>&nbsp; &nbsp;<a href="https://github.com/xiaweijie1996"><img src="https://cdn-icons-png.flaticon.com/32/733/733553.png" alt="" width="25" height="25" /></a>&nbsp; &nbsp;<a href="https://www.zhihu.com/people/xia-yier-de-ren-zhi-ren-sheng"><img src="https://cdn-icons-png.flaticon.com/32/8462/8462199.png" alt="" width="25" height="25" /></a></em></p>
+![Map](https://i.postimg.cc/X7s3sMMp/318478292-1298026027705258-8509271587284893906-n.jpg)
+
+Map Mark tool recommendation: [Mapchart](https://www.mapchart.net/index.html)
+
+## Contact
+
+**Email**: [W.xia@tudelft.nl](mailto:W.xia@tudelft.nl)
+
+**Social Platform:**
+[![Facebook](https://cdn-icons-png.flaticon.com/32/5968/5968764.png)](https://www.facebook.com/xia.wind.9/)
+[![LinkedIn](https://cdn-icons-png.flaticon.com/32/145/145807.png)](https://www.linkedin.com/in/weijie-xia-0bb095180/)
+[![GitHub](https://cdn-icons-png.flaticon.com/32/733/733553.png)](https://github.com/xiaweijie1996)
+[![Zhihu](https://cdn-icons-png.flaticon.com/32/8462/8462199.png)](https://www.zhihu.com/people/xia-yier-de-ren-zhi-ren-sheng)
