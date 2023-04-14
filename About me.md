@@ -24,7 +24,7 @@ aside: false
 </li>
 </ul>
 </td>
-<td style="height: 176px; width: 355.938px;"><img style="float: right;" src="https://media.licdn.com/dms/image/D4D03AQE7uX2AJwOgWw/profile-displayphoto-shrink_800_800/0/1643229835687?e=1681344000&v=beta&t=aL796DYTSqUQox17WTe46ZZsonqBghNYk8jFF1XUoNc" width="235" height="235" align="right" /></td>
+<td style="height: 176px; width: 355.938px;"><img style="float: right;" src="https://media.licdn.com/dms/image/D4D03AQE7uX2AJwOgWw/profile-displayphoto-shrink_800_800/0/1643229835687?e=1686787200&v=beta&t=HRWK1M_BZz8RUkWVPcCjVLBypxcMVlZ8VZhs2_2y8ZY" width="235" height="235" align="right" /></td>
 </tr>
 </tbody>
 </table>
