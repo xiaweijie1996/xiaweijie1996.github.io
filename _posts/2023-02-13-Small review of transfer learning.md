@@ -94,7 +94,7 @@ feature_image: "https://i.postimg.cc/90b8d1jW/wallhaven-9mjoy1.jpg"
 <p><strong>basic concept</strong></p>
 <p>Article 3 proposes a method to achieve transfer learning through dimensionality reduction. The purpose of the algorithm is to project the source domain data and target domain data into a new space, and hope that 1) the source domain and target domain data in the new space The division is as close as possible (looking for "transferred features") 2) The variance of the division of the data itself is as large as possible (preserving the original information, similar to PCA) 3) Satisfying other limiting conditions. After finding a suitable projection space, other machine learning models can be trained in this space to achieve the purpose of transfer learning.</p>
 <p><strong>Maximum mean discrepancy (MMD)</strong></p>
-<p>In order to achieve the goal "the source domain is as close as possible to the target division", we first need a projection function $\Phi(&middot;):\mathcal{X}\rightarrow \mathcal{H}$ . The new space after projection becomes the Regenerated Kernel Hilbert Space (RKHS).</p>
+<p>In order to achieve thgie goal "the source domain is as close as possible to the target division", we first need a projection function $\Phi(&middot;):\mathcal{X}\rightarrow \mathcal{H}$ . The new space after projection becomes the Regenerated Kernel Hilbert Space (RKHS).</p>
 <p>Then we need a function to measure the distance of $\Phi(X_s), \Phi(X_t)$ after projection. The article chooses MMD as the distance measure. The empirical estimation formula of MMD in RKHS is:</p>
 <p>$$dis(X_s,X_t)=||\frac{1}{n_s}\sum_{i=1}^{n_s} \Phi(x_{i}^s)-\frac{1}{n_t}\sum_{ j=1}^{n_t} \Phi(x_{j}^t)||_{\mathcal{H}}$$</p>
 <p>Therefore, the problem turns into finding a minimum $dis(X_s,X_t)$ .</p>
@@ -114,7 +114,9 @@ feature_image: "https://i.postimg.cc/90b8d1jW/wallhaven-9mjoy1.jpg"
 <p>3) After obtaining K, PCA can be used to achieve dimensionality reduction.</p>
 
 
-<p>Article 4: Pan, S. J., Tsang, I. W., Kwok, J. T., &amp; Yang, Q. (2011). Domain Adaptation via Transfer Component Analysis. IEEE Transactions on Neural Networks.</p>
+<h3>&nbsp;</h3>
+<h3>&nbsp;</h3>
+<h3>Pan, S. J., Tsang, I. W., Kwok, J. T., &amp; Yang, Q. (2011). Domain Adaptation via Transfer Component Analysis. IEEE Transactions on Neural Networks.</h3>
 <p>Article 4 also adopts the method of MMD in Article 3, and improves the method of MMD. The defect of the original MMD method is that 1) the amount of calculation is large and 2) MMD cannot handle points outside the sample. In article 4, the author rewrites $K$ as $ K=(KK^{-\frac{1}{2}})(K^{-\frac{1}{2}}K)$ . At the same time, assuming that there is a matrix $W'\in \mathbf{R}^{(n_1+n_2)&times;m}$ that can transform $(KK^{-\frac{1}{2}})$ into an m-dimensional matrix, And $m&lt;&lt;(n_1+n_2) $. Using W' we can get a new kernel matrix $K'$</p>
 <p>$$K' = (KK^{-\frac{1}{2}}W')({W'}^TK^{-\frac{1}{2}}K)$$</p>
 <p>Let$ K^{-\frac{1}{2}}W'=W$ , then $K'=KWW^TK$</p>
