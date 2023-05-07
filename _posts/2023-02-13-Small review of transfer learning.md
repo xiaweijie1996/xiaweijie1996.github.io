@@ -107,9 +107,11 @@ feature_image: "https://i.postimg.cc/90b8d1jW/wallhaven-9mjoy1.jpg"
 <p>The optimization problem eventually becomes:</p>
 <p>$$\min_{k'} \ \ trace(K'L)-\lambda trace(K') \\ s.t. {K'}_{ii}^2+{K'}_{jj}^2-2{K '}_{ij}=d_{ij}^2 \\ \, \, \, \, {K'}\mathbf{1}=&epsilon;I$$</p>
 <p>A little bit of my own understanding:</p>
-<p>1) We hope to find a mapping method \Phi that makes 1) the source domain and the target domain as close as possible 2) the variance after mapping is as large as possible. And the kernel matrix K represents the result of this mapping.</p>
+<p>1) We hope to find a mapping method $\Phi$ that makes 1) the source domain and the target domain as close as possible 2) the variance after mapping is as large as possible. And the kernel matrix $K$ represents the result of this mapping.</p>
 <p>2) The kernel matrix itself can be regarded as a similarity table (inner product) between data points (empirical kernel map).</p>
-<p>3) After obtaining K, PCA can be used to achieve dimensionality reduction.</p>
+<p>3) After obtaining $K$
+
+, PCA can be used to achieve dimensionality reduction.</p>
 
 
 <h3>&nbsp;</h3>
@@ -141,5 +143,17 @@ feature_image: "https://i.postimg.cc/90b8d1jW/wallhaven-9mjoy1.jpg"
 <p>Article 6 essentially proposes a neural network structure to find a space that minimizes the distribution distance between the source domain and the target domain. A neural network consists of three parts:</p>
 <p>$G_f( ; \theta_f)$ transforms an input $x$ into a feature $f$.<br />$G_y(&middot;;\theta_y)$ Input feature f and output prediction for label $y$.<br />$G_d(&middot;;\theta_d)$ takes in a feature f and outputs a prediction for the domain (source or target domain).</p>
 <p>During the training process, we hope that the features obtained by $G_f$ maximize $L_d$, even if the $f_s, f_t $ of the source domain and the target domain are as close as possible. But at the same time we want to get the smallest $L_d$ through $G_d$. Then adjust the rationality of the output $f$ according to $G_y$. In essence, it is an adversarial network, which is trained in this way to obtain a reasonable mapping method $G_f$ to $x$.</p>
+
+
+<h3>&nbsp;</h3>
+<h3>Zhuang, Fuzhen, et al. "Supervised representation learning: Transfer learning with deep autoencoders." Twenty-fourth international joint conference on artificial intelligence. 2015.</h3>
+<p><img src="https://picx.zhimg.com/80/v2-3a7a46e5959de3be2bf172841436e5fb_720w.webp?source=d16d100b" /></p>
+<p>Article 7 proposes a method to learn and find a new representation through the structure of the autoencoder, which also embeds the label data of the source domain to optimize network training. It should be noted that the autoencoders of the source domain data and the target domain data in the entire model share parameters, and the essence of the model can be glimpsed through the loss function of the model:</p>
+<p>$$J = J_r(x, \hat{x}) + &alpha;&Gamma;(&xi; (s) , &xi; (t) ) + &beta;L(&theta;, &xi; ^{(s)} ) + &gamma;&Omega;(W, b,W' , b' )$$</p>
+<p>Among them, $J_r$ is the loss caused by the autoencoder to restore the input $x$, $&Omega;(W, b,W' , b' )$ is the complexity of the regular term control parameters, $L(&theta;, &xi; ^{(s)} )$ is predicted by softmax The loss caused by the source domain data label, $&Gamma;(&xi; (s) , &xi; (t) )$ is the loss caused by the KL divergence between $P_s$ and $P_t$, the purpose is to hope that the output $&xi; (s), &xi; (t)$ As approximately as possible, $&Gamma;(&xi; (s) , &xi; (t) ) = D_{KL}(P_s||P_t) + D_{KL}(P_t||P_s)$ where:</p>
+<p>$$P_s'=\frac{1}{n_s} \sum_{i=1}^{n_s} &xi; ^{(s)}_i, \,\,P_s = \frac{P_s'}{\sum P_s'}$$</p>
+<p>$$P_t'=\frac{1}{n_t} \sum_{i=1}^{n_t} &xi; ^{(t)}_i, \,\,P_t = \frac{P_t'}{\sum P_t'}$$</p>
+<p>(Although I personally feel that the mathematical design of this $&Gamma;$ is not perfect, it can indeed achieve the desired effect)</p>
+
 
 
