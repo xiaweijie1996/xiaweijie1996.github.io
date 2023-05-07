@@ -2,7 +2,7 @@
 title: A small review of transfer learning-domain adaptation
 categories:
 - Machine Learning
-feature_image: "https://i.postimg.cc/90b8d1jW/wallhaven-9mjoy1.jpg"
+feature_image: "https://i.postimg.cc/9F4wK2S2/wallhaven-1pd1o9.jpg"
 ---
 
 <head>
