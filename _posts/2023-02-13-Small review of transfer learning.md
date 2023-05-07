@@ -156,4 +156,9 @@ feature_image: "https://i.postimg.cc/90b8d1jW/wallhaven-9mjoy1.jpg"
 <p>(Although I personally feel that the mathematical design of this $&Gamma;$ is not perfect, it can indeed achieve the desired effect)</p>
 
 
-
+<h3>&nbsp;</h3>
+<h3>Long, Mingsheng, et al. "Learning transferable features with deep adaptation networks." International conference on machine learning. PMLR, 2015.</h3>
+<p><img src="https://picx.zhimg.com/80/v2-49e55f2a96008e80be03aea5f39078e7_720w.webp?source=d16d100b" /></p>
+<p>The above figure shows the algorithm structure proposed in Article 8. I personally feel that this structure is not as clear as in another Review. Here is also the structure diagram in the Review (Zhuang, Fuzhen, et al. "A comprehensive survey on transfer learning."Proceedings of the IEEE109.1 (2020): 43-76.).</p>
+<p><img src="https://pic1.zhimg.com/80/v2-a1409a9ebc00db93ca4617d63afeb034_720w.webp?source=d16d100b" /></p>
+<p>During the training process, $X_s$ and $X_t$ are fed into the network, and the sixth layer network starts to go to $X_s$ to go to the upper network and $X_t$ to go to the lower network. The upper network can be directly trained because $X_s$ is labeled. But because the target domain has no labels, it is impossible to train the network without special means. What means did the author use? It is to realize the training of the network by minimizing the MK-MMD between the 6-8 layer network in the above figure. When the training reaches a certain level, the following network can be used to directly predict the label of $X_t$ (at least that is what the paper said, it is not very intuitive to me personally, maybe I am not good at mathematics).</p>
