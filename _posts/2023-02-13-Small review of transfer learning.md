@@ -86,48 +86,25 @@ feature_image: "https://i.postimg.cc/90b8d1jW/wallhaven-9mjoy1.jpg"
 <p>The article gives an example of using the linear kernel function $K=\left\langle \Phi (x), \Phi(x') \right\rangle$:</p>
 <p>$K=\left\{ \begin{array}{**rcl**} 2K(x,x')\ ,\ same.domain&amp; \\ K(x,x')\ \ , diff.domain &amp;\\ \end{array} \right.$</p>
 
-Pan, Sinno Jialin, James T. Kwok, and Qiang Yang. "Transfer learning via dimensionality reduction."AAAI. Vol. 8. 2008.
-
-basic concept
-
-Article 3 proposes a method to achieve transfer learning through dimensionality reduction. The purpose of the algorithm is to project the source domain data and target domain data into a new space, and hope that 1) the source domain and target domain data in the new space The division is as close as possible (looking for "transferred features") 2) The variance of the division of the data itself is as large as possible (preserving the original information, similar to PCA) 3) Satisfying other limiting conditions. After finding a suitable projection space, other machine learning models can be trained in this space to achieve the purpose of transfer learning.
-
-Maximum mean discrepancy (MMD)
-
-In order to achieve the goal "the source domain is as close as possible to the target division", we first need a projection function $\Phi(·):\mathcal{X}\rightarrow \mathcal{H}$ . The new space after projection becomes the Regenerated Kernel Hilbert Space (RKHS).
-
-Then we need a function to measure the distance of $\Phi(X_s), \Phi(X_t)$ after projection. The article chooses MMD as the distance measure. The empirical estimation formula of MMD in RKHS is:
-
-$$dis(X_s,X_t)=||\frac{1}{n_s}\sum_{i=1}^{n_s} \Phi(x_{i}^s)-\frac{1}{n_t}\sum_{ j=1}^{n_t} \Phi(x_{j}^t)||_{\mathcal{H}}$$
-
-Therefore, the problem turns into finding a minimum $dis(X_s,X_t)$ .
-
-In fact $dis(X_s,X_t)=trace(KL)$
-
-$$K=\left[ \begin{array}{ccc} K_{s,s} &K_{s,t}\\ K_{t,s} & K_{t,t}\\ \end{array} \right ] \in \mathbb{R}^{(m+n)×(m+N)}$$
-
-$$L=\left\{ \begin{array}{**rcl**} \frac{1}{{n_s}^2}\ ,\ x_i,x_j \in X_s& \\ \frac{1}{{n_t} ^2}\ ,\ x_i,x_j \in X_t& \\ \frac{1}{{n_tn_s}}\ ,\ otherwise& \\ \end{array} \right.$$
-
-From dis to trace If you don't understand the calculation, refer to Teacher Wang: Wang Jindong is not at home: MMD calculation nuclear skill formula derivation
-
-Because L is a fixed constant, the problem of minimizing dis is transformed into a positive semi-definite programming problem: find a K that minimizes dis.
-
-But up to this point, we have only minimized the distance from the source domain to the target domain, and we have not yet achieved the maximum variance of the projected data. How? Add a regular term $trace(K)$ to the original optimization problem to represent the variance of the data (because 0 is the centre point $(x-0)^2=x^2$, see the explanation later). So the optimization problem becomes:
-
-$$\min_{k} \ \trace(KL)-\lambda trace(K)$$
-
-But this is still not enough, two other constraints are added in the article 1) The spatial distance after projection is stable $K_{ii}^2+K_{jj}^2-2K_{ij}=d_{ij}^2$ 2 ) The projected data is centered on the origin K\mathbf{1}=\mathbf{0} . In addition, in order to ensure that K exists, according to "If a kernel matrix K can be written as $K = K' + εI $, where $ε > 0 $, $K'$ is position semi-definate and $I$ is the identity matrix, then the kernel function corresponding to $K$ is universal ” Rewrite $K$ as $K=K'+ε I $.
-
-The optimization problem eventually becomes:
-
-$$\min_{k'} \ \ trace(K'L)-\lambda trace(K') \\ s.t. {K'}_{ii}^2+{K'}_{jj}^2-2{K '}_{ij}=d_{ij}^2 \\ \, \, \, \, {K'}\mathbf{1}=εI$$
-
-A little bit of my own understanding:
-
-1) We hope to find a mapping method \Phi that makes 1) the source domain and the target domain as close as possible 2) the variance after mapping is as large as possible. And the kernel matrix K represents the result of this mapping.
-
-2) The kernel matrix itself can be regarded as a similarity table (inner product) between data points (empirical kernel map).
-
-3) After obtaining K, PCA can be used to achieve dimensionality reduction.
-
- 
+<h3>Pan, Sinno Jialin, James T. Kwok, and Qiang Yang. "Transfer learning via dimensionality reduction."AAAI. Vol. 8. 2008.</h3>
+<p><strong>basic concept</strong></p>
+<p>Article 3 proposes a method to achieve transfer learning through dimensionality reduction. The purpose of the algorithm is to project the source domain data and target domain data into a new space, and hope that 1) the source domain and target domain data in the new space The division is as close as possible (looking for "transferred features") 2) The variance of the division of the data itself is as large as possible (preserving the original information, similar to PCA) 3) Satisfying other limiting conditions. After finding a suitable projection space, other machine learning models can be trained in this space to achieve the purpose of transfer learning.</p>
+<p><strong>Maximum mean discrepancy (MMD)</strong></p>
+<p>In order to achieve the goal "the source domain is as close as possible to the target division", we first need a projection function $\Phi(&middot;):\mathcal{X}\rightarrow \mathcal{H}$ . The new space after projection becomes the Regenerated Kernel Hilbert Space (RKHS).</p>
+<p>Then we need a function to measure the distance of $\Phi(X_s), \Phi(X_t)$ after projection. The article chooses MMD as the distance measure. The empirical estimation formula of MMD in RKHS is:</p>
+<p>$$dis(X_s,X_t)=||\frac{1}{n_s}\sum_{i=1}^{n_s} \Phi(x_{i}^s)-\frac{1}{n_t}\sum_{ j=1}^{n_t} \Phi(x_{j}^t)||_{\mathcal{H}}$$</p>
+<p>Therefore, the problem turns into finding a minimum $dis(X_s,X_t)$ .</p>
+<p>In fact $dis(X_s,X_t)=trace(KL)$</p>
+<p>$$K=\left[ \begin{array}{ccc} K_{s,s} &amp;K_{s,t}\\ K_{t,s} &amp; K_{t,t}\\ \end{array} \right ] \in \mathbb{R}^{(m+n)&times;(m+N)}$$</p>
+<p>$$L=\left\{ \begin{array}{**rcl**} \frac{1}{{n_s}^2}\ ,\ x_i,x_j \in X_s&amp; \\ \frac{1}{{n_t} ^2}\ ,\ x_i,x_j \in X_t&amp; \\ \frac{1}{{n_tn_s}}\ ,\ otherwise&amp; \\ \end{array} \right.$$</p>
+<p>From dis to trace If you don't understand the calculation, refer to Teacher Wang: Wang Jindong is not at home: MMD calculation nuclear skill formula derivation</p>
+<p>Because L is a fixed constant, the problem of minimizing dis is transformed into a positive semi-definite programming problem: find a K that minimizes dis.</p>
+<p>But up to this point, we have only minimized the distance from the source domain to the target domain, and we have not yet achieved the maximum variance of the projected data. How? Add a regular term $trace(K)$ to the original optimization problem to represent the variance of the data (because 0 is the centre point $(x-0)^2=x^2$, see the explanation later). So the optimization problem becomes:</p>
+<p>$$\min_{k} \ \trace(KL)-\lambda trace(K)$$</p>
+<p>But this is still not enough, two other constraints are added in the article 1) The spatial distance after projection is stable $K_{ii}^2+K_{jj}^2-2K_{ij}=d_{ij}^2$ 2 ) The projected data is centered on the origin K\mathbf{1}=\mathbf{0} . In addition, in order to ensure that K exists, according to "If a kernel matrix K can be written as $K = K' + &epsilon;I $, where $&epsilon; &gt; 0 $, $K'$ is position semi-definate and $I$ is the identity matrix, then the kernel function corresponding to $K$ is universal &rdquo; Rewrite $K$ as $K=K'+&epsilon; I $.</p>
+<p>The optimization problem eventually becomes:</p>
+<p>$$\min_{k'} \ \ trace(K'L)-\lambda trace(K') \\ s.t. {K'}_{ii}^2+{K'}_{jj}^2-2{K '}_{ij}=d_{ij}^2 \\ \, \, \, \, {K'}\mathbf{1}=&epsilon;I$$</p>
+<p>A little bit of my own understanding:</p>
+<p>1) We hope to find a mapping method \Phi that makes 1) the source domain and the target domain as close as possible 2) the variance after mapping is as large as possible. And the kernel matrix K represents the result of this mapping.</p>
+<p>2) The kernel matrix itself can be regarded as a similarity table (inner product) between data points (empirical kernel map).</p>
+<p>3) After obtaining K, PCA can be used to achieve dimensionality reduction.</p>
