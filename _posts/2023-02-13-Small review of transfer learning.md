@@ -86,6 +86,8 @@ feature_image: "https://i.postimg.cc/90b8d1jW/wallhaven-9mjoy1.jpg"
 <p>The article gives an example of using the linear kernel function $K=\left\langle \Phi (x), \Phi(x') \right\rangle$:</p>
 <p>$K=\left\{ \begin{array}{**rcl**} 2K(x,x')\ ,\ same.domain&amp; \\ K(x,x')\ \ , diff.domain &amp;\\ \end{array} \right.$</p>
 
+
+
 <h3>Pan, Sinno Jialin, James T. Kwok, and Qiang Yang. "Transfer learning via dimensionality reduction."AAAI. Vol. 8. 2008.</h3>
 <p><strong>basic concept</strong></p>
 <p>Article 3 proposes a method to achieve transfer learning through dimensionality reduction. The purpose of the algorithm is to project the source domain data and target domain data into a new space, and hope that 1) the source domain and target domain data in the new space The division is as close as possible (looking for "transferred features") 2) The variance of the division of the data itself is as large as possible (preserving the original information, similar to PCA) 3) Satisfying other limiting conditions. After finding a suitable projection space, other machine learning models can be trained in this space to achieve the purpose of transfer learning.</p>
@@ -108,3 +110,18 @@ feature_image: "https://i.postimg.cc/90b8d1jW/wallhaven-9mjoy1.jpg"
 <p>1) We hope to find a mapping method \Phi that makes 1) the source domain and the target domain as close as possible 2) the variance after mapping is as large as possible. And the kernel matrix K represents the result of this mapping.</p>
 <p>2) The kernel matrix itself can be regarded as a similarity table (inner product) between data points (empirical kernel map).</p>
 <p>3) After obtaining K, PCA can be used to achieve dimensionality reduction.</p>
+
+
+
+
+
+<p>Article 4: Pan, S. J., Tsang, I. W., Kwok, J. T., &amp; Yang, Q. (2011). Domain Adaptation via Transfer Component Analysis. IEEE Transactions on Neural Networks.</p>
+<p>Article 4 also adopts the method of MMD in Article 3, and improves the method of MMD. The defect of the original MMD method is that 1) the amount of calculation is large and 2) MMD cannot handle points outside the sample. In article 4, the author rewrites $K$ as $ K=(KK^{-\frac{1}{2}})(K^{-\frac{1}{2}}K)$ . At the same time, assuming that there is a matrix $W'\in \mathbf{R}^{(n_1+n_2)&times;m}$ that can transform $(KK^{-\frac{1}{2}})$ into an m-dimensional matrix, And $m&lt;&lt;(n_1+n_2) $. Using W' we can get a new kernel matrix $K'$</p>
+<p>$$K' = (KK^{-\frac{1}{2}}W')({W'}^TK^{-\frac{1}{2}}K)$$</p>
+<p>Let$ K^{-\frac{1}{2}}W'=W$ , then $K'=KWW^TK$</p>
+<p>Then the optimization problem turns into $\min_w \, trace(K'L) $. Also considering the need to maximize the variance, the transformed data is $W^TK$ , therefore, the variance of the data is $W^TKHKW$ , and H is a centralization matrix, which functions to make the data of $W^TK$ symmetrical about the center. $H=I_{n_1+n_2}-(\mathbf{1}/n_1+n_2)\mathbf{1}\mathbf{1}^T$ .</p>
+<p>Then the optimization problem becomes:</p>
+<p>$$\max_{w} \ \ trace(KW^TLWK)+\lambda trace(WW^T) \\ s.t. W^TKHKW=I$$</p>
+<p>Among them, I guarantees the variance of the transformed data, and $trace(WW^T)$ is a regular term to control the complexity of $W$.</p>
+<p>In Lagrange, the optimization problem can be transformed into:</p>
+<p>$$\max_W trace((W^T(KLK + \lambda I)W)^{&minus;1}W^TKHKW)$$</p>
