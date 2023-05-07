@@ -88,7 +88,6 @@ feature_image: "https://i.postimg.cc/90b8d1jW/wallhaven-9mjoy1.jpg"
 
 
 
-
 <h3>Pan, Sinno Jialin, James T. Kwok, and Qiang Yang. "Transfer learning via dimensionality reduction."AAAI. Vol. 8. 2008.</h3>
 <p><strong>basic concept</strong></p>
 <p>Article 3 proposes a method to achieve transfer learning through dimensionality reduction. The purpose of the algorithm is to project the source domain data and target domain data into a new space, and hope that 1) the source domain and target domain data in the new space The division is as close as possible (looking for "transferred features") 2) The variance of the division of the data itself is as large as possible (preserving the original information, similar to PCA) 3) Satisfying other limiting conditions. After finding a suitable projection space, other machine learning models can be trained in this space to achieve the purpose of transfer learning.</p>
@@ -99,7 +98,7 @@ feature_image: "https://i.postimg.cc/90b8d1jW/wallhaven-9mjoy1.jpg"
 <p>Therefore, the problem turns into finding a minimum $dis(X_s,X_t)$ .</p>
 <p>In fact $dis(X_s,X_t)=trace(KL)$</p>
 <p>$$K=\left[ \begin{array}{ccc} K_{s,s} &amp;K_{s,t}\\ K_{t,s} &amp; K_{t,t}\\ \end{array} \right ] \in \mathbb{R}^{(m+n)&times;(m+N)}$$</p>
-<p>$$L=\left\{ \begin{array}{**rcl**} \frac{1}{{n^2_s}}\ ,\ x_i,x_j \in X_s&amp; \\ \frac{1}{{n^2_t} }\ ,\ x_i,x_j \in X_t&amp; \\ \frac{1}{{n_tn_s}}\ ,\ otherwise&amp; \\ \end{array} \right.$$</p>
+<p>$$L=\left\{ \begin{array}{**rcl**} \frac{1}{{n^2_s}}\ ,\ x_i,x_j \in X_s&amp; \\ \frac{1}{{n^2_t}}\ ,\ x_i,x_j \in X_t&amp; \\ \frac{1}{{n_tn_s}}\ ,\ otherwise&amp; \\ \end{array} \right.$$</p>
 <p>From dis to trace If you don't understand the calculation, refer to Teacher Wang: Wang Jindong is not at home: MMD calculation nuclear skill formula derivation</p>
 <p>Because L is a fixed constant, the problem of minimizing dis is transformed into a positive semi-definite programming problem: find a K that minimizes dis.</p>
 <p>But up to this point, we have only minimized the distance from the source domain to the target domain, and we have not yet achieved the maximum variance of the projected data. How? Add a regular term $trace(K)$ to the original optimization problem to represent the variance of the data (because 0 is the centre point $(x-0)^2=x^2$, see the explanation later). So the optimization problem becomes:</p>
@@ -111,8 +110,6 @@ feature_image: "https://i.postimg.cc/90b8d1jW/wallhaven-9mjoy1.jpg"
 <p>1) We hope to find a mapping method \Phi that makes 1) the source domain and the target domain as close as possible 2) the variance after mapping is as large as possible. And the kernel matrix K represents the result of this mapping.</p>
 <p>2) The kernel matrix itself can be regarded as a similarity table (inner product) between data points (empirical kernel map).</p>
 <p>3) After obtaining K, PCA can be used to achieve dimensionality reduction.</p>
-
-
 
 
 <p>Article 4: Pan, S. J., Tsang, I. W., Kwok, J. T., &amp; Yang, Q. (2011). Domain Adaptation via Transfer Component Analysis. IEEE Transactions on Neural Networks.</p>
