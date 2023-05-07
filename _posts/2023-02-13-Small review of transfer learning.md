@@ -87,8 +87,6 @@ feature_image: "https://i.postimg.cc/90b8d1jW/wallhaven-9mjoy1.jpg"
 <p>$$ K=\left\{ \begin{array}{**rcl**} 2K(x,x')\ ,\ same.domain&amp; \\ K(x,x')\ \ , diff.domain &amp;\\ \end{array} \right.$$</p>
 
 
-
-<h3>&nbsp;</h3>
 <h3>&nbsp;</h3>
 <h3>Pan, Sinno Jialin, James T. Kwok, and Qiang Yang. "Transfer learning via dimensionality reduction."AAAI. Vol. 8. 2008.</h3>
 <p><strong>basic concept</strong></p>
@@ -114,10 +112,8 @@ feature_image: "https://i.postimg.cc/90b8d1jW/wallhaven-9mjoy1.jpg"
 <p>3) After obtaining K, PCA can be used to achieve dimensionality reduction.</p>
 
 
-
 <h3>&nbsp;</h3>
-<h3>&nbsp;</h3>
-<p>Article 4: Pan, S. J., Tsang, I. W., Kwok, J. T., &amp; Yang, Q. (2011). Domain Adaptation via Transfer Component Analysis. IEEE Transactions on Neural Networks.</p>
+<h3>&nbsp;Pan, S. J., Tsang, I. W., Kwok, J. T., &amp; Yang, Q. (2011). Domain Adaptation via Transfer Component Analysis. IEEE Transactions on Neural Networks.</h3>
 <p>Article 4 also adopts the method of MMD in Article 3, and improves the method of MMD. The defect of the original MMD method is that 1) the amount of calculation is large and 2) MMD cannot handle points outside the sample. In article 4, the author rewrites $K$ as $ K=(KK^{-\frac{1}{2}})(K^{-\frac{1}{2}}K)$ . At the same time, assuming that there is a matrix $W'\in \mathbf{R}^{(n_1+n_2)&times;m}$ that can transform $(KK^{-\frac{1}{2}})$ into an m-dimensional matrix, And $m&lt;&lt;(n_1+n_2) $. Using W' we can get a new kernel matrix $K'$</p>
 <p>$$K' = (KK^{-\frac{1}{2}}W')({W'}^TK^{-\frac{1}{2}}K)$$</p>
 <p>Let$ K^{-\frac{1}{2}}W'=W$ , then $K'=KWW^TK$</p>
@@ -129,8 +125,6 @@ feature_image: "https://i.postimg.cc/90b8d1jW/wallhaven-9mjoy1.jpg"
 <p>$$\max_W \ \ trace((W^T(KLK + \lambda I)W)^{&minus;1}W^TKHKW)$$</p>
 
 
-
-<h3>&nbsp;</h3>
 <h3>&nbsp;</h3>
 <h3>Ghifary, Muhammad, W. Bastiaan Kleijn, and Mengjie Zhang. "Domain adaptive neural networks for object recognition." PRICAI 2014: Trends in Artificial Intelligence: 13th Pacific Rim International Conference on Artificial Intelligence, Gold Coast, QLD, Aust ralia, December 1-5, 2014. Proceedings 13. Springer International Publishing, 2014.</h3>
 <p>Article 5 realizes domain adaptation through the method of neural network. The core of the method is to add MMD to the loss of the original neural network.</p>
