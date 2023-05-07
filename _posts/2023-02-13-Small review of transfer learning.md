@@ -162,3 +162,15 @@ feature_image: "https://i.postimg.cc/90b8d1jW/wallhaven-9mjoy1.jpg"
 <p>The above figure shows the algorithm structure proposed in Article 8. I personally feel that this structure is not as clear as in another Review. Here is also the structure diagram in the Review (Zhuang, Fuzhen, et al. "A comprehensive survey on transfer learning."Proceedings of the IEEE109.1 (2020): 43-76.).</p>
 <p><img src="https://pic1.zhimg.com/80/v2-a1409a9ebc00db93ca4617d63afeb034_720w.webp?source=d16d100b" /></p>
 <p>During the training process, $X_s$ and $X_t$ are fed into the network, and the sixth layer network starts to go to $X_s$ to go to the upper network and $X_t$ to go to the lower network. The upper network can be directly trained because $X_s$ is labeled. But because the target domain has no labels, it is impossible to train the network without special means. What means did the author use? It is to realize the training of the network by minimizing the MK-MMD between the 6-8 layer network in the above figure. When the training reaches a certain level, the following network can be used to directly predict the label of $X_t$ (at least that is what the paper said, it is not very intuitive to me personally, maybe I am not good at mathematics).</p>
+
+
+<h3>&nbsp;</h3>
+<h3>Tzeng, Eric, et al. "Adversarial discriminative domain adaptation." Proceedings of the IEEE conference on computer vision and pattern recognition. 2017.</h3>
+<p>This article feels similar to article 6, which is 1) predicting domian through a discriminator 2) learning a mapping $M_t$ through an adversarial loss function. The role of $M_t$ is to minimize the distance between the mapped source domain and the target domain, so that other machine learning algorithms can be trained on the mapped data. The core idea of the full text lies in these lines of loss function:</p>
+<p><img src="https://picx.zhimg.com/80/v2-749a07cf76d2454e0e1d16eb962b9c07_720w.webp?source=d16d100b" /></p>
+<p>The first loss function represents the loss of the classifier (after projection) on the target domain $M_s(X_s)$.</p>
+<p>The second loss function represents the loss of the Discriminator (domain classifier).</p>
+<p>The third loss function represents the loss of the target domain projection function $M_t$, which is opposite to the loss of the Discriminator (domain classifier), reflecting adversariality.</p>
+<p>The training process is as follows:</p>
+<p><img src="https://pica.zhimg.com/80/v2-429be0698f9161805f67fdd3428c6667_720w.webp?source=d16d100b" /></p>
+<p>1) First, train a classifier on the target domain $M_s(X_s)$ through the first loss function. After completing this step, you will get a classifier $C$ and a source domain projection function M_s. This step corresponds to pre-training. 2) Fix $M_s$ and train a $M_t$ and $D$ through the second loss function and the third loss function. This step corresponds to Adversarial adaptaiton. 3) Use the previously trained $M_s$ and $C$ to predict the label.</p>
