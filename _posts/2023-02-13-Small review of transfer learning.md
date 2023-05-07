@@ -88,6 +88,8 @@ feature_image: "https://i.postimg.cc/90b8d1jW/wallhaven-9mjoy1.jpg"
 
 
 
+<h3>&nbsp;</h3>
+<h3>&nbsp;</h3>
 <h3>Pan, Sinno Jialin, James T. Kwok, and Qiang Yang. "Transfer learning via dimensionality reduction."AAAI. Vol. 8. 2008.</h3>
 <p><strong>basic concept</strong></p>
 <p>Article 3 proposes a method to achieve transfer learning through dimensionality reduction. The purpose of the algorithm is to project the source domain data and target domain data into a new space, and hope that 1) the source domain and target domain data in the new space The division is as close as possible (looking for "transferred features") 2) The variance of the division of the data itself is as large as possible (preserving the original information, similar to PCA) 3) Satisfying other limiting conditions. After finding a suitable projection space, other machine learning models can be trained in this space to achieve the purpose of transfer learning.</p>
@@ -102,7 +104,7 @@ feature_image: "https://i.postimg.cc/90b8d1jW/wallhaven-9mjoy1.jpg"
 <p>From dis to trace If you don't understand the calculation, refer to Teacher Wang: Wang Jindong is not at home: MMD calculation nuclear skill formula derivation</p>
 <p>Because L is a fixed constant, the problem of minimizing dis is transformed into a positive semi-definite programming problem: find a K that minimizes dis.</p>
 <p>But up to this point, we have only minimized the distance from the source domain to the target domain, and we have not yet achieved the maximum variance of the projected data. How? Add a regular term $trace(K)$ to the original optimization problem to represent the variance of the data (because 0 is the centre point $(x-0)^2=x^2$, see the explanation later). So the optimization problem becomes:</p>
-<p>$$\min_{k} \ \trace(KL)-\lambda trace(K)$$</p>
+<p>$$\min_{k} \ \ trace(KL)-\lambda trace(K)$$</p>
 <p>But this is still not enough, two other constraints are added in the article 1) The spatial distance after projection is stable $K_{ii}^2+K_{jj}^2-2K_{ij}=d_{ij}^2$ 2 ) The projected data is centered on the origin K\mathbf{1}=\mathbf{0} . In addition, in order to ensure that K exists, according to "If a kernel matrix K can be written as $K = K' + &epsilon;I $, where $&epsilon; &gt; 0 $, $K'$ is position semi-definate and $I$ is the identity matrix, then the kernel function corresponding to $K$ is universal &rdquo; Rewrite $K$ as $K=K'+&epsilon; I $.</p>
 <p>The optimization problem eventually becomes:</p>
 <p>$$\min_{k'} \ \ trace(K'L)-\lambda trace(K') \\ s.t. {K'}_{ii}^2+{K'}_{jj}^2-2{K '}_{ij}=d_{ij}^2 \\ \, \, \, \, {K'}\mathbf{1}=&epsilon;I$$</p>
@@ -121,4 +123,4 @@ feature_image: "https://i.postimg.cc/90b8d1jW/wallhaven-9mjoy1.jpg"
 <p>$$\max_{w} \ \ trace(KW^TLWK)+\lambda trace(WW^T) \\ s.t. W^TKHKW=I$$</p>
 <p>Among them, I guarantees the variance of the transformed data, and $trace(WW^T)$ is a regular term to control the complexity of $W$.</p>
 <p>In Lagrange, the optimization problem can be transformed into:</p>
-<p>$$\max_W trace((W^T(KLK + \lambda I)W)^{&minus;1}W^TKHKW)$$</p>
+<p>$$\max_W \ \ trace((W^T(KLK + \lambda I)W)^{&minus;1}W^TKHKW)$$</p>
