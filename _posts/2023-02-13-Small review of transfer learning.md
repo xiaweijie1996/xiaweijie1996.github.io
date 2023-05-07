@@ -133,3 +133,13 @@ feature_image: "https://i.postimg.cc/90b8d1jW/wallhaven-9mjoy1.jpg"
 <p>$L_{DaNN}$ is the total loss of my neural network, $L_{NN}$ is the general neural network loss (cross entropy in the text), $\lambda$ is the weight of MMD. $q_s, q_t$ are the representations output by the source domain data $x_s $ and target domain data $x_t$ in the Hidden layer respectively. Suppose the first layer after input is hidden layer $q_s=\sigma(W^Tx_s+b) , q_t=\sigma(W^Tx_t+b)$ .</p>
 <p>The method of network update is:</p>
 <p>Update network parameters according to $L_{NN}$ backpropagation.<br />Update the parameters of the hidden layer according to $\lambda MMD^2(q_s,q_t)$ (assuming that the hidden layer is the third layer, then only update one to three layers, and do not update the network parameters after the next three layers)</p>
+
+
+<h3>&nbsp;</h3>
+<h3>Ganin, Yaroslav, and Victor Lempitsky. "Unsupervised domain adaptation by backpropagation." International conference on machine learning. PMLR, 2015.</h3>
+<p><img src="https://picx.zhimg.com/80/v2-9b5f322cae8aee955bf84614904e3cf2_720w.webp?source=d16d100b" /></p>
+<p>Article 6 essentially proposes a neural network structure to find a space that minimizes the distribution distance between the source domain and the target domain. A neural network consists of three parts:</p>
+<p>$G_f( ; \theta_f)$ transforms an input $x$ into a feature $f$.<br />$G_y(&middot;;\theta_y)$ Input feature f and output prediction for label $y$.<br />$G_d(&middot;;\theta_d)$ takes in a feature f and outputs a prediction for the domain (source or target domain).</p>
+<p>During the training process, we hope that the features obtained by $G_f$ maximize $L_d$, even if the $f_s, f_t $ of the source domain and the target domain are as close as possible. But at the same time we want to get the smallest $L_d$ through $G_d$. Then adjust the rationality of the output $f$ according to $G_y$. In essence, it is an adversarial network, which is trained in this way to obtain a reasonable mapping method $G_f$ to $x$.</p>
+
+
