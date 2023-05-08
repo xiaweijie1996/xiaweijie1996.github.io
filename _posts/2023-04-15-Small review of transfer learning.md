@@ -97,7 +97,7 @@ feature_image: "https://i.postimg.cc/9F4wK2S2/wallhaven-1pd1o9.jpg"
 <p>Therefore, the problem turns into finding a minimum $dis(X_s,X_t)$ .</p>
 <p>In fact $dis(X_s,X_t)=trace(KL)$</p>
 <p>$$K=\left[ \begin{array}{ccc} K_{s,s} &amp;K_{s,t}\\ K_{t,s} &amp; K_{t,t}\\ \end{array} \right ] \in \mathbb{R}^{(m+n)&times;(m+N)}$$</p>
-<p>$$L=\left\{ \begin{array}{**rcl**} \frac{1}{n^2_s}\ ,\ x_i,x_j \in X_s&amp; \\ \frac{1}{n^2_t}\ ,\ x_i,x_j \in X_t&amp; \\ \frac{1}{{n_tn_s}}\ ,\ otherwise&amp; \\ \end{array} \right.$$</p>
+<p>$$L=\left\{ \begin{array}{**rcl**} \frac{1}{n^2_s}\ ,\ x_i,x_j \in X_s&amp; \\ \frac{1}{n^2_t}\ ,\ x_i,x_j \in X_t&amp; \\ \frac{1}{n_tn_s}\ ,\ otherwise&amp; \\ \end{array} \right.$$</p>
 <p>From dis to trace If you don't understand the calculation, refer to Teacher Wang: Wang Jindong is not at home: MMD calculation nuclear skill formula derivation</p>
 <p>Because $L$ is a fixed constant, the problem of minimizing dis is transformed into a positive semi-definite programming problem: find a $K$ that minimizes dis.</p>
 <p>But up to this point, we have only minimized the distance from the source domain to the target domain, and we have not yet achieved the maximum variance of the projected data. How? Add a regular term $trace(K)$ to the original optimization problem to represent the variance of the data (because 0 is the centre point $(x-0)^2=x^2$, see the explanation later). So the optimization problem becomes:</p>
