@@ -34,7 +34,7 @@ I was born in China. In 2022, I started my PhD journey in <a href="https://www.t
 One of my dreams is to travel around the world :flight_departure:.
 
 <b>Where I've been：</b><br>
-<img style="display: block; margin-left: auto; margin-right: auto;" src="https://i.postimg.cc/wxhq8Xbb/Map-Chart-Map-1.png" width="1000" align="center" />
+<img style="display: block; margin-left: auto; margin-right: auto;" src="https://i.postimg.cc/wxhq8Xbb/Map-Chart-Map-1.png" width="1100" align="center" />
 <p style="text-align: center;"><span style="font-family: 黑体; font-size: medium;">Map Mark tool recommendation <a href="https://www.mapchart.net/index.html">Mapchart</a></span>
 <br>
 
