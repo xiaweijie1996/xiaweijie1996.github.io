@@ -1,0 +1,197 @@
+/* -------Hello----------- */
+/* Apply the uploaded image as a full-page background */
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 30px;
+    /* Make sure it covers the full viewport */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    background: url('images/background.gif') no-repeat center center fixed;
+    background-size: cover;
+    /* Ensures the image covers the entire screen */
+}
+
+/* Style the header box */
+header {
+    background-color: rgba(0, 0, 0, 0.6);
+    /* Semi-transparent overlay for readability */
+    color: white;
+    padding: 20px;
+    width: 80%;
+    max-width: 800px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Hide the separate GIF if you now use it as the background */
+.gif {
+    display: none;
+}
+
+/* -------Hello----------- */
+
+
+
+
+/* -------Contacnt me----------- */
+.contact {
+    text-align: center;
+    margin-top: 20px;
+    /* Light background */
+    padding: 15px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    /* Stack elements properly */
+    align-items: center;
+    /* Ensure everything is centered */
+    width: 60%;
+    /* Adjust width */
+    max-width: 500px;
+    /* Avoid stretching */
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Make the contact list horizontal and centered */
+.contact ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    /* Space between items */
+    margin: 10px 0 0 0;
+    /* Remove extra top margin */
+}
+
+/* Make list items inline */
+.contact li {
+    display: inline-block;
+}
+
+/* Style contact links */
+.contact a {
+    text-decoration: none;
+    color: #0073e6;
+    font-size: 18px;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+
+.professor-link {
+    color: #3369ff;
+    /* Custom color */
+    font-weight: bold;
+    text-decoration: none;
+}
+
+/* Profile image container */
+.profile-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    /* Space between image and heading */
+}
+
+/* Profile image styling */
+.profile-image {
+    width: 180px;
+    /* Adjust size as needed */
+    height: 180px;
+    object-fit: cover;
+    border-radius: 50%;
+    /* Circular shape */
+    border: 4px solid white;
+    /* Optional border */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    /* Optional shadow */
+}
+
+/* -------Contacnt me----------- */
+
+
+
+
+/* -------about me----------- */
+/* Container for the education section */
+.education-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    /* Ensure responsiveness */
+    gap: 10px;
+    /* Space between boxes */
+    margin: 10px auto;
+    max-width: 1500px;
+    color: white;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Each education box */
+.edu-box {
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    margin-top: 10px;
+    text-align: center;
+    padding: 15px;
+    width: 200px;
+    /* Fixed width for uniformity */
+    height: 200px;
+    /* Adjust height if needed */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* University logos */
+.edu-box img {
+    width: 80px;
+    /* Adjust as needed */
+    height: auto;
+    margin-bottom: 10px;
+}
+
+/* Text styles */
+.edu-box p {
+    margin: 5px 0;
+    font-size: 16px;
+    color: #333;
+}
+
+.edu-box strong {
+    font-size: 18px;
+    color: #0073e6;
+    /* Highlight degree title */
+}
+
+/* Map image styling */
+.map-container {
+    text-align: center;
+    width: 50%;
+    margin-top: 10px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    opacity: 0.9;
+}
+
+.map-container img {
+    width: 60%;
+    max-width: 600px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* -------about me----------- */

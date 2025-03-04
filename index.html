@@ -4,11 +4,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Weijie Xia</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style_chatbot.css">
 </head>
 
 <body>
+    <header>
+        <div class="profile-container">
+            <img src="images/profile.jpg" alt="Profile Picture" class="profile-image">
+        </div>
+        <h1>Welcome to Weijie Xia's Website</h1>
+        <p>Hi, I am Weijie (夏伟杰), I was born in China. In 2022, I started my PhD journey in the IEPG group at TU Delft
+            under the supervision of <a href="https://scholar.google.com.br/citations?user=r-a55GMAAAAJ&hl=en"
+                class="professor-link" target="_blank">Dr. Pedro P.
+                Vergara </a> and <a href="https://scholar.google.com.br/citations?user=PI11KkwAAAAJ&hl=en"
+                class="professor-link" target="_blank">Prof. Dr. Peter Palensky</a>.
+            My research interests focus on the interdisciplinary areas of energy systems and machine learning.
+            Additionally, I am also interested in statistics and theoretical physics.
+            One of my dreams is to travel around the world ✈️. Nice to meet you! 😊</p>
+    </header>
 
+
+
+    <div class="education-container">
+        <div class="edu-box">
+            <img src="images/ouc.png" alt="Ocean University of China">
+            <p><strong>BSc</strong></p>
+        </div>
+
+        <div class="edu-box">
+            <img src="images/kth.png" alt="KTH Royal Institute of Technology">
+            <img src="images/tue.png" alt=" Eindhoven University of Technology">
+            <p><strong>MSc</strong></p>
+        </div>
+
+        <div class="edu-box">
+            <img src="images/tud.png" alt="Delft University of Technology">
+            <p><strong>PhD</strong></p>
+
+        </div>
+
+        <div class="edu-box">
+            <img src="images/essade.png" alt="Esade Business School">
+            <p><strong>Other</strong></p>
+        </div>
+    </div>
+
+
+    <!-- Chat Toggle Button -->
+    <div id="chat-toggle" onclick="toggleChat()">💬 Ask Any Questions About Me</div>
+
+    <!-- Chat Window -->
+    <div id="chat-window">
+        <div id="chat-header">
+            <span>Chat with My AI</span>
+            <button onclick="toggleChat()">✖</button>
+        </div>
+        <div id="chat-body"></div>
+        <div id="chat-input">
+            <input type="text" id="chat-text" placeholder="Ask me about my paper...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+
+
+
+    <div class="container map-container">
+        <p>The places I have been to 😆:</p>
+        <img src="images/mymap.png" alt="World Map">
+    </div>
+
+
+
+    <div class="contact">
+        <h2>Connect Me</h2>
+        <ul>
+            <li><a href="https://github.com/xiaweijie1996" target="_blank">GitHub</a></li>
+            <li><a href="https://www.linkedin.com/in/weijie-xia-0bb095180/" target="_blank">LinkedIn</a></li>
+            <li><a href="https://scholar.google.com/citations?user=lD82busAAAAJ&hl=zh-CN">Google Scholar</a></li>
+        </ul>
+    </div>
+
+
+    <script src="script.js"></script>
 </body>
 
 </html>
