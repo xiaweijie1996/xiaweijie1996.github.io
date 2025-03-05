@@ -2,6 +2,8 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log("Website loaded successfully!");
 });
 
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+
 async function sendMessage() {
     let inputField = document.getElementById("chat-text");
     let message = inputField.value.trim();
@@ -9,12 +11,20 @@ async function sendMessage() {
 
     displayMessage("You: " + message, "user");
 
-    let response = await fetch("http://your-backend-domain.com/chat", {
+    // Directly call the OpenAI API
+    let response = await fetch("https://api.openai.com/v1/chat/completions", {
         method: "POST",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${OPENAI_API_KEY}` // Replace with your actual API key
         },
-        body: JSON.stringify({ message: message })
+        body: JSON.stringify({
+            model: "gpt-3.5-turbo", // or another model of your choice
+            messages: [
+                { role: "system", content: "You are a helpful assistant." },
+                { role: "user", content: message }
+            ]
+        })
     });
 
     let result = await response.json();
