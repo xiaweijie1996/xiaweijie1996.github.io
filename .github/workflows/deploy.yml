@@ -1,26 +1,12 @@
-name: Deploy Server
-
-on:
-  push:
-    branches:
-      - main
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
     env:
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Start Server
-        run: node server.js
+      - uses: actions/checkout@v2
+      - name: Deploy Application
+        run: |
+          npm install
+          npm run build
+          npm start

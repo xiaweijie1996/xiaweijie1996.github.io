@@ -76,6 +76,29 @@ document.addEventListener("DOMContentLoaded", function () {
 //     chatBody.scrollTop = chatBody.scrollHeight; // Auto-scroll to latest message
 // }
 
+// async function sendMessage() {
+//     let inputField = document.getElementById("chat-text");
+//     let message = inputField.value.trim();
+//     if (!message) return;
+
+//     displayMessage("You: " + message, "user");
+
+//     try {
+//         let response = await fetch("http://localhost:3000/chat", { // Change URL if deployed
+//             method: "POST",
+//             headers: { "Content-Type": "application/json" },
+//             body: JSON.stringify({ message })
+//         });
+
+//         let result = await response.json();
+//         displayMessage("AI: " + result.reply, "bot");
+//     } catch (error) {
+//         displayMessage("Error: API not working!", "bot");
+//         console.error("API Request Error:", error);
+//     }
+
+//     inputField.value = "";
+// }
 async function sendMessage() {
     let inputField = document.getElementById("chat-text");
     let message = inputField.value.trim();
@@ -83,19 +106,21 @@ async function sendMessage() {
 
     displayMessage("You: " + message, "user");
 
-    try {
-        let response = await fetch("http://localhost:3000/chat", { // Change URL if deployed
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ message })
-        });
+    let response = await fetch("http://your-backend-domain.com/chat", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ message: message })
+    });
 
-        let result = await response.json();
-        displayMessage("AI: " + result.reply, "bot");
-    } catch (error) {
-        displayMessage("Error: API not working!", "bot");
-        console.error("API Request Error:", error);
+    let result = await response.json();
+
+    if (result.error) {
+        displayMessage("Error: " + result.error, "bot");
+        return;
     }
 
+    displayMessage("AI: " + result.reply, "bot");
     inputField.value = "";
 }
