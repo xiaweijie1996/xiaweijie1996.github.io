@@ -5,14 +5,13 @@ body {
     text-align: center;
     margin: 0;
     padding: 0;
-    height: 120vh;
     /* Make sure it covers the full viewport */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 
-    background: url('images/background.gif') no-repeat center center fixed;
+    background: url('../images/background.gif') no-repeat center center fixed;
     background-size: cover;
     /* Ensures the image covers the entire screen */
 }
@@ -21,10 +20,11 @@ body {
 header {
     background-color: rgba(0, 0, 0, 0.6);
     /* Semi-transparent overlay for readability */
+    margin-top: 3%;
     color: white;
     padding: 20px;
-    width: 80%;
-    max-width: 800px;
+    width: 50%;
+    /* max-width: 800px; */
     border-radius: 10px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
 }
@@ -43,7 +43,6 @@ header {
 .contact {
     text-align: center;
     margin-top: 20px;
-    background: rgba(255, 255, 255, 0.8);
     /* Light background */
     padding: 15px;
     border-radius: 10px;
@@ -52,10 +51,11 @@ header {
     /* Stack elements properly */
     align-items: center;
     /* Ensure everything is centered */
-    width: 60%;
-    /* Adjust width */
-    max-width: 500px;
+    width: 30%;
     /* Avoid stretching */
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 /* Make the contact list horizontal and centered */
@@ -130,20 +130,23 @@ header {
     /* Ensure responsiveness */
     gap: 10px;
     /* Space between boxes */
-    margin: 40px auto;
-    max-width: 900px;
+    margin: 10px auto;
+    width: 50%;
+    color: white;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.0);
 }
 
 /* Each education box */
 .edu-box {
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(0, 0, 0, 0.6);
     border-radius: 10px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    margin-top: 10px;
     text-align: center;
     padding: 15px;
-    width: 200px;
+    width: 15%;
     /* Fixed width for uniformity */
-    height: 250px;
+    height: 200px;
     /* Adjust height if needed */
     display: flex;
     flex-direction: column;
@@ -175,17 +178,155 @@ header {
 /* Map image styling */
 .map-container {
     text-align: center;
+    width: 50%;
     margin-top: 10px;
     background-color: rgba(0, 0, 0, 0.6);
     color: white;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    opacity: 0.9;
 }
 
 .map-container img {
-    width: 100%;
+    width: 60%;
     max-width: 600px;
     border-radius: 10px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 /* -------about me----------- */
+
+
+/* -------Chat----------- */
+/* 固定定位的聊天入口按钮 */
+.chat-entrance {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #020202 (0, 0, 0, 0.0);
+    /* 按钮背景色，可自定义 */
+    border-radius: 5px;
+    padding: 10px 15px;
+    z-index: 999;
+}
+
+.chat-entrance a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    font-family: sans-serif;
+}
+
+
+/* 固定定位的聊天入口按钮，示例：右下角 */
+.chat-entrance {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 10;
+}
+
+.chat-entrance button {
+    background: #007BFF;
+    color: #fff;
+    border: none;
+    padding: 12px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-family: sans-serif;
+}
+
+/* 全屏动画层，初始不可见 */
+.transition-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    /* 底色，后面再加扫描线效果 */
+    opacity: 0;
+    pointer-events: none;
+    /* 避免阻塞点击 */
+    z-index: 9999;
+    transition: opacity 0.5s ease;
+}
+
+/* 添加 active 后，开始渐显并播放扫描线动画 */
+.transition-overlay.active {
+    opacity: 1;
+    animation: scanning 3s forwards;
+    /* 3秒时长，可自行调整 */
+}
+
+/* 扫描线动画 keyframes */
+@keyframes scanning {
+    0% {
+        /* 扫描线初始：可以是完全黑屏 */
+        background-image: none;
+    }
+
+    20% {
+        /* 开始显示扫描线 */
+        background-image: repeating-linear-gradient(to bottom,
+                rgba(14, 6, 252, 1) 1px,
+                rgba(255, 255, 255, 1) 2px,
+                transparent 2px,
+                transparent 4px);
+        background-size: 100% 4px;
+    }
+
+    50% {
+        /* 扫描线往下移动一些 */
+        background-position: 0 100px;
+    }
+
+    100% {
+        /* 再移动到更远位置，让人感觉扫描线扫描全屏 */
+        background-position: 0 600px;
+    }
+}
+
+/* Container for the chat button */
+.chat-entrance {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1001;
+}
+
+/* Style the button */
+.chat-entrance button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #333;
+    /* Dark grey background */
+    border: none;
+    border-radius: 25px;
+    padding: 10px 20px;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    font-family: sans-serif;
+    transition: background-color 0.3s ease;
+}
+
+/* Hover effect for button */
+.chat-entrance button:hover {
+    background-color: #555;
+}
+
+/* Style the GIF image inside the button */
+.chat-entrance button img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    /* Makes the image circular */
+    object-fit: cover;
+    border: 2px solid #fff;
+    /* Optional white border frame */
+}
+
+
+/* -------Chat----------- */

@@ -5,14 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weijie Xia</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="style_chatbot.css">
-    <link rel="stylesheet" href="preloader_css.css">
+    <link rel="stylesheet" href="cssfolder/style.css">
+    <link rel="stylesheet" href="cssfolder/preloader_css.css">
 </head>
 
 <body>
-
-
     <!-- Preloader -->
     <div id="preloader">
         <div id="preloader-text"></div>
@@ -23,7 +20,8 @@
             <img src="images/profile.jpg" alt="Profile Picture" class="profile-image">
         </div>
         <h1>Welcome to Weijie Xia's Website</h1>
-        <p>Hi, I am Weijie (夏伟杰), I was born in China. In 2022, I started my PhD journey in the IEPG group at TU Delft
+        <p>Hi, I am Weijie (夏伟杰), I was born in China. In 2022, I started my PhD journey in the IEPG group at TU
+            Delft
             under the supervision of <a href="https://scholar.google.com.br/citations?user=r-a55GMAAAAJ&hl=en"
                 class="professor-link" target="_blank">Dr. Pedro P.
                 Vergara </a> and <a href="https://scholar.google.com.br/citations?user=PI11KkwAAAAJ&hl=en"
@@ -60,28 +58,10 @@
     </div>
 
 
-    <!-- Chat Toggle Button -->
-    <div id="chat-toggle" onclick="toggleChat()">💬 Ask Any Questions to My Digital Bro</div>
-
-    <!-- Chat Window -->
-    <div id="chat-window">
-        <div id="chat-header">
-            <span>Chat with Weijie's Digital Bro</span>
-            <button onclick="toggleChat()">✖</button>
-        </div>
-        <div id="chat-body"></div>
-        <div id="chat-input">
-            <input type="text" id="chat-text" placeholder="Ask me about my paper...">
-            <button onclick="sendMessage()">Send</button>
-        </div>
-    </div>
-
-
     <div class="container map-container">
         <p>The places I have been to 😆:</p>
         <img src="images/mymap.png" alt="World Map">
     </div>
-
 
 
     <div class="contact">
@@ -93,8 +73,20 @@
         </ul>
     </div>
 
-    <script src="script.js"></script>
-    <script src="preloader_js.js"></script>
+
+    <!-- 全屏动画层，默认隐藏 -->
+    <div class="transition-overlay" id="transitionOverlay"></div>
+    <!-- 右下角“进入聊天”按钮 -->
+    <div class="chat-entrance">
+        <button onclick="startTransition()">
+            <img src="images/robot.png" alt="Animated Icon">
+            <span>💬 Ask Weijie's Digital Bro</span>
+        </button>
+    </div>
+
+
+    <script src="jsfolder/index_js.js"></script>
+
 </body>
 
 </html>

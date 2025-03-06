@@ -1,0 +1,74 @@
+/* 初始 body 为透明，过渡到不透明 */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: #f5f5f5;
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+body.loaded {
+    opacity: 1;
+}
+
+.chat-container {
+    max-width: 600px;
+    margin: 50px auto;
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    padding: 20px;
+}
+
+.chat-messages {
+    height: 300px;
+    overflow-y: auto;
+    background: #fafafa;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+}
+
+.chat-input {
+    display: flex;
+}
+
+.chat-input input {
+    flex: 1;
+    padding: 8px;
+}
+
+.chat-input button {
+    padding: 8px 16px;
+    background: #007BFF;
+    color: #fff;
+    border: none;
+}
+
+/* 简单的消息样式 */
+.message {
+    margin: 5px 0;
+    padding: 8px 12px;
+    border-radius: 4px;
+    max-width: 80%;
+    word-wrap: break-word;
+}
+
+.user-message {
+    background: #007BFF;
+    color: #fff;
+    margin-left: auto;
+    /* 靠右 */
+}
+
+.bot-message {
+    background: #eee;
+    color: #333;
+    margin-right: auto;
+    /* 靠左 */
+}
+
+.back-link {
+    margin-top: 10px;
+}
