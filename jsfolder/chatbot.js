@@ -5,6 +5,9 @@ document.addEventListener("DOMContentLoaded", () => {
     // The greeting message with highlighted year
     const greetingText = "Machine: Hello, I am Weijie's Digital Bro manufactured in 2055, This is a Message From the Future, How are you doing?";
 
+    // Get the year now
+    const currentYear = new Date().getFullYear();
+
     // Type out the greeting message word by word
     typeLine(chatContent, greetingText, "machine", 300, () => {
         // Callback after greeting finishes (optional)
@@ -20,8 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
             appendLine("user", "User: " + content);
             userInput.value = "";
 
-            // After a short delay, type out the machine reply
-            const machineReply = "Machine: Sorry, I am still in manufacturing, but one day, my master will make me alive....";
+            const machineReply = "Machine: Sorry, I am still in manufacturing, but one day, My Master will make me Alive....";
             setTimeout(() => {
                 typeLine(chatContent, machineReply, "machine", 300, () => {
                     // Callback after machine reply finishes (optional)
@@ -83,8 +85,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }, delay);
     }
-
-
 
 });
 

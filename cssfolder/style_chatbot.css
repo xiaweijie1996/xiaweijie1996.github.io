@@ -19,6 +19,10 @@ body {
     /* 占满视口高度 */
     padding: 20px;
     box-sizing: border-box;
+    position: relative;
+    /* Add this line */
+    z-index: 99;
+    /* on top */
 }
 
 /* 聊天内容区：可滚动 */
@@ -57,13 +61,15 @@ body {
 .console-input {
     width: 100%;
     background: #0d0d1b;
-    color: #0fff9f;
+    color: #ffff99;
     border: 1px solid #333;
     padding: 8px;
     font-family: Consolas, monospace;
     font-size: 16px;
     box-sizing: border-box;
     outline: none;
+    z-index: 98;
+    /* on top */
 }
 
 /* 聚焦时，边框微微变亮 */
@@ -78,24 +84,26 @@ body {
 }
 
 
-/* Starfield container (covers the entire viewport behind all content) */
-.stars-container {
+.right-gif-container {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    pointer-events: none;
-    /* so stars don't block any clicks */
-    z-index: -1;
-    /* place behind the main content */
+    /* Stays in place while scrolling */
+    right: 15%;
+    /* 20px from the right edge */
+    top: 50%;
+    /* Center vertically in the viewport */
+    transform: translateY(-50%);
+    /* Moves up by half its height to truly center */
+    z-index: 1;
+    /* Stays on top of other elements */
+    /* pointer-events: none; If you don't want the GIF to block clicks */
 }
 
-/* Each star */
-.star {
-    position: absolute;
-    background: #fff;
-    border-radius: 50%;
-    opacity: 0.8;
-    animation: fly linear infinite;
+
+/* The GIF itself (optional sizing) */
+.right-gif {
+    width: 150%;
+    /* Adjust size as needed */
+    height: auto;
+    display: block;
+    /* Ensure it doesn't get extra spacing */
 }
