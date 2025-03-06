@@ -1,74 +1,101 @@
-/* 初始 body 为透明，过渡到不透明 */
+/* 全局：黑底，等宽字体 */
+html,
 body {
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
-    background: #f5f5f5;
-    opacity: 0;
-    transition: opacity 1s ease;
+    height: 100%;
+    font-family: Consolas, monospace;
+    background: #000;
+    /* 黑色背景 */
+    color: #ccc;
+    /* 默认文字为灰 */
 }
 
-body.loaded {
-    opacity: 1;
-}
-
-.chat-container {
-    max-width: 600px;
-    margin: 50px auto;
-    background: #fff;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    padding: 20px;
-}
-
-.chat-messages {
-    height: 300px;
-    overflow-y: auto;
-    background: #fafafa;
-    margin-bottom: 10px;
-    border: 1px solid #ddd;
-}
-
-.chat-input {
+/* 外层容器：上下布局 */
+.console-container {
     display: flex;
+    flex-direction: column;
+    height: 100vh;
+    /* 占满视口高度 */
+    padding: 20px;
+    box-sizing: border-box;
 }
 
-.chat-input input {
+/* 聊天内容区：可滚动 */
+.chat-content {
     flex: 1;
+    /* 撑开剩余空间 */
+    overflow-y: auto;
+    margin-bottom: 10px;
+}
+
+/* 基础行样式：微弱发光模拟CRT */
+.message-line {
+    margin: 6px 0;
+    text-shadow: 0 0 2px rgba(255, 255, 255, 0.2);
+    white-space: pre-wrap;
+    line-height: 1.4;
+}
+
+/* 机器行 (Machine) 用绿色 */
+.machine-line {
+    color: #50fa7b;
+}
+
+/* 用户行 (User) 用浅黄 */
+.user-line {
+    color: #ffff99;
+}
+
+/* 底部输入栏 */
+.input-bar {
+    border-top: 1px solid #333;
+    padding-top: 10px;
+}
+
+/* 输入框：深色背景 + 绿色文字 */
+.console-input {
+    width: 100%;
+    background: #0d0d1b;
+    color: #0fff9f;
+    border: 1px solid #333;
     padding: 8px;
+    font-family: Consolas, monospace;
+    font-size: 16px;
+    box-sizing: border-box;
+    outline: none;
 }
 
-.chat-input button {
-    padding: 8px 16px;
-    background: #007BFF;
-    color: #fff;
-    border: none;
+/* 聚焦时，边框微微变亮 */
+.console-input:focus {
+    border-color: #666;
 }
 
-/* 简单的消息样式 */
-.message {
-    margin: 5px 0;
-    padding: 8px 12px;
-    border-radius: 4px;
-    max-width: 80%;
-    word-wrap: break-word;
+.highlight {
+    color: #ff0;
+    /* Bright yellow for highlighting */
+    font-weight: bold;
 }
 
-.user-message {
-    background: #007BFF;
-    color: #fff;
-    margin-left: auto;
-    /* 靠右 */
+
+/* Starfield container (covers the entire viewport behind all content) */
+.stars-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    /* so stars don't block any clicks */
+    z-index: -1;
+    /* place behind the main content */
 }
 
-.bot-message {
-    background: #eee;
-    color: #333;
-    margin-right: auto;
-    /* 靠左 */
-}
-
-.back-link {
-    margin-top: 10px;
+/* Each star */
+.star {
+    position: absolute;
+    background: #fff;
+    border-radius: 50%;
+    opacity: 0.8;
+    animation: fly linear infinite;
 }

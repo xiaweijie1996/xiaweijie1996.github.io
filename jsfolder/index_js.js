@@ -21,7 +21,7 @@ function typeText(element, text, speed) {
 window.addEventListener('load', () => {
     const preloaderText = document.getElementById('preloader-text');
     const message = "Hi, Welcome to Weijie's Website!";
-    typeText(preloaderText, message, 10); // Adjust typing speed (milliseconds) as needed
+    typeText(preloaderText, message, 120); // Adjust typing speed (milliseconds) as needed
 });
 
 

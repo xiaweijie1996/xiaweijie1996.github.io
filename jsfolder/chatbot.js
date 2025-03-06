@@ -1,76 +1,91 @@
-document.addEventListener("DOMContentLoaded", function () {
-    console.log("Website loaded successfully!");
-});
+document.addEventListener("DOMContentLoaded", () => {
+    const chatContent = document.getElementById("chat-content");
+    const userInput = document.getElementById("user-input");
 
-function toggleChat() {
-    const pageContainer = document.querySelector(".page-container");
-    const chatWindow = document.getElementById("chat-window");
-    const backgroundOverlay = document.getElementById("background-overlay");
+    // The greeting message with highlighted year
+    const greetingText = "Machine: Hello, I am Weijie's Digital Bro manufactured in 2055, This is a Message From the Future, How are you doing?";
 
-    // 如果聊天窗口未激活，则激活（页面向左移动、聊天窗口和背景淡入）
-    if (!chatWindow.classList.contains("active")) {
-        pageContainer.classList.add("shift-left");
-        chatWindow.classList.add("active");
-        backgroundOverlay.style.visibility = "visible";
-        backgroundOverlay.style.opacity = "1";
-    } else {
-        // 否则，恢复原状
-        pageContainer.classList.remove("shift-left");
-        chatWindow.classList.remove("active");
-        backgroundOverlay.style.opacity = "0";
-        // 等背景淡出后再隐藏
-        setTimeout(function () {
-            backgroundOverlay.style.visibility = "hidden";
-        }, 1000);
-    }
-}
-
-// 示例：发送消息的函数（调用 OpenAI API 部分保持原样）
-const OPENAI_API_KEY = process.env.OPENAI_API_KEY; // 请确保环境变量正确设置
-
-async function sendMessage() {
-    let inputField = document.getElementById("chat-text");
-    let message = inputField.value.trim();
-    if (!message) return;
-
-    displayMessage("You: " + message, "user");
-
-    // 发送请求调用 OpenAI 接口（请确保 API KEY 正确）
-    let response = await fetch("https://api.openai.com/v1/chat/completions", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${OPENAI_API_KEY}`
-        },
-        body: JSON.stringify({
-            model: "gpt-3.5-turbo",
-            messages: [
-                { role: "system", content: "You are a helpful assistant." },
-                { role: "user", content: message }
-            ]
-        })
+    // Type out the greeting message word by word
+    typeLine(chatContent, greetingText, "machine", 300, () => {
+        // Callback after greeting finishes (optional)
     });
 
-    let result = await response.json();
+    // Listen for the Enter key in the input field
+    userInput.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") {
+            const content = userInput.value.trim();
+            if (!content) return; // Do nothing on empty input
 
-    if (result.error) {
-        displayMessage("Error: " + result.error, "bot");
-        return;
+            // Immediately add the user's line
+            appendLine("user", "User: " + content);
+            userInput.value = "";
+
+            // After a short delay, type out the machine reply
+            const machineReply = "Machine: Sorry, I am still in manufacturing, but one day, my master will make me alive....";
+            setTimeout(() => {
+                typeLine(chatContent, machineReply, "machine", 300, () => {
+                    // Callback after machine reply finishes (optional)
+                });
+            }, 500);
+        }
+    });
+
+    // Function to immediately append a line (for user messages)
+    function appendLine(type, text) {
+        const lineDiv = document.createElement("div");
+        lineDiv.classList.add("message-line");
+        if (type === "machine") {
+            lineDiv.classList.add("machine-line");
+            // Use innerHTML in case we need HTML formatting
+            lineDiv.innerHTML = text;
+        } else {
+            lineDiv.classList.add("user-line");
+            lineDiv.textContent = text;
+        }
+        chatContent.appendChild(lineDiv);
+        chatContent.scrollTop = chatContent.scrollHeight;
     }
 
-    displayMessage("AI: " + result.reply, "bot");
-    inputField.value = "";
-}
+    // Function to "type" a line word by word
+    function typeLine(container, text, type, delay, callback) {
+        let words = text.split(" ");
+        let currentText = "";
+        let i = 0;
+        // Create a new div for this line
+        let lineDiv = document.createElement("div");
+        lineDiv.classList.add("message-line");
+        if (type === "machine") {
+            lineDiv.classList.add("machine-line");
+        } else {
+            lineDiv.classList.add("user-line");
+        }
+        container.appendChild(lineDiv);
 
-function displayMessage(message, sender) {
-    const chatBody = document.getElementById("chat-body");
-    const messageElement = document.createElement("div");
-    messageElement.innerText = message;
-    messageElement.className = sender;
-    chatBody.appendChild(messageElement);
-    chatBody.scrollTop = chatBody.scrollHeight;
-}
+        let interval = setInterval(() => {
+            if (i < words.length) {
+                // Append the next word (with a space if not the first word)
+                currentText = currentText === "" ? words[i] : currentText + " " + words[i];
+                if (type === "machine") {
+                    // Use innerHTML to allow HTML formatting
+                    lineDiv.innerHTML = currentText;
+                } else {
+                    lineDiv.textContent = currentText;
+                }
+                container.scrollTop = container.scrollHeight;
+                i++;
+            } else {
+                clearInterval(interval);
+                // For machine lines, replace "2055" with a highlighted version
+                if (type === "machine") {
+                    lineDiv.innerHTML = lineDiv.innerHTML.replace("11111", '<span class="highlight">2055</span>');
+                }
+                if (callback) callback();
+            }
+        }, delay);
+    }
 
-function goBack() {
-    window.location.href = 'index.html';
-}
+
+
+});
+
+

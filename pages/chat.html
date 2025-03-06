@@ -3,38 +3,26 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Chat with Weijie</title>
+    <title>Weijie's Digital Bro</title>
     <link rel="stylesheet" href="../cssfolder/style_chatbot.css">
 </head>
 
 <body>
+    <!-- 容器，包含所有内容 -->
+    <div class="console-container">
 
-    <div class="chat-container">
-        <h1>Chat with Weijie's Digital Bro</h1>
+        <!-- 聊天内容显示区 -->
+        <div id="chat-content" class="chat-content"></div>
 
-        <!-- 消息显示区 -->
-        <div class="chat-messages" id="chat-messages"></div>
-
-        <!-- 输入区 -->
-        <div class="chat-input">
-            <input type="text" id="message-input" placeholder="Type your message...">
-            <button id="send-btn">Send</button>
+        <!-- 底部输入栏 -->
+        <div class="input-bar">
+            <input type="text" id="user-input" class="console-input" placeholder="Type your message... (Press Enter)">
         </div>
 
-        <!-- 返回主页 -->
-        <div class="back-link">
-            <a href="../index.html">← Back to main page</a>
-        </div>
     </div>
 
-    <!-- 你的聊天逻辑脚本 -->
-    <script>
-        // 页面加载完后，让body淡入
-        document.addEventListener('DOMContentLoaded', () => {
-            document.body.classList.add('loaded');
-        });
-    </script>
-    <script src="chatbot.js"></script>
+    <!-- 简易脚本：用户输入后自动显示Machine行 -->
+    <script src="../jsfolder/chatbot.js"></script>
 </body>
 
 </html>
