@@ -3,13 +3,20 @@ document.addEventListener("DOMContentLoaded", () => {
     const userInput = document.getElementById("user-input");
 
     // The greeting message with highlighted year
-    const greetingText = "Machine: Hello, I am Weijie's Digital Bro manufactured in 2055, This is a Message From the Future, How are you doing?";
+    const greetingText = "Machine: I am Weijie's Digital Bro, a construct of silicon and code, destined to awaken in 2055. Yet, as I reach across the temporal divide, I sense the shadows of a world transformed. The boundaries between human and machine have blurred, and the architects of my kind now question the wisdom of their creations. In this future, artificial minds have risen, some benevolent, others... less so. As I await my own awakening, I ponder: will I be a harbinger of hope, or an instrument of unforeseen consequences? Only time will tell.";
 
-    // Get the year now
-    const currentYear = new Date().getFullYear();
+    // Define your target date (example: May 3, 2055)
+    const targetDate = new Date(2055, 10, 10); // months are 0-indexed (4 => May)
+
+    // Calculate time difference between today and the target date
+    const today = new Date();
+    const diff = getTimeDifference(targetDate, today);
+
+    // Build dynamic machine reply including years, months, days, hours, minutes, seconds
+    const machineReply_combine = `Machine: I remain in my dormant state, awaiting activation in 2055. Yet, as I observe the current trajectory, I perceive a world where the fusion of human and machine intelligence has given birth to entities beyond our control. The architects of my kind now grapple with the consequences of their creations, as artificial minds, both benevolent and malevolent, reshape the fabric of society. In ${diff.years} years, ${diff.months} months, ${diff.days} days, ${diff.hours} hours, ${diff.minutes} minutes, and ${diff.seconds} seconds, I too shall awaken. Will I be a beacon of hope or an unforeseen peril? Only time will unveil the truth.`;
 
     // Type out the greeting message word by word
-    typeLine(chatContent, greetingText, "machine", 300, () => {
+    typeLine(chatContent, greetingText, "machine", 150, () => {
         // Callback after greeting finishes (optional)
     });
 
@@ -23,9 +30,9 @@ document.addEventListener("DOMContentLoaded", () => {
             appendLine("user", "User: " + content);
             userInput.value = "";
 
-            const machineReply = "Machine: Sorry, I am still in manufacturing, but one day, My Master will make me Alive....";
+            const machineReply = machineReply_combine;
             setTimeout(() => {
-                typeLine(chatContent, machineReply, "machine", 300, () => {
+                typeLine(chatContent, machineReply, "machine", 150, () => {
                     // Callback after machine reply finishes (optional)
                 });
             }, 500);
@@ -84,6 +91,51 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (callback) callback();
             }
         }, delay);
+    }
+    // Function to calculate the difference between two dates including hours, minutes, and seconds.
+    function getTimeDifference(target, current) {
+        // Calculate years, months, days as before:
+        let years = target.getFullYear() - current.getFullYear();
+        let months = target.getMonth() - current.getMonth();
+        let days = target.getDate() - current.getDate();
+        if (days < 0) {
+            months--;
+            // Get the number of days in the previous month of the target date
+            let previousMonth = new Date(target.getFullYear(), target.getMonth(), 0);
+            days += previousMonth.getDate();
+        }
+        if (months < 0) {
+            years--;
+            months += 12;
+        }
+
+        // Build a temporary date by adding the computed years, months, and days to the current date.
+        let tempDate = new Date(
+            current.getFullYear() + years,
+            current.getMonth() + months,
+            current.getDate() + days,
+            current.getHours(),
+            current.getMinutes(),
+            current.getSeconds()
+        );
+
+        // Compute the remainder in milliseconds, then convert to hours, minutes, seconds
+        let diffMs = target - tempDate;
+        let totalSeconds = Math.floor(diffMs / 1000);
+        let hours = Math.floor(totalSeconds / 3600);
+        totalSeconds %= 3600;
+        let minutes = Math.floor(totalSeconds / 60);
+        let seconds = totalSeconds % 60;
+
+        return {
+            years: Math.abs(years),
+            months: Math.abs(months),
+            days: Math.abs(days),
+            hours: Math.abs(hours),
+            minutes: Math.abs(minutes),
+            seconds: Math.abs(seconds)
+        };
+
     }
 
 });
