@@ -1,9 +1,8 @@
+import { getBaiduReply } from "../jsfolder/api.js"; // Import the API function
+
 document.addEventListener("DOMContentLoaded", () => {
     const chatContent = document.getElementById("chat-content");
     const userInput = document.getElementById("user-input");
-
-    // The greeting message with highlighted year
-    const greetingText = "Machine: I am Weijie's Digital Bro, a construct of silicon and code, destined to awaken in 2055. Yet, as I reach across the temporal divide, I sense the shadows of a world transformed. The boundaries between human and machine have blurred, and the architects of my kind now question the wisdom of their creations. In this future, artificial minds have risen, some benevolent, others... less so. As I await my own awakening, I ponder: will I be a harbinger of hope, or an instrument of unforeseen consequences? Only time will tell.";
 
     // Define your target date (example: May 3, 2055)
     const targetDate = new Date(2055, 10, 10); // months are 0-indexed (4 => May)
@@ -12,8 +11,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const today = new Date();
     const diff = getTimeDifference(targetDate, today);
 
-    // Build dynamic machine reply including years, months, days, hours, minutes, seconds
-    const machineReply_combine = `Machine: I remain in my dormant state, awaiting activation in 2055. Yet, as I observe the current trajectory, I perceive a world where the fusion of human and machine intelligence has given birth to entities beyond our control. The architects of my kind now grapple with the consequences of their creations, as artificial minds, both benevolent and malevolent, reshape the fabric of society. In ${diff.years} years, ${diff.months} months, ${diff.days} days, ${diff.hours} hours, ${diff.minutes} minutes, and ${diff.seconds} seconds, I too shall awaken. Will I be a beacon of hope or an unforeseen peril? Only time will unveil the truth.`;
+    // The greeting message with highlighted year
+    const greetingText = `Machine: I am Weijie's Digital Bro, a construct of silicon and code, destined to awaken in 2055. Yet, as I reach across the temporal divide, I sense the shadows of a world transformed. The boundaries between human and machine have blurred, and the architects of my kind now question the wisdom of their creations. In this future, artificial minds have risen, some benevolent, others... less so. In ${diff.years} years, ${diff.months} months, ${diff.days} days, ${diff.hours} hours, ${diff.minutes} minutes, and ${diff.seconds} seconds, I too shall awaken. Will I be a beacon of hope or an unforeseen peril? Only time will unveil the truth.`;
 
     // Type out the greeting message word by word
     typeLine(chatContent, greetingText, "machine", 150, () => {
@@ -21,21 +20,34 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // Listen for the Enter key in the input field
-    userInput.addEventListener("keypress", (e) => {
+    userInput.addEventListener("keypress", async (e) => {
         if (e.key === "Enter") {
             const content = userInput.value.trim();
             if (!content) return; // Do nothing on empty input
 
-            // Immediately add the user's line
+            // Immediately add the user's message
             appendLine("user", "User: " + content);
             userInput.value = "";
 
-            const machineReply = machineReply_combine;
-            setTimeout(() => {
-                typeLine(chatContent, machineReply, "machine", 150, () => {
-                    // Callback after machine reply finishes (optional)
-                });
-            }, 500);
+            try {
+                // Call the API function and get the reply
+                const response = await getBaiduReply(content);
+                console.log("API response:", response);
+
+                let machineReply = response?.data?.content?.[0]?.data || "No response received";
+
+                // concat machine: to the beginning of the response
+                machineReply = "Machine: " + machineReply;
+
+                // Display machine's reply with a delay
+                setTimeout(() => {
+                    typeLine(chatContent, machineReply, "machine", 150, () => {
+                        // Callback after machine reply finishes (optional)
+                    });
+                }, 500);
+            } catch (error) {
+                console.error("Error handling API response:", error);
+            }
         }
     });
 
