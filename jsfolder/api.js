@@ -1,7 +1,7 @@
 
 export async function getBaiduReply(userMessage) {
-    const id = 'YBsaNfHBk6fjP6Sn7gUfTKMvVhp0YhCf';
-    const key = 'N5ajhngmXcLA1Q3EOy34QCCGh6ArWRI7';
+    const id = 'GDdo9jy2K3dTBgWRmvMlxwkw10qItQcK';
+    const key = 'y1UitWmC2BsMcHyKydFtiyKqEStDP0xM';
     const url = `https://agentapi.baidu.com/assistant/getAnswer?appId=${id}&secretKey=${key}`;
 
     const headers = {
