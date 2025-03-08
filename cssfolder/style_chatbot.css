@@ -107,3 +107,23 @@ body {
     display: block;
     /* Ensure it doesn't get extra spacing */
 }
+
+
+.button-container {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.back-button {
+    background-color: #070707;
+    color: #50faab9a;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.back-button:hover {
+    background-color: #333;
+}
