@@ -11,7 +11,7 @@ function typeText(element, text, speed) {
             setTimeout(() => {
                 document.getElementById('preloader').classList.add('fade-out');
                 document.getElementById('main-content').style.opacity = '1';
-            }, 1000);
+            }, 300);
         }
     }
     type();
@@ -20,8 +20,8 @@ function typeText(element, text, speed) {
 // Start the preloader animation on window load
 window.addEventListener('load', () => {
     const preloaderText = document.getElementById('preloader-text');
-    const message = "Hi, Welcome to Weijie's Website!";
-    typeText(preloaderText, message, 120); // Adjust typing speed (milliseconds) as needed
+    const message = "Hi, welcome to Weijie's website!";
+    typeText(preloaderText, message, 45); // Faster typing speed
 });
 
 
@@ -46,8 +46,8 @@ function startTransition() {
     // Trigger the CSS animation by adding the 'active' class
     overlay.classList.add('active');
 
-    // After the animation duration (e.g., 3000ms), navigate to the chat page
+    // After the animation duration, navigate to the chat page
     setTimeout(() => {
         window.location.href = 'pages/chat.html';
-    }, 3000); // Adjust the delay to match your CSS animation duration if needed
+    }, 1200); // Match CSS animation duration
 }

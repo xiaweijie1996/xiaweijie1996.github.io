@@ -84,6 +84,26 @@ header {
     transition: color 0.3s;
 }
 
+.contact ul.notes-list {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.contact ul.notes-list li {
+    display: block;
+    width: 100%;
+    text-align: left;
+}
+
+.contact ul.notes-list .updated-time {
+    color: #c8c8c8;
+    font-size: 14px;
+    font-weight: normal;
+    margin-left: 8px;
+}
+
 
 .professor-link {
     color: #3369ff;
@@ -212,7 +232,7 @@ header {
 .chat-entrance a {
     color: #fff;
     text-decoration: none;
-    font-weight: bold;
+    font-weight: normal;
     font-family: sans-serif;
 }
 
@@ -249,14 +269,14 @@ header {
     pointer-events: none;
     /* 避免阻塞点击 */
     z-index: 9999;
-    transition: opacity 0.5s ease;
+    transition: opacity 0.25s ease;
 }
 
 /* 添加 active 后，开始渐显并播放扫描线动画 */
 .transition-overlay.active {
     opacity: 1;
-    animation: scanning 3s forwards;
-    /* 3秒时长，可自行调整 */
+    animation: scanning 1.2s forwards;
+    /* 1.2秒时长，更快进入 */
 }
 
 /* 扫描线动画 keyframes */
@@ -293,6 +313,10 @@ header {
     bottom: 20px;
     right: 20px;
     z-index: 1001;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-end;
 }
 
 /* Style the button */
@@ -307,6 +331,7 @@ header {
     padding: 10px 20px;
     color: #fff;
     font-size: 16px;
+    font-weight: 600;
     cursor: pointer;
     font-family: sans-serif;
     transition: background-color 0.3s ease;
@@ -315,6 +340,35 @@ header {
 /* Hover effect for button */
 .chat-entrance button:hover {
     background-color: #555;
+}
+
+.chat-entrance .secondary-entry {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #333;
+    border: none;
+    border-radius: 25px;
+    padding: 10px 20px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: sans-serif;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.chat-entrance .secondary-entry:hover {
+    background-color: #555;
+}
+
+.chat-entrance .secondary-entry img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #fff;
 }
 
 /* Style the GIF image inside the button */

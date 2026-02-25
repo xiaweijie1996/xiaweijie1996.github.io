@@ -1,0 +1,394 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Attention Mechanism — Clean Mathematical Note</title>
+
+  <!-- MathJax (LaTeX rendering) -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)'], ['$', '$']],
+        displayMath: [['\\[', '\\]'], ['$$', '$$']],
+      },
+      options: {
+        skipHtmlTags: ['script','noscript','style','textarea','pre','code'],
+      }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card: #111827;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --accent: #60a5fa;
+      --line: rgba(255,255,255,0.10);
+      --code: #0f172a;
+    }
+    body{
+      margin:0;
+      background: linear-gradient(180deg, var(--bg), #070a12);
+      color: var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      line-height: 1.7;
+    }
+    .wrap{
+      max-width: 980px;
+      margin: 40px auto;
+      padding: 0 18px 60px;
+    }
+    header{
+      background: radial-gradient(1200px 500px at 20% 0%, rgba(96,165,250,0.18), transparent 60%),
+                  radial-gradient(900px 500px at 90% 10%, rgba(34,197,94,0.10), transparent 60%);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 26px 22px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+    }
+    h1{
+      margin: 0 0 8px;
+      font-size: 28px;
+      letter-spacing: .2px;
+    }
+    .subtitle{
+      margin:0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    section{
+      margin-top: 18px;
+      background: rgba(17,24,39,0.78);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 22px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.22);
+    }
+    h2{
+      margin: 0 0 10px;
+      font-size: 18px;
+      color: #f3f4f6;
+    }
+    h3{
+      margin: 18px 0 8px;
+      font-size: 15px;
+      color: #f3f4f6;
+    }
+    p{
+      margin: 8px 0;
+      color: #e5e7eb;
+    }
+    .muted{ color: var(--muted); }
+    .pill{
+      display:inline-block;
+      padding: 2px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(96,165,250,0.10);
+      color: #dbeafe;
+      font-size: 12px;
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+    hr{
+      border:0;
+      border-top:1px solid var(--line);
+      margin: 16px 0;
+    }
+    .one-liner{
+      font-weight: 600;
+      color: #dbeafe;
+      background: rgba(96,165,250,0.10);
+      border: 1px dashed rgba(96,165,250,0.35);
+      padding: 12px 14px;
+      border-radius: 14px;
+    }
+    code.inline{
+      background: rgba(15,23,42,0.85);
+      border: 1px solid rgba(255,255,255,0.10);
+      padding: 2px 6px;
+      border-radius: 8px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
+      font-size: 0.95em;
+    }
+    .mjx-container{
+      overflow-x:auto;
+      overflow-y:hidden;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <h1>📘 Attention Mechanism — Clean Mathematical Note</h1>
+      <p class="subtitle">Rendered with MathJax (LaTeX in HTML). Copy this file as <code class="inline">attention_note.html</code> and open in your browser.</p>
+    </header>
+
+    <section>
+      <h2>1️⃣ Scaled Dot-Product Attention <span class="pill">core</span></h2>
+      <p>Let sequence length be <code class="inline">n</code>.</p>
+
+      <p><b>Query, Key, Value matrices:</b></p>
+
+      \[
+      Q \in \mathbb{R}^{n \times d_k}
+      \]
+
+      \[
+      K \in \mathbb{R}^{n \times d_k}
+      \]
+
+      \[
+      V \in \mathbb{R}^{n \times d_v}
+      \]
+
+      <hr />
+
+      <h3>Similarity Scores</h3>
+
+      \[
+      S = \frac{QK^T}{\sqrt{d_k}}
+      \]
+
+      <p class="muted">where</p>
+
+      \[
+      S \in \mathbb{R}^{n \times n}
+      \]
+
+      <hr />
+
+      <h3>Attention Weights (row-wise softmax)</h3>
+
+      \[
+      A = \text{softmax}(S)
+      \]
+
+      <p>Each row sums to 1:</p>
+
+      \[
+      \sum_j A_{ij} = 1
+      \]
+
+      <hr />
+
+      <h3>Output</h3>
+
+      \[
+      O = AV
+      \]
+
+      \[
+      O \in \mathbb{R}^{n \times d_v}
+      \]
+
+      <hr />
+
+      <h3>Compact Form</h3>
+
+      \[
+      \text{Attention}(Q,K,V)
+      =
+      \text{softmax}\left(
+      \frac{QK^T}{\sqrt{d_k}}
+      \right)V
+      \]
+    </section>
+
+    <section>
+      <h2>2️⃣ Token-wise View <span class="pill">intuition</span></h2>
+
+      <p>For token \( i \):</p>
+
+      <h3>Score</h3>
+
+      \[
+      s_{ij}
+      =
+      \frac{q_i \cdot k_j}{\sqrt{d_k}}
+      \]
+
+      <h3>Weight</h3>
+
+      \[
+      \alpha_{ij}
+      =
+      \frac{\exp(s_{ij})}
+      {\sum_m \exp(s_{im})}
+      \]
+
+      <h3>Output</h3>
+
+      \[
+      o_i
+      =
+      \sum_j \alpha_{ij} v_j
+      \]
+    </section>
+
+    <section>
+    <h2>3️⃣ Why Divide by \( \sqrt{d_k} \) <span class="pill">stability</span></h2>
+
+    <p><b>Key idea:</b> the dot product \(q \cdot k\) grows in magnitude as dimension grows. Large scores make softmax too peaky, which hurts gradients.</p>
+
+    <h3>Variance scaling (the main reason)</h3>
+    <p>Assume (roughly) each component of \(q\) and \(k\) is zero-mean with variance 1, and coordinates are weakly independent.</p>
+
+    \[
+    q \cdot k = \sum_{r=1}^{d_k} q_r k_r
+    \]
+
+    <p>Each product \(q_r k_r\) has mean \(\approx 0\) and variance \(\approx 1\). Summing \(d_k\) such terms gives:</p>
+
+    \[
+    \mathrm{Var}(q \cdot k) \approx d_k
+    \qquad
+    \Rightarrow
+    \qquad
+    \mathrm{Std}(q \cdot k) \approx \sqrt{d_k}
+    \]
+
+    <p>So without scaling, typical score magnitudes increase like \(\sqrt{d_k}\).</p>
+
+    <h3>Softmax saturation (why this is bad)</h3>
+    <p>Softmax is sensitive to the scale of its inputs. If scores are large, softmax becomes almost one-hot:</p>
+
+    \[
+    \alpha_{ij} = \frac{e^{s_{ij}}}{\sum_m e^{s_{im}}}
+    \]
+
+    <p>When \(s_{ij}\) are large in magnitude, one entry dominates, others go near 0. Then gradients through softmax become tiny for most positions, making learning unstable or slow.</p>
+
+    <h3>What scaling fixes</h3>
+    <p>Scaling by \(\sqrt{d_k}\) normalizes the typical magnitude:</p>
+
+    \[
+    s_{ij} = \frac{q_i \cdot k_j}{\sqrt{d_k}}
+    \]
+
+    \[
+    \mathrm{Var}(s_{ij}) \approx \frac{d_k}{d_k} = 1
+    \]
+
+    <p>This keeps score magnitudes roughly dimension-invariant, preventing softmax from becoming overly sharp just because \(d_k\) is large.</p>
+
+    <p class="muted">Practical intuition: if \(d_k = 512\), then \(\sqrt{d_k} \approx 22.6\). Without scaling, score magnitudes can be ~20× larger, making attention weights much more extreme.</p>
+    </section>
+
+    <section>
+      <h2>4️⃣ Multi-Head Attention <span class="pill">representation</span></h2>
+
+      <p>For head \( h \):</p>
+
+      \[
+      Q_h = Q W_h^Q
+      \]
+
+      \[
+      K_h = K W_h^K
+      \]
+
+      \[
+      V_h = V W_h^V
+      \]
+
+      \[
+      \text{head}_h
+      =
+      \text{Attention}(Q_h, K_h, V_h)
+      \]
+
+      <p>Concatenate:</p>
+
+      \[
+      \text{MultiHead}(Q,K,V)
+      =
+      \text{Concat}(\text{head}_1, \dots, \text{head}_H) W^O
+      \]
+    </section>
+
+    <section>
+    <h2>5️⃣ Positional Encoding <span class="pill">order</span></h2>
+
+    <p><b>Why needed:</b> self-attention is permutation-equivariant. Without position information, the model cannot distinguish “A then B” from “B then A”.</p>
+
+    <h3>Sinusoidal positional encoding (Transformer original)</h3>
+    <p>For position \(pos\) and dimension index \(i\):</p>
+
+    \[
+    \mathrm{PE}(pos, 2i) = \sin\!\left(\frac{pos}{10000^{2i/d_{\mathrm{model}}}}\right)
+    \]
+
+    \[
+    \mathrm{PE}(pos, 2i+1) = \cos\!\left(\frac{pos}{10000^{2i/d_{\mathrm{model}}}}\right)
+    \]
+
+    <p>The input embedding becomes:</p>
+
+    \[
+    x_{pos} = \mathrm{Embed}(token_{pos}) + \mathrm{PE}(pos)
+    \]
+
+    <h3>What “10000” is doing</h3>
+    <p>\(10000\) is a base that creates a <b>log-spaced range of wavelengths</b> across dimensions.</p>
+    <p>Define the wavelength for dimension \(i\) (ignoring constants like \(2\pi\)):</p>
+
+    \[
+    \lambda_i \propto 10000^{2i/d_{\mathrm{model}}}
+    \]
+
+    <p>So small \(i\) gives short wavelengths (captures local order), while large \(i\) gives long wavelengths (captures long-range position). This makes position encoding multi-scale.</p>
+
+    <h3>Why sin/cos (useful property)</h3>
+    <p>Sinusoids allow relative position information to be represented via linear combinations, because:</p>
+
+    \[
+    \sin(a+b) = \sin a \cos b + \cos a \sin b
+    \qquad
+    \cos(a+b) = \cos a \cos b - \sin a \sin b
+    \]
+
+    <p>This helps attention layers learn to reason about offsets like \(pos - pos'\) using simple linear operations.</p>
+
+    <h3>Modern variants (context)</h3>
+    <p class="muted">Many LLMs use learned positional embeddings or rotary positional embeddings (RoPE), which encode position directly in the attention computation and often extrapolate better to longer contexts.</p>
+    </section>
+
+    <section>
+      <h2>6️⃣ Causal Attention <span class="pill">autoregressive</span></h2>
+
+      <p>Mask matrix \( M \):</p>
+
+      \[
+      M_{ij}
+      =
+      \begin{cases}
+      0 & j \le i \\
+      -\infty & j > i
+      \end{cases}
+      \]
+
+      \[
+      S = \frac{QK^T + M}{\sqrt{d_k}}
+      \]
+
+      <p>Ensures autoregressive property:</p>
+
+      \[
+      p(x_t \mid x_{\lt t})
+      \]
+    </section>
+
+    <section>
+      <h2>🧠 One-Line Mental Model</h2>
+      <div class="one-liner">
+        Attention = softmax-normalized similarity scores + weighted aggregation of values.
+      </div>
+    </section>
+  </div>
+</body>
+</html>

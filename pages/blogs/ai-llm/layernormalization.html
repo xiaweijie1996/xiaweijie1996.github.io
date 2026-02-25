@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Layer Normalization — Geometry & Optimization Note</title>
+
+  <!-- MathJax -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(','\\)'], ['$', '$']],
+        displayMath: [['\\[','\\]'], ['$$','$$']]
+      }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card: #111827;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --accent: #60a5fa;
+      --line: rgba(255,255,255,0.10);
+    }
+
+    body{
+      margin:0;
+      background: linear-gradient(180deg, var(--bg), #070a12);
+      color: var(--text);
+      font-family: ui-sans-serif, system-ui;
+      line-height:1.7;
+    }
+
+    .wrap{
+      max-width: 980px;
+      margin: 40px auto;
+      padding: 0 18px 60px;
+    }
+
+    header{
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:26px 22px;
+      background: radial-gradient(1200px 500px at 20% 0%, rgba(96,165,250,0.18), transparent 60%);
+      box-shadow:0 20px 60px rgba(0,0,0,0.35);
+    }
+
+    h1{ margin:0 0 6px; font-size:28px; }
+    h2{ margin-top:28px; font-size:20px; }
+    h3{ margin-top:18px; font-size:16px; }
+
+    section{
+      margin-top:18px;
+      background: rgba(17,24,39,0.78);
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:22px;
+      box-shadow:0 12px 40px rgba(0,0,0,0.22);
+    }
+
+    .callout{
+      background: rgba(96,165,250,0.10);
+      border: 1px dashed rgba(96,165,250,0.35);
+      padding: 12px 14px;
+      border-radius: 14px;
+      color: #dbeafe;
+      font-weight:600;
+    }
+
+    table{
+      width:100%;
+      border-collapse: collapse;
+      margin-top:14px;
+    }
+
+    th, td{
+      border:1px solid var(--line);
+      padding:8px;
+      text-align:left;
+    }
+
+    th{
+      background:rgba(255,255,255,0.05);
+    }
+
+    .mjx-container{
+      overflow-x:auto;
+    }
+  </style>
+</head>
+
+<body>
+<div class="wrap">
+
+<header>
+  <h1>📘 Layer Normalization — Geometry & Optimization Note</h1>
+  <p>Structured knowledge-base summary (Optimization / Geometry View)</p>
+</header>
+
+<section>
+<h2>1️⃣ Definition</h2>
+
+<p>For activation vector \( x \in \mathbb{R}^d \):</p>
+
+\[
+\mu = \frac{1}{d}\sum_{i=1}^d x_i
+\]
+
+\[
+\sigma = \sqrt{\frac{1}{d}\sum_{i=1}^d (x_i - \mu)^2}
+\]
+
+\[
+\text{LayerNorm}(x) = \gamma \frac{x - \mu}{\sigma} + \beta
+\]
+
+<ul>
+<li>Normalization over <b>feature dimension</b></li>
+<li>Applied <b>per sample</b></li>
+<li>Same computation at train and inference</li>
+</ul>
+
+</section>
+
+<section>
+<h2>2️⃣ Geometry Interpretation</h2>
+
+<p>LayerNorm imposes two constraints:</p>
+
+<h3>(1) Zero mean</h3>
+
+\[
+\sum_i x_i = 0
+\]
+
+<p>Vector lies in a \( (d-1) \)-dimensional hyperplane.</p>
+
+<h3>(2) Unit variance</h3>
+
+\[
+\|x\|^2 = d
+\]
+
+<p>Vector lies on a sphere.</p>
+
+<h3>Resulting manifold</h3>
+
+\[
+\mathcal{M} = \{ x \mid \sum x_i = 0,\ \|x\|^2 = d \}
+\]
+
+<p>This is a <b>\((d-2)\)-dimensional sphere</b>.</p>
+
+<p>LayerNorm projects activations onto a curved manifold.</p>
+
+</section>
+
+<section>
+<h2>3️⃣ Riemannian Optimization View</h2>
+
+<p>LayerNorm removes:</p>
+
+<ul>
+<li>Shift freedom</li>
+<li>Scale freedom</li>
+</ul>
+
+<p>Optimization occurs on:</p>
+
+\[
+\mathbb{R}^d / (\text{shift + scale})
+\]
+
+<p>Effective gradient becomes projection:</p>
+
+\[
+g_{\text{proj}} = P_{\text{tangent}} g
+\]
+
+<p>LN removes radial component and mean direction.</p>
+
+<p>Acts like geometric preconditioning.</p>
+
+<div class="callout">
+Explains smoother optimization, reduced scale sensitivity, and deep training stability.
+</div>
+
+</section>
+
+<section>
+<h2>4️⃣ Why It Works in Transformers</h2>
+
+Transformers rely on dot products:
+
+\[
+QK^T
+\]
+
+Dot product magnitude depends on vector norm.
+
+LayerNorm:
+
+<ul>
+<li>Stabilizes per-token norm</li>
+<li>Makes attention scale-invariant</li>
+<li>Prevents exploding attention scores</li>
+</ul>
+
+</section>
+
+<section>
+<h2>5️⃣ LayerNorm vs BatchNorm</h2>
+
+<table>
+<tr>
+<th>Property</th>
+<th>BatchNorm</th>
+<th>LayerNorm</th>
+</tr>
+
+<tr><td>Normalizes over</td><td>Batch</td><td>Features</td></tr>
+<tr><td>Depends on batch size</td><td>Yes</td><td>No</td></tr>
+<tr><td>Train/test mismatch</td><td>Yes</td><td>No</td></tr>
+<tr><td>Works with batch=1</td><td>No</td><td>Yes</td></tr>
+<tr><td>Autoregressive compatible</td><td>No</td><td>Yes</td></tr>
+<tr><td>Per-sequence independence</td><td>No</td><td>Yes</td></tr>
+</table>
+
+<p>BatchNorm introduces cross-sample coupling:</p>
+
+\[
+x_i^{norm} \text{ depends on } x_j
+\]
+
+</section>
+
+<section>
+<h2>6️⃣ Pre-LN vs Post-LN</h2>
+
+<h3>Post-LN</h3>
+
+\[
+x + \text{Sublayer}(x) \rightarrow \text{LN}
+\]
+
+Harder to train deep networks.
+
+<h3>Pre-LN</h3>
+
+\[
+x + \text{Sublayer}(\text{LN}(x))
+\]
+
+More stable gradient flow.
+
+Modern LLMs use Pre-LN + RMSNorm.
+
+</section>
+
+<section>
+<h2>7️⃣ RMSNorm</h2>
+
+\[
+\text{RMSNorm}(x) = \gamma \frac{x}{\sqrt{\frac{1}{d}\sum x_i^2}}
+\]
+
+Removes mean subtraction.
+
+Keeps scale invariance.
+
+Suggests scale invariance is more important than mean-centering.
+
+</section>
+
+<section>
+<h2>8️⃣ Core Insights</h2>
+
+<ol>
+<li>Enforces per-token scale stability.</li>
+<li>Constrains activations to a sphere.</li>
+<li>Changes optimization geometry.</li>
+<li>Stabilizes attention.</li>
+<li>Eliminates train/inference mismatch.</li>
+<li>Enables deep transformer scaling.</li>
+</ol>
+
+</section>
+
+<section>
+<h2>🔟 One-Sentence Mental Model</h2>
+
+<div class="callout">
+LayerNorm projects each token representation onto a scale-invariant manifold, stabilizing attention geometry and enabling deep transformer optimization.
+</div>
+
+</section>
+
+</div>
+</body>
+</html>
