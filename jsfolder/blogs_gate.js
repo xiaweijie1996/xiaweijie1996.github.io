@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const BLOG_PASSWORD = 'weijie-private';
     const BLOG_SESSION_KEY = 'blogsUnlocked';
-    const PASSWORD_NOTICE = 'This space is mainly for my personal notes and is password-protected 🔒. Please enter the password to access it :)';
+    const PASSWORD_NOTICE = 'This space is under construction. Please enter the password to access it :)';
 
     if (sessionStorage.getItem(BLOG_SESSION_KEY) === 'true') {
         return;
