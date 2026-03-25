@@ -162,6 +162,69 @@
       overflow-y:hidden;
       margin: 6px 0;
     }
+    /* ── Thread / reply-style deep-dive notes ── */
+    .thread{
+      margin-top: 12px;
+      display: flex;
+      flex-direction: column;
+    }
+    .thread-entry{
+      display: flex;
+      gap: 16px;
+      padding-bottom: 28px;
+    }
+    .thread-spine{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex-shrink: 0;
+      width: 28px;
+    }
+    .thread-dot{
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 2px solid rgba(96,165,250,0.35);
+      flex-shrink: 0;
+      margin-top: 5px;
+    }
+    .thread-line{
+      width: 2px;
+      flex: 1;
+      background: var(--line);
+      margin-top: 6px;
+    }
+    .thread-entry:last-child .thread-line{
+      display: none;
+    }
+    .thread-body{
+      flex: 1;
+      background: rgba(17,24,39,0.55);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 18px 20px;
+    }
+    .thread-meta{
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+    .thread-date-badge{
+      font-size: 11px;
+      color: var(--muted);
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 2px 9px;
+    }
+    .thread-title{
+      font-size: 15px;
+      font-weight: 600;
+      color: #dbeafe;
+    }
   </style>
 </head>
 
@@ -486,22 +549,140 @@
     </section>
 
     <section>
-      <h2>1️⃣1️⃣ One-Page Summary <span class="pill">mental map</span></h2>
-      <div class="one-liner">
-        Belief tells a player what others might do; best response chooses what is optimal under that belief; strict dominance removes strategies that are always worse; rationalizability keeps strategies that can still be optimal under some coherent chain of rational beliefs.
-      </div>
-      <hr />
-      <ul>
-        <li>Normal-form game: \(G=(N,(S_i),(u_i))\)</li>
-        <li>Belief: \(\mu_i \in \Delta(S_{-i})\)</li>
-        <li>Best response: maximize \(U_i(s_i,\mu_i)\)</li>
-        <li>Mixed strategy: \(\sigma_i \in \Delta(S_i)\)</li>
-        <li>Correlated strategy: \(\pi \in \Delta(S)\)</li>
-        <li>Strict dominance: worse against every opponent action</li>
-        <li>IDSDS: iteratively delete strictly dominated strategies</li>
-        <li>Never best response: not optimal for any belief</li>
-        <li>Rationalizable: survives iterated rational reasoning</li>
-      </ul>
+      <h2>1️⃣1️⃣ Extended Notes <span class="pill">deep dives added over time</span></h2>
+      <p class="muted">Each entry below is a self-contained expanded note. New entries are appended chronologically.</p>
+
+      <div class="thread">
+
+        <!-- ────────────────────────────────────────────────────── -->
+        <!-- Entry 1 · 2026-05-03                                  -->
+        <!-- ────────────────────────────────────────────────────── -->
+        <div class="thread-entry">
+          <div class="thread-spine">
+            <div class="thread-dot"></div>
+            <div class="thread-line"></div>
+          </div>
+          <div class="thread-body">
+            <div class="thread-meta">
+              <span class="thread-date-badge">2026-05-03</span>
+              <span class="thread-title">Never Best Response ≠ Dominated by a Pure Strategy</span>
+            </div>
+
+            <p>
+              This note gives a concrete example showing a strategy can be a
+              <em>never best response</em> without being strictly dominated by
+              any <em>pure</em> strategy — but it is always dominated by some
+              <em>mixed</em> strategy.
+            </p>
+
+            <h3>Setup</h3>
+            <p>Player 1 chooses among \(\{T,M,B\}\), player 2 chooses among \(\{L,R\}\).
+            The payoff matrix for player 1 is:</p>
+            \[
+            \begin{array}{c|cc}
+             & L & R \\\hline
+            T & 1 & 1 \\
+            M & 3 & 0 \\
+            B & 0 & 3
+            \end{array}
+            \]
+
+            <hr />
+
+            <h3>Step 1 — Is \(T\) strictly dominated by a pure strategy?</h3>
+
+            <p>Compare \(T\) with \(M\):</p>
+            <ul>
+              <li>against \(L\): \(M=3 > 1=T\) ✓</li>
+              <li>against \(R\): \(M=0 < 1=T\) ✗</li>
+            </ul>
+            <p>So \(M\) does <b>not</b> strictly dominate \(T\).</p>
+
+            <p>Compare \(T\) with \(B\):</p>
+            <ul>
+              <li>against \(L\): \(B=0 < 1=T\) ✗</li>
+              <li>against \(R\): \(B=3 > 1=T\) ✓</li>
+            </ul>
+            <p>So \(B\) also does <b>not</b> strictly dominate \(T\).</p>
+
+            <div class="box goodbox">
+              <b>Conclusion.</b> \(T\) is <b>not strictly dominated by any pure strategy</b>.
+            </div>
+
+            <hr />
+
+            <h3>Step 2 — Is \(T\) ever a best response?</h3>
+
+            <p>
+              Suppose player 1 believes player 2 plays \(L\) with probability \(p\)
+              and \(R\) with probability \(1-p\). The expected payoffs are:
+            </p>
+            \[
+            u(T) = 1, \qquad u(M) = 3p, \qquad u(B) = 3(1-p)
+            \]
+            <p>For \(T\) to be a best response we need simultaneously:</p>
+            \[
+            1 \ge 3p
+            \quad\Longrightarrow\quad
+            p \le \tfrac{1}{3}
+            \]
+            \[
+            1 \ge 3(1-p)
+            \quad\Longrightarrow\quad
+            p \ge \tfrac{2}{3}
+            \]
+            <div class="box warnbox">
+              <b>Impossible.</b> We cannot have \(p \le \tfrac{1}{3}\) and \(p \ge \tfrac{2}{3}\) at the same time.
+              So there is <b>no belief</b> under which \(T\) is a best response.
+            </div>
+            <p>Therefore, <b>\(T\) is a never best response</b>.</p>
+
+            <hr />
+
+            <h3>Step 3 — Is \(T\) dominated by a mixed strategy?</h3>
+
+            <p>Consider the mixed strategy \(\sigma = \tfrac{1}{2}M + \tfrac{1}{2}B\):</p>
+            \[
+            u(\sigma, L) = \tfrac{1}{2}\cdot 3 + \tfrac{1}{2}\cdot 0 = 1.5 > 1 = u(T,L)
+            \]
+            \[
+            u(\sigma, R) = \tfrac{1}{2}\cdot 0 + \tfrac{1}{2}\cdot 3 = 1.5 > 1 = u(T,R)
+            \]
+            <div class="box goodbox">
+              <b>Conclusion.</b> \(\sigma = \tfrac{1}{2}M + \tfrac{1}{2}B\) <b>strictly dominates \(T\)</b>.
+            </div>
+
+            <hr />
+
+            <h3>Key Takeaway</h3>
+            <p>In this game, \(T\) is:</p>
+            <ul>
+              <li><b>Not</b> strictly dominated by any pure strategy</li>
+              <li>A <b>never best response</b> (not optimal for any belief)</li>
+              <li>Strictly dominated by a <b>mixed</b> strategy</li>
+            </ul>
+            <p>This illustrates the general theorem for finite games:</p>
+            \[
+            \text{never best response}
+            \;\iff\;
+            \text{strictly dominated by some mixed strategy}
+            \]
+            \[
+            \text{never best response}
+            \;\not\Leftarrow\;
+            \text{strictly dominated by a pure strategy}
+            \]
+
+          </div>
+        </div>
+        <!-- end entry 1 -->
+
+        <!-- ────────────────────────────────────────────────────── -->
+        <!-- Add future entries here in the same thread-entry      -->
+        <!-- format, with an updated thread-date-badge             -->
+        <!-- ────────────────────────────────────────────────────── -->
+
+      </div><!-- end .thread -->
     </section>
   </div>
 </body>
