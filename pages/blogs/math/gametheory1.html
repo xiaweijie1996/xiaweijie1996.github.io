@@ -1,0 +1,508 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Game Theory — Clean Mathematical Note</title>
+
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)'], ['$', '$']],
+        displayMath: [['\\[', '\\]'], ['$$', '$$']],
+      },
+      options: {
+        skipHtmlTags: ['script','noscript','style','textarea','pre','code'],
+      }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card: #111827;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --accent: #60a5fa;
+      --line: rgba(255,255,255,0.10);
+      --code: #0f172a;
+      --good: rgba(34,197,94,0.12);
+      --warn: rgba(250,204,21,0.12);
+    }
+    body{
+      margin:0;
+      background: linear-gradient(180deg, var(--bg), #070a12);
+      color: var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      line-height: 1.72;
+    }
+    .wrap{
+      max-width: 1040px;
+      margin: 40px auto;
+      padding: 0 18px 60px;
+    }
+    header{
+      background: radial-gradient(1200px 500px at 20% 0%, rgba(96,165,250,0.18), transparent 60%),
+                  radial-gradient(900px 500px at 90% 10%, rgba(34,197,94,0.10), transparent 60%);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 26px 22px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+    }
+    h1{
+      margin: 0 0 8px;
+      font-size: 29px;
+      letter-spacing: .2px;
+    }
+    .subtitle{
+      margin:0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    section{
+      margin-top: 18px;
+      background: rgba(17,24,39,0.78);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 22px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.22);
+    }
+    h2{
+      margin: 0 0 12px;
+      font-size: 19px;
+      color: #f3f4f6;
+    }
+    h3{
+      margin: 18px 0 8px;
+      font-size: 15px;
+      color: #f3f4f6;
+    }
+    p, li{
+      color: #e5e7eb;
+    }
+    p{ margin: 8px 0; }
+    ul{ margin: 8px 0 8px 20px; }
+    .muted{ color: var(--muted); }
+    .pill{
+      display:inline-block;
+      padding: 2px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(96,165,250,0.10);
+      color: #dbeafe;
+      font-size: 12px;
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+    .pill.good{
+      background: rgba(34,197,94,0.10);
+      color: #dcfce7;
+    }
+    .pill.warn{
+      background: rgba(250,204,21,0.10);
+      color: #fef3c7;
+    }
+    hr{
+      border:0;
+      border-top:1px solid var(--line);
+      margin: 16px 0;
+    }
+    .one-liner{
+      font-weight: 600;
+      color: #dbeafe;
+      background: rgba(96,165,250,0.10);
+      border: 1px dashed rgba(96,165,250,0.35);
+      padding: 12px 14px;
+      border-radius: 14px;
+    }
+    .box{
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.03);
+      margin: 10px 0;
+    }
+    .goodbox{
+      background: var(--good);
+      border: 1px solid rgba(34,197,94,0.24);
+    }
+    .warnbox{
+      background: var(--warn);
+      border: 1px solid rgba(250,204,21,0.24);
+    }
+    code.inline{
+      background: rgba(15,23,42,0.85);
+      border: 1px solid rgba(255,255,255,0.10);
+      padding: 2px 6px;
+      border-radius: 8px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
+      font-size: 0.95em;
+    }
+    table{
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      overflow: hidden;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+    }
+    th, td{
+      border: 1px solid var(--line);
+      padding: 10px 12px;
+      text-align: center;
+      vertical-align: middle;
+    }
+    th{
+      background: rgba(255,255,255,0.04);
+      font-weight: 600;
+    }
+    .mjx-container{
+      overflow-x:auto;
+      overflow-y:hidden;
+      margin: 6px 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <h1>🎯 Game Theory — Clean Mathematical Note</h1>
+      <p class="subtitle">A single-file HTML note for core concepts in normal-form games: beliefs, mixed and correlated strategies, dominance, iterated deletion, best responses, and rationalizability.</p>
+    </header>
+
+    <section>
+      <h2>1️⃣ Normal-Form Game <span class="pill">foundation</span></h2>
+      <p>A normal-form game is written as</p>
+      \[
+      G = (N, (S_i)_{i \in N}, (u_i)_{i \in N})
+      \]
+      <p>where:</p>
+      <ul>
+        <li>\(N = \{1,2,\dots,n\}\): set of players,</li>
+        <li>\(S_i\): strategy set of player \(i\),</li>
+        <li>\(S = \prod_{i \in N} S_i\): set of strategy profiles,</li>
+        <li>\(u_i : S \to \mathbb{R}\): payoff function of player \(i\).</li>
+      </ul>
+
+      <div class="box goodbox">
+        <b>Interpretation.</b> A player chooses a strategy \(s_i \in S_i\). Once all players choose, the profile \(s=(s_1,\dots,s_n)\) determines every player's payoff.
+      </div>
+
+      <h3>Example: Prisoner's Dilemma</h3>
+      <table>
+        <tr>
+          <th>Player 1 \ Player 2</th>
+          <th>C</th>
+          <th>D</th>
+        </tr>
+        <tr>
+          <th>C</th>
+          <td>(3,3)</td>
+          <td>(0,4)</td>
+        </tr>
+        <tr>
+          <th>D</th>
+          <td>(4,0)</td>
+          <td>(1,1)</td>
+        </tr>
+      </table>
+      <p class="muted">This is a static, complete-information normal-form game. Each player chooses \(C\) or \(D\) without observing the other's move.</p>
+    </section>
+
+    <section>
+      <h2>2️⃣ Beliefs <span class="pill">probability over others' moves</span></h2>
+      <p>For player \(i\), let</p>
+      \[
+      S_{-i} = \prod_{j \neq i} S_j
+      \]
+      <p>A <b>belief</b> of player \(i\) is a probability distribution over opponents' strategy profiles:</p>
+      \[
+      \mu_i \in \Delta(S_{-i})
+      \]
+      <p>So \(\mu_i(s_{-i})\) is the probability that player \(i\) assigns to opponents choosing \(s_{-i}\).</p>
+
+      <div class="box">
+        <b>Important distinction.</b> A belief is a player's probabilistic view of what others will do. It is not the same thing as the opponents' actual mixed strategies.
+      </div>
+
+      <h3>Independent belief</h3>
+      <p>The belief is <b>independent</b> if it factorizes as</p>
+      \[
+      \mu_i(s_{-i}) = \prod_{j \neq i} \mu_{ij}(s_j)
+      \]
+      <p>That is, player \(i\) thinks opponents randomize independently.</p>
+
+      <h3>Correlated belief</h3>
+      <p>The belief is <b>correlated</b> if it is any distribution in \(\Delta(S_{-i})\), not necessarily factorizable.</p>
+      \[
+      \mu_i \in \Delta(S_{-i}) \quad \text{with no product restriction}
+      \]
+
+      <h3>Example</h3>
+      <p>Suppose player 1 believes players 2 and 3 either both play Left or both play Right:</p>
+      \[
+      \mu_1(L,L)=\tfrac12, \qquad \mu_1(R,R)=\tfrac12, \qquad \mu_1(L,R)=\mu_1(R,L)=0
+      \]
+      <p>This is correlated because the actions of players 2 and 3 move together.</p>
+    </section>
+
+    <section>
+      <h2>3️⃣ Best Responses <span class="pill">optimization given a belief</span></h2>
+      <p>Given a belief \(\mu_i \in \Delta(S_{-i})\), player \(i\)'s expected payoff from strategy \(s_i\) is</p>
+      \[
+      U_i(s_i,\mu_i)=\sum_{s_{-i}\in S_{-i}} \mu_i(s_{-i})\,u_i(s_i,s_{-i})
+      \]
+      <p>A strategy \(s_i\) is a <b>best response</b> to \(\mu_i\) if it maximizes this expected payoff:</p>
+      \[
+      s_i \in BR_i(\mu_i)
+      \iff
+      U_i(s_i,\mu_i) \ge U_i(s_i',\mu_i)
+      \quad \forall s_i' \in S_i
+      \]
+
+      <h3>Pure-profile version</h3>
+      <p>If opponents are believed to choose a specific profile \(s_{-i}\), then</p>
+      \[
+      BR_i(s_{-i}) = \arg\max_{s_i \in S_i} u_i(s_i,s_{-i})
+      \]
+
+      <h3>Example</h3>
+      <table>
+        <tr>
+          <th>Player 1 \ Player 2</th>
+          <th>L</th>
+          <th>R</th>
+        </tr>
+        <tr>
+          <th>U</th>
+          <td>(2,1)</td>
+          <td>(0,0)</td>
+        </tr>
+        <tr>
+          <th>D</th>
+          <td>(1,2)</td>
+          <td>(3,1)</td>
+        </tr>
+      </table>
+      <p>If player 1 believes player 2 will choose \(L\) with probability \(p\), then</p>
+      \[
+      U_1(U,\mu_1)=2p, \qquad U_1(D,\mu_1)=p+3(1-p)=3-2p
+      \]
+      <p>Hence \(U\) is a best response when \(2p \ge 3-2p\), i.e.</p>
+      \[
+      p \ge \tfrac34
+      \]
+    </section>
+
+    <section>
+      <h2>4️⃣ Mixed Strategies <span class="pill">players randomize</span></h2>
+      <p>A mixed strategy of player \(i\) is a probability distribution over \(S_i\):</p>
+      \[
+      \sigma_i \in \Delta(S_i)
+      \]
+      <p>The profile of mixed strategies is \(\sigma=(\sigma_1,\dots,\sigma_n)\in \prod_i \Delta(S_i)\).</p>
+
+      <h3>Expected payoff under mixed strategies</h3>
+      \[
+      U_i(\sigma)=\sum_{s\in S} \left(\prod_{j\in N}\sigma_j(s_j)\right) u_i(s)
+      \]
+      <p>This formula uses independence across players' randomizations.</p>
+
+      <h3>Example: Matching Pennies</h3>
+      <table>
+        <tr>
+          <th>Player 1 \ Player 2</th>
+          <th>H</th>
+          <th>T</th>
+        </tr>
+        <tr>
+          <th>H</th>
+          <td>(1,-1)</td>
+          <td>(-1,1)</td>
+        </tr>
+        <tr>
+          <th>T</th>
+          <td>(-1,1)</td>
+          <td>(1,-1)</td>
+        </tr>
+      </table>
+      <p>No pure strategy profile is stable, but there is a mixed equilibrium where each player chooses \(H\) and \(T\) with probability \(\tfrac12\).</p>
+    </section>
+
+    <section>
+      <h2>5️⃣ Correlated Strategies <span class="pill">joint randomization</span></h2>
+      <p>A correlated strategy is a probability distribution over the full set of action profiles:</p>
+      \[
+      \pi \in \Delta(S)
+      \]
+      <p>Unlike mixed strategies, \(\pi\) need not factorize into independent components.</p>
+
+      <div class="box goodbox">
+        <b>Key difference.</b>
+        Mixed strategies use independent randomization by each player; correlated strategies allow a common random device to generate dependence across players' recommendations.
+      </div>
+
+      <h3>Example</h3>
+      <p>Suppose two players both choose \(A\) or \(B\), and a public coin recommends the same action to both:</p>
+      \[
+      \pi(A,A)=\tfrac12, \qquad \pi(B,B)=\tfrac12
+      \]
+      <p>Then players' actions are perfectly correlated. This cannot generally be represented as independent mixing unless the marginal probabilities happen to match a product form.</p>
+    </section>
+
+    <section>
+      <h2>6️⃣ Strict Dominance <span class="pill warn">eliminate clearly inferior strategies</span></h2>
+      <p>A strategy \(s_i \in S_i\) is <b>strictly dominated</b> by another strategy \(s_i'\) if</p>
+      \[
+      u_i(s_i',s_{-i}) > u_i(s_i,s_{-i})
+      \quad \forall s_{-i}\in S_{-i}
+      \]
+      <p>That means \(s_i\) is always worse, no matter what opponents do.</p>
+
+      <h3>Example: Prisoner's Dilemma</h3>
+      <p>In the payoff matrix from Section 1, for each player, \(D\) strictly dominates \(C\), because</p>
+      \[
+      u_i(D,C) = 4 > 3 = u_i(C,C),
+      \qquad
+      u_i(D,D) = 1 > 0 = u_i(C,D)
+      \]
+      <p>So cooperation \(C\) is strictly dominated by defection \(D\).</p>
+
+      <div class="box warnbox">
+        <b>Note.</b> A strategy may also be strictly dominated by a <i>mixed</i> strategy, not only by a pure strategy. This matters for rationalizability.
+      </div>
+    </section>
+
+    <section>
+      <h2>7️⃣ Iterated Deletion of Strictly Dominated Strategies (IDSDS) <span class="pill">procedure</span></h2>
+      <p>Start from the original strategy sets \(S_i^0 = S_i\). At each round \(k\), remove all strategies that are strictly dominated in the reduced game. This defines a sequence</p>
+      \[
+      S_i^0 \supseteq S_i^1 \supseteq S_i^2 \supseteq \cdots
+      \]
+      <p>where</p>
+      \[
+      S_i^{k+1} = \Big\{ s_i \in S_i^k : s_i \text{ is not strictly dominated on } S_{-i}^k \Big\}
+      \]
+      <p>The strategies that survive all rounds are the strategies surviving IDSDS.</p>
+
+      <h3>Example</h3>
+      <table>
+        <tr>
+          <th>Player 1 \ Player 2</th>
+          <th>L</th>
+          <th>M</th>
+          <th>R</th>
+        </tr>
+        <tr>
+          <th>U</th>
+          <td>(3,2)</td>
+          <td>(2,1)</td>
+          <td>(1,0)</td>
+        </tr>
+        <tr>
+          <th>D</th>
+          <td>(2,1)</td>
+          <td>(1,0)</td>
+          <td>(0,2)</td>
+        </tr>
+      </table>
+      <p>For player 2, \(M\) is strictly dominated by \(L\) because \(2>1\) and \(1>0\). Delete \(M\). In the reduced game with columns \(L,R\), player 1 still prefers \(U\) to \(D\) against both columns, so \(D\) is strictly dominated by \(U\). After deleting \(D\), player 2 prefers \(L\) to \(R\). The unique surviving profile is \((U,L)\).</p>
+    </section>
+
+    <section>
+      <h2>8️⃣ Never Best Response (NBR) <span class="pill">stronger viewpoint via beliefs</span></h2>
+      <p>A strategy \(s_i\) is a <b>never best response</b> if there is no belief under which it is optimal:</p>
+      \[
+      \nexists\, \mu_i \in \Delta(S_{-i}) \text{ such that } s_i \in BR_i(\mu_i)
+      \]
+      <p>Equivalently, no matter what the player believes about others, that strategy is never optimal.</p>
+
+      <div class="box">
+        <b>Comparison.</b> Strict dominance says a strategy is always worse than some alternative for every opponent action. Never-best-response says it is never optimal for any belief over opponent actions.
+      </div>
+    </section>
+
+    <section>
+      <h2>9️⃣ Rationalizability <span class="pill good">survival under rational thinking</span></h2>
+      <p>A strategy \(s_i\) is <b>rationalizable</b> if it is a best response to some belief over opponents' strategies that themselves survive similar reasoning.</p>
+
+      <h3>Operational definition</h3>
+      <p>Define sets \(R_i^0 = S_i\), and inductively</p>
+      \[
+      R_i^{k+1} = \left\{ s_i \in R_i^k : \exists \mu_i \in \Delta(R_{-i}^k) \text{ with } s_i \in BR_i(\mu_i) \right\}
+      \]
+      <p>The strategies that survive all rounds are the rationalizable strategies.</p>
+
+      <h3>Equivalent intuition</h3>
+      <p>Rationalizable strategies are exactly those that can still be chosen when everyone is rational, everyone knows everyone is rational, everyone knows that everyone knows everyone is rational, and so on.</p>
+
+      <h3>Example</h3>
+      <table>
+        <tr>
+          <th>Player 1 \ Player 2</th>
+          <th>L</th>
+          <th>R</th>
+        </tr>
+        <tr>
+          <th>U</th>
+          <td>(2,2)</td>
+          <td>(0,0)</td>
+        </tr>
+        <tr>
+          <th>D</th>
+          <td>(0,0)</td>
+          <td>(1,1)</td>
+        </tr>
+      </table>
+      <p>For player 1, \(U\) is a best response to belief "player 2 chooses \(L\)" and \(D\) is a best response to belief "player 2 chooses \(R\)". So both \(U\) and \(D\) are rationalizable. The same holds for player 2.</p>
+    </section>
+
+    <section>
+      <h2>🔟 Rationalizability vs Strict Dominance <span class="pill">key relation</span></h2>
+      <p>These ideas are closely related but not identical in wording:</p>
+      <ul>
+        <li><b>Strict dominance</b> compares a strategy against another strategy pointwise for every opponent action.</li>
+        <li><b>Rationalizability</b> asks whether a strategy can be a best response to some belief.</li>
+      </ul>
+
+      <p>In finite games, a central theorem states:</p>
+      \[
+      \text{Rationalizable strategies}
+      =
+      \text{strategies surviving iterated deletion of never-best-responses}
+      \]
+      <p>And equivalently, in finite games:</p>
+      \[
+      \text{Rationalizable strategies}
+      =
+      \text{strategies surviving iterated deletion of strategies strictly dominated by mixed strategies}
+      \]
+
+      <div class="box warnbox">
+        <b>Important nuance.</b> If you only delete strategies strictly dominated by <i>pure</i> strategies, you may keep too many strategies. The exact equivalence with rationalizability uses dominance by <i>mixed</i> strategies, or the never-best-response formulation.
+      </div>
+    </section>
+
+    <section>
+      <h2>1️⃣1️⃣ One-Page Summary <span class="pill">mental map</span></h2>
+      <div class="one-liner">
+        Belief tells a player what others might do; best response chooses what is optimal under that belief; strict dominance removes strategies that are always worse; rationalizability keeps strategies that can still be optimal under some coherent chain of rational beliefs.
+      </div>
+      <hr />
+      <ul>
+        <li>Normal-form game: \(G=(N,(S_i),(u_i))\)</li>
+        <li>Belief: \(\mu_i \in \Delta(S_{-i})\)</li>
+        <li>Best response: maximize \(U_i(s_i,\mu_i)\)</li>
+        <li>Mixed strategy: \(\sigma_i \in \Delta(S_i)\)</li>
+        <li>Correlated strategy: \(\pi \in \Delta(S)\)</li>
+        <li>Strict dominance: worse against every opponent action</li>
+        <li>IDSDS: iteratively delete strictly dominated strategies</li>
+        <li>Never best response: not optimal for any belief</li>
+        <li>Rationalizable: survives iterated rational reasoning</li>
+      </ul>
+    </section>
+  </div>
+</body>
+</html>
