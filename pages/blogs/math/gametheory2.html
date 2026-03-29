@@ -856,7 +856,7 @@
           <line x1="658" y1="81" x2="692" y2="81" stroke="#60a5fa" stroke-width="3.2" marker-end="url(#flowArrow)"/>
           <line x1="818" y1="81" x2="848" y2="81" stroke="#60a5fa" stroke-width="3.2" marker-end="url(#flowArrow)"/>
         </svg>
-        <div class="figure-caption">This is the logical chain behind Nash's existence theorem in finite games.</div>
+        <div class="figure-caption">This is the logical chain behind Nash's existence theorem in finite games. Section 5 below gives the exact definitions of compactness, convexity, simplex, correspondence, and closed graph that make each arrow valid.</div>
       </div>
 
       <h3>The two technical tools that make the proof work</h3>
@@ -953,19 +953,42 @@
 
       <div class="one-liner"><b>Abstract template.</b> Find a nonempty compact convex set \(X\) and a best-response correspondence \(B:X \rightrightarrows X\) with nonempty convex values and closed graph. Then Kakutani gives some \(x^*\in X\) such that \(x^*\in B(x^*)\).</div>
 
-      <h3>The topology behind the proof</h3>
+      <h3>Core definitions used in the proof</h3>
+      <div class="formula-card">
+        <div class="label">Definitions</div>
+        <p><b>Convex set.</b> A set \(C\subseteq \mathbb{R}^m\) is convex if for all \(x,y\in C\) and every \(\lambda\in[0,1]\),</p>
+        \[
+        \lambda x + (1-\lambda)y \in C.
+        \]
+        <p><b>Standard simplex.</b> The standard \(n\)-simplex is</p>
+        \[
+        \Delta_n = \left\{p\in \mathbb{R}^{n+1} : p_k \ge 0 \text{ for all } k,\ \sum_{k=0}^n p_k = 1\right\}.
+        \]
+        <p>For a player with \(|S_i|=m_i\) pure actions, the mixed-strategy set is exactly a standard simplex:</p>
+        \[
+        \Sigma_i = \Delta(S_i) \cong \left\{p_i\in \mathbb{R}^{m_i} : p_i(a_i)\ge 0,\ \sum_{a_i\in S_i} p_i(a_i)=1\right\}.
+        \]
+        <p><b>Compactness.</b> In finite-dimensional Euclidean space, a set is compact if and only if it is closed and bounded. So each simplex \(\Sigma_i\) is compact because it is a closed and bounded subset of \(\mathbb{R}^{m_i}\).</p>
+        <p><b>Homeomorphism.</b> A map \(h:A\to B\) between topological spaces is a homeomorphism if it is bijective, continuous, and \(h^{-1}:B\to A\) is also continuous. In that case, \(A\) and \(B\) have the same topological shape.</p>
+        <p><b>Correspondence.</b> A correspondence \(B:X \rightrightarrows X\) assigns to each \(x\in X\) a set \(B(x)\subseteq X\), not a single point. This is necessary because best responses need not be unique.</p>
+        <p><b>Closed graph.</b> The graph of \(B\) is</p>
+        \[
+        \operatorname{Graph}(B)=\{(x,y)\in X\times X : y\in B(x)\}.
+        \]
+        <p>We say \(B\) has a closed graph if whenever \(x^n\to x\), \(y^n\to y\), and \(y^n\in B(x^n)\) for all \(n\), then \(y\in B(x)\).</p>
+        <p><b>Why homeomorphism matters for fixed points.</b> If \(h:A\to B\) is a homeomorphism and \(f:A\to A\) is continuous, then</p>
+        \[
+        g = h\circ f\circ h^{-1}:B\to B
+        \]
+        <p>is continuous, and \(g(y)=y\) if and only if \(f(h^{-1}(y))=h^{-1}(y)\). So fixed points are transported by homeomorphisms. This is why Brouwer is often proved on a standard simplex or ball and then transferred to any homeomorphic model. In this note, however, we apply Kakutani directly on \(\Sigma\), so no explicit homeomorphism is needed for the Nash proof itself.</p>
+      </div>
+
       <div class="grid-2">
         <div class="box">
-          <b>Compactness.</b> Maximizers cannot escape, and convergent sequences stay inside the strategy space. This is why Weierstrass applies and why the limit arguments have somewhere to land.
+          <b>Brouwer.</b> If \(f:X\to X\) is continuous and \(X\) is nonempty, compact, and convex, then some \(x^*\) satisfies \(f(x^*)=x^*\).
         </div>
         <div class="box">
-          <b>Convexity.</b> If two mixed strategies are feasible, every average of them is feasible. That is the geometry that makes mixing possible and that Kakutani requires.
-        </div>
-        <div class="box">
-          <b>Closed graph.</b> Best responses must survive limits. If environments and best-response choices converge together, the limit choice should still be optimal in the limit environment.
-        </div>
-        <div class="box">
-          <b>Why a correspondence.</b> Best responses are often not unique, so the right object is not a single-valued function \(f(\sigma)\) but a set-valued map \(B(\sigma)\).
+          <b>Kakutani.</b> This is the set-valued version: if \(B:X\rightrightarrows X\) has nonempty convex values and closed graph, then some \(x^*\) satisfies \(x^*\in B(x^*)\).
         </div>
       </div>
 
@@ -978,7 +1001,7 @@
       \[
       \Sigma = \prod_{i\in I} \Sigma_i.
       \]
-      <p>Each \(\Sigma_i\) is a simplex, so it is compact, convex, and nonempty. Finite products preserve these properties, so \(\Sigma\) is exactly the kind of space on which Kakutani can operate.</p>
+      <p>By the definitions above, each \(\Sigma_i\) is a nonempty compact convex set. Finite products preserve these properties, so \(\Sigma\) is exactly the kind of space on which Kakutani can operate.</p>
 
       <h3>Step 2: Turn equilibrium into a fixed-point problem</h3>
       <div class="formula-card">
@@ -1067,7 +1090,7 @@
       </div>
 
       <h3>Where Kakutani enters</h3>
-      <p>Kakutani is needed because \(B\) is usually <b>set-valued</b>. A player can have many best responses, so \(B(\sigma)\) is a set, not a single point. Brouwer is for ordinary functions; Kakutani is the matching fixed-point theorem once equilibrium is expressed as a correspondence problem.</p>
+      <p>Kakutani is needed because \(B\) is usually set-valued: a player can have several best responses at the same profile. Brouwer handles single-valued maps, while Kakutani is the fixed-point theorem designed for correspondences.</p>
 
       <div class="grid-2">
         <div class="box">
