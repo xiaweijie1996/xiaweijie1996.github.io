@@ -1,0 +1,1281 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Game Theory Study Note - Nash, Correlated, Wardrop, and Existence Theorems</title>
+
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)'], ['$', '$']],
+        displayMath: [['\\[', '\\]'], ['$$', '$$']]
+      },
+      options: {
+        skipHtmlTags: ['script','noscript','style','textarea','pre','code']
+      }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <style>
+    :root{
+      --bg:#0b0f19;
+      --bg2:#0f172a;
+      --card:#111827;
+      --card2:rgba(17,24,39,0.78);
+      --text:#e5e7eb;
+      --muted:#9ca3af;
+      --line:rgba(255,255,255,0.10);
+      --line2:rgba(255,255,255,0.16);
+      --blue:#60a5fa;
+      --green:#34d399;
+      --gold:#fbbf24;
+      --red:#f87171;
+      --purple:#a78bfa;
+      --shadow:0 18px 60px rgba(0,0,0,0.35);
+    }
+    *{ box-sizing:border-box; }
+    html{ scroll-behavior:smooth; }
+    body{
+      margin:0;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 500px at 8% 0%, rgba(96,165,250,0.16), transparent 60%),
+        radial-gradient(1000px 600px at 90% 0%, rgba(52,211,153,0.10), transparent 55%),
+        linear-gradient(180deg, var(--bg), #070a12);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      line-height:1.72;
+    }
+    a{ color:#bfdbfe; text-decoration:none; }
+    a:hover{ text-decoration:underline; }
+    .wrap{
+      max-width:1120px;
+      margin:32px auto 80px;
+      padding:0 18px;
+    }
+    header.hero{
+      background:
+        radial-gradient(900px 380px at 10% 0%, rgba(96,165,250,0.18), transparent 60%),
+        radial-gradient(900px 380px at 90% 0%, rgba(167,139,250,0.12), transparent 60%),
+        linear-gradient(180deg, rgba(17,24,39,0.95), rgba(15,23,42,0.92));
+      border:1px solid var(--line);
+      border-radius:22px;
+      padding:30px 26px 24px;
+      box-shadow:var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+    .hero h1{
+      margin:0 0 10px;
+      font-size:34px;
+      letter-spacing:.2px;
+      line-height:1.2;
+    }
+    .hero p{
+      margin:0;
+      max-width:860px;
+      color:var(--muted);
+      font-size:15px;
+    }
+    .hero-tags{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:16px;
+    }
+    .tag{
+      padding:5px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,0.05);
+      color:#dbeafe;
+      font-size:12px;
+    }
+    .tag.green{ color:#dcfce7; background:rgba(34,197,94,0.10); }
+    .tag.gold{ color:#fef3c7; background:rgba(250,204,21,0.10); }
+    .toc{
+      margin-top:18px;
+      background:var(--card2);
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:18px 20px;
+      box-shadow:0 10px 36px rgba(0,0,0,0.20);
+    }
+    .toc h2{
+      margin:0 0 12px;
+      font-size:18px;
+    }
+    .toc-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+      gap:10px 16px;
+    }
+    .toc a{
+      display:block;
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,0.08);
+      background:rgba(255,255,255,0.03);
+      color:#e5e7eb;
+    }
+    .toc a span{
+      display:block;
+      color:var(--muted);
+      font-size:12px;
+      margin-top:2px;
+    }
+    section{
+      margin-top:18px;
+      background:var(--card2);
+      border:1px solid var(--line);
+      border-radius:20px;
+      padding:24px 22px 24px;
+      box-shadow:0 12px 40px rgba(0,0,0,0.22);
+    }
+    h2{
+      margin:0 0 14px;
+      font-size:22px;
+      line-height:1.3;
+      color:#f8fafc;
+    }
+    h3{
+      margin:18px 0 8px;
+      font-size:16px;
+      color:#f3f4f6;
+    }
+    h4{
+      margin:14px 0 6px;
+      font-size:14px;
+      color:#dbeafe;
+      letter-spacing:.1px;
+    }
+    p{ margin:9px 0; }
+    ul,ol{ margin:8px 0 10px 22px; }
+    li{ margin:4px 0; }
+    .muted{ color:var(--muted); }
+    .pill{
+      display:inline-block;
+      margin-left:8px;
+      padding:2px 10px;
+      border-radius:999px;
+      font-size:12px;
+      border:1px solid var(--line);
+      background:rgba(96,165,250,0.10);
+      color:#dbeafe;
+      vertical-align:middle;
+    }
+    .pill.green{ background:rgba(34,197,94,0.10); color:#dcfce7; }
+    .pill.gold{ background:rgba(250,204,21,0.10); color:#fef3c7; }
+    .pill.purple{ background:rgba(167,139,250,0.12); color:#ede9fe; }
+    .box{
+      margin:12px 0;
+      padding:13px 14px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,0.03);
+    }
+    .box.blue{
+      background:rgba(96,165,250,0.10);
+      border-color:rgba(96,165,250,0.24);
+    }
+    .box.green{
+      background:rgba(34,197,94,0.10);
+      border-color:rgba(34,197,94,0.24);
+    }
+    .box.gold{
+      background:rgba(250,204,21,0.10);
+      border-color:rgba(250,204,21,0.24);
+    }
+    .box.purple{
+      background:rgba(167,139,250,0.10);
+      border-color:rgba(167,139,250,0.24);
+    }
+    .one-liner{
+      margin:12px 0;
+      padding:12px 14px;
+      border-radius:14px;
+      border:1px dashed rgba(96,165,250,0.35);
+      background:rgba(96,165,250,0.10);
+      color:#dbeafe;
+      font-weight:600;
+    }
+    .grid-2{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:16px;
+      align-items:start;
+    }
+    .grid-3{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:14px;
+      align-items:start;
+    }
+    table{
+      width:100%;
+      border-collapse:collapse;
+      margin:12px 0;
+      border:1px solid var(--line);
+      border-radius:14px;
+      overflow:hidden;
+    }
+    th,td{
+      border:1px solid var(--line);
+      padding:10px 12px;
+      text-align:center;
+      vertical-align:middle;
+    }
+    th{
+      background:rgba(255,255,255,0.05);
+      font-weight:600;
+    }
+    td:first-child, th:first-child{
+      text-align:center;
+      white-space:nowrap;
+    }
+    .formula-card{
+      padding:14px 16px;
+      border-radius:16px;
+      border:1px solid var(--line2);
+      background:rgba(15,23,42,0.70);
+      margin:12px 0;
+      overflow:auto;
+    }
+    .formula-card .label{
+      display:inline-block;
+      margin-bottom:8px;
+      padding:2px 8px;
+      border-radius:999px;
+      font-size:11px;
+      color:#dbeafe;
+      background:rgba(96,165,250,0.10);
+      border:1px solid rgba(96,165,250,0.20);
+      letter-spacing:.2px;
+      text-transform:uppercase;
+    }
+    .steps{
+      display:grid;
+      gap:10px;
+      margin-top:12px;
+    }
+    .step{
+      display:grid;
+      grid-template-columns:36px 1fr;
+      gap:12px;
+      align-items:start;
+      padding:12px 14px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,0.03);
+    }
+    .step-num{
+      width:36px;
+      height:36px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:50%;
+      background:rgba(96,165,250,0.14);
+      border:1px solid rgba(96,165,250,0.26);
+      color:#dbeafe;
+      font-weight:700;
+    }
+    .figure{
+      margin:14px 0;
+      padding:14px;
+      border:1px solid var(--line);
+      border-radius:16px;
+      background:rgba(255,255,255,0.03);
+    }
+    .figure svg{
+      width:100%;
+      height:auto;
+      display:block;
+    }
+    .figure-caption{
+      color:var(--muted);
+      font-size:13px;
+      margin-top:8px;
+    }
+    code.inline{
+      background:#0f172a;
+      border:1px solid rgba(255,255,255,0.10);
+      padding:2px 6px;
+      border-radius:8px;
+      font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
+      font-size:0.95em;
+    }
+    hr{
+      border:0;
+      border-top:1px solid var(--line);
+      margin:18px 0;
+    }
+    .compare{
+      width:100%;
+      overflow:auto;
+      border:1px solid var(--line);
+      border-radius:16px;
+    }
+    .compare table{ margin:0; border:0; }
+    .note-list{
+      display:grid;
+      gap:10px;
+      margin-top:10px;
+    }
+    .note-item{
+      padding:12px 14px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,0.03);
+    }
+    .thread{
+      margin-top:12px;
+      display:flex;
+      flex-direction:column;
+    }
+    .thread-entry{
+      display:flex;
+      gap:16px;
+      padding-bottom:26px;
+    }
+    .thread-spine{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      flex-shrink:0;
+      width:28px;
+    }
+    .thread-dot{
+      width:12px;
+      height:12px;
+      border-radius:50%;
+      background:var(--blue);
+      border:2px solid rgba(96,165,250,0.35);
+      margin-top:5px;
+      flex-shrink:0;
+    }
+    .thread-line{
+      width:2px;
+      flex:1;
+      background:var(--line);
+      margin-top:6px;
+    }
+    .thread-entry:last-child .thread-line{ display:none; }
+    .thread-body{
+      flex:1;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:rgba(17,24,39,0.55);
+      padding:18px 18px;
+    }
+    .thread-meta{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-bottom:10px;
+    }
+    .thread-badge{
+      font-size:11px;
+      color:var(--muted);
+      background:rgba(255,255,255,0.05);
+      border:1px solid var(--line);
+      border-radius:8px;
+      padding:2px 9px;
+    }
+    .thread-title{
+      font-size:15px;
+      font-weight:600;
+      color:#dbeafe;
+    }
+    footer{
+      margin-top:18px;
+      color:var(--muted);
+      font-size:13px;
+      text-align:center;
+      padding:8px;
+    }
+    .mjx-container{
+      overflow-x:auto;
+      overflow-y:hidden;
+      margin:6px 0;
+    }
+    @media (max-width:760px){
+      .hero h1{ font-size:28px; }
+      section{ padding:20px 16px 20px; }
+      .step{ grid-template-columns:32px 1fr; gap:10px; }
+      .step-num{ width:32px; height:32px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header class="hero">
+      <h1>Game Theory Study Note</h1>
+      <p>
+        A single-file HTML note built from the MIT 6.254 lecture themes on solution concepts and equilibrium
+        existence, and expanded using the study questions that came up in discussion:
+        Nash equilibrium, mixed strategies, correlated equilibrium, Kakutani, Wardrop equilibrium,
+        and existence results for finite and infinite games.
+      </p>
+      <div class="hero-tags">
+        <span class="tag">Normal-form games</span>
+        <span class="tag">Mixed strategies</span>
+        <span class="tag green">Correlated equilibrium</span>
+        <span class="tag">Fixed-point proofs</span>
+        <span class="tag gold">Wardrop</span>
+        <span class="tag">Infinite games</span>
+      </div>
+    </header>
+
+    <section class="toc">
+      <h2>Table of contents</h2>
+      <div class="toc-grid">
+        <a href="#sec1">1. Nash and mixed Nash equilibrium<span>Pure equilibrium, mixed equilibrium, and a game with no pure equilibrium</span></a>
+        <a href="#sec2">2. Correlated equilibrium<span>Mediator interpretation, formula, and why the notation is not strange</span></a>
+        <a href="#sec3">3. Existence of a mixed strategy equilibrium in finite games<span>The theorem statement and the intuition for why it works</span></a>
+        <a href="#sec4">4. Wardrop equilibrium<span>User equilibrium in congested networks and priced links</span></a>
+        <a href="#sec5">5. Existence proof in finite games<span>Weierstrass + Kakutani + best responses</span></a>
+        <a href="#sec6">6. Existence in games with infinite strategy spaces<span>Debreu-Glicksberg-Fan and Glicksberg</span></a>
+        <a href="#sec7">7. Deep-dive clarifications<span>Short answers to the exact questions that usually cause confusion</span></a>
+      </div>
+    </section>
+
+    <section id="sec1">
+      <h2>1. Nash equilibrium and mixed Nash equilibrium <span class="pill">core definitions</span></h2>
+
+      <p>A strategic-form game is</p>
+      \[
+      G = \bigl(I, (S_i)_{i \in I}, (u_i)_{i \in I}\bigr),
+      \]
+      <p>where \(I\) is the set of players, \(S_i\) is player \(i\)'s strategy set, and \(u_i : \prod_{j\in I} S_j \to \mathbb{R}\) is player \(i\)'s payoff.</p>
+
+      <h3>Pure-strategy Nash equilibrium</h3>
+      <div class="formula-card">
+        <div class="label">Definition</div>
+        \[
+        s^* = (s_i^*)_{i\in I} \text{ is a Nash equilibrium if }
+        u_i(s_i^*, s_{-i}^*) \ge u_i(t_i, s_{-i}^*)
+        \quad
+        \forall i,\ \forall t_i \in S_i.
+        \]
+      </div>
+
+      <div class="box blue">
+        <b>Interpretation.</b> At a Nash equilibrium, every player's chosen strategy is a best response to the other players' chosen strategies.
+        No one can gain by deviating alone.
+      </div>
+
+      <h3>Mixed strategy</h3>
+      <p>A mixed strategy of player \(i\) is a probability distribution over \(S_i\):</p>
+      \[
+      \sigma_i \in \Delta(S_i).
+      \]
+      <p>If players randomize independently, the mixed-strategy profile is \(\sigma=(\sigma_i)_{i\in I}\in \prod_i \Delta(S_i)\), and expected payoff is</p>
+      \[
+      u_i(\sigma)
+      =
+      \sum_{s \in S}
+      \left(\prod_{j\in I}\sigma_j(s_j)\right) u_i(s).
+      \]
+
+      <h3>Mixed-strategy Nash equilibrium</h3>
+      <div class="formula-card">
+        <div class="label">Definition</div>
+        \[
+        \sigma^* \text{ is a mixed Nash equilibrium if }
+        u_i(\sigma_i^*, \sigma_{-i}^*) \ge u_i(\tau_i,\sigma_{-i}^*)
+        \quad
+        \forall i,\ \forall \tau_i \in \Delta(S_i).
+        \]
+      </div>
+
+      <div class="one-liner">Pure Nash equilibrium says "best response to a fixed action profile." Mixed Nash equilibrium says "best response to opponents' probability distributions."</div>
+
+      <div class="grid-2">
+        <div>
+          <h3>Example: Matching Pennies</h3>
+          <table>
+            <tr>
+              <th>Player 1 \ Player 2</th>
+              <th>H</th>
+              <th>T</th>
+            </tr>
+            <tr>
+              <th>H</th>
+              <td>(1,-1)</td>
+              <td>(-1,1)</td>
+            </tr>
+            <tr>
+              <th>T</th>
+              <td>(-1,1)</td>
+              <td>(1,-1)</td>
+            </tr>
+          </table>
+
+          <p><b>No pure Nash equilibrium.</b> In every cell, one player wants to switch.</p>
+          <ul>
+            <li>If the outcome is \((H,H)\), player 2 wants to switch to \(T\).</li>
+            <li>If the outcome is \((H,T)\), player 1 wants to switch to \(T\).</li>
+            <li>If the outcome is \((T,H)\), player 1 wants to switch to \(H\).</li>
+            <li>If the outcome is \((T,T)\), player 2 wants to switch to \(H\).</li>
+          </ul>
+        </div>
+
+        <div>
+          <h3>Deriving the mixed equilibrium</h3>
+          <p>Let \(q\) be the probability that player 2 plays \(H\). Player 1 must be indifferent between \(H\) and \(T\):</p>
+          \[
+          u_1(H,q) = q(1) + (1-q)(-1) = 2q-1,
+          \]
+          \[
+          u_1(T,q) = q(-1) + (1-q)(1) = 1-2q.
+          \]
+          <p>Set them equal:</p>
+          \[
+          2q-1 = 1-2q \quad \Longrightarrow \quad q=\tfrac12.
+          \]
+          <p>By symmetry, player 2 is indifferent only if player 1 also chooses \(H\) with probability \(p=\tfrac12\).</p>
+
+          <div class="box green">
+            <b>Conclusion.</b> Matching Pennies has no pure equilibrium, but it has a mixed Nash equilibrium:
+            \[
+            \sigma_1^*(H)=\sigma_2^*(H)=\tfrac12.
+            \]
+          </div>
+        </div>
+      </div>
+
+      <div class="figure">
+        <svg viewBox="0 0 720 180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Simplex line segment for a two-action mixed strategy">
+          <defs>
+            <marker id="arrowBlue" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+              <path d="M0,0 L10,5 L0,10 z" fill="#60a5fa"></path>
+            </marker>
+          </defs>
+          <rect x="1" y="1" width="718" height="178" rx="14" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.08)"/>
+          <line x1="90" y1="95" x2="630" y2="95" stroke="#cbd5e1" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="90" cy="95" r="7" fill="#fbbf24"/>
+          <circle cx="630" cy="95" r="7" fill="#34d399"/>
+          <circle cx="360" cy="95" r="8" fill="#60a5fa"/>
+          <text x="68" y="70" fill="#fef3c7" font-size="18" font-family="Arial">pure H</text>
+          <text x="602" y="70" fill="#dcfce7" font-size="18" font-family="Arial">pure T</text>
+          <text x="323" y="55" fill="#dbeafe" font-size="18" font-family="Arial">mixed 50-50</text>
+          <line x1="360" y1="68" x2="360" y2="87" stroke="#60a5fa" stroke-width="2"/>
+          <path d="M205,135 C255,160 465,160 515,135" fill="none" stroke="#60a5fa" stroke-width="2.5" marker-end="url(#arrowBlue)"/>
+          <text x="228" y="154" fill="#dbeafe" font-size="16" font-family="Arial">the whole line segment is the mixed-strategy space</text>
+        </svg>
+        <div class="figure-caption">
+          For a player with two pure actions, the mixed-strategy set \(\Delta(\{H,T\})\) is a line segment. Endpoints are pure strategies; interior points are genuine randomizations.
+        </div>
+      </div>
+    </section>
+
+    <section id="sec2">
+      <h2>2. Correlated equilibrium <span class="pill green">joint randomization + recommendations</span></h2>
+
+      <p>In a mixed Nash equilibrium, players randomize <b>independently</b>. A correlated equilibrium allows a <b>joint distribution</b> over action profiles, so recommendations can be statistically related.</p>
+
+      <div class="grid-2">
+        <div>
+          <h3>Idea</h3>
+          <p>A mediator draws a random pure profile \(R=(R_1,\dots,R_n)\) from a joint distribution \(\pi \in \Delta(S)\). Player \(i\) sees only the recommendation \(R_i\).</p>
+          <p>After seeing \(R_i=s_i\), player \(i\) forms a posterior belief about the others' recommendations and decides whether following \(s_i\) is optimal.</p>
+        </div>
+        <div class="figure">
+          <svg viewBox="0 0 560 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Mediator sends recommendations to players">
+            <defs>
+              <marker id="medArrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+                <path d="M0,0 L10,5 L0,10 z" fill="#60a5fa"></path>
+              </marker>
+            </defs>
+            <rect x="190" y="24" width="180" height="58" rx="14" fill="rgba(96,165,250,0.14)" stroke="rgba(96,165,250,0.38)"/>
+            <text x="280" y="49" text-anchor="middle" fill="#dbeafe" font-size="22" font-family="Arial">Mediator</text>
+            <text x="280" y="70" text-anchor="middle" fill="#cbd5e1" font-size="14" font-family="Arial">draws R ~ pi over full profiles</text>
+
+            <rect x="60" y="152" width="165" height="64" rx="14" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.10)"/>
+            <text x="142.5" y="178" text-anchor="middle" fill="#f8fafc" font-size="20" font-family="Arial">Player 1</text>
+            <text x="142.5" y="199" text-anchor="middle" fill="#cbd5e1" font-size="14" font-family="Arial">sees only R1</text>
+
+            <rect x="335" y="152" width="165" height="64" rx="14" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.10)"/>
+            <text x="417.5" y="178" text-anchor="middle" fill="#f8fafc" font-size="20" font-family="Arial">Player 2</text>
+            <text x="417.5" y="199" text-anchor="middle" fill="#cbd5e1" font-size="14" font-family="Arial">sees only R2</text>
+
+            <line x1="240" y1="82" x2="160" y2="148" stroke="#60a5fa" stroke-width="3" marker-end="url(#medArrow)"/>
+            <line x1="320" y1="82" x2="400" y2="148" stroke="#60a5fa" stroke-width="3" marker-end="url(#medArrow)"/>
+            <text x="182" y="110" fill="#dbeafe" font-size="15" font-family="Arial">recommend s1</text>
+            <text x="335" y="110" fill="#dbeafe" font-size="15" font-family="Arial">recommend s2</text>
+          </svg>
+          <div class="figure-caption">The mediator samples a full profile, but each player sees only his or her component.</div>
+        </div>
+      </div>
+
+      <h3>Formal definition</h3>
+      <div class="formula-card">
+        <div class="label">Definition</div>
+        \[
+        \pi \in \Delta(S) \text{ is a correlated equilibrium if, for every player } i,
+        \]
+        \[
+        \sum_{s_{-i}\in S_{-i}}
+        \Pr(R=s \mid R_i=s_i)\,
+        \bigl[u_i(s_i,s_{-i}) - u_i(t_i,s_{-i})\bigr]
+        \ge 0
+        \]
+        \[
+        \text{for all recommendations } s_i \text{ with } \Pr(R_i=s_i)>0
+        \text{ and all deviations } t_i \in S_i.
+        \]
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div>
+            <b>Fix a recommendation \(s_i\).</b>
+            Player \(i\) is told: "play \(s_i\)."
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div>
+            <b>Use conditional probability.</b>
+            The term \(\Pr(R=s \mid R_i=s_i)\) is the posterior belief about the full profile after seeing the recommendation.
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div>
+            <b>Compare follow vs deviate.</b>
+            The difference
+            \[
+            u_i(s_i,s_{-i}) - u_i(t_i,s_{-i})
+            \]
+            is the gain from following the recommendation instead of switching to \(t_i\).
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div>
+            <b>Average using the posterior.</b>
+            The whole sum is an expected payoff difference. The inequality says the expected gain from following is nonnegative.
+          </div>
+        </div>
+      </div>
+
+      <div class="box blue">
+        <b>How to read the formula in one line.</b>
+        Given the recommendation I actually receive, I do not want to switch to any other action.
+      </div>
+
+      <h3>Why writing \(\Pr(R=s \mid R_i=s_i)\) is not strange</h3>
+      <p>Write the full profile as \(s=(s_i,s_{-i})\). Once \(s_i\) is fixed, the event \(R=s\) is exactly the same as the event \(R_{-i}=s_{-i}\). So</p>
+      \[
+      \Pr(R=s \mid R_i=s_i)
+      =
+      \Pr(R_{-i}=s_{-i} \mid R_i=s_i).
+      \]
+      <p>The lecture writes \(R=s\) because \(\pi\) is defined on the full profile space \(S\), but conceptually the conditioning is about beliefs over \(s_{-i}\).</p>
+
+      <h3>Equivalent linear characterization</h3>
+      <p>Using conditional probability,</p>
+      \[
+      \Pr(R=s \mid R_i=s_i)
+      =
+      \frac{\pi(s_i,s_{-i})}{\sum_{t_{-i}\in S_{-i}} \pi(s_i,t_{-i})}.
+      \]
+      <p>If \(\Pr(R_i=s_i)>0\), multiplying both sides by the denominator gives the equivalent condition</p>
+      \[
+      \sum_{s_{-i}\in S_{-i}}
+      \pi(s_i,s_{-i})
+      \bigl[u_i(s_i,s_{-i}) - u_i(t_i,s_{-i})\bigr]
+      \ge 0.
+      \]
+      <p>This is useful because it is <b>linear in \(\pi\)</b>, which is why the set of correlated equilibria is convex.</p>
+
+      <h3>Example: Traffic intersection game</h3>
+      <table>
+        <tr>
+          <th>Player 1 \ Player 2</th>
+          <th>L</th>
+          <th>R</th>
+        </tr>
+        <tr>
+          <th>U</th>
+          <td>(5,1)</td>
+          <td>(0,0)</td>
+        </tr>
+        <tr>
+          <th>D</th>
+          <td>(4,4)</td>
+          <td>(1,5)</td>
+        </tr>
+      </table>
+
+      <div class="grid-2">
+        <div>
+          <h4>Pure and mixed Nash equilibria</h4>
+          <p>There are two pure Nash equilibria: \((U,L)\) and \((D,R)\).</p>
+          <p>To find the mixed equilibrium, let player 1 choose \(U\) with probability \(p\), and player 2 choose \(L\) with probability \(q\).</p>
+          \[
+          u_1(U,q)=5q,\qquad
+          u_1(D,q)=4q + 1(1-q)=1+3q.
+          \]
+          \[
+          5q = 1+3q
+          \quad\Longrightarrow\quad
+          q=\tfrac12.
+          \]
+          \[
+          u_2(L,p)=1p + 4(1-p)=4-3p,\qquad
+          u_2(R,p)=0p + 5(1-p)=5-5p.
+          \]
+          \[
+          4-3p = 5-5p
+          \quad\Longrightarrow\quad
+          p=\tfrac12.
+          \]
+          <p>So the mixed equilibrium gives each player expected payoff \(5/2\).</p>
+        </div>
+
+        <div>
+          <h4>A correlated device does better</h4>
+          <p>Suppose a public coin recommends:</p>
+          <ul>
+            <li>\((U,L)\) with probability \(1/2\)</li>
+            <li>\((D,R)\) with probability \(1/2\)</li>
+          </ul>
+          <p>Expected payoff becomes</p>
+          \[
+          \tfrac12(5,1) + \tfrac12(1,5) = (3,3).
+          \]
+          <p>Why follow the recommendation?</p>
+          <ul>
+            <li>If player 1 is told \(U\), he infers player 2 will play \(L\), and \(U\) is optimal.</li>
+            <li>If player 1 is told \(D\), he infers player 2 will play \(R\), and \(D\) is optimal.</li>
+            <li>The same logic holds for player 2.</li>
+          </ul>
+
+          <div class="box green">
+            <b>Conclusion.</b> This is a correlated equilibrium and it yields \((3,3)\), which is strictly better than the mixed Nash payoff \((5/2,5/2)\).
+          </div>
+
+          <div class="box">
+            <b>Stronger mediator from the lecture.</b> A mediator can recommend
+            \((U,L)\), \((D,L)\), and \((D,R)\) each with probability \(1/3\).
+            The induced expected payoff is
+            \[
+            \tfrac13(5,1) + \tfrac13(4,4) + \tfrac13(1,5)
+            =
+            (10/3,10/3),
+            \]
+            and the recommendations are still self-enforcing. This shows correlated equilibrium can achieve payoffs that are outside the convex hull of Nash-equilibrium payoffs and strictly better than randomizing only between Nash equilibria.
+          </div>
+        </div>
+      </div>
+
+      <div class="compare">
+        <table>
+          <tr>
+            <th>Fact</th>
+            <th>Why it is true</th>
+          </tr>
+          <tr>
+            <td>Every mixed Nash equilibrium is a correlated equilibrium</td>
+            <td>Independent randomization is a special case of a joint distribution over profiles.</td>
+          </tr>
+          <tr>
+            <td>The set of correlated equilibria is convex</td>
+            <td>The defining inequalities are linear in \(\pi\).</td>
+          </tr>
+          <tr>
+            <td>The CE set contains the convex hull of mixed Nash equilibria</td>
+            <td>Because mixed Nash equilibria are inside the CE set and the CE set is convex.</td>
+          </tr>
+        </table>
+      </div>
+    </section>
+
+    <section id="sec3">
+      <h2>3. Existence of a mixed strategy equilibrium in finite games <span class="pill purple">the theorem and the roadmap</span></h2>
+
+      <div class="formula-card">
+        <div class="label">Nash's theorem</div>
+        \[
+        \text{Every finite strategic-form game has a mixed-strategy Nash equilibrium.}
+        \]
+      </div>
+
+      <div class="box purple">
+        <b>Why this matters.</b> In a finite game, pure equilibrium can fail completely, as Matching Pennies shows. Nash's theorem says equilibrium still exists once players are allowed to randomize.
+      </div>
+
+      <h3>The key idea</h3>
+      <p>Do not search directly for \(\sigma^*\). Instead, define the <b>best-response correspondence</b> \(B\) and look for a fixed point:</p>
+      \[
+      \sigma^* \in B(\sigma^*).
+      \]
+      <p>If that happens, each player's mixed strategy is a best response to the others, which is exactly the definition of a mixed Nash equilibrium.</p>
+
+      <div class="figure">
+        <svg viewBox="0 0 980 170" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Flow of the fixed-point proof of Nash's theorem">
+          <defs>
+            <marker id="flowArrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+              <path d="M0,0 L12,6 L0,12 z" fill="#60a5fa"></path>
+            </marker>
+          </defs>
+          <rect x="20" y="42" width="170" height="78" rx="16" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.10)"/>
+          <text x="105" y="72" text-anchor="middle" fill="#f8fafc" font-size="22" font-family="Arial">Finite game</text>
+          <text x="105" y="95" text-anchor="middle" fill="#cbd5e1" font-size="14" font-family="Arial">finite pure strategy sets</text>
+
+          <rect x="235" y="28" width="190" height="106" rx="16" fill="rgba(96,165,250,0.12)" stroke="rgba(96,165,250,0.28)"/>
+          <text x="330" y="58" text-anchor="middle" fill="#dbeafe" font-size="22" font-family="Arial">Mixed strategy space</text>
+          <text x="330" y="82" text-anchor="middle" fill="#e5e7eb" font-size="16" font-family="Arial">Sigma = product of simplices</text>
+          <text x="330" y="104" text-anchor="middle" fill="#cbd5e1" font-size="14" font-family="Arial">compact, convex, nonempty</text>
+
+          <rect x="468" y="28" width="190" height="106" rx="16" fill="rgba(167,139,250,0.12)" stroke="rgba(167,139,250,0.28)"/>
+          <text x="563" y="58" text-anchor="middle" fill="#ede9fe" font-size="22" font-family="Arial">Best responses</text>
+          <text x="563" y="82" text-anchor="middle" fill="#e5e7eb" font-size="16" font-family="Arial">B(sigma)</text>
+          <text x="563" y="104" text-anchor="middle" fill="#cbd5e1" font-size="14" font-family="Arial">nonempty, convex, closed graph</text>
+
+          <rect x="700" y="42" width="118" height="78" rx="16" fill="rgba(52,211,153,0.12)" stroke="rgba(52,211,153,0.28)"/>
+          <text x="759" y="69" text-anchor="middle" fill="#dcfce7" font-size="22" font-family="Arial">Kakutani</text>
+          <text x="759" y="92" text-anchor="middle" fill="#cbd5e1" font-size="14" font-family="Arial">fixed point</text>
+
+          <rect x="855" y="42" width="104" height="78" rx="16" fill="rgba(250,204,21,0.12)" stroke="rgba(250,204,21,0.28)"/>
+          <text x="907" y="69" text-anchor="middle" fill="#fef3c7" font-size="22" font-family="Arial">sigma*</text>
+          <text x="907" y="92" text-anchor="middle" fill="#cbd5e1" font-size="14" font-family="Arial">mixed NE</text>
+
+          <line x1="190" y1="81" x2="228" y2="81" stroke="#60a5fa" stroke-width="3.2" marker-end="url(#flowArrow)"/>
+          <line x1="425" y1="81" x2="460" y2="81" stroke="#60a5fa" stroke-width="3.2" marker-end="url(#flowArrow)"/>
+          <line x1="658" y1="81" x2="692" y2="81" stroke="#60a5fa" stroke-width="3.2" marker-end="url(#flowArrow)"/>
+          <line x1="818" y1="81" x2="848" y2="81" stroke="#60a5fa" stroke-width="3.2" marker-end="url(#flowArrow)"/>
+        </svg>
+        <div class="figure-caption">This is the logical chain behind Nash's existence theorem in finite games.</div>
+      </div>
+
+      <h3>The two technical tools that make the proof work</h3>
+      <div class="grid-2">
+        <div class="box">
+          <b>Weierstrass's theorem.</b> A continuous function on a nonempty compact set attains its maximum and minimum.
+          This guarantees best responses exist.
+        </div>
+        <div class="box">
+          <b>Kakutani's fixed-point theorem.</b> A set-valued map with nonempty, convex values and closed graph on a compact convex set has a fixed point.
+          This turns "best responses exist" into "an equilibrium exists."
+        </div>
+      </div>
+
+      <p>The full proof appears in Section 5 below, after Section 4 on Wardrop equilibrium.</p>
+    </section>
+
+    <section id="sec4">
+      <h2>4. Wardrop equilibrium <span class="pill gold">equilibrium for a continuum of users</span></h2>
+
+      <p>Wardrop equilibrium is the network-flow analogue of Nash equilibrium when there is a continuum of infinitesimal users, such as many drivers in traffic.</p>
+
+      <div class="one-liner">All routes that are actually used have equal and minimal cost. No infinitesimal user can improve by switching routes.</div>
+
+      <h3>Basic route-based definition</h3>
+      <p>Let \(f_p\) be the flow on path \(p\), and let \(c_p(f)\) be the cost of that path under total flow vector \(f\). A feasible flow \(f\) is a Wardrop equilibrium if</p>
+      \[
+      f_p > 0 \quad \Longrightarrow \quad c_p(f) \le c_q(f)\ \text{for every feasible path } q.
+      \]
+      <p>So any route that carries positive flow must be a cheapest route.</p>
+
+      <div class="figure">
+        <svg viewBox="0 0 760 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Two-route network for Wardrop equilibrium">
+          <defs>
+            <marker id="routeArrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+              <path d="M0,0 L10,5 L0,10 z" fill="#60a5fa"></path>
+            </marker>
+          </defs>
+          <circle cx="90" cy="130" r="28" fill="rgba(96,165,250,0.14)" stroke="rgba(96,165,250,0.32)" />
+          <circle cx="670" cy="130" r="28" fill="rgba(96,165,250,0.14)" stroke="rgba(96,165,250,0.32)" />
+          <text x="90" y="136" text-anchor="middle" fill="#dbeafe" font-size="18" font-family="Arial">O</text>
+          <text x="670" y="136" text-anchor="middle" fill="#dbeafe" font-size="18" font-family="Arial">D</text>
+
+          <path d="M118,118 C250,10 510,10 642,118" fill="none" stroke="#34d399" stroke-width="5" marker-end="url(#routeArrow)"/>
+          <path d="M118,142 C250,250 510,250 642,142" fill="none" stroke="#fbbf24" stroke-width="5" marker-end="url(#routeArrow)"/>
+
+          <text x="378" y="44" text-anchor="middle" fill="#dcfce7" font-size="18" font-family="Arial">Route 1: c1(f1) = f1</text>
+          <text x="378" y="228" text-anchor="middle" fill="#fef3c7" font-size="18" font-family="Arial">Route 2: c2(f2) = 1/2</text>
+
+          <text x="378" y="122" text-anchor="middle" fill="#cbd5e1" font-size="18" font-family="Arial">Total demand = 1</text>
+          <text x="378" y="146" text-anchor="middle" fill="#dbeafe" font-size="18" font-family="Arial">Wardrop equilibrium: f1 = 1/2, f2 = 1/2</text>
+        </svg>
+        <div class="figure-caption">In this example, if both routes are used, they must have equal cost. Since \(c_2 = 1/2\), we need \(c_1(f_1)=f_1=1/2\), hence \(f_1=f_2=1/2\).</div>
+      </div>
+
+      <h3>Priced-link version used in congestion games</h3>
+      <p>In the pricing-congestion model from the lecture, provider \(i\) chooses a price \(p_i\), link \(i\) has latency \(l_i(x_i)\), and the effective cost of using link \(i\) is</p>
+      \[
+      p_i + l_i(x_i).
+      \]
+      <p>With total demand \(d\) and reservation utility \(R\), a flow vector \(x=(x_i)_{i=1}^I\) is a Wardrop equilibrium if</p>
+      \[
+      \sum_{i=1}^I x_i \le d,
+      \]
+      \[
+      p_i + l_i(x_i) = \min_j \{p_j + l_j(x_j)\}
+      \quad \text{for all } i \text{ with } x_i > 0,
+      \]
+      \[
+      p_i + l_i(x_i) \le R
+      \quad \text{for all } i \text{ with } x_i > 0,
+      \]
+      <p>and if the minimal effective cost is strictly below \(R\), then all traffic is served:</p>
+      \[
+      \sum_{i=1}^I x_i = d.
+      \]
+
+      <div class="box gold">
+        <b>Interpretation.</b> Used links must have minimal effective cost, and users only enter the network if that cost does not exceed the reservation utility.
+      </div>
+
+      <div class="box">
+        <b>Why this appears in the existence lecture.</b> The lecture uses Wardrop flow as the lower-level behavior in a price-congestion game. Providers choose prices, users react through Wardrop equilibrium, and the resulting provider game can have either a unique pure Nash equilibrium or no pure Nash equilibrium depending on the latency functions.
+      </div>
+
+      <h3>Connection to Nash equilibrium</h3>
+      <p>Wardrop equilibrium is like Nash equilibrium for infinitely many negligible users. A single user cannot noticeably change congestion, so the relevant deviation is an infinitesimal switch of mass from one route to another.</p>
+    </section>
+
+    <section id="sec5">
+      <h2>5. Existence of a mixed strategy Nash equilibrium in finite games <span class="pill purple">proof details</span></h2>
+
+      <p>This is the detailed fixed-point proof behind Nash's theorem.</p>
+
+      <h3>Step 1: Build the mixed strategy space</h3>
+      <p>For each player \(i\), define the simplex of mixed strategies</p>
+      \[
+      \Sigma_i = \Delta(S_i).
+      \]
+      <p>The full mixed strategy space is</p>
+      \[
+      \Sigma = \prod_{i\in I} \Sigma_i.
+      \]
+      <p>Each \(\Sigma_i\) is a simplex, so it is compact, convex, and nonempty. Therefore \(\Sigma\) is also compact, convex, and nonempty.</p>
+
+      <h3>Step 2: Define the best-response correspondence</h3>
+      <div class="formula-card">
+        <div class="label">Best response correspondence</div>
+        \[
+        B_i(\sigma_{-i})
+        =
+        \arg\max_{\tau_i \in \Sigma_i}
+        u_i(\tau_i,\sigma_{-i}),
+        \]
+        \[
+        B(\sigma) = \prod_{i\in I} B_i(\sigma_{-i}).
+        \]
+      </div>
+
+      <p>A fixed point \(\sigma^* \in B(\sigma^*)\) means every player's mixed strategy is a best response to the others. That is exactly a mixed Nash equilibrium.</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">A</div>
+          <div>
+            <b>\(B(\sigma)\) is nonempty.</b>
+            For fixed \(\sigma_{-i}\), the function \(\tau_i \mapsto u_i(\tau_i,\sigma_{-i})\) is linear in \(\tau_i\), hence continuous.
+            Since \(\Sigma_i\) is compact and nonempty, Weierstrass gives at least one maximizer.
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">B</div>
+          <div>
+            <b>\(B(\sigma)\) is convex-valued.</b>
+            Suppose \(\sigma_i'\) and \(\sigma_i''\) are both best responses to \(\sigma_{-i}\). Then for every \(\tau_i\in\Sigma_i\),
+            \[
+            u_i(\sigma_i',\sigma_{-i}) \ge u_i(\tau_i,\sigma_{-i}),
+            \qquad
+            u_i(\sigma_i'',\sigma_{-i}) \ge u_i(\tau_i,\sigma_{-i}).
+            \]
+            Multiply by \(\lambda\) and \(1-\lambda\), add, and use linearity:
+            \[
+            u_i\bigl(\lambda \sigma_i' + (1-\lambda)\sigma_i'',\, \sigma_{-i}\bigr)
+            =
+            \lambda u_i(\sigma_i',\sigma_{-i}) + (1-\lambda)u_i(\sigma_i'',\sigma_{-i})
+            \ge u_i(\tau_i,\sigma_{-i}).
+            \]
+            So every convex combination of best responses is again a best response.
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">C</div>
+          <div>
+            <b>\(B\) has a closed graph.</b>
+            Intuitively, best responses cannot jump wildly when payoffs are continuous.
+            If \((\sigma^n,\hat{\sigma}^n)\to(\sigma,\hat{\sigma})\) and each \(\hat{\sigma}^n \in B(\sigma^n)\), then continuity of payoffs implies \(\hat{\sigma}\in B(\sigma)\).
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">D</div>
+          <div>
+            <b>Apply Kakutani.</b>
+            The map \(B:\Sigma \rightrightarrows \Sigma\) has nonempty convex values, closed graph, and is defined on a compact convex nonempty set.
+            Therefore there exists \(\sigma^*\in\Sigma\) such that
+            \[
+            \sigma^* \in B(\sigma^*).
+            \]
+          </div>
+        </div>
+      </div>
+
+      <div class="box green">
+        <b>Conclusion.</b>
+        By Kakutani's fixed-point theorem, a mixed-strategy Nash equilibrium exists in every finite game.
+      </div>
+
+      <h3>Where Kakutani enters</h3>
+      <p>Kakutani is needed because \(B\) is usually <b>set-valued</b>. A player can have many best responses, so \(B(\sigma)\) is a set, not a single point. Brouwer's theorem is for single-valued functions; Kakutani is the right theorem for correspondences.</p>
+
+      <div class="grid-2">
+        <div class="box">
+          <b>Weierstrass gives:</b> best responses exist.
+        </div>
+        <div class="box">
+          <b>Kakutani gives:</b> some profile is a best response to itself.
+        </div>
+      </div>
+    </section>
+
+    <section id="sec6">
+      <h2>6. Existence in games with infinite strategy spaces <span class="pill">pure existence under concavity; mixed existence more generally</span></h2>
+
+      <p>When strategy sets are infinite, pure equilibrium may or may not exist. The answer depends on the shape of the payoff functions.</p>
+
+      <h3>Debreu-Glicksberg-Fan theorem (pure strategy existence)</h3>
+      <div class="formula-card">
+        <div class="label">Theorem</div>
+        \[
+        \text{Consider } \bigl(I,(S_i)_{i\in I},(u_i)_{i\in I}\bigr)
+        \text{ such that for each } i:
+        \]
+        <ul>
+          <li>\(S_i\) is compact and convex,</li>
+          <li>\(u_i(s_i,s_{-i})\) is continuous in the strategy profile,</li>
+          <li>\(u_i(s_i,s_{-i})\) is concave (or quasi-concave) in \(s_i\).</li>
+        </ul>
+        \[
+        \text{Then a pure-strategy Nash equilibrium exists.}
+        \]
+      </div>
+
+      <div class="box blue">
+        <b>Why the proof works.</b> It is the same Kakutani strategy as in finite games, except the best responses are now over the pure strategy sets \(S_i\) themselves.
+      </div>
+
+      <h3>Proof skeleton</h3>
+      <ol>
+        <li>Define \(B_i(s_{-i}) = \arg\max_{s_i \in S_i} u_i(s_i,s_{-i})\).</li>
+        <li>\(B_i(s_{-i})\) is nonempty by Weierstrass because \(S_i\) is compact and \(u_i\) is continuous.</li>
+        <li>\(B_i(s_{-i})\) is convex because the argmax set of a concave function over a convex set is convex.</li>
+        <li>The correspondence \(B\) has closed graph by continuity.</li>
+        <li>Kakutani then gives \(s^* \in B(s^*)\), which is a pure Nash equilibrium.</li>
+      </ol>
+
+      <div class="grid-2">
+        <div>
+          <h3>Example where the theorem applies</h3>
+          <p>Let each player choose a number \(x_i \in [0,1]\), and suppose player \(i\)'s payoff is</p>
+          \[
+          u_i(x_i,x_{-i}) = -\bigl(x_i - m_{-i}\bigr)^2,
+          \]
+          <p>where \(m_{-i}\) is some average of the other players' actions. This payoff is continuous and concave in \(x_i\) because it is a negative quadratic. So the theorem guarantees a pure equilibrium exists.</p>
+        </div>
+        <div class="figure">
+          <svg viewBox="0 0 480 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Concave payoff illustration">
+            <rect x="1" y="1" width="478" height="258" rx="14" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.08)"/>
+            <line x1="58" y1="220" x2="430" y2="220" stroke="#cbd5e1" stroke-width="2"/>
+            <line x1="58" y1="220" x2="58" y2="36" stroke="#cbd5e1" stroke-width="2"/>
+            <path d="M88 198 C145 86, 235 86, 320 198" fill="none" stroke="#60a5fa" stroke-width="4"/>
+            <line x1="115" y1="162" x2="292" y2="162" stroke="#fbbf24" stroke-width="3"/>
+            <text x="238" y="32" text-anchor="middle" fill="#dbeafe" font-size="20" font-family="Arial">Concave in own action</text>
+            <text x="337" y="152" fill="#fef3c7" font-size="15" font-family="Arial">chord lies below graph</text>
+            <text x="206" y="242" fill="#cbd5e1" font-size="15" font-family="Arial">own action</text>
+          </svg>
+          <div class="figure-caption">Concavity is what makes the best-response set convex, which is exactly what Kakutani needs.</div>
+        </div>
+      </div>
+
+      <h3>Why pure equilibrium can fail without concavity</h3>
+      <p>The lecture gives a circle-location example: two players choose points on a circle and player 1 wants to maximize distance from player 2, while player 2 wants to minimize it. There is no pure Nash equilibrium because one player always wants to move away and the other wants to adjust in response.</p>
+
+      <div class="box gold">
+        <b>Key lesson.</b> Compactness and continuity alone are not enough for pure equilibrium in infinite games. Concavity or quasi-concavity is the crucial extra condition.
+      </div>
+
+      <h3>Glicksberg's theorem (mixed strategy existence in compact metric games)</h3>
+      <div class="formula-card">
+        <div class="label">More general mixed-strategy theorem</div>
+        \[
+        \text{If each } S_i \text{ is a nonempty compact metric space and each } u_i
+        \text{ is continuous, then a mixed-strategy Nash equilibrium exists.}
+        \]
+      </div>
+      <p>This theorem is more powerful because it does not require concavity in the pure action. The price is that equilibrium may exist only after players mix, and the mixed-strategy spaces become infinite-dimensional.</p>
+    </section>
+
+    <section id="sec7">
+      <h2>7. Deep-dive clarifications <span class="pill">answers to the exact sticky points</span></h2>
+      <p class="muted">These notes are included because they were precisely the places where the definitions started to feel abstract.</p>
+
+      <div class="thread">
+        <div class="thread-entry">
+          <div class="thread-spine">
+            <div class="thread-dot"></div>
+            <div class="thread-line"></div>
+          </div>
+          <div class="thread-body">
+            <div class="thread-meta">
+              <span class="thread-badge">Study Q1</span>
+              <span class="thread-title">How should I interpret the correlated-equilibrium inequality?</span>
+            </div>
+
+            <p>Fix a player \(i\), a recommendation \(s_i\), and a possible deviation \(t_i\).</p>
+            \[
+            \sum_{s_{-i}}
+            \Pr(R=s \mid R_i=s_i)
+            \bigl[u_i(s_i,s_{-i}) - u_i(t_i,s_{-i})\bigr]
+            \ge 0
+            \]
+            <p>This is just</p>
+            \[
+            \mathbb{E}\!\left[
+            u_i(\text{follow}) - u_i(\text{deviate})
+            \,\middle|\, R_i=s_i
+            \right]
+            \ge 0.
+            \]
+            <p>So the sum is not an unweighted sum over all \(s_{-i}\). It is a <b>conditional expectation</b>, using the belief induced by the recommendation.</p>
+          </div>
+        </div>
+
+        <div class="thread-entry">
+          <div class="thread-spine">
+            <div class="thread-dot"></div>
+            <div class="thread-line"></div>
+          </div>
+          <div class="thread-body">
+            <div class="thread-meta">
+              <span class="thread-badge">Study Q2</span>
+              <span class="thread-title">Why do the notes write \(R=s\) instead of \(R_{-i}=s_{-i}\)?</span>
+            </div>
+
+            <p>Because the distribution \(\pi\) is defined over the full profile space \(S\). But once your recommendation \(s_i\) is fixed, writing
+            \[
+            \Pr(R=s \mid R_i=s_i)
+            \]
+            is equivalent to writing
+            \[
+            \Pr(R_{-i}=s_{-i} \mid R_i=s_i).
+            \]
+            The first notation keeps the joint distribution explicit; the second is often easier to interpret.</p>
+          </div>
+        </div>
+
+        <div class="thread-entry">
+          <div class="thread-spine">
+            <div class="thread-dot"></div>
+            <div class="thread-line"></div>
+          </div>
+          <div class="thread-body">
+            <div class="thread-meta">
+              <span class="thread-badge">Study Q3</span>
+              <span class="thread-title">Why does the convex hull of Nash equilibria sit inside correlated equilibria?</span>
+            </div>
+
+            <p>Two facts are enough:</p>
+            <ul>
+              <li>Every mixed Nash equilibrium is a correlated equilibrium.</li>
+              <li>The correlated-equilibrium set is convex.</li>
+            </ul>
+            <p>So if \(\pi^1,\dots,\pi^k\) are mixed Nash equilibria and \(\lambda_1,\dots,\lambda_k\) are nonnegative weights summing to 1, then
+            \[
+            \sum_{m=1}^k \lambda_m \pi^m
+            \]
+            is again a correlated equilibrium.</p>
+          </div>
+        </div>
+
+        <div class="thread-entry">
+          <div class="thread-spine">
+            <div class="thread-dot"></div>
+            <div class="thread-line"></div>
+          </div>
+          <div class="thread-body">
+            <div class="thread-meta">
+              <span class="thread-badge">Study Q4</span>
+              <span class="thread-title">What is Kakutani's theorem really saying?</span>
+            </div>
+
+            <p>It generalizes fixed points from ordinary functions to <b>correspondences</b> (set-valued maps). Instead of asking for
+            \[
+            f(x)=x,
+            \]
+            it asks for
+            \[
+            x \in f(x).
+            \]
+            In game theory, \(f(x)\) is the set of best responses. So a fixed point means the strategy profile is one of its own best responses, which is exactly equilibrium.</p>
+
+            <div class="box">
+              <b>Minimal example.</b> Let \(A=[0,1]\) and define
+              \[
+              f(x)=
+              \begin{cases}
+              [1/2,1], & x\le 1/2,\\
+              [0,1/2], & x>1/2.
+              \end{cases}
+              \]
+              Then \(x=1/2\) is a fixed point because \(1/2 \in f(1/2)\).
+            </div>
+          </div>
+        </div>
+
+        <div class="thread-entry">
+          <div class="thread-spine">
+            <div class="thread-dot"></div>
+            <div class="thread-line"></div>
+          </div>
+          <div class="thread-body">
+            <div class="thread-meta">
+              <span class="thread-badge">Study Q5</span>
+              <span class="thread-title">Why does a pure equilibrium exist in the infinite-game theorem?</span>
+            </div>
+
+            <p>Because the best-response correspondence over pure strategies satisfies Kakutani's conditions:</p>
+            <ul>
+              <li>The product strategy space \(S=\prod_i S_i\) is compact, convex, and nonempty.</li>
+              <li>Best responses exist by Weierstrass.</li>
+              <li>Best-response sets are convex because the payoff is concave in own strategy.</li>
+              <li>The graph is closed by continuity.</li>
+            </ul>
+            <p>Kakutani then gives \(s^* \in B(s^*)\), which means every player is best responding in pure strategies.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Source anchors <span class="pill">for revision</span></h2>
+      <div class="note-list">
+        <div class="note-item"><b>Lecture 4 focus:</b> correlated equilibrium, characterization of CE, Nash's theorem in finite games, Weierstrass, Kakutani, and the proof of mixed-strategy existence.</div>
+        <div class="note-item"><b>Lecture 5 focus:</b> pricing-congestion / Wardrop motivation, mixed equilibrium existence in finite games, pure equilibrium existence in infinite games under concavity, and Glicksberg's mixed-strategy theorem for compact metric spaces.</div>
+      </div>
+    </section>
+
+    <footer>
+      Built as a single-file HTML study note with MathJax, tables, formulas, and inline figures.
+    </footer>
+  </div>
+</body>
+</html>
