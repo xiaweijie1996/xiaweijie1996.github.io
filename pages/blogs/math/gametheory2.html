@@ -438,8 +438,8 @@
         <a href="#sec2">2. Correlated equilibrium<span>Mediator interpretation, formula, and why the notation is not strange</span></a>
         <a href="#sec3">3. Existence of a mixed strategy equilibrium in finite games<span>The theorem statement and the intuition for why it works</span></a>
         <a href="#sec4">4. Wardrop equilibrium<span>User equilibrium in congested networks and priced links</span></a>
-        <a href="#sec5">5. Existence proof in finite games<span>Weierstrass + Kakutani + best responses</span></a>
-        <a href="#sec6">6. Existence in games with infinite strategy spaces<span>Debreu-Glicksberg-Fan and Glicksberg</span></a>
+        <a href="#sec5">5. Existence proof in finite games<span>Topology of simplices, correspondences, and Kakutani</span></a>
+        <a href="#sec6">6. Existence in games with infinite strategy spaces<span>The same template with convex pure strategy sets</span></a>
         <a href="#sec7">7. Deep-dive clarifications<span>Short answers to the exact questions that usually cause confusion</span></a>
       </div>
     </section>
@@ -949,9 +949,27 @@
     <section id="sec5">
       <h2>5. Existence of a mixed strategy Nash equilibrium in finite games <span class="pill purple">proof details</span></h2>
 
-      <p>This is the detailed fixed-point proof behind Nash's theorem.</p>
+      <p>This is the detailed fixed-point proof behind Nash's theorem. The main idea is not just a checklist of lemmas: it is a reusable existence pattern. Build a strategy space with the right topological shape, turn equilibrium into a fixed-point problem, and then use Kakutani to force a self-consistent profile.</p>
 
-      <h3>Step 1: Build the mixed strategy space</h3>
+      <div class="one-liner"><b>Abstract template.</b> Find a nonempty compact convex set \(X\) and a best-response correspondence \(B:X \rightrightarrows X\) with nonempty convex values and closed graph. Then Kakutani gives some \(x^*\in X\) such that \(x^*\in B(x^*)\).</div>
+
+      <h3>The topology behind the proof</h3>
+      <div class="grid-2">
+        <div class="box">
+          <b>Compactness.</b> Maximizers cannot escape, and convergent sequences stay inside the strategy space. This is why Weierstrass applies and why the limit arguments have somewhere to land.
+        </div>
+        <div class="box">
+          <b>Convexity.</b> If two mixed strategies are feasible, every average of them is feasible. That is the geometry that makes mixing possible and that Kakutani requires.
+        </div>
+        <div class="box">
+          <b>Closed graph.</b> Best responses must survive limits. If environments and best-response choices converge together, the limit choice should still be optimal in the limit environment.
+        </div>
+        <div class="box">
+          <b>Why a correspondence.</b> Best responses are often not unique, so the right object is not a single-valued function \(f(\sigma)\) but a set-valued map \(B(\sigma)\).
+        </div>
+      </div>
+
+      <h3>Step 1: Build the compact convex stage</h3>
       <p>For each player \(i\), define the simplex of mixed strategies</p>
       \[
       \Sigma_i = \Delta(S_i).
@@ -960,9 +978,9 @@
       \[
       \Sigma = \prod_{i\in I} \Sigma_i.
       \]
-      <p>Each \(\Sigma_i\) is a simplex, so it is compact, convex, and nonempty. Therefore \(\Sigma\) is also compact, convex, and nonempty.</p>
+      <p>Each \(\Sigma_i\) is a simplex, so it is compact, convex, and nonempty. Finite products preserve these properties, so \(\Sigma\) is exactly the kind of space on which Kakutani can operate.</p>
 
-      <h3>Step 2: Define the best-response correspondence</h3>
+      <h3>Step 2: Turn equilibrium into a fixed-point problem</h3>
       <div class="formula-card">
         <div class="label">Best response correspondence</div>
         \[
@@ -976,7 +994,7 @@
         \]
       </div>
 
-      <p>A fixed point \(\sigma^* \in B(\sigma^*)\) means every player's mixed strategy is a best response to the others. That is exactly a mixed Nash equilibrium.</p>
+      <p>A fixed point \(\sigma^* \in B(\sigma^*)\) means every player's mixed strategy is a best response to the others. So instead of directly solving many equilibrium inequalities at once, the proof reduces existence to a single fixed-point statement.</p>
 
       <div class="steps">
         <div class="step">
@@ -984,7 +1002,7 @@
           <div>
             <b>\(B(\sigma)\) is nonempty.</b>
             For fixed \(\sigma_{-i}\), the function \(\tau_i \mapsto u_i(\tau_i,\sigma_{-i})\) is linear in \(\tau_i\), hence continuous.
-            Since \(\Sigma_i\) is compact and nonempty, Weierstrass gives at least one maximizer.
+            Since \(\Sigma_i\) is compact and nonempty, Weierstrass gives at least one maximizer. This is the first place where topology enters: compactness turns continuity into actual existence of best responses.
           </div>
         </div>
 
@@ -1005,7 +1023,7 @@
             \lambda u_i(\sigma_i',\sigma_{-i}) + (1-\lambda)u_i(\sigma_i'',\sigma_{-i})
             \ge u_i(\tau_i,\sigma_{-i}).
             \]
-            So every convex combination of best responses is again a best response.
+            So every convex combination of best responses is again a best response. Geometrically, linearity of expected payoff makes the argmax set inherit the convexity of the simplex.
           </div>
         </div>
 
@@ -1014,7 +1032,15 @@
           <div>
             <b>\(B\) has a closed graph.</b>
             Intuitively, best responses cannot jump wildly when payoffs are continuous.
-            If \((\sigma^n,\hat{\sigma}^n)\to(\sigma,\hat{\sigma})\) and each \(\hat{\sigma}^n \in B(\sigma^n)\), then continuity of payoffs implies \(\hat{\sigma}\in B(\sigma)\).
+            If \((\sigma^n,\hat{\sigma}^n)\to(\sigma,\hat{\sigma})\) and each \(\hat{\sigma}^n \in B(\sigma^n)\), then for every player \(i\) and every candidate deviation \(\tau_i\in\Sigma_i\),
+            \[
+            u_i(\hat{\sigma}_i^n,\sigma_{-i}^n) \ge u_i(\tau_i,\sigma_{-i}^n).
+            \]
+            Passing to the limit and using continuity gives
+            \[
+            u_i(\hat{\sigma}_i,\sigma_{-i}) \ge u_i(\tau_i,\sigma_{-i}),
+            \]
+            so \(\hat{\sigma}_i\in B_i(\sigma_{-i})\) for every \(i\). Hence \(\hat{\sigma}\in B(\sigma)\).
           </div>
         </div>
 
@@ -1031,13 +1057,17 @@
         </div>
       </div>
 
+      <div class="box purple">
+        <b>What the proof really shows.</b> The existence theorem is a geometry statement. The mixed-strategy simplex supplies a compact convex stage, continuity keeps optimality stable under limits, and linearity makes best-response sets convex. Once those ingredients are present, Kakutani forces equilibrium.
+      </div>
+
       <div class="box green">
         <b>Conclusion.</b>
         By Kakutani's fixed-point theorem, a mixed-strategy Nash equilibrium exists in every finite game.
       </div>
 
       <h3>Where Kakutani enters</h3>
-      <p>Kakutani is needed because \(B\) is usually <b>set-valued</b>. A player can have many best responses, so \(B(\sigma)\) is a set, not a single point. Brouwer's theorem is for single-valued functions; Kakutani is the right theorem for correspondences.</p>
+      <p>Kakutani is needed because \(B\) is usually <b>set-valued</b>. A player can have many best responses, so \(B(\sigma)\) is a set, not a single point. Brouwer is for ordinary functions; Kakutani is the matching fixed-point theorem once equilibrium is expressed as a correspondence problem.</p>
 
       <div class="grid-2">
         <div class="box">
@@ -1072,16 +1102,26 @@
       </div>
 
       <div class="box blue">
-        <b>Why the proof works.</b> It is the same Kakutani strategy as in finite games, except the best responses are now over the pure strategy sets \(S_i\) themselves.
+        <b>Why the proof works.</b> It is the same Kakutani strategy as in finite games, but the source of convexity changes. In finite games, convexity is created by randomization over finitely many pure actions. Here, convexity must already be built into the pure strategy sets \(S_i\), and concavity of payoffs keeps the best-response sets convex.
+      </div>
+
+      <div class="grid-2">
+        <div class="box">
+          <b>Finite mixed case.</b> The domain is \(\Sigma=\prod_i \Delta(S_i)\). The simplex geometry comes from allowing mixtures.
+        </div>
+        <div class="box">
+          <b>Infinite pure case.</b> The domain is \(S=\prod_i S_i\). Convexity must be assumed directly, and concavity replaces linearity in the convexity step.
+        </div>
       </div>
 
       <h3>Proof skeleton</h3>
       <ol>
-        <li>Define \(B_i(s_{-i}) = \arg\max_{s_i \in S_i} u_i(s_i,s_{-i})\).</li>
-        <li>\(B_i(s_{-i})\) is nonempty by Weierstrass because \(S_i\) is compact and \(u_i\) is continuous.</li>
-        <li>\(B_i(s_{-i})\) is convex because the argmax set of a concave function over a convex set is convex.</li>
-        <li>The correspondence \(B\) has closed graph by continuity.</li>
-        <li>Kakutani then gives \(s^* \in B(s^*)\), which is a pure Nash equilibrium.</li>
+        <li><b>Build the stage.</b> Let \(S=\prod_i S_i\). Since each \(S_i\) is compact, convex, and nonempty, the full strategy space has the same topological shape needed by Kakutani.</li>
+        <li><b>Define best responses.</b> Set \(B_i(s_{-i}) = \arg\max_{s_i \in S_i} u_i(s_i,s_{-i})\) and \(B(s)=\prod_i B_i(s_{-i})\).</li>
+        <li><b>Get nonemptiness from compactness.</b> Each \(B_i(s_{-i})\) is nonempty by Weierstrass because \(S_i\) is compact and \(u_i\) is continuous.</li>
+        <li><b>Get convexity from concavity.</b> The argmax set of a concave function over a convex set is convex, so each \(B_i(s_{-i})\) is convex-valued.</li>
+        <li><b>Get closed graph from continuity.</b> The same limit argument as in the finite mixed case shows that \(B\) has a closed graph.</li>
+        <li><b>Apply Kakutani.</b> Therefore some \(s^*\in S\) satisfies \(s^*\in B(s^*)\), which is a pure Nash equilibrium.</li>
       </ol>
 
       <div class="grid-2">
@@ -1266,7 +1306,6 @@
         </div>
       </div>
     </section>
-
 
     <footer>
       Built as a single-file HTML study note with MathJax, tables, formulas, and inline figures.
