@@ -731,7 +731,7 @@
       \qquad
       \ell^{(0)} = 0,
       \qquad
-      z^{(0)} = 0.
+      z^{(0)} = \mathbf{0} \in \mathbb{R}^{d_h}.
       \]
 
       <div class="formula-card">
@@ -751,6 +751,13 @@
         \[
         o = \frac{z^{(T)}}{\ell^{(T)}}.
         \]
+      </div>
+
+      <div class="box blue">
+        <b>Notation check.</b> Here \(p_j^{(t)}\) is <b>not yet a normalized attention probability</b>. It is the block-local exponential weight
+        \(\exp(s_j^{(t)} - m^{(t)})\).
+        Also, \(v_j^{(t)} \in \mathbb{R}^{d_h}\) is the <b>j-th value vector inside block \(t\)</b>.
+        So \(z^{(t)}\) is a running weighted sum of value vectors, while \(\ell^{(t)}\) is the running scalar denominator.
       </div>
 
       <div class="grid-2">
