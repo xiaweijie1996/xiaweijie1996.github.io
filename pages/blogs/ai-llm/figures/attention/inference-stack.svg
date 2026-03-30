@@ -1,94 +1,130 @@
-<svg width="1200" height="500" viewBox="0 0 1200 500" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+<svg width="1200" height="580" viewBox="0 0 1200 580" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
   <title id="title">Attention inference stack diagram</title>
   <desc id="desc">Dark themed diagram showing the distinction between architecture changes, FlashAttention compute tiling, and paged attention cache layout.</desc>
-  <rect width="1200" height="500" rx="28" fill="#0F172A"/>
-  <rect x="18" y="18" width="1164" height="464" rx="22" stroke="rgba(255,255,255,0.12)"/>
+  <rect width="1200" height="580" rx="28" fill="#0F172A"/>
+  <rect x="18" y="18" width="1164" height="544" rx="22" stroke="rgba(255,255,255,0.12)"/>
 
   <text x="600" y="56" fill="#F8FAFC" font-family="Arial, sans-serif" font-size="30" font-weight="700" text-anchor="middle">Three layers of change in LLM attention systems</text>
   <text x="600" y="84" fill="#94A3B8" font-family="Arial, sans-serif" font-size="18" text-anchor="middle">Ask first: does this method change the model, the kernel, or the cache layout?</text>
 
   <g transform="translate(48 122)">
-    <rect width="320" height="300" rx="20" fill="rgba(96,165,250,0.08)" stroke="rgba(96,165,250,0.28)"/>
-    <text x="24" y="38" fill="#DBEAFE" font-family="Arial, sans-serif" font-size="24" font-weight="700">1. Architecture: GQA</text>
-    <text x="24" y="64" fill="#CBD5E1" font-family="Arial, sans-serif" font-size="16">Fewer K/V heads than query heads</text>
+    <rect width="320" height="380" rx="20" fill="rgba(96,165,250,0.08)" stroke="rgba(96,165,250,0.28)"/>
+    <text x="24" y="34" fill="#DBEAFE" font-family="Arial, sans-serif" font-size="22" font-weight="700">
+      <tspan x="24" dy="0">1. Architecture</tspan>
+      <tspan x="24" dy="24">GQA</tspan>
+    </text>
+    <text x="24" y="86" fill="#CBD5E1" font-family="Arial, sans-serif" font-size="15">
+      <tspan x="24" dy="0">Fewer K/V heads than</tspan>
+      <tspan x="24" dy="20">query heads</tspan>
+    </text>
 
-    <rect x="36" y="105" width="18" height="52" rx="4" fill="#F87171" fill-opacity="0.22" stroke="#F87171" stroke-width="2"/>
-    <rect x="84" y="105" width="18" height="52" rx="4" fill="#F87171" fill-opacity="0.22" stroke="#F87171" stroke-width="2"/>
-    <rect x="168" y="105" width="18" height="52" rx="4" fill="#F87171" fill-opacity="0.22" stroke="#F87171" stroke-width="2"/>
-    <rect x="216" y="105" width="18" height="52" rx="4" fill="#F87171" fill-opacity="0.22" stroke="#F87171" stroke-width="2"/>
+    <rect x="36" y="145" width="18" height="52" rx="4" fill="#F87171" fill-opacity="0.22" stroke="#F87171" stroke-width="2"/>
+    <rect x="84" y="145" width="18" height="52" rx="4" fill="#F87171" fill-opacity="0.22" stroke="#F87171" stroke-width="2"/>
+    <rect x="168" y="145" width="18" height="52" rx="4" fill="#F87171" fill-opacity="0.22" stroke="#F87171" stroke-width="2"/>
+    <rect x="216" y="145" width="18" height="52" rx="4" fill="#F87171" fill-opacity="0.22" stroke="#F87171" stroke-width="2"/>
 
-    <rect x="26" y="205" width="18" height="52" rx="4" fill="#60A5FA" fill-opacity="0.22" stroke="#60A5FA" stroke-width="2"/>
-    <rect x="58" y="205" width="18" height="52" rx="4" fill="#60A5FA" fill-opacity="0.22" stroke="#60A5FA" stroke-width="2"/>
-    <rect x="94" y="205" width="18" height="52" rx="4" fill="#60A5FA" fill-opacity="0.22" stroke="#60A5FA" stroke-width="2"/>
-    <rect x="126" y="205" width="18" height="52" rx="4" fill="#60A5FA" fill-opacity="0.22" stroke="#60A5FA" stroke-width="2"/>
-    <rect x="158" y="205" width="18" height="52" rx="4" fill="#60A5FA" fill-opacity="0.22" stroke="#60A5FA" stroke-width="2"/>
-    <rect x="190" y="205" width="18" height="52" rx="4" fill="#60A5FA" fill-opacity="0.22" stroke="#60A5FA" stroke-width="2"/>
-    <rect x="226" y="205" width="18" height="52" rx="4" fill="#60A5FA" fill-opacity="0.22" stroke="#60A5FA" stroke-width="2"/>
-    <rect x="258" y="205" width="18" height="52" rx="4" fill="#60A5FA" fill-opacity="0.22" stroke="#60A5FA" stroke-width="2"/>
+    <rect x="26" y="255" width="18" height="52" rx="4" fill="#60A5FA" fill-opacity="0.22" stroke="#60A5FA" stroke-width="2"/>
+    <rect x="58" y="255" width="18" height="52" rx="4" fill="#60A5FA" fill-opacity="0.22" stroke="#60A5FA" stroke-width="2"/>
+    <rect x="94" y="255" width="18" height="52" rx="4" fill="#60A5FA" fill-opacity="0.22" stroke="#60A5FA" stroke-width="2"/>
+    <rect x="126" y="255" width="18" height="52" rx="4" fill="#60A5FA" fill-opacity="0.22" stroke="#60A5FA" stroke-width="2"/>
+    <rect x="158" y="255" width="18" height="52" rx="4" fill="#60A5FA" fill-opacity="0.22" stroke="#60A5FA" stroke-width="2"/>
+    <rect x="190" y="255" width="18" height="52" rx="4" fill="#60A5FA" fill-opacity="0.22" stroke="#60A5FA" stroke-width="2"/>
+    <rect x="226" y="255" width="18" height="52" rx="4" fill="#60A5FA" fill-opacity="0.22" stroke="#60A5FA" stroke-width="2"/>
+    <rect x="258" y="255" width="18" height="52" rx="4" fill="#60A5FA" fill-opacity="0.22" stroke="#60A5FA" stroke-width="2"/>
 
-    <line x1="35" y1="198" x2="45" y2="161" stroke="#94A3B8" stroke-width="2" stroke-dasharray="4 5"/>
-    <line x1="67" y1="198" x2="45" y2="161" stroke="#94A3B8" stroke-width="2" stroke-dasharray="4 5"/>
-    <line x1="103" y1="198" x2="93" y2="161" stroke="#94A3B8" stroke-width="2" stroke-dasharray="4 5"/>
-    <line x1="135" y1="198" x2="93" y2="161" stroke="#94A3B8" stroke-width="2" stroke-dasharray="4 5"/>
-    <line x1="167" y1="198" x2="177" y2="161" stroke="#94A3B8" stroke-width="2" stroke-dasharray="4 5"/>
-    <line x1="199" y1="198" x2="177" y2="161" stroke="#94A3B8" stroke-width="2" stroke-dasharray="4 5"/>
-    <line x1="235" y1="198" x2="225" y2="161" stroke="#94A3B8" stroke-width="2" stroke-dasharray="4 5"/>
-    <line x1="267" y1="198" x2="225" y2="161" stroke="#94A3B8" stroke-width="2" stroke-dasharray="4 5"/>
+    <line x1="35" y1="248" x2="45" y2="201" stroke="#94A3B8" stroke-width="2" stroke-dasharray="4 5"/>
+    <line x1="67" y1="248" x2="45" y2="201" stroke="#94A3B8" stroke-width="2" stroke-dasharray="4 5"/>
+    <line x1="103" y1="248" x2="93" y2="201" stroke="#94A3B8" stroke-width="2" stroke-dasharray="4 5"/>
+    <line x1="135" y1="248" x2="93" y2="201" stroke="#94A3B8" stroke-width="2" stroke-dasharray="4 5"/>
+    <line x1="167" y1="248" x2="177" y2="201" stroke="#94A3B8" stroke-width="2" stroke-dasharray="4 5"/>
+    <line x1="199" y1="248" x2="177" y2="201" stroke="#94A3B8" stroke-width="2" stroke-dasharray="4 5"/>
+    <line x1="235" y1="248" x2="225" y2="201" stroke="#94A3B8" stroke-width="2" stroke-dasharray="4 5"/>
+    <line x1="267" y1="248" x2="225" y2="201" stroke="#94A3B8" stroke-width="2" stroke-dasharray="4 5"/>
 
-    <text x="24" y="286" fill="#E5E7EB" font-family="Arial, sans-serif" font-size="18">Effect: smaller KV cache, same number of query outputs.</text>
+    <line x1="20" y1="326" x2="300" y2="326" stroke="rgba(255,255,255,0.10)"/>
+
+    <text x="24" y="346" fill="#E5E7EB" font-family="Arial, sans-serif" font-size="16">
+      <tspan x="24" dy="0">Effect: smaller KV cache,</tspan>
+      <tspan x="24" dy="20">same number of</tspan>
+      <tspan x="24" dy="20">query outputs.</tspan>
+    </text>
   </g>
 
   <g transform="translate(440 122)">
-    <rect width="320" height="300" rx="20" fill="rgba(251,191,36,0.08)" stroke="rgba(251,191,36,0.28)"/>
-    <text x="24" y="38" fill="#FEF3C7" font-family="Arial, sans-serif" font-size="24" font-weight="700">2. Kernel: FlashAttention</text>
-    <text x="24" y="64" fill="#CBD5E1" font-family="Arial, sans-serif" font-size="16">Tile K/V blocks and merge with online softmax</text>
+    <rect width="320" height="380" rx="20" fill="rgba(251,191,36,0.08)" stroke="rgba(251,191,36,0.28)"/>
+    <text x="24" y="34" fill="#FEF3C7" font-family="Arial, sans-serif" font-size="22" font-weight="700">
+      <tspan x="24" dy="0">2. Kernel</tspan>
+      <tspan x="24" dy="24">FlashAttention</tspan>
+    </text>
+    <text x="24" y="86" fill="#CBD5E1" font-family="Arial, sans-serif" font-size="15">
+      <tspan x="24" dy="0">Tile K/V blocks and</tspan>
+      <tspan x="24" dy="20">merge with online softmax</tspan>
+    </text>
 
-    <rect x="36" y="104" width="36" height="140" rx="6" fill="#60A5FA" fill-opacity="0.18" stroke="#60A5FA" stroke-width="2"/>
-    <text x="54" y="92" fill="#DBEAFE" font-family="Arial, sans-serif" font-size="15" text-anchor="middle">Q</text>
+    <rect x="36" y="144" width="36" height="140" rx="6" fill="#60A5FA" fill-opacity="0.18" stroke="#60A5FA" stroke-width="2"/>
+    <text x="54" y="132" fill="#DBEAFE" font-family="Arial, sans-serif" font-size="15" text-anchor="middle">Q</text>
 
-    <rect x="112" y="98" width="120" height="32" rx="6" fill="#34D399" fill-opacity="0.18" stroke="#34D399" stroke-width="2"/>
     <rect x="112" y="138" width="120" height="32" rx="6" fill="#34D399" fill-opacity="0.18" stroke="#34D399" stroke-width="2"/>
     <rect x="112" y="178" width="120" height="32" rx="6" fill="#34D399" fill-opacity="0.18" stroke="#34D399" stroke-width="2"/>
-    <text x="172" y="92" fill="#DCFCE7" font-family="Arial, sans-serif" font-size="15" text-anchor="middle">K/V blocks</text>
+    <rect x="112" y="218" width="120" height="32" rx="6" fill="#34D399" fill-opacity="0.18" stroke="#34D399" stroke-width="2"/>
+    <text x="172" y="132" fill="#DCFCE7" font-family="Arial, sans-serif" font-size="15" text-anchor="middle">K/V blocks</text>
 
-    <rect x="140" y="230" width="92" height="32" rx="6" fill="#FBBF24" fill-opacity="0.18" stroke="#FBBF24" stroke-width="2"/>
-    <text x="186" y="251" fill="#FEF3C7" font-family="Arial, sans-serif" font-size="15" text-anchor="middle">running m, l, z</text>
+    <rect x="140" y="272" width="92" height="32" rx="6" fill="#FBBF24" fill-opacity="0.18" stroke="#FBBF24" stroke-width="2"/>
+    <text x="186" y="293" fill="#FEF3C7" font-family="Arial, sans-serif" font-size="15" text-anchor="middle">running m, l, z</text>
 
-    <line x1="72" y1="174" x2="112" y2="114" stroke="#E5E7EB" stroke-width="2.5"/>
-    <line x1="72" y1="174" x2="112" y2="154" stroke="#E5E7EB" stroke-width="2.5"/>
-    <line x1="72" y1="174" x2="112" y2="194" stroke="#E5E7EB" stroke-width="2.5"/>
-    <line x1="232" y1="114" x2="270" y2="114" stroke="#E5E7EB" stroke-width="2.5"/>
+    <line x1="72" y1="214" x2="112" y2="154" stroke="#E5E7EB" stroke-width="2.5"/>
+    <line x1="72" y1="214" x2="112" y2="194" stroke="#E5E7EB" stroke-width="2.5"/>
+    <line x1="72" y1="214" x2="112" y2="234" stroke="#E5E7EB" stroke-width="2.5"/>
     <line x1="232" y1="154" x2="270" y2="154" stroke="#E5E7EB" stroke-width="2.5"/>
     <line x1="232" y1="194" x2="270" y2="194" stroke="#E5E7EB" stroke-width="2.5"/>
-    <line x1="270" y1="114" x2="270" y2="246" stroke="#E5E7EB" stroke-width="2.5"/>
-    <line x1="270" y1="246" x2="232" y2="246" stroke="#E5E7EB" stroke-width="2.5"/>
+    <line x1="232" y1="234" x2="270" y2="234" stroke="#E5E7EB" stroke-width="2.5"/>
+    <line x1="270" y1="154" x2="270" y2="288" stroke="#E5E7EB" stroke-width="2.5"/>
+    <line x1="270" y1="288" x2="232" y2="288" stroke="#E5E7EB" stroke-width="2.5"/>
 
-    <text x="24" y="286" fill="#E5E7EB" font-family="Arial, sans-serif" font-size="18">Effect: same exact output, much less memory traffic.</text>
+    <line x1="20" y1="326" x2="300" y2="326" stroke="rgba(255,255,255,0.10)"/>
+
+    <text x="24" y="346" fill="#E5E7EB" font-family="Arial, sans-serif" font-size="16">
+      <tspan x="24" dy="0">Effect: same exact output,</tspan>
+      <tspan x="24" dy="20">much less</tspan>
+      <tspan x="24" dy="20">memory traffic.</tspan>
+    </text>
   </g>
 
   <g transform="translate(832 122)">
-    <rect width="320" height="300" rx="20" fill="rgba(52,211,153,0.08)" stroke="rgba(52,211,153,0.28)"/>
-    <text x="24" y="38" fill="#DCFCE7" font-family="Arial, sans-serif" font-size="24" font-weight="700">3. Cache layout: paged attention</text>
-    <text x="24" y="64" fill="#CBD5E1" font-family="Arial, sans-serif" font-size="16">Logical sequence pages map to physical KV blocks</text>
+    <rect width="320" height="380" rx="20" fill="rgba(52,211,153,0.08)" stroke="rgba(52,211,153,0.28)"/>
+    <text x="24" y="34" fill="#DCFCE7" font-family="Arial, sans-serif" font-size="22" font-weight="700">
+      <tspan x="24" dy="0">3. Cache layout</tspan>
+      <tspan x="24" dy="24">paged attention</tspan>
+    </text>
+    <text x="24" y="86" fill="#CBD5E1" font-family="Arial, sans-serif" font-size="15">
+      <tspan x="24" dy="0">Logical sequence pages map</tspan>
+      <tspan x="24" dy="20">to physical KV blocks</tspan>
+    </text>
 
-    <rect x="24" y="102" width="96" height="134" rx="10" fill="#111827" stroke="rgba(255,255,255,0.14)"/>
-    <text x="72" y="128" fill="#E5E7EB" font-family="Arial, sans-serif" font-size="16" text-anchor="middle">Page table</text>
-    <text x="72" y="160" fill="#CBD5E1" font-family="Arial, sans-serif" font-size="15" text-anchor="middle">0 -&gt; 14</text>
-    <text x="72" y="187" fill="#CBD5E1" font-family="Arial, sans-serif" font-size="15" text-anchor="middle">1 -&gt; 03</text>
-    <text x="72" y="214" fill="#CBD5E1" font-family="Arial, sans-serif" font-size="15" text-anchor="middle">2 -&gt; 19</text>
+    <rect x="24" y="150" width="96" height="134" rx="10" fill="#111827" stroke="rgba(255,255,255,0.14)"/>
+    <text x="72" y="176" fill="#E5E7EB" font-family="Arial, sans-serif" font-size="16" text-anchor="middle">Page table</text>
+    <text x="72" y="208" fill="#CBD5E1" font-family="Arial, sans-serif" font-size="15" text-anchor="middle">0 -&gt; 14</text>
+    <text x="72" y="235" fill="#CBD5E1" font-family="Arial, sans-serif" font-size="15" text-anchor="middle">1 -&gt; 03</text>
+    <text x="72" y="262" fill="#CBD5E1" font-family="Arial, sans-serif" font-size="15" text-anchor="middle">2 -&gt; 19</text>
 
-    <rect x="168" y="100" width="42" height="52" rx="6" fill="#60A5FA" fill-opacity="0.18" stroke="#60A5FA" stroke-width="2"/>
-    <rect x="222" y="100" width="42" height="52" rx="6" fill="#60A5FA" fill-opacity="0.18" stroke="#60A5FA" stroke-width="2"/>
-    <rect x="276" y="100" width="42" height="52" rx="6" fill="#60A5FA" fill-opacity="0.18" stroke="#60A5FA" stroke-width="2"/>
-    <rect x="168" y="172" width="42" height="52" rx="6" fill="#F87171" fill-opacity="0.18" stroke="#F87171" stroke-width="2"/>
-    <rect x="222" y="172" width="42" height="52" rx="6" fill="#F87171" fill-opacity="0.18" stroke="#F87171" stroke-width="2"/>
-    <rect x="276" y="172" width="42" height="52" rx="6" fill="#F87171" fill-opacity="0.18" stroke="#F87171" stroke-width="2"/>
-    <text x="243" y="86" fill="#DBEAFE" font-family="Arial, sans-serif" font-size="15" text-anchor="middle">Physical blocks</text>
+    <rect x="168" y="148" width="42" height="52" rx="6" fill="#60A5FA" fill-opacity="0.18" stroke="#60A5FA" stroke-width="2"/>
+    <rect x="222" y="148" width="42" height="52" rx="6" fill="#60A5FA" fill-opacity="0.18" stroke="#60A5FA" stroke-width="2"/>
+    <rect x="276" y="148" width="42" height="52" rx="6" fill="#60A5FA" fill-opacity="0.18" stroke="#60A5FA" stroke-width="2"/>
+    <rect x="168" y="220" width="42" height="52" rx="6" fill="#F87171" fill-opacity="0.18" stroke="#F87171" stroke-width="2"/>
+    <rect x="222" y="220" width="42" height="52" rx="6" fill="#F87171" fill-opacity="0.18" stroke="#F87171" stroke-width="2"/>
+    <rect x="276" y="220" width="42" height="52" rx="6" fill="#F87171" fill-opacity="0.18" stroke="#F87171" stroke-width="2"/>
+    <text x="243" y="134" fill="#DBEAFE" font-family="Arial, sans-serif" font-size="15" text-anchor="middle">Physical blocks</text>
 
-    <line x1="120" y1="157" x2="168" y2="126" stroke="#E5E7EB" stroke-width="2.5"/>
-    <line x1="120" y1="184" x2="222" y2="126" stroke="#E5E7EB" stroke-width="2.5"/>
-    <line x1="120" y1="211" x2="276" y2="126" stroke="#E5E7EB" stroke-width="2.5"/>
+    <line x1="120" y1="205" x2="168" y2="174" stroke="#E5E7EB" stroke-width="2.5"/>
+    <line x1="120" y1="232" x2="222" y2="174" stroke="#E5E7EB" stroke-width="2.5"/>
+    <line x1="120" y1="259" x2="276" y2="174" stroke="#E5E7EB" stroke-width="2.5"/>
 
-    <text x="24" y="286" fill="#E5E7EB" font-family="Arial, sans-serif" font-size="18">Effect: dynamic growth and batching without giant contiguous buffers.</text>
+    <line x1="20" y1="326" x2="300" y2="326" stroke="rgba(255,255,255,0.10)"/>
+
+    <text x="24" y="346" fill="#E5E7EB" font-family="Arial, sans-serif" font-size="16">
+      <tspan x="24" dy="0">Effect: dynamic growth and</tspan>
+      <tspan x="24" dy="20">batching without giant</tspan>
+      <tspan x="24" dy="20">contiguous buffers.</tspan>
+    </text>
   </g>
 </svg>
