@@ -1,19 +1,18 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Attention Mechanism — Clean Mathematical Note</title>
+  <title>Attention Mechanism: GQA, FlashAttention, and Paged Attention</title>
 
-  <!-- MathJax (LaTeX rendering) -->
   <script>
     window.MathJax = {
       tex: {
         inlineMath: [['\\(', '\\)'], ['$', '$']],
-        displayMath: [['\\[', '\\]'], ['$$', '$$']],
+        displayMath: [['\\[', '\\]'], ['$$', '$$']]
       },
       options: {
-        skipHtmlTags: ['script','noscript','style','textarea','pre','code'],
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
       }
     };
   </script>
@@ -22,373 +21,910 @@
   <style>
     :root {
       --bg: #0b0f19;
+      --bg2: #0f172a;
       --card: #111827;
+      --card2: rgba(17, 24, 39, 0.78);
       --text: #e5e7eb;
       --muted: #9ca3af;
-      --accent: #60a5fa;
-      --line: rgba(255,255,255,0.10);
-      --code: #0f172a;
+      --line: rgba(255, 255, 255, 0.10);
+      --line2: rgba(255, 255, 255, 0.16);
+      --blue: #60a5fa;
+      --green: #34d399;
+      --gold: #fbbf24;
+      --red: #f87171;
+      --shadow: 0 18px 60px rgba(0, 0, 0, 0.35);
     }
-    body{
-      margin:0;
-      background: linear-gradient(180deg, var(--bg), #070a12);
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
       color: var(--text);
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      line-height: 1.7;
+      background:
+        radial-gradient(1200px 500px at 10% 0%, rgba(96, 165, 250, 0.16), transparent 60%),
+        radial-gradient(1000px 600px at 92% 0%, rgba(52, 211, 153, 0.10), transparent 55%),
+        linear-gradient(180deg, var(--bg), #070a12);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      line-height: 1.72;
     }
-    .wrap{
-      max-width: 980px;
-      margin: 40px auto;
-      padding: 0 18px 60px;
+
+    a {
+      color: #bfdbfe;
+      text-decoration: none;
     }
-    header{
-      background: radial-gradient(1200px 500px at 20% 0%, rgba(96,165,250,0.18), transparent 60%),
-                  radial-gradient(900px 500px at 90% 10%, rgba(34,197,94,0.10), transparent 60%);
+
+    a:hover { text-decoration: underline; }
+
+    .wrap {
+      max-width: 1120px;
+      margin: 32px auto 80px;
+      padding: 0 18px;
+    }
+
+    header.hero {
+      background:
+        radial-gradient(900px 380px at 10% 0%, rgba(96, 165, 250, 0.18), transparent 60%),
+        radial-gradient(900px 380px at 90% 0%, rgba(251, 191, 36, 0.10), transparent 60%),
+        linear-gradient(180deg, rgba(17, 24, 39, 0.95), rgba(15, 23, 42, 0.92));
       border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 26px 22px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+      border-radius: 22px;
+      padding: 30px 26px 24px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
     }
-    h1{
-      margin: 0 0 8px;
-      font-size: 28px;
-      letter-spacing: .2px;
-    }
-    .subtitle{
-      margin:0;
-      color: var(--muted);
-      font-size: 14px;
-    }
-    section{
-      margin-top: 18px;
-      background: rgba(17,24,39,0.78);
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 22px;
-      box-shadow: 0 12px 40px rgba(0,0,0,0.22);
-    }
-    h2{
+
+    .hero h1 {
       margin: 0 0 10px;
-      font-size: 18px;
-      color: #f3f4f6;
+      font-size: 34px;
+      letter-spacing: 0.2px;
+      line-height: 1.2;
     }
-    h3{
-      margin: 18px 0 8px;
+
+    .hero p {
+      margin: 0;
+      max-width: 900px;
+      color: var(--muted);
       font-size: 15px;
-      color: #f3f4f6;
     }
-    p{
-      margin: 8px 0;
-      color: #e5e7eb;
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
     }
-    .muted{ color: var(--muted); }
-    .pill{
-      display:inline-block;
-      padding: 2px 10px;
+
+    .tag {
+      padding: 5px 10px;
       border-radius: 999px;
       border: 1px solid var(--line);
-      background: rgba(96,165,250,0.10);
+      background: rgba(255, 255, 255, 0.05);
       color: #dbeafe;
       font-size: 12px;
+    }
+
+    .tag.green {
+      color: #dcfce7;
+      background: rgba(34, 197, 94, 0.10);
+    }
+
+    .tag.gold {
+      color: #fef3c7;
+      background: rgba(250, 204, 21, 0.10);
+    }
+
+    .toc {
+      margin-top: 18px;
+      background: var(--card2);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 18px 20px;
+      box-shadow: 0 10px 36px rgba(0, 0, 0, 0.20);
+    }
+
+    .toc h2 {
+      margin: 0 0 12px;
+      font-size: 18px;
+    }
+
+    .toc-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 10px 16px;
+    }
+
+    .toc a {
+      display: block;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.03);
+      color: #e5e7eb;
+    }
+
+    .toc a span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 2px;
+    }
+
+    section {
+      margin-top: 18px;
+      background: var(--card2);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 24px 22px;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.22);
+    }
+
+    h2 {
+      margin: 0 0 14px;
+      font-size: 22px;
+      line-height: 1.3;
+      color: #f8fafc;
+    }
+
+    h3 {
+      margin: 18px 0 8px;
+      font-size: 16px;
+      color: #f3f4f6;
+    }
+
+    h4 {
+      margin: 14px 0 6px;
+      font-size: 14px;
+      color: #dbeafe;
+      letter-spacing: 0.1px;
+    }
+
+    p { margin: 9px 0; }
+    ul, ol { margin: 8px 0 10px 22px; }
+    li { margin: 4px 0; }
+
+    .muted { color: var(--muted); }
+
+    .pill {
+      display: inline-block;
       margin-left: 8px;
+      padding: 2px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      border: 1px solid var(--line);
+      background: rgba(96, 165, 250, 0.10);
+      color: #dbeafe;
       vertical-align: middle;
     }
-    hr{
-      border:0;
-      border-top:1px solid var(--line);
-      margin: 16px 0;
+
+    .pill.green {
+      background: rgba(34, 197, 94, 0.10);
+      color: #dcfce7;
     }
-    .one-liner{
-      font-weight: 600;
-      color: #dbeafe;
-      background: rgba(96,165,250,0.10);
-      border: 1px dashed rgba(96,165,250,0.35);
+
+    .pill.gold {
+      background: rgba(250, 204, 21, 0.10);
+      color: #fef3c7;
+    }
+
+    .box {
+      margin: 12px 0;
+      padding: 13px 14px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .box.blue {
+      background: rgba(96, 165, 250, 0.10);
+      border-color: rgba(96, 165, 250, 0.24);
+    }
+
+    .box.green {
+      background: rgba(34, 197, 94, 0.10);
+      border-color: rgba(34, 197, 94, 0.24);
+    }
+
+    .box.gold {
+      background: rgba(250, 204, 21, 0.10);
+      border-color: rgba(250, 204, 21, 0.24);
+    }
+
+    .one-liner {
+      margin: 12px 0;
       padding: 12px 14px;
       border-radius: 14px;
+      border: 1px dashed rgba(96, 165, 250, 0.35);
+      background: rgba(96, 165, 250, 0.10);
+      color: #dbeafe;
+      font-weight: 600;
     }
-    code.inline{
-      background: rgba(15,23,42,0.85);
-      border: 1px solid rgba(255,255,255,0.10);
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      align-items: start;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      align-items: start;
+    }
+
+    .formula-card {
+      padding: 14px 16px;
+      border-radius: 16px;
+      border: 1px solid var(--line2);
+      background: rgba(15, 23, 42, 0.70);
+      margin: 12px 0;
+      overflow: auto;
+    }
+
+    .formula-card .label {
+      display: inline-block;
+      margin-bottom: 8px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      color: #dbeafe;
+      background: rgba(96, 165, 250, 0.10);
+      border: 1px solid rgba(96, 165, 250, 0.20);
+      letter-spacing: 0.2px;
+      text-transform: uppercase;
+    }
+
+    .figure {
+      margin: 14px 0;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .figure img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 12px;
+    }
+
+    .figure-caption {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 8px;
+    }
+
+    .steps {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 36px 1fr;
+      gap: 12px;
+      align-items: start;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .step-num {
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: rgba(96, 165, 250, 0.14);
+      border: 1px solid rgba(96, 165, 250, 0.26);
+      color: #dbeafe;
+      font-weight: 700;
+    }
+
+    .note-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .note-item {
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .compare {
+      width: 100%;
+      overflow: auto;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+    }
+
+    .compare table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+    }
+
+    .compare th,
+    .compare td {
+      border: 1px solid var(--line);
+      padding: 10px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .compare th {
+      background: rgba(255, 255, 255, 0.05);
+      font-weight: 600;
+    }
+
+    code.inline {
+      background: #0f172a;
+      border: 1px solid rgba(255, 255, 255, 0.10);
       padding: 2px 6px;
       border-radius: 8px;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       font-size: 0.95em;
     }
-    .mjx-container{
-      overflow-x:auto;
-      overflow-y:hidden;
+
+    hr {
+      border: 0;
+      border-top: 1px solid var(--line);
+      margin: 18px 0;
+    }
+
+    footer {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+      padding: 8px;
+    }
+
+    .mjx-container {
+      overflow-x: auto;
+      overflow-y: hidden;
+      margin: 6px 0;
+    }
+
+    @media (max-width: 760px) {
+      .hero h1 { font-size: 28px; }
+      section { padding: 20px 16px; }
+      .step { grid-template-columns: 32px 1fr; gap: 10px; }
+      .step-num { width: 32px; height: 32px; }
     }
   </style>
 </head>
 
 <body>
   <div class="wrap">
-    <header>
-      <h1>📘 Attention Mechanism — Clean Mathematical Note</h1>
-      <p class="subtitle">Rendered with MathJax (LaTeX in HTML). Copy this file as <code class="inline">attention_note.html</code> and open in your browser.</p>
+    <header class="hero">
+      <h1>Attention Mechanism: GQA, FlashAttention, and Paged Attention</h1>
+      <p>
+        This note keeps the core attention math, then separates three ideas that are easy to mix up in LLM systems:
+        <b>architecture</b>, <b>kernel / execution schedule</b>, and <b>KV-cache layout</b>.
+        The goal is to make the current file easier to study, not just longer.
+      </p>
+      <div class="hero-tags">
+        <span class="tag">Scaled dot-product attention</span>
+        <span class="tag">Multi-head attention</span>
+        <span class="tag green">Grouped-query attention</span>
+        <span class="tag gold">FlashAttention</span>
+        <span class="tag">Paged attention</span>
+        <span class="tag">Autoregressive inference</span>
+      </div>
     </header>
 
-    <section>
-      <h2>1️⃣ Scaled Dot-Product Attention <span class="pill">core</span></h2>
-      <p>Let sequence length be <code class="inline">n</code>.</p>
-
-      <p><b>Query, Key, Value matrices:</b></p>
-
-      \[
-      Q \in \mathbb{R}^{n \times d_k}
-      \]
-
-      \[
-      K \in \mathbb{R}^{n \times d_k}
-      \]
-
-      \[
-      V \in \mathbb{R}^{n \times d_v}
-      \]
-
-      <hr />
-
-      <h3>Similarity Scores</h3>
-
-      \[
-      S = \frac{QK^T}{\sqrt{d_k}}
-      \]
-
-      <p class="muted">where</p>
-
-      \[
-      S \in \mathbb{R}^{n \times n}
-      \]
-
-      <hr />
-
-      <h3>Attention Weights (row-wise softmax)</h3>
-
-      \[
-      A = \text{softmax}(S)
-      \]
-
-      <p>Each row sums to 1:</p>
-
-      \[
-      \sum_j A_{ij} = 1
-      \]
-
-      <hr />
-
-      <h3>Output</h3>
-
-      \[
-      O = AV
-      \]
-
-      \[
-      O \in \mathbb{R}^{n \times d_v}
-      \]
-
-      <hr />
-
-      <h3>Compact Form</h3>
-
-      \[
-      \text{Attention}(Q,K,V)
-      =
-      \text{softmax}\left(
-      \frac{QK^T}{\sqrt{d_k}}
-      \right)V
-      \]
-    </section>
-
-    <section>
-      <h2>2️⃣ Token-wise View <span class="pill">intuition</span></h2>
-
-      <p>For token \( i \):</p>
-
-      <h3>Score</h3>
-
-      \[
-      s_{ij}
-      =
-      \frac{q_i \cdot k_j}{\sqrt{d_k}}
-      \]
-
-      <h3>Weight</h3>
-
-      \[
-      \alpha_{ij}
-      =
-      \frac{\exp(s_{ij})}
-      {\sum_m \exp(s_{im})}
-      \]
-
-      <h3>Output</h3>
-
-      \[
-      o_i
-      =
-      \sum_j \alpha_{ij} v_j
-      \]
-    </section>
-
-    <section>
-    <h2>3️⃣ Why Divide by \( \sqrt{d_k} \) <span class="pill">stability</span></h2>
-
-    <p><b>Key idea:</b> the dot product \(q \cdot k\) grows in magnitude as dimension grows. Large scores make softmax too peaky, which hurts gradients.</p>
-
-    <h3>Variance scaling (the main reason)</h3>
-    <p>Assume (roughly) each component of \(q\) and \(k\) is zero-mean with variance 1, and coordinates are weakly independent.</p>
-
-    \[
-    q \cdot k = \sum_{r=1}^{d_k} q_r k_r
-    \]
-
-    <p>Each product \(q_r k_r\) has mean \(\approx 0\) and variance \(\approx 1\). Summing \(d_k\) such terms gives:</p>
-
-    \[
-    \mathrm{Var}(q \cdot k) \approx d_k
-    \qquad
-    \Rightarrow
-    \qquad
-    \mathrm{Std}(q \cdot k) \approx \sqrt{d_k}
-    \]
-
-    <p>So without scaling, typical score magnitudes increase like \(\sqrt{d_k}\).</p>
-
-    <h3>Softmax saturation (why this is bad)</h3>
-    <p>Softmax is sensitive to the scale of its inputs. If scores are large, softmax becomes almost one-hot:</p>
-
-    \[
-    \alpha_{ij} = \frac{e^{s_{ij}}}{\sum_m e^{s_{im}}}
-    \]
-
-    <p>When \(s_{ij}\) are large in magnitude, one entry dominates, others go near 0. Then gradients through softmax become tiny for most positions, making learning unstable or slow.</p>
-
-    <h3>What scaling fixes</h3>
-    <p>Scaling by \(\sqrt{d_k}\) normalizes the typical magnitude:</p>
-
-    \[
-    s_{ij} = \frac{q_i \cdot k_j}{\sqrt{d_k}}
-    \]
-
-    \[
-    \mathrm{Var}(s_{ij}) \approx \frac{d_k}{d_k} = 1
-    \]
-
-    <p>This keeps score magnitudes roughly dimension-invariant, preventing softmax from becoming overly sharp just because \(d_k\) is large.</p>
-
-    <p class="muted">Practical intuition: if \(d_k = 512\), then \(\sqrt{d_k} \approx 22.6\). Without scaling, score magnitudes can be ~20× larger, making attention weights much more extreme.</p>
-    </section>
-
-    <section>
-      <h2>4️⃣ Multi-Head Attention <span class="pill">representation</span></h2>
-
-      <p>For head \( h \):</p>
-
-      \[
-      Q_h = Q W_h^Q
-      \]
-
-      \[
-      K_h = K W_h^K
-      \]
-
-      \[
-      V_h = V W_h^V
-      \]
-
-      \[
-      \text{head}_h
-      =
-      \text{Attention}(Q_h, K_h, V_h)
-      \]
-
-      <p>Concatenate:</p>
-
-      \[
-      \text{MultiHead}(Q,K,V)
-      =
-      \text{Concat}(\text{head}_1, \dots, \text{head}_H) W^O
-      \]
-    </section>
-
-    <section>
-    <h2>5️⃣ Positional Encoding <span class="pill">order</span></h2>
-
-    <p><b>Why needed:</b> self-attention is permutation-equivariant. Without position information, the model cannot distinguish “A then B” from “B then A”.</p>
-
-    <h3>Sinusoidal positional encoding (Transformer original)</h3>
-    <p>For position \(pos\) and dimension index \(i\):</p>
-
-    \[
-    \mathrm{PE}(pos, 2i) = \sin\!\left(\frac{pos}{10000^{2i/d_{\mathrm{model}}}}\right)
-    \]
-
-    \[
-    \mathrm{PE}(pos, 2i+1) = \cos\!\left(\frac{pos}{10000^{2i/d_{\mathrm{model}}}}\right)
-    \]
-
-    <p>The input embedding becomes:</p>
-
-    \[
-    x_{pos} = \mathrm{Embed}(token_{pos}) + \mathrm{PE}(pos)
-    \]
-
-    <h3>What “10000” is doing</h3>
-    <p>\(10000\) is a base that creates a <b>log-spaced range of wavelengths</b> across dimensions.</p>
-    <p>Define the wavelength for dimension \(i\) (ignoring constants like \(2\pi\)):</p>
-
-    \[
-    \lambda_i \propto 10000^{2i/d_{\mathrm{model}}}
-    \]
-
-    <p>So small \(i\) gives short wavelengths (captures local order), while large \(i\) gives long wavelengths (captures long-range position). This makes position encoding multi-scale.</p>
-
-    <h3>Why sin/cos (useful property)</h3>
-    <p>Sinusoids allow relative position information to be represented via linear combinations, because:</p>
-
-    \[
-    \sin(a+b) = \sin a \cos b + \cos a \sin b
-    \qquad
-    \cos(a+b) = \cos a \cos b - \sin a \sin b
-    \]
-
-    <p>This helps attention layers learn to reason about offsets like \(pos - pos'\) using simple linear operations.</p>
-
-    <h3>Modern variants (context)</h3>
-    <p class="muted">Many LLMs use learned positional embeddings or rotary positional embeddings (RoPE), which encode position directly in the attention computation and often extrapolate better to longer contexts.</p>
-    </section>
-
-    <section>
-      <h2>6️⃣ Causal Attention <span class="pill">autoregressive</span></h2>
-
-      <p>Mask matrix \( M \):</p>
-
-      \[
-      M_{ij}
-      =
-      \begin{cases}
-      0 & j \le i \\
-      -\infty & j > i
-      \end{cases}
-      \]
-
-      \[
-      S = \frac{QK^T + M}{\sqrt{d_k}}
-      \]
-
-      <p>Ensures autoregressive property:</p>
-
-      \[
-      p(x_t \mid x_{\lt t})
-      \]
-    </section>
-
-    <section>
-      <h2>🧠 One-Line Mental Model</h2>
-      <div class="one-liner">
-        Attention = softmax-normalized similarity scores + weighted aggregation of values.
+    <section class="toc">
+      <h2>Table of contents</h2>
+      <div class="toc-grid">
+        <a href="#sec-map">1. Study map<span>What changes in the model, in the kernel, and in the cache</span></a>
+        <a href="#sec-core">2. Core attention math<span>The main formula, token-wise view, and why we divide by sqrt(d_k)</span></a>
+        <a href="#sec-gqa">3. Multi-head and GQA<span>Head sharing, cache reduction, and the MHA-GQA-MQA relationship</span></a>
+        <a href="#sec-flash">4. FlashAttention<span>Exact attention computed block by block with online softmax</span></a>
+        <a href="#sec-paged">5. Paged attention<span>Virtual-memory-style KV caching for serving many sequences</span></a>
+        <a href="#sec-order">6. Position and causality<span>Positional encoding and autoregressive masking</span></a>
+        <a href="#sec-summary">7. Summary and self-check<span>Quick comparison table and study questions</span></a>
       </div>
     </section>
+
+    <section id="sec-map">
+      <h2>1. Study map <span class="pill">big picture first</span></h2>
+
+      <div class="one-liner">
+        Attention is the math. GQA changes how heads are parameterized, FlashAttention changes how the same attention is executed, and paged attention changes how KV cache memory is organized.
+      </div>
+
+      <div class="grid-3">
+        <div class="box blue">
+          <b>Architecture.</b> GQA changes the model itself by using fewer key/value heads than query heads.
+        </div>
+        <div class="box gold">
+          <b>Kernel.</b> FlashAttention keeps exact attention but changes the compute schedule to reduce memory traffic.
+        </div>
+        <div class="box green">
+          <b>Serving layout.</b> Paged attention keeps the formula and stores cached K/V in fixed-size pages.
+        </div>
+      </div>
+
+      <div class="figure">
+        <img src="figures/attention/inference-stack.svg" alt="Diagram separating architecture changes, FlashAttention kernel tiling, and paged KV-cache layout" />
+        <div class="figure-caption">
+          This is the most important distinction in the whole note. When a paper or system mentions one of these methods, first ask which layer it changes: model weights, compute schedule, or memory layout.
+        </div>
+      </div>
+
+      <div class="note-list">
+        <div class="note-item"><b>Common confusion 1.</b> FlashAttention does not mean a different attention formula. It is still exact softmax attention.</div>
+        <div class="note-item"><b>Common confusion 2.</b> Paged attention is not a new attention score. It is a way to store and fetch cached keys and values.</div>
+        <div class="note-item"><b>Common confusion 3.</b> GQA is not only a systems trick. It changes the learned parameterization because K/V heads are shared.</div>
+      </div>
+    </section>
+
+    <section id="sec-core">
+      <h2>2. Core attention math <span class="pill">foundation</span></h2>
+
+      <p>Let sequence length be <code class="inline">n</code>. Queries, keys, and values are</p>
+
+      <div class="formula-card">
+        <div class="label">Main formula</div>
+        \[
+        Q \in \mathbb{R}^{n \times d_k},
+        \qquad
+        K \in \mathbb{R}^{n \times d_k},
+        \qquad
+        V \in \mathbb{R}^{n \times d_v}
+        \]
+        \[
+        \mathrm{Attention}(Q,K,V)
+        =
+        \mathrm{softmax}\!\left(\frac{QK^T}{\sqrt{d_k}}\right)V
+        \]
+      </div>
+
+      <div class="grid-2">
+        <div>
+          <h3>Token-wise view</h3>
+          <p>For query token <code class="inline">i</code>, attention first scores all key tokens:</p>
+          \[
+          s_{ij} = \frac{q_i \cdot k_j}{\sqrt{d_k}}
+          \]
+          <p>Then it normalizes those scores row-wise:</p>
+          \[
+          \alpha_{ij} = \frac{\exp(s_{ij})}{\sum_m \exp(s_{im})}
+          \]
+          <p>And finally computes a weighted sum of values:</p>
+          \[
+          o_i = \sum_j \alpha_{ij} v_j
+          \]
+        </div>
+
+        <div>
+          <h3>What the matrix form is doing</h3>
+          <div class="steps">
+            <div class="step">
+              <div class="step-num">1</div>
+              <div><b><code class="inline">QK^T</code></b> compares every query with every key.</div>
+            </div>
+            <div class="step">
+              <div class="step-num">2</div>
+              <div><b>Softmax</b> converts raw scores into attention weights that sum to 1 across each row.</div>
+            </div>
+            <div class="step">
+              <div class="step-num">3</div>
+              <div><b>Multiplying by <code class="inline">V</code></b> mixes information from tokens that received high weight.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3>Why divide by \(\sqrt{d_k}\)</h3>
+      <p>The dot product grows with dimension. If scores become too large, softmax becomes too sharp and gradients become less useful.</p>
+
+      <div class="formula-card">
+        <div class="label">Variance intuition</div>
+        \[
+        q \cdot k = \sum_{r=1}^{d_k} q_r k_r
+        \]
+        \[
+        \mathrm{Var}(q \cdot k) \approx d_k
+        \qquad \Longrightarrow \qquad
+        \mathrm{Std}(q \cdot k) \approx \sqrt{d_k}
+        \]
+        \[
+        s_{ij} = \frac{q_i \cdot k_j}{\sqrt{d_k}}
+        \qquad \Longrightarrow \qquad
+        \mathrm{Var}(s_{ij}) \approx 1
+        \]
+      </div>
+
+      <div class="box blue">
+        <b>Study takeaway.</b> The scaling factor is mainly about keeping score magnitudes stable as head dimension grows, so softmax stays trainable.
+      </div>
+
+      <h3>Multi-head attention</h3>
+      <p>Instead of using one attention map, the model uses multiple heads that learn different projections of the same input.</p>
+
+      <div class="formula-card">
+        <div class="label">Multi-head attention</div>
+        \[
+        Q_h = QW_h^Q,
+        \qquad
+        K_h = KW_h^K,
+        \qquad
+        V_h = VW_h^V
+        \]
+        \[
+        \mathrm{head}_h = \mathrm{Attention}(Q_h, K_h, V_h)
+        \]
+        \[
+        \mathrm{MultiHead}(Q,K,V)
+        =
+        \mathrm{Concat}(\mathrm{head}_1, \dots, \mathrm{head}_H)W^O
+        \]
+      </div>
+    </section>
+
+    <section id="sec-gqa">
+      <h2>3. Multi-head and grouped-query attention <span class="pill green">architecture change</span></h2>
+
+      <p>Standard multi-head attention gives each query head its own key head and value head. GQA keeps many query heads but uses fewer K/V heads, so several query heads share the same K/V stream.</p>
+
+      <div class="figure">
+        <img src="figures/attention/head-sharing.svg" alt="Comparison of standard multi-head attention, grouped-query attention, and multi-query attention" />
+        <div class="figure-caption">
+          GQA sits between full multi-head attention and multi-query attention. It preserves multiple query views while shrinking the number of K/V streams that must be cached during inference.
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div>
+          <h3>Definition and shapes</h3>
+          <p>Let \(H_q\) be the number of query heads and \(H_{kv}\) the number of key/value heads. Define the group size</p>
+          \[
+          g = \frac{H_q}{H_{kv}}.
+          \]
+          <p>Then the projected tensors are</p>
+          \[
+          Q = XW^Q \in \mathbb{R}^{n \times H_q \times d_h}
+          \]
+          \[
+          K = XW^K \in \mathbb{R}^{n \times H_{kv} \times d_h},
+          \qquad
+          V = XW^V \in \mathbb{R}^{n \times H_{kv} \times d_h}
+          \]
+          <p>For query head \(h\), the shared K/V head index is</p>
+          \[
+          r(h) = \left\lfloor \frac{h}{g} \right\rfloor.
+          \]
+        </div>
+
+        <div>
+          <h3>Per-head output</h3>
+          <div class="formula-card">
+            <div class="label">GQA head computation</div>
+            \[
+            O_h
+            =
+            \mathrm{softmax}\!\left(\frac{Q_h K_{r(h)}^T}{\sqrt{d_h}}\right)V_{r(h)}
+            \]
+            \[
+            O = \mathrm{Concat}(O_0, O_1, \dots, O_{H_q-1})W^O
+            \]
+          </div>
+
+          <div class="box green">
+            <b>Main idea.</b> The model still emits one output per query head. What shrinks is the number of distinct K/V streams that must exist and be cached.
+          </div>
+        </div>
+      </div>
+
+      <h3>Special cases</h3>
+      <div class="compare">
+        <table>
+          <tr>
+            <th>Choice</th>
+            <th>Meaning</th>
+          </tr>
+          <tr>
+            <td><b>\(H_{kv} = H_q\)</b></td>
+            <td>Standard multi-head attention</td>
+          </tr>
+          <tr>
+            <td><b>\(1 &lt; H_{kv} &lt; H_q\)</b></td>
+            <td>Grouped-query attention</td>
+          </tr>
+          <tr>
+            <td><b>\(H_{kv} = 1\)</b></td>
+            <td>Multi-query attention</td>
+          </tr>
+        </table>
+      </div>
+
+      <h3>Why GQA matters at inference time</h3>
+      <p>During autoregressive generation, cached keys and values dominate memory cost. Per token, per layer, the number of cached elements is</p>
+      \[
+      \text{KV elements per token} = 2 H_{kv} d_h.
+      \]
+      <p>For standard multi-head attention, this would be \(2 H_q d_h\). So</p>
+      \[
+      \frac{\text{KV cache in GQA}}{\text{KV cache in MHA}} = \frac{H_{kv}}{H_q} = \frac{1}{g}.
+      \]
+
+      <div class="box blue">
+        <b>Example.</b> If \(H_q = 32\) and \(H_{kv} = 8\), then \(g = 4\). The cache is 4x smaller than standard multi-head attention.
+      </div>
+    </section>
+
+    <section id="sec-flash">
+      <h2>4. FlashAttention <span class="pill gold">exact but memory-aware</span></h2>
+
+      <p>FlashAttention does <b>not</b> change the attention formula. It changes how exact attention is executed so large intermediate matrices do not have to be materialized in slow memory.</p>
+
+      <div class="box gold">
+        <b>Important distinction.</b> If two implementations both use FlashAttention correctly, they compute the same exact attention result as the standard formula. The gain comes from lower memory traffic, not approximate math.
+      </div>
+
+      <div class="grid-2">
+        <div class="figure">
+          <img src="figures/attention/gpu-memory-hierarchy.svg" alt="Simplified GPU memory hierarchy showing SRAM, HBM, and CPU DRAM with bandwidth and capacity differences" />
+          <div class="figure-caption">
+            FlashAttention is motivated by this hierarchy: on-chip SRAM is very fast but small, HBM on the GPU is much larger but slower, and CPU DRAM is slower still. Good kernels try to keep active blocks in SRAM and avoid repeatedly writing large attention matrices back to HBM.
+          </div>
+        </div>
+
+        <div>
+          <h3>Why memory hierarchy matters</h3>
+          <p>Modern GPUs can do a lot of arithmetic, but moving data is often the real bottleneck. In practice:</p>
+          <ul>
+            <li><b>SRAM / shared memory</b> is closest to the compute units and has the highest bandwidth, but it is tiny.</li>
+            <li><b>HBM</b> is much larger and still on the GPU, but access is slower than on-chip memory.</li>
+            <li><b>CPU DRAM</b> is larger again, but far too slow for repeatedly materializing attention intermediates during a kernel.</li>
+          </ul>
+          <div class="box blue">
+            <b>FlashAttention in one sentence.</b> It reorganizes exact attention so score blocks are loaded, normalized, and consumed while they are still in fast on-chip memory instead of bouncing large matrices through HBM.
+          </div>
+        </div>
+      </div>
+
+      <h3>Standard computation</h3>
+      <div class="formula-card">
+        <div class="label">Same formula</div>
+        \[
+        S = \frac{QK^T}{\sqrt{d_h}},
+        \qquad
+        A = \mathrm{softmax}(S),
+        \qquad
+        O = AV.
+        \]
+      </div>
+
+      <p>The problem is that many naive implementations store \(S \in \mathbb{R}^{n \times n}\) and sometimes \(A \in \mathbb{R}^{n \times n}\) in global GPU memory. Those tensors are large, and moving them around is expensive.</p>
+
+      <h3>Tiling idea</h3>
+      <p>Split \(K\) and \(V\) into blocks of size \(B\):</p>
+      \[
+      K = \begin{bmatrix} K^{(1)} \\ K^{(2)} \\ \vdots \\ K^{(T)} \end{bmatrix},
+      \qquad
+      V = \begin{bmatrix} V^{(1)} \\ V^{(2)} \\ \vdots \\ V^{(T)} \end{bmatrix}.
+      \]
+      <p>For one query row \(q\), process those blocks one at a time instead of forming all scores at once.</p>
+
+      <h3>Online softmax update</h3>
+      <p>For block \(t\), compute local scores</p>
+      \[
+      s^{(t)} = \frac{q K^{(t)T}}{\sqrt{d_h}} \in \mathbb{R}^{B}.
+      \]
+
+      <p>Maintain a running row maximum \(m\), denominator \(\ell\), and numerator \(z\):</p>
+      \[
+      m^{(0)} = -\infty,
+      \qquad
+      \ell^{(0)} = 0,
+      \qquad
+      z^{(0)} = 0.
+      \]
+
+      <div class="formula-card">
+        <div class="label">Block merge rule</div>
+        \[
+        m^{(t)} = \max\!\left(m^{(t-1)}, \max_j s_j^{(t)}\right)
+        \]
+        \[
+        p_j^{(t)} = \exp\!\left(s_j^{(t)} - m^{(t)}\right)
+        \]
+        \[
+        \ell^{(t)} = e^{m^{(t-1)} - m^{(t)}}\ell^{(t-1)} + \sum_j p_j^{(t)}
+        \]
+        \[
+        z^{(t)} = e^{m^{(t-1)} - m^{(t)}} z^{(t-1)} + \sum_j p_j^{(t)} v_j^{(t)}
+        \]
+        \[
+        o = \frac{z^{(T)}}{\ell^{(T)}}.
+        \]
+      </div>
+
+      <div class="grid-2">
+        <div class="box blue">
+          <b>Why it is exact.</b> The running max and denominator let the kernel merge blocks without losing the softmax normalization over the whole row.
+        </div>
+        <div class="box green">
+          <b>Why it is fast.</b> Arithmetic complexity stays roughly \(O(n^2 d_h)\), but intermediate memory use becomes much more IO-friendly because blocks are consumed before they are written out in full.
+        </div>
+      </div>
+    </section>
+
+    <section id="sec-paged">
+      <h2>5. Paged attention <span class="pill green">KV-cache layout</span></h2>
+
+      <p>Paged attention also keeps the same attention formula. It changes how the KV cache is stored during autoregressive decoding, especially when a serving system must handle many sequences with different lengths.</p>
+
+      <h3>Standard cache view</h3>
+      <p>At generation step \(t\), one layer stores keys and values for all previous tokens:</p>
+      \[
+      K_{\mathrm{cache}}, V_{\mathrm{cache}} \in \mathbb{R}^{t \times H_{kv} \times d_h}.
+      \]
+      <p>If this cache is one long contiguous tensor, growing it for many sequences is awkward and can fragment memory.</p>
+
+      <h3>Split the cache into pages</h3>
+      <p>Choose a page size \(B\) tokens and split the sequence dimension into pages:</p>
+      \[
+      K^{(p)}, V^{(p)} \in \mathbb{R}^{B \times H_{kv} \times d_h},
+      \qquad
+      p = 0, 1, \dots, P-1,
+      \qquad
+      P = \left\lceil \frac{t}{B} \right\rceil.
+      \]
+
+      <h3>Logical pages and physical pages</h3>
+      <p>For each sequence \(s\), maintain a page table</p>
+      \[
+      \beta_s = [b_s^{(0)}, b_s^{(1)}, \dots, b_s^{(P-1)}].
+      \]
+      <p>Token index \(\tau\) maps to page and offset by</p>
+      \[
+      p = \left\lfloor \frac{\tau}{B} \right\rfloor,
+      \qquad
+      o = \tau \bmod B.
+      \]
+      <p>The actual cached entries read by head \(h\) are</p>
+      \[
+      k_{s,\tau,h} = K^{\mathrm{phys}}_{b_s^{(p)}}[o,h,:],
+      \qquad
+      v_{s,\tau,h} = V^{\mathrm{phys}}_{b_s^{(p)}}[o,h,:].
+      \]
+
+      <div class="box blue">
+        <b>Interpretation.</b> Paged attention adds one level of indirection:
+        logical token index to page id and offset to physical cache block.
+      </div>
+
+      <h3>The attention math is unchanged</h3>
+      <div class="formula-card">
+        <div class="label">Same decoding rule</div>
+        \[
+        \alpha_{s,t,\tau,h}
+        =
+        \frac{\exp\!\left(q_{s,t,h} \cdot k_{s,\tau,h} / \sqrt{d_h}\right)}
+        {\sum_{u=0}^{t} \exp\!\left(q_{s,t,h} \cdot k_{s,u,h} / \sqrt{d_h}\right)}
+        \]
+        \[
+        o_{s,t,h} = \sum_{\tau=0}^{t} \alpha_{s,t,\tau,h} v_{s,\tau,h}.
+        \]
+      </div>
+
+      <div class="grid-2">
+        <div>
+          <h3>Why serving systems like it</h3>
+          <ul>
+            <li>Less memory fragmentation.</li>
+            <li>No huge reallocation when a sequence grows.</li>
+            <li>Easier continuous batching across requests with different lengths.</li>
+            <li>Possible prefix sharing when multiple requests reuse the same prompt pages.</li>
+          </ul>
+        </div>
+
+        <div>
+          <h3>How it composes with FlashAttention</h3>
+          <p>A kernel can read one page or one block of K/V at a time and still apply the same online-softmax update used by FlashAttention.</p>
+          <div class="box green">
+            <b>Short version.</b> Paged attention decides <i>where</i> cached K/V live. FlashAttention decides <i>how</i> exact attention is computed over them efficiently.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="sec-order">
+      <h2>6. Position and causality <span class="pill">sequence order</span></h2>
+
+      <p>Self-attention by itself is permutation-equivariant, so the model needs extra structure to know token order and to prevent future-token leakage during autoregressive decoding.</p>
+
+      <div class="grid-2">
+        <div>
+          <h3>Sinusoidal positional encoding</h3>
+          \[
+          \mathrm{PE}(pos, 2i) = \sin\!\left(\frac{pos}{10000^{2i/d_{\mathrm{model}}}}\right)
+          \]
+          \[
+          \mathrm{PE}(pos, 2i+1) = \cos\!\left(\frac{pos}{10000^{2i/d_{\mathrm{model}}}}\right)
+          \]
+          \[
+          x_{pos} = \mathrm{Embed}(token_{pos}) + \mathrm{PE}(pos).
+          \]
+          <p class="muted">The base 10000 spreads wavelengths across dimensions so some coordinates capture short-range order while others vary slowly over long distances.</p>
+        </div>
+
+        <div>
+          <h3>Causal masking</h3>
+          \[
+          M_{ij} =
+          \begin{cases}
+          0 & j \le i \\
+          -\infty & j &gt; i
+          \end{cases}
+          \]
+          \[
+          S = \frac{QK^T + M}{\sqrt{d_k}}.
+          \]
+          <p>That mask enforces the autoregressive rule that token \(t\) may attend only to positions \(&lt;= t\).</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="sec-summary">
+      <h2>7. Summary and self-check <span class="pill">revision</span></h2>
+
+      <div class="compare">
+        <table>
+          <tr>
+            <th>Method</th>
+            <th>What changes?</th>
+            <th>Does the formula change?</th>
+            <th>Main gain</th>
+          </tr>
+          <tr>
+            <td><b>GQA</b></td>
+            <td>Head sharing pattern: fewer K/V heads than query heads</td>
+            <td>Yes, because the architecture uses shared K/V projections</td>
+            <td>Smaller KV cache while keeping many query heads</td>
+          </tr>
+          <tr>
+            <td><b>FlashAttention</b></td>
+            <td>Execution schedule and tiling</td>
+            <td>No</td>
+            <td>Lower memory traffic for exact attention</td>
+          </tr>
+          <tr>
+            <td><b>Paged attention</b></td>
+            <td>KV-cache allocation and lookup</td>
+            <td>No</td>
+            <td>Efficient long-context serving across many requests</td>
+          </tr>
+        </table>
+      </div>
+
+      <h3>Study checklist</h3>
+      <div class="note-list">
+        <div class="note-item"><b>1.</b> Can you explain why \(\sqrt{d_k}\) is a stability term rather than a modeling trick?</div>
+        <div class="note-item"><b>2.</b> Can you state exactly what tensor count changes when moving from MHA to GQA?</div>
+        <div class="note-item"><b>3.</b> Can you explain why FlashAttention is exact even though it processes K/V block by block?</div>
+        <div class="note-item"><b>4.</b> Can you describe paged attention without saying anything about a new score function?</div>
+        <div class="note-item"><b>5.</b> Can you say how FlashAttention and paged attention can be used together in the same inference stack?</div>
+      </div>
+    </section>
+
+    <footer>
+      Polished as a study note: start with the study map, then revisit the comparison table after each section.
+    </footer>
   </div>
 </body>
 </html>

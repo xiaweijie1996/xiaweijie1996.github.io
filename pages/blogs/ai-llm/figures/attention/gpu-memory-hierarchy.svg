@@ -1,0 +1,30 @@
+<svg width="760" height="520" viewBox="0 0 760 520" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">GPU memory hierarchy</title>
+  <desc id="desc">Triangle diagram showing on-chip SRAM, GPU HBM, and main memory CPU DRAM with their relative bandwidth and size.</desc>
+  <rect width="760" height="520" rx="28" fill="#0F172A"/>
+  <rect x="18" y="18" width="724" height="484" rx="22" stroke="rgba(255,255,255,0.12)"/>
+
+  <g transform="translate(64 70)">
+    <path d="M168 10L318 296H18L168 10Z" fill="#111827" stroke="rgba(255,255,255,0.14)" stroke-width="2"/>
+    <path d="M168 10L218 105H118L168 10Z" fill="#FB923C" fill-opacity="0.95"/>
+    <path d="M118 105H218L268 202H68L118 105Z" fill="#4ADE80" fill-opacity="0.80"/>
+    <path d="M68 202H268L318 296H18L68 202Z" fill="#99F6E4" fill-opacity="0.75"/>
+
+    <text x="168" y="72" fill="#FFF7ED" font-family="Arial, sans-serif" font-size="24" font-weight="700" text-anchor="middle">GPU</text>
+    <text x="168" y="100" fill="#FFF7ED" font-family="Arial, sans-serif" font-size="24" font-weight="700" text-anchor="middle">SRAM</text>
+
+    <text x="168" y="154" fill="#F0FDF4" font-family="Arial, sans-serif" font-size="26" font-weight="700" text-anchor="middle">GPU</text>
+    <text x="168" y="186" fill="#F0FDF4" font-family="Arial, sans-serif" font-size="26" font-weight="700" text-anchor="middle">HBM</text>
+
+    <text x="168" y="248" fill="#ECFEFF" font-family="Arial, sans-serif" font-size="22" font-weight="700" text-anchor="middle">Main Memory</text>
+    <text x="168" y="278" fill="#ECFEFF" font-family="Arial, sans-serif" font-size="22" font-weight="700" text-anchor="middle">(CPU DRAM)</text>
+
+    <text x="352" y="62" fill="#FDBA74" font-family="Arial, sans-serif" font-size="20" font-weight="700">SRAM: 19 TB/s (20 MB)</text>
+    <text x="352" y="160" fill="#86EFAC" font-family="Arial, sans-serif" font-size="20" font-weight="700">HBM: 1.5 TB/s (40 GB)</text>
+    <text x="352" y="258" fill="#99F6E4" font-family="Arial, sans-serif" font-size="20" font-weight="700">DRAM: 12.8 GB/s</text>
+    <text x="468" y="288" fill="#E5E7EB" font-family="Arial, sans-serif" font-size="18" font-weight="700">(&gt; 1 TB)</text>
+  </g>
+
+  <text x="380" y="430" fill="#E5E7EB" font-family="Arial, sans-serif" font-size="30" font-weight="700" text-anchor="middle">Memory hierarchy with bandwidth and capacity</text>
+  <text x="380" y="466" fill="#94A3B8" font-family="Arial, sans-serif" font-size="18" text-anchor="middle">FlashAttention is IO-aware because repeated HBM traffic is expensive compared with compute on active SRAM blocks.</text>
+</svg>
