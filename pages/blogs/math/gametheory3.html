@@ -1,0 +1,955 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Game Theory 3: Finite Dynamic Games, Backward Induction, and the One-Shot Deviation Principle</title>
+
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)'], ['$', '$']],
+        displayMath: [['\\[', '\\]'], ['$$', '$$']]
+      },
+      options: {
+        skipHtmlTags: ['script','noscript','style','textarea','pre','code']
+      }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <style>
+    :root{
+      --bg:#09111a;
+      --bg2:#0f1c2b;
+      --card:#0f1724;
+      --card2:rgba(15,23,36,0.82);
+      --text:#e7edf5;
+      --muted:#9fb0c3;
+      --line:rgba(255,255,255,0.10);
+      --line2:rgba(255,255,255,0.18);
+      --cyan:#67e8f9;
+      --teal:#2dd4bf;
+      --amber:#fbbf24;
+      --rose:#fb7185;
+      --shadow:0 18px 60px rgba(0,0,0,0.34);
+    }
+    *{ box-sizing:border-box; }
+    html{ scroll-behavior:smooth; }
+    body{
+      margin:0;
+      color:var(--text);
+      background:
+        radial-gradient(1100px 520px at 10% 0%, rgba(103,232,249,0.12), transparent 60%),
+        radial-gradient(900px 520px at 92% 0%, rgba(251,191,36,0.10), transparent 56%),
+        linear-gradient(180deg, var(--bg), #050a11);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      line-height:1.74;
+    }
+    a{ color:#c6f4ff; text-decoration:none; }
+    a:hover{ text-decoration:underline; }
+    .wrap{
+      max-width:1120px;
+      margin:32px auto 80px;
+      padding:0 18px;
+    }
+    header.hero{
+      background:
+        radial-gradient(860px 380px at 10% 0%, rgba(103,232,249,0.16), transparent 58%),
+        radial-gradient(760px 340px at 90% 0%, rgba(251,191,36,0.10), transparent 56%),
+        linear-gradient(180deg, rgba(12,20,31,0.96), rgba(10,17,28,0.92));
+      border:1px solid var(--line);
+      border-radius:22px;
+      padding:30px 26px 24px;
+      box-shadow:var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+    .hero h1{
+      margin:0 0 10px;
+      font-size:34px;
+      letter-spacing:.2px;
+      line-height:1.18;
+    }
+    .hero p{
+      margin:0;
+      max-width:900px;
+      color:var(--muted);
+      font-size:15px;
+    }
+    .hero-tags{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:16px;
+    }
+    .tag{
+      padding:5px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,0.04);
+      color:#d8fbff;
+      font-size:12px;
+    }
+    .tag.teal{ color:#ccfbf1; background:rgba(45,212,191,0.10); }
+    .tag.amber{ color:#fde7a3; background:rgba(251,191,36,0.10); }
+    .tag.rose{ color:#ffd0d8; background:rgba(251,113,133,0.10); }
+    .toc{
+      margin-top:18px;
+      background:var(--card2);
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:18px 20px;
+      box-shadow:0 10px 36px rgba(0,0,0,0.20);
+    }
+    .toc h2{
+      margin:0 0 12px;
+      font-size:18px;
+    }
+    .toc-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+      gap:10px 16px;
+    }
+    .toc a{
+      display:block;
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,0.08);
+      background:rgba(255,255,255,0.03);
+      color:var(--text);
+    }
+    .toc a span{
+      display:block;
+      color:var(--muted);
+      font-size:12px;
+      margin-top:2px;
+    }
+    section{
+      margin-top:18px;
+      background:var(--card2);
+      border:1px solid var(--line);
+      border-radius:20px;
+      padding:24px 22px 24px;
+      box-shadow:0 12px 40px rgba(0,0,0,0.22);
+    }
+    h2{
+      margin:0 0 14px;
+      font-size:22px;
+      line-height:1.3;
+      color:#f8fbff;
+    }
+    h3{
+      margin:18px 0 8px;
+      font-size:16px;
+      color:#eff7ff;
+    }
+    h4{
+      margin:14px 0 6px;
+      font-size:14px;
+      color:#d1f8ff;
+      letter-spacing:.1px;
+    }
+    p{ margin:9px 0; }
+    ul,ol{ margin:8px 0 10px 22px; }
+    li{ margin:4px 0; }
+    .muted{ color:var(--muted); }
+    .pill{
+      display:inline-block;
+      margin-left:8px;
+      padding:2px 10px;
+      border-radius:999px;
+      font-size:12px;
+      border:1px solid var(--line);
+      background:rgba(103,232,249,0.10);
+      color:#d8fbff;
+      vertical-align:middle;
+    }
+    .pill.teal{ background:rgba(45,212,191,0.12); color:#ccfbf1; }
+    .pill.amber{ background:rgba(251,191,36,0.12); color:#fde7a3; }
+    .pill.rose{ background:rgba(251,113,133,0.12); color:#ffd0d8; }
+    .box{
+      margin:12px 0;
+      padding:13px 14px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,0.03);
+    }
+    .box.cyan{
+      background:rgba(103,232,249,0.10);
+      border-color:rgba(103,232,249,0.24);
+    }
+    .box.teal{
+      background:rgba(45,212,191,0.10);
+      border-color:rgba(45,212,191,0.24);
+    }
+    .box.amber{
+      background:rgba(251,191,36,0.10);
+      border-color:rgba(251,191,36,0.24);
+    }
+    .box.rose{
+      background:rgba(251,113,133,0.10);
+      border-color:rgba(251,113,133,0.24);
+    }
+    .one-liner{
+      margin:12px 0;
+      padding:12px 14px;
+      border-radius:14px;
+      border:1px dashed rgba(103,232,249,0.35);
+      background:rgba(103,232,249,0.10);
+      color:#d8fbff;
+      font-weight:600;
+    }
+    .grid-2{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:16px;
+      align-items:start;
+    }
+    .grid-3{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:14px;
+      align-items:start;
+    }
+    table{
+      width:100%;
+      border-collapse:collapse;
+      margin:12px 0;
+      border:1px solid var(--line);
+      border-radius:14px;
+      overflow:hidden;
+    }
+    th,td{
+      border:1px solid var(--line);
+      padding:10px 12px;
+      text-align:center;
+      vertical-align:middle;
+    }
+    th{
+      background:rgba(255,255,255,0.05);
+      font-weight:600;
+    }
+    td:first-child, th:first-child{
+      text-align:center;
+      white-space:nowrap;
+    }
+    .formula-card{
+      padding:14px 16px;
+      border-radius:16px;
+      border:1px solid var(--line2);
+      background:rgba(13,24,39,0.74);
+      margin:12px 0;
+      overflow:auto;
+    }
+    .formula-card .label{
+      display:inline-block;
+      margin-bottom:8px;
+      padding:2px 8px;
+      border-radius:999px;
+      font-size:11px;
+      color:#d8fbff;
+      background:rgba(103,232,249,0.10);
+      border:1px solid rgba(103,232,249,0.22);
+      letter-spacing:.2px;
+      text-transform:uppercase;
+    }
+    .steps{
+      display:grid;
+      gap:10px;
+      margin-top:12px;
+    }
+    .step{
+      display:grid;
+      grid-template-columns:36px 1fr;
+      gap:12px;
+      align-items:start;
+      padding:12px 14px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,0.03);
+    }
+    .step-num{
+      width:36px;
+      height:36px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:50%;
+      background:rgba(103,232,249,0.14);
+      border:1px solid rgba(103,232,249,0.26);
+      color:#d8fbff;
+      font-weight:700;
+    }
+    .figure{
+      margin:14px 0;
+      padding:14px;
+      border:1px solid var(--line);
+      border-radius:16px;
+      background:rgba(255,255,255,0.03);
+    }
+    .figure svg{
+      width:100%;
+      height:auto;
+      display:block;
+    }
+    .figure-caption{
+      color:var(--muted);
+      font-size:13px;
+      margin-top:8px;
+    }
+    .compare{
+      width:100%;
+      overflow:auto;
+      border:1px solid var(--line);
+      border-radius:16px;
+    }
+    .compare table{ margin:0; border:0; }
+    .note-list{
+      display:grid;
+      gap:10px;
+      margin-top:10px;
+    }
+    .note-item{
+      padding:12px 14px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,0.03);
+    }
+    footer{
+      margin-top:18px;
+      color:var(--muted);
+      font-size:13px;
+      text-align:center;
+      padding:8px;
+    }
+    .mjx-container{
+      overflow-x:auto;
+      overflow-y:hidden;
+      margin:6px 0;
+    }
+    @media (max-width:760px){
+      .hero h1{ font-size:28px; }
+      section{ padding:20px 16px 20px; }
+      .step{ grid-template-columns:32px 1fr; gap:10px; }
+      .step-num{ width:32px; height:32px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header class="hero">
+      <h1>Game Theory 3: Finite Dynamic Games, Backward Induction, and the One-Shot Deviation Principle</h1>
+      <p>
+        A note on finite dynamic games of complete information, with careful definitions,
+        a full backward-induction example, and a clean statement of the one-shot deviation principle.
+        The goal is to make the logic of subgame-perfect equilibrium precise and easy to read.
+      </p>
+      <div class="hero-tags">
+        <span class="tag">Dynamic games</span>
+        <span class="tag teal">Complete information</span>
+        <span class="tag">Subgame perfection</span>
+        <span class="tag amber">Backward induction</span>
+        <span class="tag rose">One-shot deviation</span>
+        <span class="tag">Repeated games</span>
+      </div>
+    </header>
+
+    <section class="toc">
+      <h2>Table of contents</h2>
+      <div class="toc-grid">
+        <a href="#sec1">1. Finite dynamic games of complete information<span>Extensive-form model, histories, terminal nodes, and what complete information means</span></a>
+        <a href="#sec2">2. Strategies, subgames, and subgame-perfect equilibrium<span>Why a strategy is a full contingent plan and why Nash is not enough</span></a>
+        <a href="#sec3">3. Backward induction<span>The recursive method, theorem, and why it works</span></a>
+        <a href="#sec4">4. Worked cases: entry deterrence and pirate gold<span>Compute two classic backward-induction examples and identify a non-credible threat</span></a>
+        <a href="#sec5">5. One-shot deviation principle<span>Formal statement, interpretation, and verification logic</span></a>
+        <a href="#sec6">6. Worked case: two-period Prisoner's Dilemma<span>Use one-shot deviations to verify the subgame-perfect equilibrium</span></a>
+        <a href="#sec7">7. Summary and checklist<span>When to use backward induction and when to use one-shot deviations</span></a>
+      </div>
+    </section>
+
+    <section id="sec1">
+      <h2>1. Finite dynamic games of complete information <span class="pill">extensive-form foundation</span></h2>
+
+      <p>A finite dynamic game is usually described in <b>extensive form</b>. The game unfolds over time, players may move at different nodes, and payoffs are realized at the end of the path.</p>
+
+      <div class="formula-card">
+        <div class="label">Extensive-form game</div>
+        <p>A finite extensive-form game of complete information can be written as</p>
+        \[
+        \Gamma = \bigl(N,H,Z,P,(A(h))_{h \in H \setminus Z},(u_i)_{i \in N}\bigr).
+        \]
+        <p>The ingredients are:</p>
+        <ul>
+          <li><b>Players.</b> \(N=\{1,2,\dots,n\}\).</li>
+          <li><b>Histories.</b> \(H\) is the finite set of possible action histories, including the empty history \(\varnothing\).</li>
+          <li><b>Terminal histories.</b> \(Z \subseteq H\) is the set of histories where the game ends.</li>
+          <li><b>Player function.</b> For every nonterminal history \(h \in H \setminus Z\), \(P(h)\in N\) tells us which player moves at \(h\).</li>
+          <li><b>Available actions.</b> \(A(h)\) is the set of feasible actions at history \(h\).</li>
+          <li><b>Payoffs.</b> For each player \(i\), \(u_i: Z \to \mathbb{R}\) assigns a payoff to every terminal history.</li>
+        </ul>
+      </div>
+
+      <div class="box cyan">
+        <b>Main picture.</b> A dynamic game is a tree. Histories are nodes, actions are edges, terminal histories are leaves, and payoffs sit at the leaves.
+      </div>
+
+      <h3>Complete information versus perfect information</h3>
+      <div class="compare">
+        <table>
+          <tr>
+            <th>Concept</th>
+            <th>Meaning</th>
+            <th>Why it matters here</th>
+          </tr>
+          <tr>
+            <td>Complete information</td>
+            <td>All players know the game structure, action sets, and payoff functions.</td>
+            <td>This is the benchmark setting for the note.</td>
+          </tr>
+          <tr>
+            <td>Perfect information</td>
+            <td>Whenever a player moves, that player knows the entire past history of play.</td>
+            <td>Backward induction applies most cleanly in this case.</td>
+          </tr>
+        </table>
+      </div>
+
+      <p>Complete information does <b>not</b> automatically imply perfect information. A game can have known payoffs and known rules, yet still hide earlier actions from later movers. In this note, backward induction is presented for the perfect-information case, while the one-shot deviation principle is stated in the broader finite-horizon perfect-recall setting.</p>
+
+      <div class="grid-2">
+        <div>
+          <h3>Histories and successors</h3>
+          <p>If \(h\) is a history and \(a \in A(h)\), then \((h,a)\) or simply \(ha\) denotes the successor history obtained by taking action \(a\) after \(h\).</p>
+          <p>A history \(z\in Z\) is terminal if no further action is available. A nonterminal history is a decision node.</p>
+        </div>
+        <div>
+          <h3>Finite horizon</h3>
+          <p>"Finite" means the tree has finitely many histories, so the game ends after finitely many moves. This is exactly what allows recursive arguments such as backward induction.</p>
+        </div>
+      </div>
+
+      <div class="figure">
+        <svg viewBox="0 0 860 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Generic dynamic game tree">
+          <rect x="1" y="1" width="858" height="258" rx="16" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.08)"/>
+          <circle cx="110" cy="130" r="16" fill="rgba(103,232,249,0.15)" stroke="rgba(103,232,249,0.35)"/>
+          <circle cx="330" cy="80" r="14" fill="rgba(45,212,191,0.14)" stroke="rgba(45,212,191,0.32)"/>
+          <circle cx="330" cy="180" r="14" fill="rgba(45,212,191,0.14)" stroke="rgba(45,212,191,0.32)"/>
+          <circle cx="565" cy="55" r="9" fill="#fbbf24"/>
+          <circle cx="565" cy="105" r="9" fill="#fbbf24"/>
+          <circle cx="565" cy="155" r="9" fill="#fbbf24"/>
+          <circle cx="565" cy="205" r="9" fill="#fbbf24"/>
+          <line x1="126" y1="122" x2="315" y2="88" stroke="#cbd5e1" stroke-width="3"/>
+          <line x1="126" y1="138" x2="315" y2="172" stroke="#cbd5e1" stroke-width="3"/>
+          <line x1="344" y1="74" x2="556" y2="57" stroke="#cbd5e1" stroke-width="2.8"/>
+          <line x1="344" y1="86" x2="556" y2="103" stroke="#cbd5e1" stroke-width="2.8"/>
+          <line x1="344" y1="174" x2="556" y2="157" stroke="#cbd5e1" stroke-width="2.8"/>
+          <line x1="344" y1="186" x2="556" y2="203" stroke="#cbd5e1" stroke-width="2.8"/>
+          <text x="110" y="135" text-anchor="middle" fill="#d8fbff" font-size="16" font-family="Arial">root</text>
+          <text x="330" y="84" text-anchor="middle" fill="#ccfbf1" font-size="14" font-family="Arial">history h1</text>
+          <text x="330" y="184" text-anchor="middle" fill="#ccfbf1" font-size="14" font-family="Arial">history h2</text>
+          <text x="595" y="60" fill="#fde7a3" font-size="14" font-family="Arial">terminal z1</text>
+          <text x="595" y="110" fill="#fde7a3" font-size="14" font-family="Arial">terminal z2</text>
+          <text x="595" y="160" fill="#fde7a3" font-size="14" font-family="Arial">terminal z3</text>
+          <text x="595" y="210" fill="#fde7a3" font-size="14" font-family="Arial">terminal z4</text>
+          <text x="196" y="88" fill="#cbd5e1" font-size="13" font-family="Arial">action a</text>
+          <text x="196" y="190" fill="#cbd5e1" font-size="13" font-family="Arial">action b</text>
+          <text x="436" y="52" fill="#cbd5e1" font-size="12" font-family="Arial">continuation action</text>
+          <text x="670" y="58" fill="#cbd5e1" font-size="12" font-family="Arial">payoffs u(z1)</text>
+        </svg>
+        <div class="figure-caption">A finite dynamic game is a finite rooted tree. Solving the game means identifying which path rational players choose when every continuation problem is taken seriously.</div>
+      </div>
+    </section>
+
+    <section id="sec2">
+      <h2>2. Strategies, subgames, and subgame-perfect equilibrium <span class="pill teal">full contingent plans</span></h2>
+
+      <h3>Strategy as a complete plan</h3>
+      <p>In a dynamic game, a player's strategy is <b>not</b> just the action actually observed on the realized path. It is a complete contingent plan that tells the player what to do at every decision node where that player might move.</p>
+
+      <div class="formula-card">
+        <div class="label">Pure strategy</div>
+        <p>Let \(H_i = \{h \in H \setminus Z : P(h)=i\}\) be the set of decision histories of player \(i\). A pure strategy for player \(i\) is a function</p>
+        \[
+        s_i : H_i \to \bigcup_{h \in H_i} A(h)
+        \]
+        <p>such that \(s_i(h) \in A(h)\) for every \(h \in H_i\).</p>
+      </div>
+
+      <p>The full strategy profile is \(s=(s_1,\dots,s_n)\). Because the game tree is finite, any profile determines a unique terminal history \(z(s)\), and each player receives payoff \(u_i(z(s))\).</p>
+
+      <h3>Subgames</h3>
+      <p>A <b>subgame</b> starting at history \(h\) is the continuation game obtained by taking \(h\) as the new root and keeping all later feasible actions and payoffs. In perfect-information trees, every decision node defines a subgame.</p>
+
+      <div class="formula-card">
+        <div class="label">Subgame-perfect equilibrium</div>
+        <p>A strategy profile \(s^*\) is a <b>subgame-perfect equilibrium</b> if it induces a Nash equilibrium in <b>every</b> subgame of the original game.</p>
+      </div>
+
+      <div class="box teal">
+        <b>Interpretation.</b> Subgame perfection rules out empty threats. A strategy profile is acceptable only if it prescribes rational continuation behavior after every possible history, including off-path histories.
+      </div>
+
+      <div class="grid-2">
+        <div>
+          <h3>Why Nash equilibrium is not enough</h3>
+          <p>Ordinary Nash equilibrium checks whether a player wants to deviate from the full strategy profile <b>before</b> the game starts. It does not force off-path continuation actions to be optimal when those nodes are actually reached.</p>
+        </div>
+        <div>
+          <h3>Why subgame perfection fixes the issue</h3>
+          <p>Subgame perfection asks for Nash equilibrium inside every continuation game. That means every promised punishment or reward must still be optimal when the continuation is reached.</p>
+        </div>
+      </div>
+
+      <div class="box rose">
+        <b>Mini example: why Nash can allow a bad threat.</b>
+        <p>Consider the following entry game, with payoffs listed as \((\text{entrant},\text{incumbent})\):</p>
+        <table>
+          <tr>
+            <th>Entrant's move</th>
+            <th>Incumbent's continuation</th>
+            <th>Outcome payoff</th>
+          </tr>
+          <tr>
+            <td>Out</td>
+            <td>Game ends</td>
+            <td>\((0,2)\)</td>
+          </tr>
+          <tr>
+            <td>Enter</td>
+            <td>Fight</td>
+            <td>\((-1,-1)\)</td>
+          </tr>
+          <tr>
+            <td>Enter</td>
+            <td>Accommodate</td>
+            <td>\((2,1)\)</td>
+          </tr>
+        </table>
+        <p><b>Threat that can support Nash:</b> the incumbent says, "If you enter, I will fight." If the entrant believes this, staying out is optimal because \(0 &gt; -1\).</p>
+        <p><b>What actually happens in the entry subgame:</b> once entry occurs, the incumbent compares \(-1\) from Fight with \(1\) from Accommodate, so Accommodate is better.</p>
+        <p><b>Conclusion:</b> the threat to Fight is <i>non-credible</i>. Nash equilibrium may still allow the profile because the off-path move is never tested, but subgame perfection rejects it because the continuation action is not optimal when the subgame is reached.</p>
+      </div>
+
+      <div class="one-liner">A strategy is a full plan. A subgame-perfect equilibrium is a plan that remains optimal after every history, not only on the equilibrium path.</div>
+    </section>
+
+    <section id="sec3">
+      <h2>3. Backward induction <span class="pill amber">recursive solution method</span></h2>
+
+      <p>Backward induction is the standard solution method for finite dynamic games with perfect information. The idea is simple: solve the last decision problem first, replace it by its optimal payoff, and keep moving backward until the root is solved.</p>
+
+      <div class="formula-card">
+        <div class="label">Recursive value rule</div>
+        <p>For each terminal history \(z\in Z\), define</p>
+        \[
+        V_i(z)=u_i(z).
+        \]
+        <p>If \(h\) is a nonterminal history and player \(i=P(h)\) moves at \(h\), then define</p>
+        \[
+        V_i(h)=\max_{a \in A(h)} V_i(ha).
+        \]
+        <p>An optimal action at \(h\) is any</p>
+        \[
+        a^*(h) \in \arg\max_{a \in A(h)} V_i(ha).
+        \]
+      </div>
+
+      <div class="box amber">
+        <b>Backward-induction theorem.</b> Every finite perfect-information game has a subgame-perfect equilibrium, and any strategy profile generated by backward induction is subgame perfect.
+      </div>
+
+      <h3>Algorithm</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div><b>Start from the last movers.</b> At every decision node just before a terminal node, choose the action that gives the moving player the highest payoff.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div><b>Collapse solved branches.</b> Replace each solved continuation by the payoff that rational play would deliver from that node onward.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div><b>Repeat one layer earlier.</b> Treat the reduced tree as a smaller game and solve the next decision problem.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div><b>Continue to the root.</b> The resulting action at each node defines a full strategy profile.</div>
+        </div>
+      </div>
+
+      <h3>Why the method works</h3>
+      <div class="grid-2">
+        <div class="box">
+          <b>Local rationality at the end.</b> The last mover faces an ordinary static choice, so selecting a best action is immediate.
+        </div>
+        <div class="box">
+          <b>Recursion on subgames.</b> Once every later subgame has been solved, the current player compares continuation values that are already rationally justified.
+        </div>
+      </div>
+
+      <div class="box cyan">
+        <b>Important qualification.</b> If a player has several payoff-maximizing actions at some node, backward induction can generate several subgame-perfect equilibria. The method gives a set of solutions when ties occur.
+      </div>
+    </section>
+
+    <section id="sec4">
+      <h2>4. Worked cases: entry deterrence and pirate gold <span class="pill amber">classic examples</span></h2>
+
+      <p>Consider a market-entry game. First the entrant chooses whether to stay out or enter. If entry occurs, the incumbent chooses whether to fight or accommodate.</p>
+
+      <div class="figure">
+        <svg viewBox="0 0 960 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Entry deterrence game tree">
+          <rect x="1" y="1" width="958" height="318" rx="16" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.08)"/>
+          <circle cx="150" cy="160" r="20" fill="rgba(103,232,249,0.15)" stroke="rgba(103,232,249,0.35)"/>
+          <circle cx="450" cy="220" r="18" fill="rgba(45,212,191,0.14)" stroke="rgba(45,212,191,0.32)"/>
+          <circle cx="760" cy="90" r="10" fill="#fbbf24"/>
+          <circle cx="760" cy="220" r="10" fill="#fb7185"/>
+          <circle cx="450" cy="90" r="10" fill="#fbbf24"/>
+          <line x1="168" y1="147" x2="438" y2="98" stroke="#cbd5e1" stroke-width="3.2"/>
+          <line x1="167" y1="169" x2="432" y2="213" stroke="#cbd5e1" stroke-width="3.2"/>
+          <line x1="467" y1="209" x2="751" y2="97" stroke="#cbd5e1" stroke-width="3.2"/>
+          <line x1="468" y1="224" x2="750" y2="220" stroke="#cbd5e1" stroke-width="3.2"/>
+          <text x="150" y="166" text-anchor="middle" fill="#d8fbff" font-size="16" font-family="Arial">E</text>
+          <text x="450" y="226" text-anchor="middle" fill="#ccfbf1" font-size="16" font-family="Arial">I</text>
+          <text x="286" y="104" fill="#cbd5e1" font-size="15" font-family="Arial">Out</text>
+          <text x="286" y="211" fill="#cbd5e1" font-size="15" font-family="Arial">Enter</text>
+          <text x="590" y="143" fill="#cbd5e1" font-size="15" font-family="Arial">Fight</text>
+          <text x="590" y="245" fill="#cbd5e1" font-size="15" font-family="Arial">Accommodate</text>
+          <text x="792" y="95" fill="#fde7a3" font-size="16" font-family="Arial">(-1, -1)</text>
+          <text x="792" y="225" fill="#ffd0d8" font-size="16" font-family="Arial">(2, 1)</text>
+          <text x="486" y="95" fill="#fde7a3" font-size="16" font-family="Arial">(0, 2)</text>
+          <text x="128" y="128" fill="#d8fbff" font-size="13" font-family="Arial">Entrant</text>
+          <text x="422" y="255" fill="#ccfbf1" font-size="13" font-family="Arial">Incumbent</text>
+        </svg>
+        <div class="figure-caption">Payoffs are listed as (entrant, incumbent). If entry occurs, the incumbent prefers Accommodate to Fight because \(1 &gt; -1\).</div>
+      </div>
+
+      <h3>Step 1: Solve the last decision</h3>
+      <p>If the entrant has already chosen Enter, the incumbent compares:</p>
+      \[
+      u_I(\text{Fight})=-1, \qquad u_I(\text{Accommodate})=1.
+      \]
+      <p>So the incumbent chooses <b>Accommodate</b>.</p>
+
+      <h3>Step 2: Move back to the first decision</h3>
+      <p>The entrant now anticipates that Enter will be followed by Accommodate, so the relevant comparison is:</p>
+      \[
+      u_E(\text{Out})=0, \qquad u_E(\text{Enter then Accommodate})=2.
+      \]
+      <p>Therefore the entrant chooses <b>Enter</b>.</p>
+
+      <div class="box teal">
+        <b>Backward-induction solution.</b> The subgame-perfect equilibrium is
+        \[
+        (\text{Enter},\text{Accommodate}).
+        \]
+      </div>
+
+      <h3>Why this example matters</h3>
+      <p>In the strategic form, the profile \((\text{Out},\text{Fight})\) can be a Nash equilibrium: if the entrant expects Fight after entry, staying Out is optimal, and if the entrant stays Out, the incumbent never has to carry out Fight. But this threat is not credible.</p>
+
+      <div class="box rose">
+        <b>Non-credible threat.</b> Once the subgame after Enter is actually reached, Fight is strictly worse than Accommodate for the incumbent. Subgame perfection removes \((\text{Out},\text{Fight})\) for exactly this reason.
+      </div>
+
+      <div class="compare">
+        <table>
+          <tr>
+            <th>Question</th>
+            <th>Answer in this game</th>
+          </tr>
+          <tr>
+            <td>What does the last mover do?</td>
+            <td>The incumbent accommodates because \(1 &gt; -1\).</td>
+          </tr>
+          <tr>
+            <td>What does the first mover infer?</td>
+            <td>Entry leads to payoff \(2\), which is better than staying out and getting \(0\).</td>
+          </tr>
+          <tr>
+            <td>Why is the solution subgame perfect?</td>
+            <td>It is optimal in the whole game and in the subgame after entry.</td>
+          </tr>
+        </table>
+      </div>
+
+      <hr />
+
+      <h3>Another classic backward-induction example: pirate gold</h3>
+      <p>This is one of the best-known dynamic-game puzzles. Three pirates, ordered by seniority as \(A\), \(B\), and \(C\), must divide \(100\) gold coins.</p>
+
+      <div class="formula-card">
+        <div class="label">Rules</div>
+        <ul>
+          <li>The most senior surviving pirate proposes a division of the \(100\) coins.</li>
+          <li>All surviving pirates vote on the proposal.</li>
+          <li>The proposal passes if it gets at least half of the votes.</li>
+          <li>If the proposal fails, the proposer is eliminated, and the next pirate makes a proposal.</li>
+          <li>Preferences are lexicographic: each pirate first wants to survive, then wants more gold, and if still tied prefers that more rivals be eliminated.</li>
+        </ul>
+      </div>
+
+      <p>The key is to solve the game from the end.</p>
+
+      <div class="compare">
+        <table>
+          <tr>
+            <th>Remaining pirates</th>
+            <th>What the proposer needs</th>
+            <th>Backward-induction outcome</th>
+          </tr>
+          <tr>
+            <td>Only \(C\)</td>
+            <td>No vote problem remains</td>
+            <td>\(C\) gets all \(100\) coins.</td>
+          </tr>
+          <tr>
+            <td>\(B\) and \(C\)</td>
+            <td>At least half of \(2\) votes, so \(1\) vote is enough</td>
+            <td>\(B\) votes for his own proposal and keeps all \(100\): \((0,100,0)\).</td>
+          </tr>
+          <tr>
+            <td>\(A\), \(B\), and \(C\)</td>
+            <td>At least half of \(3\) votes, so \(2\) votes are needed</td>
+            <td>\(A\) needs one more pirate besides himself.</td>
+          </tr>
+        </table>
+      </div>
+
+      <h4>Step 1: What happens if \(A\) is eliminated?</h4>
+      <p>Then only \(B\) and \(C\) remain. From the table above, \(B\) can pass \((0,100,0)\) using his own vote. So:</p>
+      \[
+      	ext{If  }  A \text{ dies, then } B \text{ expects } 100 \text{ and } C \text{ expects } 0.
+      \]
+
+      <h4>Step 2: What should \(A\) offer?</h4>
+      <p>Since \(B\) expects \(100\) if \(A\) is eliminated, \(B\) will not support any proposal from \(A\) giving him less than \(100\). But \(C\) expects \(0\) if \(A\) is eliminated, so giving \(C\) just \(1\) coin is enough to make \(C\) prefer acceptance.</p>
+
+      <div class="box teal">
+        <b>Backward-induction solution.</b> Pirate \(A\) proposes
+        \[
+        (99,0,1),
+        \]
+        and the proposal passes with votes from \(A\) and \(C\).
+      </div>
+
+      <div class="grid-2">
+        <div class="box">
+          <b>Why \(B\) votes no.</b> If \(A\)'s proposal fails, \(B\) becomes proposer in the next round and gets all \(100\) coins.
+        </div>
+        <div class="box">
+          <b>Why \(C\) votes yes.</b> If \(A\)'s proposal fails, \(C\) gets \(0\) in the continuation game, so receiving \(1\) coin now is better.
+        </div>
+      </div>
+
+      <div class="box cyan">
+        <b>Why this example is famous.</b> The result looks surprising at first, but it follows mechanically from backward induction. Each pirate reasons from the future continuation game, not from vague fairness.
+      </div>
+    </section>
+
+    <section id="sec5">
+      <h2>5. One-shot deviation principle <span class="pill rose">local checks imply global optimality</span></h2>
+
+      <p>Backward induction is a constructive method. The one-shot deviation principle is mainly a <b>verification tool</b>. Instead of checking every possible alternative strategy, it says we only need to check whether some player can gain by changing the action at one decision point and leaving the rest of the strategy unchanged.</p>
+
+      <div class="formula-card">
+        <div class="label">One-shot deviation</div>
+        <p>Fix a player \(i\) and a strategy profile \(s=(s_i,s_{-i})\). A strategy \(s_i'\) is a <b>one-shot deviation</b> from \(s_i\) at decision point \(h\in H_i\) if</p>
+        <ul>
+          <li>\(s_i'(h) \neq s_i(h)\), and</li>
+          <li>\(s_i'(h') = s_i(h')\) for every other decision point \(h' \neq h\).</li>
+        </ul>
+      </div>
+
+      <div class="formula-card">
+        <div class="label">Principle</div>
+        <p>In a finite-horizon extensive-form game with perfect recall, a strategy profile \(s\) is subgame perfect if and only if there is <b>no profitable one-shot deviation</b> in any subgame.</p>
+      </div>
+
+      <p>Write \(U_i(s \mid h)\) for player \(i\)'s continuation payoff from history \(h\) onward when strategy profile \(s\) is played. Then the condition is:</p>
+      \[
+      U_i(s \mid h) \ge U_i(s_i', s_{-i} \mid h)
+      \]
+      <p>for every player \(i\), every decision point \(h\in H_i\), and every one-shot deviation \(s_i'\) at \(h\).</p>
+
+      <div class="box cyan">
+        <b>Reading the theorem in plain English.</b> To verify subgame perfection, you do not need to inspect every complicated re-optimization plan. You only need to ask: "Can some player improve by changing exactly one move at exactly one place?"
+      </div>
+
+      <h3>Why a local test is enough</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div><b>Suppose a profitable full deviation exists.</b> Then there is a first decision point where the deviating strategy differs from the original strategy.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div><b>Focus on that first difference.</b> If changing the full future plan increases payoff, then changing the action at that first difference must already be part of what creates the gain.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div><b>Perfect recall prevents hidden self-contradictions.</b> The player remembers earlier choices and information, so the continuation problem can be decomposed consistently.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div><b>Therefore one local profitable deviation exists.</b> So if no profitable one-shot deviation exists anywhere, no profitable full deviation exists either.</div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="box">
+          <b>Backward induction asks:</b> "What action is optimal when I solve the tree from the end?"
+        </div>
+        <div class="box">
+          <b>One-shot deviation asks:</b> "Given a candidate equilibrium, can any player improve by changing one move at one history?"
+        </div>
+      </div>
+
+      <div class="box amber">
+        <b>Common use case.</b> In repeated games and finite-horizon dynamic games, the one-shot deviation principle is often the fastest way to verify a proposed subgame-perfect equilibrium.
+      </div>
+    </section>
+
+    <section id="sec6">
+      <h2>6. Worked case: two-period Prisoner's Dilemma <span class="pill rose">case + explanation</span></h2>
+
+      <p>Take the standard stage game:</p>
+
+      <table>
+        <tr>
+          <th>Player 1 \ Player 2</th>
+          <th>C</th>
+          <th>D</th>
+        </tr>
+        <tr>
+          <th>C</th>
+          <td>(3,3)</td>
+          <td>(0,5)</td>
+        </tr>
+        <tr>
+          <th>D</th>
+          <td>(5,0)</td>
+          <td>(1,1)</td>
+        </tr>
+      </table>
+
+      <p>Now repeat this game for two periods, with total payoff equal to the sum of the two stage payoffs. The game has complete information and finite horizon. Histories after period 1 are observed, so the game has perfect recall.</p>
+
+      <h3>A candidate profile that fails</h3>
+      <p>Suppose both players plan to choose \(C\) in both periods after every history. This looks cooperative, but it is not subgame perfect.</p>
+
+      <div class="formula-card">
+        <div class="label">Profitable one-shot deviation at the last period</div>
+        <p>At any history before period 2, if the opponent plans to play \(C\), then</p>
+        \[
+        u_i(D,C)=5 \quad \text{and} \quad u_i(C,C)=3.
+        \]
+        <p>So switching from \(C\) to \(D\) at that single decision point raises the player's payoff by \(2\).</p>
+      </div>
+
+      <div class="box rose">
+        <b>Conclusion.</b> "Always cooperate" fails the one-shot deviation test in the final period, so it cannot be a subgame-perfect equilibrium.
+      </div>
+
+      <h3>The actual subgame-perfect equilibrium</h3>
+      <p>Consider the strategy profile \(s^D\) in which each player chooses \(D\) after every history in both periods.</p>
+
+      <div class="grid-2">
+        <div>
+          <h4>Period 2 check</h4>
+          <p>At the last period, \(D\) strictly dominates \(C\):</p>
+          \[
+          u_i(D,C)=5 &gt; 3=u_i(C,C),
+          \qquad
+          u_i(D,D)=1 &gt; 0=u_i(C,D).
+          \]
+          <p>So no player wants to deviate from \(D\) to \(C\) in period 2.</p>
+        </div>
+        <div>
+          <h4>Period 1 check</h4>
+          <p>Because continuation play in period 2 is already fixed at \((D,D)\), the period-1 comparison is just the stage-game comparison plus the same continuation payoff on both sides. So \(D\) again strictly dominates \(C\).</p>
+        </div>
+      </div>
+
+      <div class="box teal">
+        <b>Verified equilibrium.</b> The strategy profile "defect after every history" has no profitable one-shot deviation. By the one-shot deviation principle, it is a subgame-perfect equilibrium.
+      </div>
+
+      <div class="figure">
+        <svg viewBox="0 0 900 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Two-period reasoning timeline">
+          <rect x="1" y="1" width="898" height="228" rx="16" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.08)"/>
+          <rect x="88" y="72" width="220" height="88" rx="16" fill="rgba(251,113,133,0.10)" stroke="rgba(251,113,133,0.28)"/>
+          <rect x="340" y="72" width="220" height="88" rx="16" fill="rgba(251,191,36,0.10)" stroke="rgba(251,191,36,0.28)"/>
+          <rect x="592" y="72" width="220" height="88" rx="16" fill="rgba(45,212,191,0.10)" stroke="rgba(45,212,191,0.28)"/>
+          <line x1="308" y1="116" x2="340" y2="116" stroke="#67e8f9" stroke-width="3"/>
+          <line x1="560" y1="116" x2="592" y2="116" stroke="#67e8f9" stroke-width="3"/>
+          <text x="198" y="103" text-anchor="middle" fill="#ffd0d8" font-size="18" font-family="Arial">Period 2</text>
+          <text x="198" y="129" text-anchor="middle" fill="#e7edf5" font-size="14" font-family="Arial">D strictly dominates C</text>
+          <text x="198" y="148" text-anchor="middle" fill="#e7edf5" font-size="14" font-family="Arial">so final play is D,D</text>
+          <text x="450" y="103" text-anchor="middle" fill="#fde7a3" font-size="18" font-family="Arial">Roll back</text>
+          <text x="450" y="129" text-anchor="middle" fill="#e7edf5" font-size="14" font-family="Arial">continuation is fixed</text>
+          <text x="450" y="148" text-anchor="middle" fill="#e7edf5" font-size="14" font-family="Arial">at D,D in period 2</text>
+          <text x="702" y="103" text-anchor="middle" fill="#ccfbf1" font-size="18" font-family="Arial">Period 1</text>
+          <text x="702" y="129" text-anchor="middle" fill="#e7edf5" font-size="14" font-family="Arial">D still dominates C</text>
+          <text x="702" y="148" text-anchor="middle" fill="#e7edf5" font-size="14" font-family="Arial">so play D,D again</text>
+        </svg>
+        <div class="figure-caption">Backward induction and the one-shot deviation principle point to the same conclusion in the finite repeated Prisoner's Dilemma: defect in the last period, then defect earlier as well.</div>
+      </div>
+
+      <h3>What this example teaches</h3>
+      <div class="note-list">
+        <div class="note-item"><b>Finite horizon matters.</b> At the last period there is no future punishment, so the incentive to defect becomes immediate and unavoidable.</div>
+        <div class="note-item"><b>One-shot deviation is efficient.</b> You do not need to enumerate every possible contingent strategy in both periods.</div>
+        <div class="note-item"><b>Local rationality propagates backward.</b> Once the final period is solved, earlier periods inherit the same logic.</div>
+      </div>
+    </section>
+
+    <section id="sec7">
+      <h2>7. Summary and checklist <span class="pill">what to remember</span></h2>
+
+      <div class="compare">
+        <table>
+          <tr>
+            <th>Tool</th>
+            <th>Best use</th>
+            <th>Main output</th>
+          </tr>
+          <tr>
+            <td>Backward induction</td>
+            <td>Construct an equilibrium in a finite perfect-information game</td>
+            <td>A subgame-perfect equilibrium obtained by recursive optimization</td>
+          </tr>
+          <tr>
+            <td>One-shot deviation principle</td>
+            <td>Verify a candidate equilibrium in a finite-horizon game with perfect recall</td>
+            <td>A quick test for subgame perfection</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="one-liner">Backward induction builds the equilibrium. The one-shot deviation principle checks the equilibrium.</div>
+
+      <!-- <h3>Compact checklist</h3>
+      <ol>
+        <li>Write the game in extensive form: players, histories, actions, terminal payoffs.</li>
+        <li>Distinguish complete information from perfect information.</li>
+        <li>Define a strategy as a full contingent plan, not just the realized action path.</li>
+        <li>Use subgame-perfect equilibrium to eliminate non-credible threats.</li>
+        <li>In finite perfect-information games, solve by backward induction.</li>
+        <li>In finite-horizon games with perfect recall, verify candidates by the one-shot deviation principle.</li>
+      </ol>
+
+      <div class="box cyan">
+        <b>Final takeaway.</b> Dynamic game theory is about rational behavior not only at the start of the game, but after every history. Backward induction and the one-shot deviation principle are two complementary ways of enforcing that idea.
+      </div> -->
+    </section>
+
+    <footer>
+      Built as a single-file HTML study note with MathJax, tables, formulas, and inline figures.
+    </footer>
+  </div>
+</body>
+</html>
