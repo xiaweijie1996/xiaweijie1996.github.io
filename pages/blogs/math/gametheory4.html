@@ -1,0 +1,1054 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Game Theory 4: Bayesian Games, Harsanyi Transformation, BNE, Auctions, Signaling, and Electricity Markets</title>
+
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)'], ['$', '$']],
+        displayMath: [['\\[', '\\]'], ['$$', '$$']]
+      },
+      options: {
+        skipHtmlTags: ['script','noscript','style','textarea','pre','code']
+      }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <style>
+    :root{
+      --bg:#09111a;
+      --bg2:#0f1c2b;
+      --card:#0f1724;
+      --card2:rgba(15,23,36,0.82);
+      --text:#e7edf5;
+      --muted:#9fb0c3;
+      --line:rgba(255,255,255,0.10);
+      --line2:rgba(255,255,255,0.18);
+      --cyan:#67e8f9;
+      --teal:#2dd4bf;
+      --amber:#fbbf24;
+      --rose:#fb7185;
+      --shadow:0 18px 60px rgba(0,0,0,0.34);
+    }
+    *{ box-sizing:border-box; }
+    html{ scroll-behavior:smooth; }
+    body{
+      margin:0;
+      color:var(--text);
+      background:
+        radial-gradient(1100px 520px at 10% 0%, rgba(103,232,249,0.12), transparent 60%),
+        radial-gradient(900px 520px at 92% 0%, rgba(251,191,36,0.10), transparent 56%),
+        linear-gradient(180deg, var(--bg), #050a11);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      line-height:1.74;
+    }
+    a{ color:#c6f4ff; text-decoration:none; }
+    a:hover{ text-decoration:underline; }
+    .wrap{
+      max-width:1120px;
+      margin:32px auto 80px;
+      padding:0 18px;
+    }
+    header.hero{
+      background:
+        radial-gradient(860px 380px at 10% 0%, rgba(103,232,249,0.16), transparent 58%),
+        radial-gradient(760px 340px at 90% 0%, rgba(251,191,36,0.10), transparent 56%),
+        linear-gradient(180deg, rgba(12,20,31,0.96), rgba(10,17,28,0.92));
+      border:1px solid var(--line);
+      border-radius:22px;
+      padding:30px 26px 24px;
+      box-shadow:var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+    .hero h1{
+      margin:0 0 10px;
+      font-size:34px;
+      letter-spacing:.2px;
+      line-height:1.18;
+    }
+    .hero p{
+      margin:0;
+      max-width:940px;
+      color:var(--muted);
+      font-size:15px;
+    }
+    .hero-tags{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:16px;
+    }
+    .tag{
+      padding:5px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,0.04);
+      color:#d8fbff;
+      font-size:12px;
+    }
+    .tag.teal{ color:#ccfbf1; background:rgba(45,212,191,0.10); }
+    .tag.amber{ color:#fde7a3; background:rgba(251,191,36,0.10); }
+    .tag.rose{ color:#ffd0d8; background:rgba(251,113,133,0.10); }
+    .toc{
+      margin-top:18px;
+      background:var(--card2);
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:18px 20px;
+      box-shadow:0 10px 36px rgba(0,0,0,0.20);
+    }
+    .toc h2{
+      margin:0 0 12px;
+      font-size:18px;
+    }
+    .toc-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+      gap:10px 16px;
+    }
+    .toc a{
+      display:block;
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,0.08);
+      background:rgba(255,255,255,0.03);
+      color:var(--text);
+    }
+    .toc a span{
+      display:block;
+      color:var(--muted);
+      font-size:12px;
+      margin-top:2px;
+    }
+    section{
+      margin-top:18px;
+      background:var(--card2);
+      border:1px solid var(--line);
+      border-radius:20px;
+      padding:24px 22px 24px;
+      box-shadow:0 12px 40px rgba(0,0,0,0.22);
+    }
+    h2{
+      margin:0 0 14px;
+      font-size:22px;
+      line-height:1.3;
+      color:#f8fbff;
+    }
+    h3{
+      margin:18px 0 8px;
+      font-size:16px;
+      color:#eff7ff;
+    }
+    h4{
+      margin:14px 0 6px;
+      font-size:14px;
+      color:#d1f8ff;
+      letter-spacing:.1px;
+    }
+    p{ margin:9px 0; }
+    ul,ol{ margin:8px 0 10px 22px; }
+    li{ margin:4px 0; }
+    .muted{ color:var(--muted); }
+    .pill{
+      display:inline-block;
+      margin-left:8px;
+      padding:2px 10px;
+      border-radius:999px;
+      font-size:12px;
+      border:1px solid var(--line);
+      background:rgba(103,232,249,0.10);
+      color:#d8fbff;
+      vertical-align:middle;
+    }
+    .pill.teal{ background:rgba(45,212,191,0.12); color:#ccfbf1; }
+    .pill.amber{ background:rgba(251,191,36,0.12); color:#fde7a3; }
+    .pill.rose{ background:rgba(251,113,133,0.12); color:#ffd0d8; }
+    .box{
+      margin:12px 0;
+      padding:13px 14px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,0.03);
+    }
+    .box.cyan{
+      background:rgba(103,232,249,0.10);
+      border-color:rgba(103,232,249,0.24);
+    }
+    .box.teal{
+      background:rgba(45,212,191,0.10);
+      border-color:rgba(45,212,191,0.24);
+    }
+    .box.amber{
+      background:rgba(251,191,36,0.10);
+      border-color:rgba(251,191,36,0.24);
+    }
+    .box.rose{
+      background:rgba(251,113,133,0.10);
+      border-color:rgba(251,113,133,0.24);
+    }
+    .one-liner{
+      margin:12px 0;
+      padding:12px 14px;
+      border-radius:14px;
+      border:1px dashed rgba(103,232,249,0.35);
+      background:rgba(103,232,249,0.10);
+      color:#d8fbff;
+      font-weight:600;
+    }
+    .grid-2{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:16px;
+      align-items:start;
+    }
+    .grid-3{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:14px;
+      align-items:start;
+    }
+    table{
+      width:100%;
+      border-collapse:collapse;
+      margin:12px 0;
+      border:1px solid var(--line);
+      border-radius:14px;
+      overflow:hidden;
+    }
+    th,td{
+      border:1px solid var(--line);
+      padding:10px 12px;
+      text-align:center;
+      vertical-align:middle;
+    }
+    th{
+      background:rgba(255,255,255,0.05);
+      font-weight:600;
+    }
+    td:first-child, th:first-child{
+      text-align:center;
+      white-space:nowrap;
+    }
+    .formula-card{
+      padding:14px 16px;
+      border-radius:16px;
+      border:1px solid var(--line2);
+      background:rgba(13,24,39,0.74);
+      margin:12px 0;
+      overflow:auto;
+    }
+    .formula-card .label{
+      display:inline-block;
+      margin-bottom:8px;
+      padding:2px 8px;
+      border-radius:999px;
+      font-size:11px;
+      color:#d8fbff;
+      background:rgba(103,232,249,0.10);
+      border:1px solid rgba(103,232,249,0.22);
+      letter-spacing:.2px;
+      text-transform:uppercase;
+    }
+    .steps{
+      display:grid;
+      gap:10px;
+      margin-top:12px;
+    }
+    .step{
+      display:grid;
+      grid-template-columns:36px 1fr;
+      gap:12px;
+      align-items:start;
+      padding:12px 14px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,0.03);
+    }
+    .step-num{
+      width:36px;
+      height:36px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:50%;
+      background:rgba(103,232,249,0.14);
+      border:1px solid rgba(103,232,249,0.26);
+      color:#d8fbff;
+      font-weight:700;
+    }
+    .figure{
+      margin:14px 0;
+      padding:14px;
+      border:1px solid var(--line);
+      border-radius:16px;
+      background:rgba(255,255,255,0.03);
+    }
+    .figure svg{
+      width:100%;
+      height:auto;
+      display:block;
+    }
+    .figure-caption{
+      color:var(--muted);
+      font-size:13px;
+      margin-top:8px;
+    }
+    .compare{
+      width:100%;
+      overflow:auto;
+      border:1px solid var(--line);
+      border-radius:16px;
+    }
+    .compare table{ margin:0; border:0; }
+    .note-list{
+      display:grid;
+      gap:10px;
+      margin-top:10px;
+    }
+    .note-item{
+      padding:12px 14px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,0.03);
+    }
+    footer{
+      margin-top:18px;
+      color:var(--muted);
+      font-size:13px;
+      text-align:center;
+      padding:8px;
+    }
+    .mjx-container{
+      overflow-x:auto;
+      overflow-y:hidden;
+      margin:6px 0;
+    }
+    @media (max-width:760px){
+      .hero h1{ font-size:28px; }
+      section{ padding:20px 16px 20px; }
+      .step{ grid-template-columns:32px 1fr; gap:10px; }
+      .step-num{ width:32px; height:32px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header class="hero">
+      <h1>Game Theory 4: Bayesian Games, Harsanyi Transformation, Bayesian Nash Equilibrium, and Core Applications</h1>
+      <p>
+        A single-file study note on Bayesian games, written in the same style as the dynamic-games page above.
+        The focus is conceptual completeness, readable mathematics, and worked examples that connect directly to
+        the cases discussed earlier: Harsanyi transformation, discrete Bayesian reasoning, first-price auctions,
+        the signaling extension, and why electricity markets are often modeled with Bayesian games.
+      </p>
+      <div class="hero-tags">
+        <span class="tag">Incomplete information</span>
+        <span class="tag teal">Types and beliefs</span>
+        <span class="tag">Common prior</span>
+        <span class="tag amber">Bayesian Nash equilibrium</span>
+        <span class="tag rose">Signaling extension</span>
+        <span class="tag">First-price auction</span>
+        <span class="tag teal">Electricity markets</span>
+      </div>
+    </header>
+
+    <section class="toc">
+      <h2>Table of contents</h2>
+      <div class="toc-grid">
+        <a href="#sec1">1. What Bayesian games are<span>Incomplete information, types, and how Bayesian games differ from ordinary Nash games</span></a>
+        <a href="#sec2">2. Formal model and notation<span>Players, actions, types, common prior, beliefs, and strategy mappings</span></a>
+        <a href="#sec3">3. Harsanyi transformation<span>How incomplete information becomes a move by Nature</span></a>
+        <a href="#sec4">4. Bayesian Nash equilibrium<span>Definition, expected payoff, and a clean solution checklist</span></a>
+        <a href="#sec5">5. Worked discrete example: posted pricing<span>A compact example with private buyer valuation</span></a>
+        <a href="#sec6">6. Continuous types: first-price auction<span>General derivation for n bidders and the uniform special case</span></a>
+        <a href="#sec7">7. From Bayesian games to signaling games<span>Why signaling is deeper than static incomplete information</span></a>
+        <a href="#sec8">8. Why electricity markets often use Bayesian games<span>Private cost information, strategic bidding, and network constraints</span></a>
+        <a href="#sec9">9. Summary and checklist<span>What to remember and what to compute first</span></a>
+      </div>
+    </section>
+
+    <section id="sec1">
+      <h2>1. What Bayesian games are <span class="pill">incomplete information</span></h2>
+
+      <p>A Bayesian game is a game in which at least one payoff-relevant feature is not publicly known. The unknown object is encoded as a <b>type</b>. Each player knows their own type, but may not know the types of the others.</p>
+
+      <div class="one-liner">Core picture: a Bayesian game is an ordinary strategic game plus private payoff-relevant information and beliefs about that information.</div>
+
+      <div class="formula-card">
+        <div class="label">Main intuition</div>
+        <p>In an ordinary Nash game, player i compares actions given what others do. In a Bayesian game, player i compares actions given what others do <b>and</b> what others might privately be.</p>
+        \[
+        \text{Ordinary game: } u_i(a_i,a_{-i})
+        \qquad
+        \text{Bayesian game: } u_i(a_i,a_{-i};t_i,t_{-i}).
+        \]
+      </div>
+
+      <h3>Complete information, incomplete information, perfect information, imperfect information</h3>
+      <div class="compare">
+        <table>
+          <tr>
+            <th>Concept</th>
+            <th>Meaning</th>
+            <th>Why it matters</th>
+          </tr>
+          <tr>
+            <td>Complete information</td>
+            <td>Everyone knows the game structure and every player's payoff function.</td>
+            <td>This is the benchmark in ordinary normal-form analysis.</td>
+          </tr>
+          <tr>
+            <td>Incomplete information</td>
+            <td>At least one payoff-relevant variable is privately known or unknown to some players.</td>
+            <td>This is exactly the setting modeled by Bayesian games.</td>
+          </tr>
+          <tr>
+            <td>Perfect information</td>
+            <td>Whenever a player moves, they observe the entire past history of play.</td>
+            <td>This is about observed actions, not private types.</td>
+          </tr>
+          <tr>
+            <td>Imperfect information</td>
+            <td>At some decision points, a player does not observe all earlier actions.</td>
+            <td>A game can be Bayesian and still be imperfect-information or perfect-information depending on the timing.</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="box cyan">
+        <b>Key distinction.</b> Incomplete information is about <i>unknown characteristics</i>, such as costs, valuations, or risk types. Imperfect information is about <i>unknown past actions</i>. The two ideas are different and often coexist.
+      </div>
+
+      <div class="grid-2">
+        <div>
+          <h3>What counts as a type?</h3>
+          <p>A type can represent any privately known payoff determinant: a buyer's valuation, a firm's marginal cost, a worker's productivity, an insurer's risk class, or a generator's true operating cost.</p>
+        </div>
+        <div>
+          <h3>Why Bayesian?</h3>
+          <p>Players do not know the true type profile, so they attach probabilities to possible types and choose actions that maximize expected payoff under those beliefs.</p>
+        </div>
+      </div>
+
+      <div class="box amber">
+        <b>Mathematical punchline.</b> The jump from Nash to Bayesian Nash is structurally small: add a type variable, add a belief distribution, and optimize expected payoff conditional on your own type.
+      </div>
+    </section>
+
+    <section id="sec2">
+      <h2>2. Formal model and notation <span class="pill teal">types, actions, beliefs, strategies</span></h2>
+
+      <div class="formula-card">
+        <div class="label">Static Bayesian game</div>
+        <p>A standard finite Bayesian game can be written as</p>
+        \[
+        G=\bigl(N,(A_i)_{i\in N},(T_i)_{i\in N},p,(u_i)_{i\in N}\bigr).
+        \]
+        <p>The ingredients are:</p>
+        <ul>
+          <li><b>Players.</b> \(N=\{1,2,\dots,n\}\).</li>
+          <li><b>Action sets.</b> Each player \(i\) chooses an action from \(A_i\).</li>
+          <li><b>Type sets.</b> Each player has a type \(t_i\in T_i\).</li>
+          <li><b>Common prior.</b> \(p(t_1,\dots,t_n)\) is a probability distribution over type profiles.</li>
+          <li><b>Payoff functions.</b> For each player \(i\), \(u_i(a_1,\dots,a_n;t_1,\dots,t_n)\).</li>
+        </ul>
+      </div>
+
+      <h3>Pure and mixed Bayesian strategies</h3>
+      <div class="grid-2">
+        <div class="formula-card">
+          <div class="label">Pure strategy</div>
+          <p>A pure Bayesian strategy for player \(i\) is a function</p>
+          \[
+          s_i:T_i\to A_i.
+          \]
+          <p>Interpretation: for each possible type, the strategy specifies what action that type takes.</p>
+        </div>
+        <div class="formula-card">
+          <div class="label">Mixed strategy</div>
+          <p>A mixed Bayesian strategy assigns a distribution over actions to each type:</p>
+          \[
+          \sigma_i(\cdot\mid t_i)\in \Delta(A_i).
+          \]
+          <p>Interpretation: type \(t_i\) may randomize over actions.</p>
+        </div>
+      </div>
+
+      <h3>Beliefs induced by the common prior</h3>
+      <p>If types can be correlated, player \(i\)'s belief about the other players' types after observing their own type \(t_i\) is obtained by conditioning the common prior:</p>
+      <div class="formula-card">
+        <div class="label">Conditional belief</div>
+        \[
+        \mu_i(t_{-i}\mid t_i)
+        =
+        \frac{p(t_i,t_{-i})}{\sum_{\tau_{-i}\in T_{-i}}p(t_i,\tau_{-i})}.
+        \]
+        <p>When types are independent, this simplifies substantially because knowing your own type does not change the distribution of the others' types.</p>
+      </div>
+
+      <div class="grid-3">
+        <div class="box">
+          <b>Type</b>
+          <p>A privately known characteristic, such as cost or valuation.</p>
+        </div>
+        <div class="box">
+          <b>Belief</b>
+          <p>A probability assessment over the unknown types of the other players.</p>
+        </div>
+        <div class="box">
+          <b>Strategy</b>
+          <p>A full plan that tells each type what action to choose.</p>
+        </div>
+      </div>
+
+      <div class="box teal">
+        <b>Why strategies are functions.</b> In a Bayesian game, the player does not choose one action once and for all. The player chooses a rule: what to do if my type is high, what to do if my type is low, and so on.
+      </div>
+    </section>
+
+    <section id="sec3">
+      <h2>3. Harsanyi transformation <span class="pill amber">Nature draws types first</span></h2>
+
+      <p>Harsanyi's idea is to convert incomplete information into an ordinary extensive-form game by adding a move by Nature at the beginning. Nature draws the type profile, each player observes their own type, and play then continues with those types fixed in the background.</p>
+
+      <div class="formula-card">
+        <div class="label">Transformation idea</div>
+        <p>Instead of saying, "player i does not know player j's true cost," we say:</p>
+        <ol>
+          <li>Nature draws a type profile \(t=(t_1,\dots,t_n)\sim p\).</li>
+          <li>Player \(i\) privately observes \(t_i\).</li>
+          <li>Players choose actions based on their observed types and beliefs.</li>
+        </ol>
+      </div>
+
+      <div class="figure">
+        <svg viewBox="0 0 920 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Harsanyi transformation tree">
+          <rect x="1" y="1" width="918" height="318" rx="16" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.08)"/>
+          <circle cx="130" cy="160" r="22" fill="rgba(103,232,249,0.15)" stroke="rgba(103,232,249,0.35)"/>
+          <circle cx="390" cy="90" r="18" fill="rgba(45,212,191,0.14)" stroke="rgba(45,212,191,0.32)"/>
+          <circle cx="390" cy="230" r="18" fill="rgba(45,212,191,0.14)" stroke="rgba(45,212,191,0.32)"/>
+          <circle cx="650" cy="90" r="18" fill="rgba(251,191,36,0.14)" stroke="rgba(251,191,36,0.32)"/>
+          <circle cx="650" cy="230" r="18" fill="rgba(251,191,36,0.14)" stroke="rgba(251,191,36,0.32)"/>
+          <circle cx="840" cy="55" r="10" fill="#fb7185"/>
+          <circle cx="840" cy="125" r="10" fill="#fb7185"/>
+          <circle cx="840" cy="195" r="10" fill="#fb7185"/>
+          <circle cx="840" cy="265" r="10" fill="#fb7185"/>
+          <line x1="152" y1="149" x2="373" y2="101" stroke="#cbd5e1" stroke-width="3.2"/>
+          <line x1="152" y1="171" x2="373" y2="219" stroke="#cbd5e1" stroke-width="3.2"/>
+          <line x1="408" y1="90" x2="632" y2="90" stroke="#cbd5e1" stroke-width="3.2"/>
+          <line x1="408" y1="230" x2="632" y2="230" stroke="#cbd5e1" stroke-width="3.2"/>
+          <line x1="668" y1="83" x2="830" y2="56" stroke="#cbd5e1" stroke-width="2.8"/>
+          <line x1="668" y1="97" x2="830" y2="124" stroke="#cbd5e1" stroke-width="2.8"/>
+          <line x1="668" y1="223" x2="830" y2="196" stroke="#cbd5e1" stroke-width="2.8"/>
+          <line x1="668" y1="237" x2="830" y2="264" stroke="#cbd5e1" stroke-width="2.8"/>
+          <text x="130" y="166" text-anchor="middle" fill="#d8fbff" font-size="16" font-family="Arial">Nature</text>
+          <text x="250" y="108" fill="#cbd5e1" font-size="14" font-family="Arial">type H with prob p</text>
+          <text x="250" y="228" fill="#cbd5e1" font-size="14" font-family="Arial">type L with prob 1-p</text>
+          <text x="390" y="95" text-anchor="middle" fill="#ccfbf1" font-size="15" font-family="Arial">player sees H</text>
+          <text x="390" y="235" text-anchor="middle" fill="#ccfbf1" font-size="15" font-family="Arial">player sees L</text>
+          <text x="650" y="95" text-anchor="middle" fill="#fde7a3" font-size="14" font-family="Arial">action a</text>
+          <text x="650" y="235" text-anchor="middle" fill="#fde7a3" font-size="14" font-family="Arial">action b</text>
+          <text x="858" y="60" fill="#ffd0d8" font-size="13" font-family="Arial">terminal payoffs</text>
+        </svg>
+        <div class="figure-caption">The unknown type is treated as an initial random move by Nature. After that move, each player knows their own type but not necessarily the others' types.</div>
+      </div>
+
+      <h3>Why this is useful</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div><b>It standardizes incomplete information.</b> Private characteristics become explicit objects in the model.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div><b>It clarifies beliefs.</b> The common prior tells us exactly how uncertainty is represented.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div><b>It clarifies strategies.</b> A player's decision rule becomes a type-contingent strategy.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div><b>It lets us use standard equilibrium ideas.</b> Once the transformation is made, Bayesian Nash equilibrium becomes the natural solution concept for the resulting strategic problem.</div>
+        </div>
+      </div>
+
+      <div class="box cyan">
+        <b>Short memory aid.</b> Harsanyi transformation means: Nature draws the types first, players observe what they are allowed to observe, and the rest of the game is solved normally.
+      </div>
+    </section>
+
+    <section id="sec4">
+      <h2>4. Bayesian Nash equilibrium <span class="pill rose">expected-payoff optimality by type</span></h2>
+
+      <p>A Bayesian Nash equilibrium (BNE) is a strategy profile in which every type of every player is choosing a best response, given beliefs about other players' types and given the strategy functions of the other players.</p>
+
+      <div class="formula-card">
+        <div class="label">Expected payoff for finite type spaces</div>
+        <p>Given a pure-strategy profile \(s=(s_1,\dots,s_n)\), player \(i\)'s expected payoff conditional on type \(t_i\) is</p>
+        \[
+        U_i(s\mid t_i)
+        =
+        \sum_{t_{-i}\in T_{-i}}
+        \mu_i(t_{-i}\mid t_i)
+        \,u_i\bigl(s_i(t_i),s_{-i}(t_{-i});t_i,t_{-i}\bigr).
+        \]
+      </div>
+
+      <div class="formula-card">
+        <div class="label">Expected payoff for continuous type spaces</div>
+        <p>If types are continuous, the sum becomes an integral:</p>
+        \[
+        U_i(s\mid t_i)
+        =
+        \int_{T_{-i}}
+        u_i\bigl(s_i(t_i),s_{-i}(t_{-i});t_i,t_{-i}\bigr)
+        \,d\mu_i(t_{-i}\mid t_i).
+        \]
+      </div>
+
+      <div class="formula-card">
+        <div class="label">Definition of BNE</div>
+        <p>A strategy profile \(s^*\) is a Bayesian Nash equilibrium if for every player \(i\), every type \(t_i\), and every feasible alternative action \(a_i\in A_i\),</p>
+        \[
+        U_i(s^*\mid t_i)
+        \ge
+        \sum_{t_{-i}\in T_{-i}}
+        \mu_i(t_{-i}\mid t_i)
+        \,u_i\bigl(a_i,s^*_{-i}(t_{-i});t_i,t_{-i}\bigr).
+        \]
+        <p>So each type must be best responding in expected-value terms.</p>
+      </div>
+
+      <div class="grid-2">
+        <div>
+          <h3>How BNE differs from ordinary Nash equilibrium</h3>
+          <p>Ordinary Nash equilibrium asks whether an action is a best response to others' actions. BNE asks whether a type-contingent action is a best response to others' <b>type-contingent strategies</b> under beliefs about the unknown type profile.</p>
+        </div>
+        <div>
+          <h3>What is the main extra object?</h3>
+          <p>The extra object is not a new optimization method. It is the player's belief about hidden types. Once the belief is specified, the computation is expected-utility maximization.</p>
+        </div>
+      </div>
+
+      <h3>Practical solution checklist</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div><b>Identify the types.</b> Determine what information is privately known and how it affects payoff.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div><b>Write the strategy space.</b> A strategy should specify an action for every type, not just one realized action.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div><b>Condition on your own type.</b> Fix \(t_i\) and compute the expected payoff from each feasible action using beliefs over \(t_{-i}\).</div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div><b>Find best responses type by type.</b> Different types may optimally choose different actions.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">5</div>
+          <div><b>Look for consistency.</b> A BNE is a fixed point of type-contingent best responses.</div>
+        </div>
+      </div>
+
+      <div class="box amber">
+        <b>Common beginner mistake.</b> Treating a strategy as one action. In Bayesian games, the strategy is a map from type to action. That is the whole point of the model.
+      </div>
+    </section>
+
+    <section id="sec5">
+      <h2>5. Worked discrete example: posted pricing with private buyer valuation <span class="pill amber">compact BNE computation</span></h2>
+
+      <p>This example supports the earlier discussion of Harsanyi transformation and Bayesian reasoning. A seller posts a price and a buyer privately knows whether they are a high-value or low-value type.</p>
+
+      <div class="formula-card">
+        <div class="label">Environment</div>
+        <ul>
+          <li>The seller chooses a price \(P\in\{5,9\}\).</li>
+          <li>The buyer's type is \(H\) or \(L\).</li>
+          <li>Valuations are \(v_H=10\) and \(v_L=4\).</li>
+          <li>Beliefs: \(\Pr(H)=0.6\), \(\Pr(L)=0.4\).</li>
+          <li>After observing the price, the buyer chooses \(\text{Buy}\) or \(\text{Not Buy}\).</li>
+        </ul>
+      </div>
+
+      <p>To be formally complete, the buyer's strategy is a mapping from type and observed price to a response:</p>
+      \[
+      s_B:\{H,L\}\times\{5,9\}\to\{\text{Buy},\text{Not Buy}\}.
+      \]
+
+      <div class="compare">
+        <table>
+          <tr>
+            <th>Buyer type</th>
+            <th>If P = 5</th>
+            <th>If P = 9</th>
+            <th>Best response pattern</th>
+          </tr>
+          <tr>
+            <td>H with value 10</td>
+            <td>Buy payoff = 10 - 5 = 5</td>
+            <td>Buy payoff = 10 - 9 = 1</td>
+            <td>Buy at both prices</td>
+          </tr>
+          <tr>
+            <td>L with value 4</td>
+            <td>Buy payoff = 4 - 5 = -1</td>
+            <td>Buy payoff = 4 - 9 = -5</td>
+            <td>Reject at both prices</td>
+          </tr>
+        </table>
+      </div>
+
+      <h3>Buyer's best responses</h3>
+      <div class="formula-card">
+        <div class="label">Type-contingent behavior</div>
+        \[
+        s_B(H,5)=\text{Buy},
+        \qquad
+        s_B(H,9)=\text{Buy},
+        \]
+        \[
+        s_B(L,5)=\text{Not Buy},
+        \qquad
+        s_B(L,9)=\text{Not Buy}.
+        \]
+      </div>
+
+      <h3>Seller's expected payoff</h3>
+      <p>The seller knows that only type \(H\) buys. Therefore the sale probability is \(0.6\) under either feasible price, and expected profit is:</p>
+      <div class="formula-card">
+        <div class="label">Seller's comparison</div>
+        \[
+        \Pi_S(5)=0.6\times 5=3,
+        \qquad
+        \Pi_S(9)=0.6\times 9=5.4.
+        \]
+      </div>
+
+      <div class="box teal">
+        <b>Bayesian equilibrium outcome.</b> The seller chooses \(P=9\). The high-value buyer buys and the low-value buyer rejects. This is a Bayesian best-response configuration.
+      </div>
+
+      <div class="box cyan">
+        <b>Technical note.</b> Because this example is sequential, one can also formulate it in extensive form and refine behavior with sequential rationality. In this simple case the Bayesian best-response calculation and the extensive-form reasoning give the same outcome.
+      </div>
+    </section>
+
+    <section id="sec6">
+      <h2>6. Continuous types: first-price auction with n bidders <span class="pill rose">general formula</span></h2>
+
+      <p>This is the most useful continuous-type Bayesian example for developing technique. Each bidder privately knows their valuation and submits a bid simultaneously. The highest bidder wins and pays their own bid.</p>
+
+      <div class="formula-card">
+        <div class="label">Auction environment</div>
+        <ul>
+          <li>There are \(n\) risk-neutral bidders.</li>
+          <li>Each valuation \(v_i\) is independently drawn from distribution \(F\) on \([0,\bar v]\) with density \(f\).</li>
+          <li>Each bidder uses the same strictly increasing bid function \(b(v)\).</li>
+          <li>We seek a symmetric pure-strategy Bayesian Nash equilibrium.</li>
+        </ul>
+      </div>
+
+      <h3>Step 1: Write the payoff from mimicking another type</h3>
+      <p>Fix a bidder with true valuation \(v\). If they bid as if they were type \(z\), they submit bid \(b(z)\). Since the bid function is strictly increasing, they win exactly when every rival valuation is below \(z\). Thus the winning probability is \(F(z)^{n-1}\), so expected profit is</p>
+      <div class="formula-card">
+        <div class="label">Expected profit from bidding like type z</div>
+        \[
+        \Pi(z;v)=\bigl(v-b(z)\bigr)F(z)^{n-1}.
+        \]
+      </div>
+
+      <h3>Step 2: First-order condition at the symmetric optimum</h3>
+      <p>In equilibrium, type \(v\) should choose \(z=v\). Differentiate \(\Pi(z;v)\) with respect to \(z\) and set \(z=v\):</p>
+      <div class="formula-card">
+        <div class="label">Differentiation</div>
+        \[
+        \frac{\partial \Pi}{\partial z}
+        =
+        -b'(z)F(z)^{n-1}
+        +
+        \bigl(v-b(z)\bigr)(n-1)F(z)^{n-2}f(z).
+        \]
+        <p>At \(z=v\), the equilibrium condition becomes</p>
+        \[
+        -b'(v)F(v)^{n-1}
+        +
+        \bigl(v-b(v)\bigr)(n-1)F(v)^{n-2}f(v)=0.
+        \]
+      </div>
+
+      <h3>Step 3: Rearrange into a linear differential equation</h3>
+      <div class="formula-card">
+        <div class="label">ODE for the equilibrium bid function</div>
+        \[
+        b'(v)+\frac{(n-1)f(v)}{F(v)}b(v)
+        =
+        \frac{(n-1)f(v)}{F(v)}v.
+        \]
+        <p>Using the integrating factor \(F(v)^{n-1}\), one obtains</p>
+        \[
+        \frac{d}{dv}\Bigl(F(v)^{n-1}b(v)\Bigr)
+        =
+        (n-1)vf(v)F(v)^{n-2}.
+        \]
+      </div>
+
+      <h3>Step 4: Solve the equation</h3>
+      <p>Imposing the natural boundary condition \(b(0)=0\), the symmetric equilibrium bid function is</p>
+      <div class="formula-card">
+        <div class="label">General n-bidder formula</div>
+        \[
+        b(v)
+        =
+        \frac{\int_0^v (n-1)tf(t)F(t)^{n-2}\,dt}{F(v)^{n-1}}
+        =
+        v-\frac{\int_0^v F(t)^{n-1}\,dt}{F(v)^{n-1}}.
+        \]
+      </div>
+
+      <h3>Uniform special case</h3>
+      <p>If valuations are uniform on \([0,1]\), then \(F(v)=v\) and \(f(v)=1\). Substituting into the formula yields</p>
+      <div class="formula-card">
+        <div class="label">Uniform distribution result</div>
+        \[
+        b(v)
+        =
+        v-\frac{\int_0^v t^{n-1}\,dt}{v^{n-1}}
+        =
+        v-\frac{v^n/n}{v^{n-1}}
+        =
+        \frac{n-1}{n}v.
+        \]
+      </div>
+
+      <div class="figure">
+        <svg viewBox="0 0 900 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bid shading curve in first-price auction">
+          <rect x="1" y="1" width="898" height="318" rx="16" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.08)"/>
+          <line x1="90" y1="260" x2="840" y2="260" stroke="#cbd5e1" stroke-width="3"/>
+          <line x1="90" y1="260" x2="90" y2="40" stroke="#cbd5e1" stroke-width="3"/>
+          <text x="846" y="282" fill="#cbd5e1" font-size="14" font-family="Arial">valuation v</text>
+          <text x="40" y="52" fill="#cbd5e1" font-size="14" font-family="Arial">bid</text>
+          <line x1="90" y1="260" x2="800" y2="70" stroke="#67e8f9" stroke-width="4" stroke-dasharray="8 8"/>
+          <line x1="90" y1="260" x2="800" y2="117" stroke="#fbbf24" stroke-width="4"/>
+          <text x="646" y="82" fill="#d8fbff" font-size="14" font-family="Arial">truthful line b(v) = v</text>
+          <text x="610" y="108" fill="#fde7a3" font-size="14" font-family="Arial">first-price equilibrium b(v) = (n-1)/n v</text>
+          <circle cx="610" cy="155" r="7" fill="#fb7185"/>
+          <line x1="610" y1="155" x2="610" y2="260" stroke="#fb7185" stroke-width="2.5" stroke-dasharray="6 6"/>
+          <line x1="610" y1="155" x2="704" y2="155" stroke="#fb7185" stroke-width="2.5" stroke-dasharray="6 6"/>
+          <text x="710" y="159" fill="#ffd0d8" font-size="13" font-family="Arial">bid shading</text>
+        </svg>
+        <div class="figure-caption">In a first-price auction, equilibrium bids lie below valuation. The gap reflects the tradeoff between increasing winning probability and lowering payment conditional on winning.</div>
+      </div>
+
+      <div class="box teal">
+        <b>Interpretation.</b> As \(n\) increases, \((n-1)/n\) moves closer to \(1\), so bids become more aggressive and approach truthful bidding. Stronger competition reduces bid shading.
+      </div>
+    </section>
+
+    <section id="sec7">
+      <h2>7. From Bayesian games to signaling games <span class="pill teal">why signaling is deeper</span></h2>
+
+      <p>Static Bayesian games treat types as hidden and actions as direct responses to those hidden types. Signaling games add an extra strategic layer: actions themselves can reveal, conceal, or distort beliefs about type.</p>
+
+      <div class="compare">
+        <table>
+          <tr>
+            <th>Object</th>
+            <th>Static Bayesian game</th>
+            <th>Signaling game</th>
+          </tr>
+          <tr>
+            <td>Unknown variable</td>
+            <td>Type is privately known</td>
+            <td>Type is privately known</td>
+          </tr>
+          <tr>
+            <td>Timing</td>
+            <td>Usually simultaneous or one-stage incomplete information</td>
+            <td>A sender moves first, then a receiver updates beliefs and responds</td>
+          </tr>
+          <tr>
+            <td>Main equilibrium object</td>
+            <td>Type-contingent strategies</td>
+            <td>Type-contingent signals, posterior beliefs, and receiver actions</td>
+          </tr>
+          <tr>
+            <td>New issue</td>
+            <td>Expected-payoff maximization under hidden types</td>
+            <td>Actions change beliefs, and beliefs change later actions</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="formula-card">
+        <div class="label">Posterior belief after a signal</div>
+        <p>If the sender sends signal \(m\), the receiver forms a posterior</p>
+        \[
+        \mu(t\mid m).
+        \]
+        <p>Now the strategic chain is</p>
+        \[
+        \text{signal } m
+        \to
+        \text{belief } \mu(\cdot\mid m)
+        \to
+        \text{receiver action}
+        \to
+        \text{sender payoff}.
+        \]
+      </div>
+
+      <div class="grid-2">
+        <div class="box rose">
+          <b>Why signaling is more subtle.</b>
+          <p>A player's action now has two effects at once: a direct payoff effect and an informational effect. The sender asks not only "what do I gain from this move?" but also "what will the receiver infer from this move?"</p>
+        </div>
+        <div class="box amber">
+          <b>Canonical distinction.</b>
+          <p><b>Separating equilibrium:</b> different types choose different signals. <b>Pooling equilibrium:</b> different types choose the same signal. The distinction is about whether information is revealed endogenously.</p>
+        </div>
+      </div>
+
+      <div class="box cyan">
+        <b>Good bridge intuition.</b> Static Bayesian games are about acting under hidden information. Signaling games are about acting in ways that actively shape what others believe about hidden information.
+      </div>
+    </section>
+
+    <section id="sec8">
+      <h2>8. Why electricity markets often use Bayesian games <span class="pill amber">application mapping</span></h2>
+
+      <p>Electricity markets are a natural environment for Bayesian modeling because they combine private information, strategic bids, and market-clearing rules under physical network constraints.</p>
+
+      <div class="grid-2">
+        <div class="box">
+          <b>Private information</b>
+          <p>Generators know more than rivals do about marginal costs, outage risk, start-up constraints, fuel positions, ramping capability, or the true flexibility of their assets.</p>
+        </div>
+        <div class="box">
+          <b>Strategic interaction</b>
+          <p>Participants submit offers and quantities while anticipating the bids of competitors and the clearing rule used by the market operator.</p>
+        </div>
+      </div>
+
+      <div class="formula-card">
+        <div class="label">Bayesian-game mapping for electricity markets</div>
+        <ul>
+          <li><b>Type.</b> Cost, available capacity, outage probability, flexibility, or demand elasticity.</li>
+          <li><b>Action.</b> Bid price, offered quantity, block structure, reserve offer, or demand response commitment.</li>
+          <li><b>Belief.</b> Distribution over rivals' costs, capacity states, and likely bidding behavior.</li>
+          <li><b>Payoff.</b> Revenue net of production cost, adjusted by dispatch, congestion, reserve payments, penalties, and market rules.</li>
+        </ul>
+      </div>
+
+      <div class="figure">
+        <svg viewBox="0 0 920 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Electricity market Bayesian mapping">
+          <rect x="1" y="1" width="918" height="278" rx="16" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.08)"/>
+          <rect x="64" y="74" width="170" height="120" rx="16" fill="rgba(45,212,191,0.10)" stroke="rgba(45,212,191,0.28)"/>
+          <rect x="292" y="74" width="170" height="120" rx="16" fill="rgba(103,232,249,0.10)" stroke="rgba(103,232,249,0.28)"/>
+          <rect x="520" y="74" width="170" height="120" rx="16" fill="rgba(251,191,36,0.10)" stroke="rgba(251,191,36,0.28)"/>
+          <rect x="748" y="74" width="120" height="120" rx="16" fill="rgba(251,113,133,0.10)" stroke="rgba(251,113,133,0.28)"/>
+          <line x1="234" y1="134" x2="292" y2="134" stroke="#67e8f9" stroke-width="3.2"/>
+          <line x1="462" y1="134" x2="520" y2="134" stroke="#67e8f9" stroke-width="3.2"/>
+          <line x1="690" y1="134" x2="748" y2="134" stroke="#67e8f9" stroke-width="3.2"/>
+          <text x="149" y="110" text-anchor="middle" fill="#ccfbf1" font-size="17" font-family="Arial">private type</text>
+          <text x="149" y="136" text-anchor="middle" fill="#e7edf5" font-size="13" font-family="Arial">cost, capacity, risk</text>
+          <text x="149" y="156" text-anchor="middle" fill="#e7edf5" font-size="13" font-family="Arial">flexibility, demand state</text>
+          <text x="377" y="110" text-anchor="middle" fill="#d8fbff" font-size="17" font-family="Arial">strategic bid</text>
+          <text x="377" y="136" text-anchor="middle" fill="#e7edf5" font-size="13" font-family="Arial">price, quantity, blocks</text>
+          <text x="377" y="156" text-anchor="middle" fill="#e7edf5" font-size="13" font-family="Arial">reserve offer</text>
+          <text x="605" y="110" text-anchor="middle" fill="#fde7a3" font-size="17" font-family="Arial">market clearing</text>
+          <text x="605" y="136" text-anchor="middle" fill="#e7edf5" font-size="13" font-family="Arial">dispatch plus</text>
+          <text x="605" y="156" text-anchor="middle" fill="#e7edf5" font-size="13" font-family="Arial">network constraints</text>
+          <text x="808" y="110" text-anchor="middle" fill="#ffd0d8" font-size="17" font-family="Arial">payoff</text>
+          <text x="808" y="136" text-anchor="middle" fill="#e7edf5" font-size="13" font-family="Arial">profit</text>
+          <text x="808" y="156" text-anchor="middle" fill="#e7edf5" font-size="13" font-family="Arial">or loss</text>
+        </svg>
+        <div class="figure-caption">The Bayesian logic is natural: hidden operational conditions shape bids, bids feed into constrained market clearing, and the resulting prices and quantities determine profit.</div>
+      </div>
+
+      <div class="grid-2">
+        <div class="box teal">
+          <b>Why ordinary complete-information models are often too strong.</b>
+          <p>Rivals do not observe each other's true marginal costs, start-up costs, or real-time capability with full precision. Modeling everyone as fully informed can erase exactly the strategic uncertainty that matters.</p>
+        </div>
+        <div class="box rose">
+          <b>Where Bayesian games are especially useful.</b>
+          <p>They are most useful when the research question is strategic bidding under private information. They are not the only tool in electricity economics; optimization, stochastic programming, and equilibrium-with-network models remain central for many other questions.</p>
+        </div>
+      </div>
+
+      <div class="box cyan">
+        <b>One-sentence summary.</b> Electricity markets often call for Bayesian games because participants submit strategic offers while holding private information that materially affects clearing outcomes and profit under network constraints.
+      </div>
+    </section>
+
+    <section id="sec9">
+      <h2>9. Summary and checklist <span class="pill">what to remember</span></h2>
+
+      <div class="compare">
+        <table>
+          <tr>
+            <th>Concept</th>
+            <th>What it adds</th>
+            <th>What to compute</th>
+          </tr>
+          <tr>
+            <td>Bayesian game</td>
+            <td>Private payoff-relevant information</td>
+            <td>Type spaces, beliefs, and type-contingent strategies</td>
+          </tr>
+          <tr>
+            <td>Harsanyi transformation</td>
+            <td>Turns hidden characteristics into Nature's initial move</td>
+            <td>The induced type structure and information pattern</td>
+          </tr>
+          <tr>
+            <td>Bayesian Nash equilibrium</td>
+            <td>Best-response optimality for every type</td>
+            <td>Expected payoff conditional on own type</td>
+          </tr>
+          <tr>
+            <td>Continuous-type auction analysis</td>
+            <td>Functional strategy rather than a single action</td>
+            <td>The equilibrium bid function \(b(v)\)</td>
+          </tr>
+          <tr>
+            <td>Signaling extension</td>
+            <td>Actions affect beliefs and later responses</td>
+            <td>Signals, posterior beliefs, and receiver best responses</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="one-liner">Bayesian games add types and beliefs; Bayesian Nash equilibrium says each type must be optimizing in expectation; signaling games go one layer deeper by making actions informative.</div>
+
+      <div class="note-list">
+        <div class="note-item"><b>Checklist 1.</b> Ask first: what information is private, and whose payoff does it change?</div>
+        <div class="note-item"><b>Checklist 2.</b> Write the strategy correctly as a map from type to action, or from type and history to action in dynamic settings.</div>
+        <div class="note-item"><b>Checklist 3.</b> Condition on own type and compute expected payoff under beliefs about the unknown types of others.</div>
+        <div class="note-item"><b>Checklist 4.</b> For continuous types, expect to solve for a function, not a single number.</div>
+        <div class="note-item"><b>Checklist 5.</b> If actions are observed before others respond, ask whether the richer signaling or sequential-belief framework is needed.</div>
+      </div>
+
+      <div class="box cyan">
+        <b>Final takeaway.</b> The mathematical core of Bayesian games is not mysterious: add types, add beliefs, take conditional expectations, and solve best responses. The real richness comes from what those types represent in economic environments such as auctions, signaling, labor markets, insurance, and electricity markets.
+      </div>
+    </section>
+
+    <footer>
+      Built as a single-file HTML study note with MathJax, tables, formulas, and inline SVG figures.
+    </footer>
+  </div>
+</body>
+</html>
