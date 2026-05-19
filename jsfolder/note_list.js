@@ -2,14 +2,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const noteLists = document.querySelectorAll('.auto-note-list');
 
     noteLists.forEach((list) => {
-        const noteItems = list.querySelectorAll('li');
+        const noteItems = Array.from(list.querySelectorAll('li'));
 
+        // Sort descending by data-updated (newest first)
+        noteItems.sort((a, b) => {
+            const da = a.dataset.updated || '';
+            const db = b.dataset.updated || '';
+            return db.localeCompare(da);
+        });
+
+        // Re-append in sorted order
+        noteItems.forEach(item => list.appendChild(item));
+
+        // Number and annotate
         noteItems.forEach((item, index) => {
             const link = item.querySelector('a');
-
-            if (!link) {
-                return;
-            }
+            if (!link) return;
 
             const originalTitle = link.textContent.trim();
             const displayIndex = String(index + 1).padStart(2, '0');
@@ -23,7 +31,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 updatedTag.className = 'updated-time';
                 item.appendChild(updatedTag);
             }
-
             updatedTag.textContent = `Updated: ${updatedDate}`;
         });
     });

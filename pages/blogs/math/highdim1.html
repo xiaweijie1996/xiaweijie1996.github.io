@@ -1,0 +1,1167 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>High-Dimensional Learning — Curse of Dimensionality</title>
+
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)'], ['$', '$']],
+        displayMath: [['\\[', '\\]'], ['$$', '$$']]
+      },
+      options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <style>
+    :root{
+      --bg:#09111a; --bg2:#0f1c2b; --card:#0f1724; --card2:rgba(15,23,36,0.84);
+      --text:#e7edf5; --muted:#9fb0c3; --line:rgba(255,255,255,0.10);
+      --line2:rgba(255,255,255,0.18); --cyan:#67e8f9; --teal:#2dd4bf;
+      --amber:#fbbf24; --rose:#fb7185; --violet:#c084fc;
+      --shadow:0 18px 60px rgba(0,0,0,0.34);
+    }
+    *{ box-sizing:border-box; }
+    html{ scroll-behavior:smooth; }
+    body{
+      margin:0; color:var(--text);
+      background:
+        radial-gradient(1100px 520px at 10% 0%, rgba(103,232,249,0.12), transparent 60%),
+        radial-gradient(900px 520px at 92% 0%, rgba(251,191,36,0.10), transparent 56%),
+        linear-gradient(180deg, var(--bg), #050a11);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      line-height:1.72;
+    }
+    a{ color:#c6f4ff; text-decoration:none; }
+    a:hover{ text-decoration:underline; }
+    .wrap{ max-width:1160px; margin:32px auto 80px; padding:0 18px; }
+    header.hero{
+      background:
+        radial-gradient(860px 380px at 10% 0%, rgba(103,232,249,0.16), transparent 58%),
+        radial-gradient(760px 340px at 90% 0%, rgba(251,191,36,0.10), transparent 56%),
+        linear-gradient(180deg, rgba(12,20,31,0.96), rgba(10,17,28,0.92));
+      border:1px solid var(--line); border-radius:22px; padding:30px 26px 24px;
+      box-shadow:var(--shadow); position:relative; overflow:hidden;
+    }
+    .hero h1{ margin:0 0 10px; font-size:34px; letter-spacing:.2px; line-height:1.18; }
+    .hero p{ margin:0; max-width:980px; color:var(--muted); font-size:15px; }
+    .hero-tags{ display:flex; flex-wrap:wrap; gap:8px; margin-top:16px; }
+    .tag{ padding:5px 10px; border-radius:999px; border:1px solid var(--line);
+      background:rgba(255,255,255,0.04); color:#d8fbff; font-size:12px; }
+    .tag.teal{ color:#ccfbf1; background:rgba(45,212,191,0.10); }
+    .tag.amber{ color:#fde7a3; background:rgba(251,191,36,0.10); }
+    .tag.rose{ color:#ffd0d8; background:rgba(251,113,133,0.10); }
+    .tag.violet{ color:#ead8ff; background:rgba(192,132,252,0.10); }
+    .toc, section{
+      margin-top:18px; background:var(--card2); border:1px solid var(--line);
+      border-radius:20px; padding:24px 22px 24px; box-shadow:0 12px 40px rgba(0,0,0,0.22);
+    }
+    .toc{ padding:18px 20px; }
+    .toc h2{ margin:0 0 12px; font-size:18px; }
+    .toc-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:10px 16px; }
+    .toc a{ display:block; padding:10px 12px; border-radius:12px; border:1px solid rgba(255,255,255,0.08);
+      background:rgba(255,255,255,0.03); color:var(--text); }
+    .toc a span{ display:block; color:var(--muted); font-size:12px; margin-top:2px; }
+    h2{ margin:0 0 14px; font-size:22px; line-height:1.3; color:#f8fbff; }
+    h3{ margin:18px 0 8px; font-size:16px; color:#eff7ff; }
+    h4{ margin:14px 0 6px; font-size:14px; color:#d1f8ff; letter-spacing:.1px; }
+    p{ margin:9px 0; }
+    ul,ol{ margin:8px 0 10px 22px; }
+    li{ margin:4px 0; }
+    .muted{ color:var(--muted); }
+    .pill{ display:inline-block; margin-left:8px; padding:2px 10px; border-radius:999px; font-size:12px;
+      border:1px solid var(--line); background:rgba(103,232,249,0.10); color:#d8fbff; vertical-align:middle; }
+    .pill.teal{ background:rgba(45,212,191,0.12); color:#ccfbf1; }
+    .pill.amber{ background:rgba(251,191,36,0.12); color:#fde7a3; }
+    .pill.rose{ background:rgba(251,113,133,0.12); color:#ffd0d8; }
+    .pill.violet{ background:rgba(192,132,252,0.12); color:#ead8ff; }
+    .box{ margin:12px 0; padding:13px 14px; border-radius:14px; border:1px solid var(--line); background:rgba(255,255,255,0.03); }
+    .box.cyan{ background:rgba(103,232,249,0.10); border-color:rgba(103,232,249,0.24); }
+    .box.teal{ background:rgba(45,212,191,0.10); border-color:rgba(45,212,191,0.24); }
+    .box.amber{ background:rgba(251,191,36,0.10); border-color:rgba(251,191,36,0.24); }
+    .box.rose{ background:rgba(251,113,133,0.10); border-color:rgba(251,113,133,0.24); }
+    .box.violet{ background:rgba(192,132,252,0.10); border-color:rgba(192,132,252,0.24); }
+    .one-liner{ margin:12px 0; padding:12px 14px; border-radius:14px; border:1px dashed rgba(103,232,249,0.35);
+      background:rgba(103,232,249,0.10); color:#d8fbff; font-weight:650; }
+    .grid-2{ display:grid; grid-template-columns:repeat(auto-fit,minmax(290px,1fr)); gap:16px; align-items:start; }
+    .grid-3{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; align-items:start; }
+    table{ width:100%; border-collapse:collapse; margin:12px 0; border:1px solid var(--line); border-radius:14px; overflow:hidden; }
+    th,td{ border:1px solid var(--line); padding:10px 12px; text-align:left; vertical-align:top; }
+    th{ background:rgba(255,255,255,0.05); font-weight:650; text-align:center; }
+    td:first-child, th:first-child{ white-space:nowrap; }
+    .formula-card{ padding:14px 16px; border-radius:16px; border:1px solid var(--line2); background:rgba(13,24,39,0.74); margin:12px 0; overflow:auto; }
+    .formula-card .label{ display:inline-block; margin-bottom:8px; padding:2px 8px; border-radius:999px; font-size:11px; color:#d8fbff;
+      background:rgba(103,232,249,0.10); border:1px solid rgba(103,232,249,0.22); letter-spacing:.2px; text-transform:uppercase; }
+    .steps{ display:grid; gap:10px; margin-top:12px; }
+    .step{ display:grid; grid-template-columns:36px 1fr; gap:12px; align-items:start; padding:12px 14px; border-radius:14px;
+      border:1px solid var(--line); background:rgba(255,255,255,0.03); }
+    .step-num{ width:36px; height:36px; display:flex; align-items:center; justify-content:center; border-radius:50%;
+      background:rgba(103,232,249,0.14); border:1px solid rgba(103,232,249,0.26); color:#d8fbff; font-weight:700; }
+    .note-list{ display:grid; gap:10px; margin-top:10px; }
+    .note-item{ padding:12px 14px; border-radius:14px; border:1px solid var(--line); background:rgba(255,255,255,0.03); }
+    footer{ margin-top:18px; color:var(--muted); font-size:13px; text-align:center; padding:8px; }
+    .mjx-container{ overflow-x:auto; overflow-y:hidden; margin:6px 0; }
+    code{ color:#d8fbff; background:rgba(255,255,255,0.06); padding:1px 5px; border-radius:5px; }
+    .derivation-block{
+      border-left:3px solid rgba(103,232,249,0.45);
+      padding:12px 16px;
+      margin:14px 0;
+      background:rgba(13,24,39,0.60);
+      border-radius:0 14px 14px 0;
+    }
+    .derivation-block .step-label{
+      font-size:12px; color:var(--cyan); font-weight:700; letter-spacing:.3px;
+      text-transform:uppercase; margin-bottom:6px;
+    }
+    @media (max-width:760px){
+      .hero h1{ font-size:28px; }
+      section{ padding:20px 16px 20px; }
+      .step{ grid-template-columns:32px 1fr; gap:10px; }
+      .step-num{ width:32px; height:32px; }
+    }
+  </style>
+</head>
+
+<body>
+<div class="wrap">
+  <header class="hero">
+    <h1>High-Dimensional Learning — Curse of Dimensionality</h1>
+    <p>
+      A detailed study note based on AIMS 2022 Lecture 2. Covers the full statistical learning framework,
+      a rigorous derivation of the three-way error decomposition (approximation, statistical, optimization),
+      and three manifestations of the curse of dimensionality in Lipschitz estimation, neural network
+      approximation, and non-convex optimization.
+    </p>
+    <div class="hero-tags">
+      <span class="tag">Statistical Learning</span>
+      <span class="tag teal">Error Decomposition</span>
+      <span class="tag amber">Curse of Dimensionality</span>
+      <span class="tag rose">Lipschitz Estimation</span>
+      <span class="tag violet">Approximation Theory</span>
+      <span class="tag teal">ERM</span>
+      <span class="tag">Rademacher Complexity</span>
+      <span class="tag amber">Barron Class</span>
+    </div>
+  </header>
+
+  <section class="toc">
+    <h2>Table of contents</h2>
+    <div class="toc-grid">
+      <a href="#sec1">1. Statistical Learning Framework<span>Data, model, loss, and the learning goal</span></a>
+      <a href="#sec2">2. Empirical Risk Minimisation<span>Three equivalent formulations of ERM</span></a>
+      <a href="#sec3">3. Error Decomposition<span>Full algebraic derivation of ε_opt + ε_stat + ε_appr</span></a>
+      <a href="#sec4">4. Approximation Error<span>Model capacity vs target complexity</span></a>
+      <a href="#sec5">5. Statistical Error<span>Generalisation gap and uniform bounds</span></a>
+      <a href="#sec6">6. Optimisation Error<span>ERM sub-optimality</span></a>
+      <a href="#sec7">7. Curse of Dimensionality<span>What it is and where it bites</span></a>
+      <a href="#sec8">8. Learning Lipschitz Functions<span>Upper and lower bounds with derivation</span></a>
+      <a href="#sec9">9. Curse in Approximation<span>Sobolev rates and the Barron exception</span></a>
+      <a href="#sec10">10. Curse in Optimisation<span>NP-hardness and benign landscapes</span></a>
+      <a href="#sec11">11. Summary and the Way Out<span>Geometric priors and adapted function spaces</span></a>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <section id="sec1">
+    <h2>1. Statistical Learning Framework <span class="pill">foundations</span></h2>
+
+    <p>
+      Statistical learning concerns fitting an unknown function \(f^*\) from data. The setup involves
+      four interacting components: a data distribution, a hypothesis class, a loss metric, and an estimation algorithm.
+    </p>
+
+    <h3>Data</h3>
+    <p>
+      We observe \(n\) i.i.d. pairs
+      \(\{(x_i, y_i)\}_{i=1}^n\), where
+    </p>
+    <div class="formula-card">
+      <div class="label">Data model</div>
+      \[
+        x_i \sim \nu \quad (\text{data distribution over } \mathcal X),
+        \qquad
+        y_i = f^*(x_i),
+      \]
+      <p>
+        with \(f^*:\mathcal X\to\mathbb{R}\) the unknown target function we wish to recover.
+        Examples: \(f^*(x)\) = excitation energy of molecule \(x\), or \(f^*(x)=P(y=1\mid x)\) in binary classification.
+      </p>
+    </div>
+
+    <div class="box amber">
+      <b>Why assumptions are unavoidable.</b>
+      We cannot learn \(f^*\) without structural assumptions on both \(\nu\) and \(f^*\).
+      Without any assumption, every function consistent with the data is equally plausible,
+      so no estimator can generalise.
+    </div>
+
+    <h3>Hypothesis class and complexity</h3>
+    <p>
+      We restrict the search to a <b>hypothesis class</b> \(\mathcal{F}\subset\{f:\mathcal{X}\to\mathbb{R}\}\).
+      Within \(\mathcal{F}\), we measure model size via a (non-negative) <b>complexity measure</b>
+      \(\gamma:\mathcal{F}\to\mathbb{R}_{\ge 0}\), e.g. a norm or neuron count.
+    </p>
+
+    <div class="formula-card">
+      <div class="label">Complexity ball</div>
+      \[
+        \mathcal{F}_\delta = \{f\in\mathcal{F} : \gamma(f)\le\delta\}.
+      \]
+      <p>
+        Choosing \(\delta\) trades approximation power against statistical tractability: larger \(\delta\)
+        admits richer functions but also harder generalisation.
+      </p>
+    </div>
+
+    <div class="compare">
+      <table>
+        <tr>
+          <th>Hypothesis class</th>
+          <th>Complexity measure \(\gamma(f)\)</th>
+          <th>Intuition</th>
+        </tr>
+        <tr>
+          <td>Shallow neural network \(\sum_j a_j\rho(w_j^Tx+b_j)\)</td>
+          <td>Number of neurons \(m\)</td>
+          <td>More neurons → richer functions</td>
+        </tr>
+        <tr>
+          <td>Same shallow net</td>
+          <td>Path norm \(\sum_j|a_j|(\|w_j\|+|b_j|)\)</td>
+          <td>Controls smoothness of the function</td>
+        </tr>
+        <tr>
+          <td>Sobolev ball \(\mathcal{H}^s\)</td>
+          <td>Sobolev norm \(\int(1+\omega^2)^s|\hat f(\omega)|^2\,d\omega\)</td>
+          <td>\(s\) finite derivatives bounded</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="box teal">
+      <b>Implicit complexity.</b> Often \(\gamma(f)\) is not prescribed explicitly but is defined
+      implicitly through the training algorithm — e.g. gradient descent with early stopping
+      or SGD with a particular initialisation.
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <section id="sec2">
+    <h2>2. Empirical Risk Minimisation <span class="pill teal">three formulations</span></h2>
+
+    <h3>Population loss vs empirical loss</h3>
+    <div class="formula-card">
+      <div class="label">Population loss</div>
+      \[
+        \mathcal{R}(f) = \mathbb{E}_\nu[\,\ell(f(x), f^*(x))\,],
+      \]
+      <p>where \(\ell(y,y')\) is a pointwise convex error measure, e.g. \(\ell(y,y')=|y-y'|^2\).</p>
+    </div>
+
+    <div class="formula-card">
+      <div class="label">Empirical loss</div>
+      \[
+        \hat{\mathcal{R}}(f) = \frac{1}{n}\sum_{i=1}^n \ell\!\left(f(x_i),\, f^*(x_i)\right).
+      \]
+    </div>
+
+    <p>
+      For any fixed \(f\in\mathcal{F}\), the empirical loss is an <em>unbiased</em> estimator of the
+      population loss:
+    </p>
+    <div class="formula-card">
+      <div class="label">Unbiasedness and variance</div>
+      \[
+        \mathbb{E}[\hat{\mathcal{R}}(f)] = \mathcal{R}(f),
+        \qquad
+        \text{Var}[\hat{\mathcal{R}}(f)] = \frac{\sigma^2(f)}{n},
+        \quad
+        \sigma^2(f) = \mathbb{E}\!\left[\left(\ell(f(x),f^*(x))-\mathcal{R}(f)\right)^2\right].
+      \]
+    </div>
+
+    <div class="box rose">
+      <b>Why pointwise unbiasedness is not enough.</b> In machine learning, the hypothesis \(f\) is chosen
+      <em>after seeing the data</em>, so it depends on the training set. Pointwise variance bounds
+      do not control the worst-case fluctuation over all \(f\in\mathcal{F}_\delta\) simultaneously.
+      We need <b>uniform</b> bounds — typically via Rademacher complexities.
+    </div>
+
+    <h3>Three formulations of ERM</h3>
+
+    <p>The <b>underlying goal</b> is to minimise \(\mathcal{R}(f)\) while having access only to \(\hat{\mathcal{R}}(f)\). The three standard formulations are:</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">C</div>
+        <div>
+          <b>Constrained form.</b> Fix a budget \(\delta\) and minimise empirical loss inside the ball:
+          \[
+            \hat{f}_\delta = \mathop{\arg\min}_{f\in\mathcal{F}_\delta} \hat{\mathcal{R}}(f).
+          \]
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">P</div>
+        <div>
+          <b>Penalised form.</b> Add a regulariser weighted by \(\lambda>0\):
+          \[
+            \hat{f} = \mathop{\arg\min}_{f\in\mathcal{F}} \hat{\mathcal{R}}(f) + \lambda\,\gamma(f).
+          \]
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">I</div>
+        <div>
+          <b>Interpolation form.</b> Minimise complexity subject to zero empirical loss:
+          \[
+            \hat{f} = \mathop{\arg\min}_{f\in\mathcal{F}} \gamma(f) \quad \text{s.t.} \quad \hat{\mathcal{R}}(f)=0.
+          \]
+          <p class="muted">This is the formulation used to analyse double-descent and implicit regularisation of gradient descent.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="box cyan">
+      <b>Lagrangian duality.</b> The constrained and penalised forms are equivalent for the right
+      choice of \(\lambda\) as a function of \(\delta\), by the Lagrangian duality argument.
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <section id="sec3">
+    <h2>3. Error Decomposition <span class="pill amber">full derivation</span></h2>
+
+    <p>
+      The central decomposition of excess population risk into three interpretable components is fundamental
+      to theoretical ML. We derive it step by step.
+    </p>
+
+    <div class="one-liner">
+      Goal: bound \(\mathcal{R}(\hat{f}_\delta) - \inf_{f\in\mathcal{F}}\mathcal{R}(f)\) in terms of three manageable quantities.
+    </div>
+
+    <h3>Setup</h3>
+    <p>
+      Fix any \(\delta>0\) and let \(\hat{f}_\delta\in\mathcal{F}_\delta\) be the ERM solution (constrained form).
+      Define the best possible population risk over the full class and over the ball:
+    </p>
+    <div class="formula-card">
+      <div class="label">Key notation</div>
+      \[
+        f^*_\delta = \mathop{\arg\min}_{f\in\mathcal{F}_\delta}\mathcal{R}(f),
+        \qquad
+        \mathcal{R}^*_\delta = \inf_{f\in\mathcal{F}_\delta}\mathcal{R}(f),
+        \qquad
+        \mathcal{R}^* = \inf_{f\in\mathcal{F}}\mathcal{R}(f).
+      \]
+    </div>
+
+    <h3>Step 1 — Introduce the constrained oracle</h3>
+    <p>
+      Add and subtract \(\mathcal{R}^*_\delta\):
+    </p>
+
+    <div class="derivation-block">
+      <div class="step-label">Step 1</div>
+      \[
+        \mathcal{R}(\hat{f}_\delta) - \mathcal{R}^*
+        =
+        \underbrace{\bigl(\mathcal{R}(\hat{f}_\delta) - \mathcal{R}^*_\delta\bigr)}_{\text{sub-optimality within }\mathcal{F}_\delta}
+        +
+        \underbrace{\bigl(\mathcal{R}^*_\delta - \mathcal{R}^*\bigr)}_{\varepsilon_{\mathrm{appr}}\ge 0}.
+      \]
+      <p>
+        The second term is the <b>approximation error</b>: how much we lose by restricting to \(\mathcal{F}_\delta\)
+        instead of all of \(\mathcal{F}\). It is always \(\ge 0\) since \(\mathcal{F}_\delta\subseteq\mathcal{F}\).
+      </p>
+    </div>
+
+    <h3>Step 2 — Replace population loss by empirical loss</h3>
+    <p>
+      Inside the first bracket, add and subtract the empirical loss at \(\hat{f}_\delta\) and at \(f^*_\delta\):
+    </p>
+
+    <div class="derivation-block">
+      <div class="step-label">Step 2</div>
+      \[
+        \mathcal{R}(\hat{f}_\delta) - \mathcal{R}^*_\delta
+        =
+        \underbrace{\bigl(\hat{\mathcal{R}}(\hat{f}_\delta) - \hat{\mathcal{R}}(f^*_\delta)\bigr)}_{\le\,\varepsilon_{\mathrm{opt}}\,\text{by defn}}
+        +
+        \underbrace{\bigl(\mathcal{R}(\hat{f}_\delta) - \hat{\mathcal{R}}(\hat{f}_\delta)\bigr)}_{\text{fluctuation at }\hat{f}_\delta}
+        +
+        \underbrace{\bigl(\hat{\mathcal{R}}(f^*_\delta) - \mathcal{R}(f^*_\delta)\bigr)}_{\text{fluctuation at }f^*_\delta}.
+      \]
+      <p>
+        The first bracket is the <b>optimisation error</b>
+        \(\varepsilon_{\mathrm{opt}} = \hat{\mathcal{R}}(\hat{f}_\delta) - \inf_{f\in\mathcal{F}_\delta}\hat{\mathcal{R}}(f) \ge 0\).
+        It is zero if ERM is solved exactly (often assumed in theory).
+      </p>
+    </div>
+
+    <h3>Step 3 — Bound fluctuations uniformly</h3>
+    <p>
+      Both fluctuation terms are bounded by the <em>supremum</em> of the generalisation gap over the whole ball:
+    </p>
+
+    <div class="derivation-block">
+      <div class="step-label">Step 3</div>
+      \[
+        \bigl|\mathcal{R}(f) - \hat{\mathcal{R}}(f)\bigr|
+        \le
+        \sup_{f\in\mathcal{F}_\delta}\bigl|\mathcal{R}(f) - \hat{\mathcal{R}}(f)\bigr|
+        \quad\forall f\in\mathcal{F}_\delta.
+      \]
+      Therefore, combining both fluctuation terms:
+      \[
+        \bigl(\mathcal{R}(\hat{f}_\delta) - \hat{\mathcal{R}}(\hat{f}_\delta)\bigr)
+        +
+        \bigl(\hat{\mathcal{R}}(f^*_\delta) - \mathcal{R}(f^*_\delta)\bigr)
+        \le
+        2\sup_{f\in\mathcal{F}_\delta}\bigl|\mathcal{R}(f) - \hat{\mathcal{R}}(f)\bigr|
+        =:\varepsilon_{\mathrm{stat}}.
+      \]
+    </div>
+
+    <h3>Final bound</h3>
+
+    <div class="formula-card">
+      <div class="label">Three-way error decomposition</div>
+      \[
+        \mathcal{R}(\hat{f}_\delta) - \mathcal{R}^*
+        \;\le\;
+        \underbrace{\varepsilon_{\mathrm{opt}}}_{\text{optimisation}}
+        +
+        \underbrace{2\sup_{f\in\mathcal{F}_\delta}|\mathcal{R}(f)-\hat{\mathcal{R}}(f)|}_{\varepsilon_{\mathrm{stat}},\;\text{statistical}}
+        +
+        \underbrace{(\mathcal{R}^*_\delta - \mathcal{R}^*)}_{\varepsilon_{\mathrm{appr}},\;\text{approximation}}.
+      \]
+    </div>
+
+    <div class="grid-3">
+      <div class="box amber">
+        <b>\(\varepsilon_{\mathrm{opt}}\)</b><br>
+        How far the training algorithm is from the ERM minimiser on the empirical objective.
+        <b>Decreases</b> with more compute.
+      </div>
+      <div class="box rose">
+        <b>\(\varepsilon_{\mathrm{stat}}\)</b><br>
+        Maximum discrepancy between population and empirical loss over the model class.
+        <b>Decreases</b> with more data \(n\); <b>increases</b> with larger \(\delta\).
+      </div>
+      <div class="box teal">
+        <b>\(\varepsilon_{\mathrm{appr}}\)</b><br>
+        How far the best model in the class is from the true target.
+        <b>Decreases</b> with larger \(\delta\); independent of data.
+      </div>
+    </div>
+
+    <div class="box cyan">
+      <b>The fundamental tension.</b>
+      \(\delta\) controls the bias-variance tradeoff at the model-class level:
+      increasing \(\delta\) reduces \(\varepsilon_{\mathrm{appr}}\) but inflates \(\varepsilon_{\mathrm{stat}}\).
+      Choosing the optimal \(\delta\) as a function of \(n\) is the classical model-selection problem.
+    </div>
+
+    <h3>Geometric picture</h3>
+    <p>
+      Imagine the function space as a plane with two sets of concentric contours:
+      one for the population loss (centred on \(f^*\)) and one for the empirical loss (slightly shifted due to finite data).
+      The ball \(\mathcal{F}_\delta\) is a constrained region:
+    </p>
+    <ul>
+      <li><b>\(\hat{f}_\delta\)</b>: the point in \(\mathcal{F}_\delta\) minimising the empirical contours.</li>
+      <li><b>\(f^*_\delta\)</b>: the point in \(\mathcal{F}_\delta\) minimising the population contours.</li>
+      <li><b>\(\varepsilon_{\mathrm{stat}}\)</b>: how far the empirical and population landscapes disagree within \(\mathcal{F}_\delta\).</li>
+      <li><b>\(\varepsilon_{\mathrm{appr}}\)</b>: how far the constrained oracle \(f^*_\delta\) sits from the global optimum \(f^*\).</li>
+    </ul>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <section id="sec4">
+    <h2>4. Approximation Error in Depth <span class="pill teal">model capacity</span></h2>
+
+    <div class="formula-card">
+      <div class="label">Approximation error</div>
+      \[
+        \varepsilon_{\mathrm{appr}}(\delta)
+        =
+        \inf_{f\in\mathcal{F}_\delta}\mathcal{R}(f) - \inf_{f\in\mathcal{F}}\mathcal{R}(f)
+        =
+        \inf_{f\in\mathcal{F}_\delta}\mathcal{R}(f) - \mathcal{R}^*.
+      \]
+    </div>
+
+    <p>Three regimes matter in practice:</p>
+
+    <div class="grid-3">
+      <div class="box cyan">
+        <b>Universal approximation</b>
+        <p>
+          If \(\mathcal{F}\) is dense (e.g. neural networks with a non-polynomial activation), then
+          \(\inf_{f\in\mathcal{F}}\mathcal{R}(f)=0\), so \(\mathcal{R}^*=0\). But making \(\delta\to\infty\)
+          may be statistically intractable.
+        </p>
+      </div>
+      <div class="box amber">
+        <b>Sobolev class</b>
+        <p>
+          If \(f^*\in\mathcal{H}^s\) (s finite derivatives bounded), then for shallow nets with \(m\) neurons:
+          \(\varepsilon_{\mathrm{appr}} = \Theta(m^{-s/d})\).
+          The rate degrades exponentially with input dimension \(d\).
+        </p>
+      </div>
+      <div class="box teal">
+        <b>Barron class</b>
+        <p>
+          If \(\int|\hat{f}^*(\omega)|\|\omega\|^2\,d\omega<\infty\), the approximation error is
+          \(\varepsilon_{\mathrm{appr}} = O(m^{-1})\), independent of \(d\). A rare curse-free setting.
+        </p>
+      </div>
+    </div>
+
+    <div class="box rose">
+      <b>Key message.</b> Approximation error reflects a pure model-capacity question: does \(\mathcal{F}_\delta\)
+      contain a function close to \(f^*\)? It has nothing to do with data or the training algorithm.
+      It is determined entirely by the architecture and the target.
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <section id="sec5">
+    <h2>5. Statistical Error in Depth <span class="pill rose">generalisation gap</span></h2>
+
+    <div class="formula-card">
+      <div class="label">Statistical error</div>
+      \[
+        \varepsilon_{\mathrm{stat}}
+        =
+        2\sup_{f\in\mathcal{F}_\delta}\bigl|\mathcal{R}(f) - \hat{\mathcal{R}}(f)\bigr|.
+      \]
+    </div>
+
+    <p>
+      This is the <em>uniform law of large numbers</em> deviation. Pointwise, each \(\hat{\mathcal{R}}(f)\)
+      concentrates around \(\mathcal{R}(f)\), but we need <b>simultaneous</b> control over all
+      \(f\in\mathcal{F}_\delta\) because the chosen \(\hat{f}_\delta\) depends on the training data.
+    </p>
+
+    <h3>Rademacher complexity</h3>
+    <p>
+      The standard tool to bound \(\varepsilon_{\mathrm{stat}}\) is the empirical Rademacher complexity:
+    </p>
+
+    <div class="formula-card">
+      <div class="label">Rademacher complexity</div>
+      \[
+        \mathfrak{R}_n(\mathcal{F}_\delta)
+        =
+        \mathbb{E}_{\varepsilon,x}\!\left[
+          \sup_{f\in\mathcal{F}_\delta}
+          \frac{1}{n}\sum_{i=1}^n \varepsilon_i f(x_i)
+        \right],
+      \]
+      where \(\varepsilon_i\in\{-1,+1\}\) are independent Rademacher (uniform random sign) variables.
+    </div>
+
+    <div class="formula-card">
+      <div class="label">Generalisation bound via Rademacher complexity</div>
+      <p>With probability at least \(1-\delta'\) over the draw of the data:</p>
+      \[
+        \sup_{f\in\mathcal{F}_\delta}|\mathcal{R}(f) - \hat{\mathcal{R}}(f)|
+        \le
+        2\mathfrak{R}_n(\ell\circ\mathcal{F}_\delta)
+        +
+        c\sqrt{\frac{\log(1/\delta')}{n}}.
+      \]
+    </div>
+
+    <div class="box teal">
+      <b>Intuition for Rademacher complexity.</b> The random signs \(\varepsilon_i\) represent pure noise.
+      A rich class can "fit" noise well, achieving a large correlation. A simpler class cannot adapt to
+      random signs and therefore has small complexity.
+    </div>
+
+    <h3>How the ball size \(\delta\) enters</h3>
+    <p>
+      For Lipschitz functions, the Rademacher complexity of the ball \(\mathcal{F}_\delta\)
+      typically scales as:
+    </p>
+    <div class="formula-card">
+      <div class="label">Typical scaling</div>
+      \[
+        \mathfrak{R}_n(\mathcal{F}_\delta)
+        \sim
+        \delta \cdot C(n, d),
+      \]
+      <p>
+        where \(C(n,d)\) captures dimensional complexity. For Lipschitz classes on \(\mathbb{R}^d\),
+        \(C(n,d)\sim n^{-1/d}\), exposing the curse.
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <section id="sec6">
+    <h2>6. Optimisation Error in Depth <span class="pill violet">algorithmic gap</span></h2>
+
+    <div class="formula-card">
+      <div class="label">Optimisation error</div>
+      \[
+        \varepsilon_{\mathrm{opt}}
+        =
+        \hat{\mathcal{R}}(\hat{f}_\delta) - \inf_{f\in\mathcal{F}_\delta}\hat{\mathcal{R}}(f).
+      \]
+    </div>
+
+    <p>
+      This is zero only when the algorithm finds a global minimiser of \(\hat{\mathcal{R}}\) on \(\mathcal{F}_\delta\).
+      In theory, this is often assumed to be zero (exact ERM). In practice, it depends on how well
+      the optimiser converges.
+    </p>
+
+    <div class="grid-2">
+      <div class="box rose">
+        <b>When it is hard to minimise</b>
+        <p>
+          For generic non-convex losses, finding the global minimum is NP-hard. In high dimensions,
+          the landscape may have exponentially many local minima.
+        </p>
+      </div>
+      <div class="box teal">
+        <b>When it is tractable</b>
+        <p>
+          Many ML models (linear regression, kernel regression, convex losses) make ERM a convex
+          problem. Gradient descent provably converges to the global minimum.
+        </p>
+      </div>
+    </div>
+
+    <div class="box amber">
+      <b>Theorem (Jin et al., 2017).</b>
+      Noisy gradient descent finds an \(\varepsilon\)-approximate second-order stationary point
+      of a \(\beta\)-smooth function in \(\tilde{O}(\beta/\varepsilon^2)\) iterations —
+      a rate with no explicit dependence on dimension (up to logarithmic factors).
+      Provided the empirical loss has no spurious local minima, this translates to a global minimiser.
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <section id="sec7">
+    <h2>7. The Curse of Dimensionality <span class="pill amber">Bellman, 1962</span></h2>
+
+    <p>
+      The <b>curse of dimensionality</b> refers to the phenomenon where computational and statistical
+      costs grow exponentially (or super-polynomially) with the input dimension \(d\),
+      making learning from high-dimensional data fundamentally hard without further structure.
+    </p>
+
+    <div class="one-liner">
+      "The curse of dimensionality" — Richard Bellman, 1962. The name was coined in the context of dynamic programming, but the phenomenon is universal.
+    </div>
+
+    <h3>Three faces of the curse</h3>
+
+    <div class="grid-3">
+      <div class="box rose">
+        <b>Statistical curse</b>
+        <p>
+          The number of samples needed to learn a generic Lipschitz function to error \(\varepsilon\)
+          grows as \(n\sim\varepsilon^{-d}\). Even moderate \(d\) makes this astronomical.
+        </p>
+      </div>
+      <div class="box amber">
+        <b>Approximation curse</b>
+        <p>
+          A network with \(m\) neurons approximates a Sobolev \(s\)-smooth function only to error
+          \(\Theta(m^{-s/d})\). Increasing \(d\) requires exponentially more neurons for the same accuracy.
+        </p>
+      </div>
+      <div class="box violet">
+        <b>Optimisation curse</b>
+        <p>
+          Minimising a generic \(d\)-dimensional function is NP-hard. The number of local minima can
+          grow exponentially in \(d\), though structured ML losses often escape this.
+        </p>
+      </div>
+    </div>
+
+    <h3>High-dimensional geometry intuition</h3>
+    <p>
+      In high dimensions, the volume of a unit ball concentrates near its surface: almost all of the
+      mass of a Gaussian in \(\mathbb{R}^d\) lies in a thin shell at radius \(\sqrt{d}\).
+      This means that <em>two random points are nearly orthogonal</em>, and there are no "close
+      neighbours" — every point is far from every other point.
+    </p>
+
+    <div class="formula-card">
+      <div class="label">Volume concentration</div>
+      \[
+        \frac{\text{Vol}(B_d(1-\varepsilon))}{\text{Vol}(B_d(1))}
+        =
+        (1-\varepsilon)^d
+        \;\xrightarrow{d\to\infty}\;
+        0
+        \quad \text{for any fixed } \varepsilon>0.
+      \]
+      <p>
+        Almost all of the volume of the unit ball sits within distance \(\varepsilon\) of the boundary.
+        This makes grid-based methods useless: you would need \((1/\varepsilon)^d\) grid points to cover the ball.
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <section id="sec8">
+    <h2>8. Learning Lipschitz Functions <span class="pill rose">statistical curse quantified</span></h2>
+
+    <p>
+      The Lipschitz class is the simplest regularity assumption that captures continuity. We show that
+      even here, learning is exponentially hard in dimension.
+    </p>
+
+    <div class="formula-card">
+      <div class="label">Lipschitz function</div>
+      \[
+        f:\mathcal X\subseteq\mathbb{R}^d\to\mathbb{R}
+        \text{ is } \beta\text{-Lipschitz if }
+        |f(x)-f(x')|\le\beta\|x-x'\|
+        \quad\forall x,x'.
+      \]
+    </div>
+
+    <h3>Upper bound: nearest-neighbour estimator</h3>
+    <p>
+      Fix \(f^*\) to be 1-Lipschitz and let \(\nu=\mathcal{N}(0,I_d)\).
+      The nearest-neighbour estimator \(\hat{f}(x)=y_{i^*}\), where \(i^*=\arg\min_i\|x-x_i\|\), satisfies:
+    </p>
+
+    <div class="derivation-block">
+      <div class="step-label">Bounding the error</div>
+      <p>For any test point \(x\), let \(r_n = \|x - x_{i^*}\|\) be the distance to the nearest training point.</p>
+      \[
+        |f^*(x) - \hat{f}(x)|
+        =
+        |f^*(x) - f^*(x_{i^*})|
+        \le
+        \|x - x_{i^*}\|
+        = r_n
+        \quad\text{(Lipschitz condition)}.
+      \]
+      <p>
+        The squared population loss is bounded by the expected squared nearest-neighbour distance:
+      </p>
+      \[
+        \mathcal{R}(\hat{f}) \le \mathbb{E}[r_n^2].
+      \]
+    </div>
+
+    <p>
+      To bound \(\mathbb{E}[r_n^2]\), we analyse how densely \(n\) random Gaussian points cover \(\mathbb{R}^d\).
+      Covering a ball of radius \(R\) with \((R/r)^d\) balls of radius \(r\) means we need
+      \(n\sim(R/r)^d\) samples to guarantee every point has a neighbour within distance \(r\).
+    </p>
+
+    <div class="formula-card">
+      <div class="label">Upper bound</div>
+      \[
+        \mathcal{R}(\hat{f})
+        =
+        O\!\left(n^{-2/d}\right)
+        \quad \text{as } n\to\infty.
+      \]
+      <p>
+        To achieve error \(\varepsilon\), we need \(n = O(\varepsilon^{-d/2})\) samples — exponential in \(d\).
+      </p>
+    </div>
+
+    <h3>Lower bound: Le Cam / Fano method</h3>
+    <p>
+      The lower bound shows this exponential rate is unavoidable for <em>any</em> estimator,
+      not just nearest-neighbour.
+    </p>
+
+    <div class="derivation-block">
+      <div class="step-label">Lower bound sketch</div>
+      <p>
+        Construct a set of \(M\) functions that are all 1-Lipschitz but pairwise differ by at least \(\varepsilon\)
+        in \(L^2(\nu)\) on disjoint regions of \(\mathbb{R}^d\):
+      </p>
+      <ul>
+        <li>Partition a region into cubes of side length \(r\).</li>
+        <li>On each cube, the function can be \(0\) or go up by \(r\) (staying Lipschitz).</li>
+        <li>Number of cubes: \(\sim (R/r)^d\), giving \(M = 2^{(R/r)^d}\) distinct functions.</li>
+        <li>With \(n\) samples, we cannot distinguish \(M\) hypotheses unless \(n\gtrsim \log M \sim (R/r)^d\).</li>
+      </ul>
+      <p>Setting \(r = \varepsilon\) gives the lower bound:</p>
+      \[
+        \inf_{\hat f}\sup_{f^*\in\mathrm{Lip}(1)}\mathbb{E}[\mathcal{R}(\hat f)]
+        =
+        \Omega\!\left(n^{-2/d}\right).
+      \]
+    </div>
+
+    <div class="formula-card">
+      <div class="label">Minimax rate for Lipschitz estimation</div>
+      \[
+        \inf_{\hat f}\sup_{f^*\in\mathrm{Lip}(\beta)}
+        \mathbb{E}[\,\mathcal{R}(\hat f)\,]
+        =
+        \Theta\!\left(n^{-2/d}\right).
+      \]
+      <p>
+        Both the nearest-neighbour upper bound and the Le Cam lower bound match. The rate is tight.
+        For \(d=100\) and target error \(\varepsilon=0.1\), we need \(n \sim 0.1^{-50} = 10^{50}\) samples.
+      </p>
+    </div>
+
+    <div class="box rose">
+      <b>Implication.</b> The Lipschitz class is too large for high-dimensional learning.
+      Although it is a natural smoothness assumption, it does not give enough structure to overcome
+      the statistical curse. We must impose additional structure.
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <section id="sec9">
+    <h2>9. Curse in Approximation <span class="pill violet">shallow nets and Sobolev rates</span></h2>
+
+    <h3>Shallow neural network class</h3>
+    <div class="formula-card">
+      <div class="label">Shallow net</div>
+      \[
+        f(x) = \sum_{j=1}^m a_j\,\rho(w_j^Tx + b_j),
+        \qquad
+        \mathcal{F} = \{f \text{ of this form for any } m,a_j,w_j,b_j\}.
+      \]
+    </div>
+
+    <p>
+      By the <b>Universal Approximation Theorem</b> (Hornik, Cybenko, Barron, Pinkus, …):
+      if \(\rho\) is not a polynomial, \(\mathcal{F}\) is dense in the class of continuous functions
+      under the uniform compact topology. But density alone does not tell us how many neurons we need.
+    </p>
+
+    <h3>Sobolev class: curse remains</h3>
+
+    <div class="formula-card">
+      <div class="label">Sobolev approximation rate (DeVore, Maiorov)</div>
+      <p>
+        If \(f^*\in\mathcal{H}^s\) (the Sobolev class with \(s\) bounded derivatives), then the best
+        approximation by a shallow net with \(m\) neurons satisfies:
+      </p>
+      \[
+        \inf_{g\in\mathcal{F}}\sup_{x\in K}|f^*(x)-g(x)|
+        =
+        \Theta\!\left(m^{-s/d}\right).
+      \]
+      <p>Here \(K\subset\mathbb{R}^d\) is a compact domain and \(s\) is the number of bounded derivatives.</p>
+    </div>
+
+    <div class="derivation-block">
+      <div class="step-label">Why the curse appears</div>
+      <p>
+        Approximating a smooth function in \(\mathbb{R}^d\) requires covering the input space.
+        A grid of side \(h\) needs \((1/h)^d\) cells. A shallow net approximating the function at resolution
+        \(h\) on each cell needs at most one neuron per cell (a bump function), so \(m\sim(1/h)^d\).
+        Inverting: \(h\sim m^{-1/d}\), so the approximation error (controlled by \(h^s\)) is \(\sim m^{-s/d}\).
+      </p>
+    </div>
+
+    <p>
+      <b>Consequence for error decomposition.</b> Setting \(\delta\) proportional to the neuron budget \(m\),
+      \(\varepsilon_{\mathrm{appr}}(\delta)\sim m^{-s/d}\). For fixed accuracy \(\varepsilon\), we need
+      \(m\sim\varepsilon^{-d/s}\) neurons — exponential in \(d\).
+    </p>
+
+    <h3>Barron class: the curse-free exception</h3>
+
+    <div class="formula-card">
+      <div class="label">Barron condition</div>
+      \[
+        C_{f^*}^2 := \int_{\mathbb{R}^d} |\hat{f}^*(\omega)|\,\|\omega\|^2\,d\omega < \infty,
+      \]
+      where \(\hat{f}^*\) is the Fourier transform of \(f^*\).
+    </div>
+
+    <div class="formula-card">
+      <div class="label">Barron approximation theorem</div>
+      \[
+        \inf_{g\in\mathcal{F}_m}\|f^*-g\|_{L^2(\nu)}^2
+        =
+        O\!\left(\frac{C_{f^*}^2}{m}\right),
+      \]
+      where \(\mathcal{F}_m\) consists of shallow nets with at most \(m\) neurons.
+    </div>
+
+    <p>
+      The rate \(O(m^{-1})\) is <em>independent of dimension \(d\)</em>. This is because the Barron condition
+      controls the Fourier energy at high frequencies — functions satisfying it are "band-limited enough"
+      that they can be well-approximated by averaging random Fourier features.
+    </p>
+
+    <div class="derivation-block">
+      <div class="step-label">Monte Carlo argument (sketch)</div>
+      <p>
+        By the Barron condition, \(f^*\) has an integral representation:
+      </p>
+      \[
+        f^*(x)
+        =
+        \int_{\mathbb{R}^d} e^{i\omega^Tx}\hat{f}^*(\omega)\,d\omega
+        \approx
+        \sum_{j=1}^m w_j\,e^{i\omega_j^Tx},
+        \quad
+        \omega_j \sim \frac{|\hat{f}^*(\omega)|\|\omega\|^2}{C_{f^*}^2}.
+      \]
+      <p>
+        By Monte Carlo, each term contributes variance \(\le C_{f^*}^2/m\) to the approximation error.
+        The dimension \(d\) does not appear because Fourier sampling is dimension-agnostic.
+      </p>
+    </div>
+
+    <div class="box amber">
+      <b>Practical caveat.</b> The Barron condition is a strong restriction on \(f^*\).
+      Most functions encountered in practice (e.g. those that depend on all \(d\) coordinates in a
+      non-linear and non-smooth way) do not satisfy it. It is a special favourable case, not the rule.
+    </div>
+
+    <div class="compare">
+      <table>
+        <tr>
+          <th>Function class</th>
+          <th>Approximation rate (neurons \(m\))</th>
+          <th>Curse?</th>
+        </tr>
+        <tr>
+          <td>Sobolev \(\mathcal{H}^s\) in \(\mathbb{R}^d\)</td>
+          <td>\(\Theta(m^{-s/d})\)</td>
+          <td>Yes — exponential in \(d\)</td>
+        </tr>
+        <tr>
+          <td>Barron class (spectral condition)</td>
+          <td>\(O(m^{-1})\)</td>
+          <td>No — dimension-free</td>
+        </tr>
+        <tr>
+          <td>Composition of Sobolev pieces (deep nets)</td>
+          <td>\(O(m^{-s/d'})\) with \(d'\ll d\)</td>
+          <td>Partially lifted if \(d'\) is small</td>
+        </tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <section id="sec10">
+    <h2>10. Curse in Optimisation <span class="pill amber">non-convex landscapes</span></h2>
+
+    <p>
+      Even if the model class and data are well-behaved, finding the ERM solution is in general NP-hard.
+    </p>
+
+    <div class="box rose">
+      <b>Hardness result.</b> Training a 3-node network with sigmoid activations to minimise the squared
+      error is NP-hard (Blum and Rivest, 1992). The landscape of the empirical loss has exponentially many
+      saddle points and local minima in general.
+    </div>
+
+    <h3>Why neural network training often works despite NP-hardness</h3>
+    <p>
+      The NP-hardness result applies to the worst case. Many practically important ML models define
+      "benign" landscapes: losses with no spurious local minima, or where all local minima are global minima.
+    </p>
+
+    <div class="grid-2">
+      <div class="box teal">
+        <b>Over-parameterisation</b>
+        <p>
+          With enough parameters, the empirical loss typically has many global minima forming a connected
+          manifold. Gradient descent converges to this manifold from any initialisation.
+        </p>
+      </div>
+      <div class="box cyan">
+        <b>Implicit regularisation</b>
+        <p>
+          Even among global minima, gradient descent with small learning rate tends to pick
+          low-complexity solutions, acting as an implicit regulariser.
+        </p>
+      </div>
+    </div>
+
+    <h3>Gradient descent escapes saddle points</h3>
+
+    <div class="formula-card">
+      <div class="label">Noisy GD theorem (Jin et al., 2017)</div>
+      <p>
+        Let \(\mathcal{L}\) be a \(\beta\)-smooth function. Noisy gradient descent (GD with small
+        random perturbations) finds an \(\varepsilon\)-approximate second-order stationary point
+        — a point where \(\|\nabla\mathcal{L}\|\le\varepsilon\) and
+        \(\lambda_{\min}(\nabla^2\mathcal{L})\ge-\sqrt{\varepsilon}\) — in at most
+      </p>
+      \[
+        T = \tilde{O}\!\left(\frac{\beta}{\varepsilon^2}\right)
+      \]
+      <p>
+        iterations. The iteration count has <em>no explicit dependence on dimension</em> (up to log factors).
+      </p>
+    </div>
+
+    <div class="box teal">
+      <b>Key implication.</b> If the ERM landscape has <em>no bad local minima</em>
+      (all second-order stationary points are global minima), then noisy GD efficiently finds a
+      global minimiser in polynomial time regardless of dimension. This is verified for several ML models
+      (matrix factorisation, two-layer nets in the mean-field limit, etc.).
+    </div>
+
+    <h3>Summary of three curses</h3>
+
+    <div class="compare">
+      <table>
+        <tr>
+          <th>Curse</th>
+          <th>Where it appears</th>
+          <th>Formal manifestation</th>
+          <th>Known escape</th>
+        </tr>
+        <tr>
+          <td>Statistical</td>
+          <td>\(\varepsilon_{\mathrm{stat}}\)</td>
+          <td>Minimax rate \(\Theta(n^{-2/d})\) for Lipschitz class</td>
+          <td>Geometric priors, invariance, low-dim structure</td>
+        </tr>
+        <tr>
+          <td>Approximation</td>
+          <td>\(\varepsilon_{\mathrm{appr}}\)</td>
+          <td>\(\Theta(m^{-s/d})\) for Sobolev class</td>
+          <td>Barron class; compositional / deep models</td>
+        </tr>
+        <tr>
+          <td>Optimisation</td>
+          <td>\(\varepsilon_{\mathrm{opt}}\)</td>
+          <td>NP-hard in general; exponential local minima</td>
+          <td>Benign landscapes; noisy GD; implicit regularisation</td>
+        </tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <section id="sec11">
+    <h2>11. Summary and the Way Out <span class="pill teal">geometric function spaces</span></h2>
+
+    <p>
+      The three curses leave us in a dilemma:
+    </p>
+
+    <div class="grid-2">
+      <div class="box rose">
+        <b>Lipschitz class is too large</b>
+        <p>
+          The statistical error is exponential in dimension: \(\varepsilon_{\mathrm{stat}}\sim n^{-2/d}\).
+          Even with infinite compute, no algorithm can learn a generic Lipschitz function in high dimension
+          from a polynomial number of samples.
+        </p>
+      </div>
+      <div class="box amber">
+        <b>Smooth Sobolev/Barron classes are too restrictive</b>
+        <p>
+          The approximation error for Sobolev functions is \(\Theta(m^{-s/d})\), cursed again.
+          The Barron class avoids this but requires very strong Fourier decay, which most real
+          targets do not satisfy.
+        </p>
+      </div>
+    </div>
+
+    <div class="one-liner">
+      We need function classes that are rich enough to contain \(f^*\) but structured enough to be statistically and computationally tractable.
+    </div>
+
+    <h3>Geometric function spaces: the key idea</h3>
+    <p>
+      Real high-dimensional data — images, molecules, 3D shapes, social graphs — are not arbitrary
+      vectors in \(\mathbb{R}^d\). They are <b>signals defined on structured low-dimensional domains</b>:
+    </p>
+
+    <div class="compare">
+      <table>
+        <tr>
+          <th>Data type</th>
+          <th>High-dim ambient space</th>
+          <th>Low-dim geometric domain \(\Omega\)</th>
+          <th>Signal</th>
+        </tr>
+        <tr>
+          <td>Image</td>
+          <td>\(\mathbb{R}^{H\times W\times 3}\)</td>
+          <td>2D pixel grid</td>
+          <td>colour per pixel</td>
+        </tr>
+        <tr>
+          <td>Molecule</td>
+          <td>\(\mathbb{R}^{3N}\) (atom positions)</td>
+          <td>graph of bonds</td>
+          <td>atom features per node</td>
+        </tr>
+        <tr>
+          <td>3D shape</td>
+          <td>\(\mathbb{R}^{d}\) (point cloud)</td>
+          <td>manifold / mesh surface</td>
+          <td>geometric or semantic feature</td>
+        </tr>
+      </table>
+    </div>
+
+    <p>
+      The geometric domain \(\Omega\) carries <b>symmetries</b> (translations, rotations, permutations)
+      and a notion of <b>locality</b> (nearby pixels share context; bonded atoms interact).
+      By encoding these priors into the hypothesis class, we can simultaneously reduce approximation
+      and statistical error — without losing \(f^*\) from the class, provided \(f^*\) itself respects the symmetry.
+    </p>
+
+    <div class="box teal">
+      <b>Geometric regularity vs classical regularity.</b>
+      Classical Sobolev regularity penalises any oscillation in input space.
+      Geometric regularity additionally respects symmetry (invariance/equivariance) and locality (nearby
+      domain points give similar signals). This is a richer but more relevant prior for structured data.
+    </div>
+
+    <h3>What comes next</h3>
+    <div class="note-list">
+      <div class="note-item">
+        <b>Symmetry and group theory:</b> formalise which transformations of \(\Omega\) should leave
+        \(f^*\) invariant or equivariant.
+      </div>
+      <div class="note-item">
+        <b>Group smoothing:</b> show that averaging over group orbits is an orthogonal projection
+        that cannot worsen approximation error when \(f^*\) is invariant.
+      </div>
+      <div class="note-item">
+        <b>Sample complexity under invariance:</b> the effective sample size scales as \((|\mathfrak{G}|n)^{-1/d}\),
+        giving a multiplicative improvement by the group size.
+      </div>
+      <div class="note-item">
+        <b>Scale separation:</b> composing equivariant layers with local pooling reduces the effective
+        dimension from \(d\) to a much smaller intrinsic dimension, further lifting the curse.
+      </div>
+    </div>
+
+    <div class="box cyan">
+      <b>Big picture.</b>
+      The error decomposition \(\varepsilon_{\mathrm{opt}}+\varepsilon_{\mathrm{stat}}+\varepsilon_{\mathrm{appr}}\)
+      provides a clean framework for understanding where high-dimensional learning fails and how structure
+      helps. Each geometric prior directly addresses one or more of these three terms.
+    </div>
+  </section>
+
+  <footer>
+    Study note based on AIMS 2022 Lecture 2 — High-Dimensional Learning and the Curse of Dimensionality.
+    Built with MathJax and inline CSS.
+  </footer>
+</div>
+</body>
+</html>

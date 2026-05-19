@@ -1,0 +1,1309 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Geometry and Group Theory for DL</title>
+
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)'], ['$', '$']],
+        displayMath: [['\\[', '\\]'], ['$$', '$$']]
+      },
+      options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <style>
+    :root{
+      --bg:#09111a; --bg2:#0f1c2b; --card:#0f1724; --card2:rgba(15,23,36,0.84);
+      --text:#e7edf5; --muted:#9fb0c3; --line:rgba(255,255,255,0.10);
+      --line2:rgba(255,255,255,0.18); --cyan:#67e8f9; --teal:#2dd4bf;
+      --amber:#fbbf24; --rose:#fb7185; --violet:#c084fc;
+      --shadow:0 18px 60px rgba(0,0,0,0.34);
+    }
+    *{ box-sizing:border-box; }
+    html{ scroll-behavior:smooth; }
+    body{
+      margin:0; color:var(--text);
+      background:
+        radial-gradient(1100px 520px at 10% 0%, rgba(103,232,249,0.12), transparent 60%),
+        radial-gradient(900px 520px at 92% 0%, rgba(251,191,36,0.10), transparent 56%),
+        linear-gradient(180deg, var(--bg), #050a11);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      line-height:1.72;
+    }
+    a{ color:#c6f4ff; text-decoration:none; }
+    a:hover{ text-decoration:underline; }
+    .wrap{ max-width:1160px; margin:32px auto 80px; padding:0 18px; }
+    header.hero{
+      background:
+        radial-gradient(860px 380px at 10% 0%, rgba(103,232,249,0.16), transparent 58%),
+        radial-gradient(760px 340px at 90% 0%, rgba(251,191,36,0.10), transparent 56%),
+        linear-gradient(180deg, rgba(12,20,31,0.96), rgba(10,17,28,0.92));
+      border:1px solid var(--line); border-radius:22px; padding:30px 26px 24px;
+      box-shadow:var(--shadow); position:relative; overflow:hidden;
+    }
+    .hero h1{ margin:0 0 10px; font-size:34px; letter-spacing:.2px; line-height:1.18; }
+    .hero p{ margin:0; max-width:980px; color:var(--muted); font-size:15px; }
+    .hero-tags{ display:flex; flex-wrap:wrap; gap:8px; margin-top:16px; }
+    .tag{ padding:5px 10px; border-radius:999px; border:1px solid var(--line);
+      background:rgba(255,255,255,0.04); color:#d8fbff; font-size:12px; }
+    .tag.teal{ color:#ccfbf1; background:rgba(45,212,191,0.10); }
+    .tag.amber{ color:#fde7a3; background:rgba(251,191,36,0.10); }
+    .tag.rose{ color:#ffd0d8; background:rgba(251,113,133,0.10); }
+    .tag.violet{ color:#ead8ff; background:rgba(192,132,252,0.10); }
+    .toc, section{
+      margin-top:18px; background:var(--card2); border:1px solid var(--line);
+      border-radius:20px; padding:24px 22px 24px; box-shadow:0 12px 40px rgba(0,0,0,0.22);
+    }
+    .toc{ padding:18px 20px; }
+    .toc h2{ margin:0 0 12px; font-size:18px; }
+    .toc-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:10px 16px; }
+    .toc a{ display:block; padding:10px 12px; border-radius:12px; border:1px solid rgba(255,255,255,0.08);
+      background:rgba(255,255,255,0.03); color:var(--text); }
+    .toc a span{ display:block; color:var(--muted); font-size:12px; margin-top:2px; }
+    h2{ margin:0 0 14px; font-size:22px; line-height:1.3; color:#f8fbff; }
+    h3{ margin:18px 0 8px; font-size:16px; color:#eff7ff; }
+    h4{ margin:14px 0 6px; font-size:14px; color:#d1f8ff; letter-spacing:.1px; }
+    p{ margin:9px 0; }
+    ul,ol{ margin:8px 0 10px 22px; }
+    li{ margin:4px 0; }
+    .muted{ color:var(--muted); }
+    .pill{ display:inline-block; margin-left:8px; padding:2px 10px; border-radius:999px; font-size:12px;
+      border:1px solid var(--line); background:rgba(103,232,249,0.10); color:#d8fbff; vertical-align:middle; }
+    .pill.teal{ background:rgba(45,212,191,0.12); color:#ccfbf1; }
+    .pill.amber{ background:rgba(251,191,36,0.12); color:#fde7a3; }
+    .pill.rose{ background:rgba(251,113,133,0.12); color:#ffd0d8; }
+    .pill.violet{ background:rgba(192,132,252,0.12); color:#ead8ff; }
+    .box{ margin:12px 0; padding:13px 14px; border-radius:14px; border:1px solid var(--line); background:rgba(255,255,255,0.03); }
+    .box.cyan{ background:rgba(103,232,249,0.10); border-color:rgba(103,232,249,0.24); }
+    .box.teal{ background:rgba(45,212,191,0.10); border-color:rgba(45,212,191,0.24); }
+    .box.amber{ background:rgba(251,191,36,0.10); border-color:rgba(251,191,36,0.24); }
+    .box.rose{ background:rgba(251,113,133,0.10); border-color:rgba(251,113,133,0.24); }
+    .box.violet{ background:rgba(192,132,252,0.10); border-color:rgba(192,132,252,0.24); }
+    .one-liner{ margin:12px 0; padding:12px 14px; border-radius:14px; border:1px dashed rgba(103,232,249,0.35);
+      background:rgba(103,232,249,0.10); color:#d8fbff; font-weight:650; }
+    .grid-2{ display:grid; grid-template-columns:repeat(auto-fit,minmax(290px,1fr)); gap:16px; align-items:start; }
+    .grid-3{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; align-items:start; }
+    table{ width:100%; border-collapse:collapse; margin:12px 0; border:1px solid var(--line); border-radius:14px; overflow:hidden; }
+    th,td{ border:1px solid var(--line); padding:10px 12px; text-align:left; vertical-align:top; }
+    th{ background:rgba(255,255,255,0.05); font-weight:650; text-align:center; }
+    td:first-child, th:first-child{ white-space:nowrap; }
+    .formula-card{ padding:14px 16px; border-radius:16px; border:1px solid var(--line2); background:rgba(13,24,39,0.74); margin:12px 0; overflow:auto; }
+    .formula-card .label{ display:inline-block; margin-bottom:8px; padding:2px 8px; border-radius:999px; font-size:11px; color:#d8fbff;
+      background:rgba(103,232,249,0.10); border:1px solid rgba(103,232,249,0.22); letter-spacing:.2px; text-transform:uppercase; }
+    .steps{ display:grid; gap:10px; margin-top:12px; }
+    .step{ display:grid; grid-template-columns:36px 1fr; gap:12px; align-items:start; padding:12px 14px; border-radius:14px;
+      border:1px solid var(--line); background:rgba(255,255,255,0.03); }
+    .step-num{ width:36px; height:36px; display:flex; align-items:center; justify-content:center; border-radius:50%;
+      background:rgba(103,232,249,0.14); border:1px solid rgba(103,232,249,0.26); color:#d8fbff; font-weight:700; }
+    .figure{ margin:14px 0; padding:14px; border:1px solid var(--line); border-radius:16px; background:rgba(255,255,255,0.03); }
+    .figure svg{ width:100%; height:auto; display:block; }
+    .figure-caption{ color:var(--muted); font-size:13px; margin-top:8px; }
+    .compare{ width:100%; overflow:auto; border:1px solid var(--line); border-radius:16px; }
+    .compare table{ margin:0; border:0; }
+    .note-list{ display:grid; gap:10px; margin-top:10px; }
+    .note-item{ padding:12px 14px; border-radius:14px; border:1px solid var(--line); background:rgba(255,255,255,0.03); }
+    footer{ margin-top:18px; color:var(--muted); font-size:13px; text-align:center; padding:8px; }
+    .mjx-container{ overflow-x:auto; overflow-y:hidden; margin:6px 0; }
+    code{ color:#d8fbff; background:rgba(255,255,255,0.06); padding:1px 5px; border-radius:5px; }
+    @media (max-width:760px){
+      .hero h1{ font-size:28px; }
+      section{ padding:20px 16px 20px; }
+      .step{ grid-template-columns:32px 1fr; gap:10px; }
+      .step-num{ width:32px; height:32px; }
+    }
+  </style>
+</head>
+
+<body>
+<div class="wrap">
+  <header class="hero">
+    <h1>Geometric Deep Learning Notes: Lectures 3–4</h1>
+    <p>
+      A single-file study note for AIMS 2022 Geometric Deep Learning Lectures 3 and 4.
+      The focus is mathematical logic: geometric domains, group actions, representations,
+      invariance, equivariance, group smoothing, projection arguments, sample complexity,
+      scale separation, and the GDL blueprint.
+    </p>
+    <div class="hero-tags">
+      <span class="tag">Geometric priors</span>
+      <span class="tag teal">Groups and actions</span>
+      <span class="tag">Representations</span>
+      <span class="tag amber">Invariance</span>
+      <span class="tag rose">Equivariance</span>
+      <span class="tag violet">Group smoothing</span>
+      <span class="tag teal">Scale separation</span>
+      <span class="tag">GDL blueprint</span>
+    </div>
+  </header>
+
+  <section class="toc">
+    <h2>Table of contents</h2>
+    <div class="toc-grid">
+      <a href="#sec1">1. Big picture<span>Why geometric priors help high-dimensional learning</span></a>
+      <a href="#sec2">2. Domains and signals<span>From \(\Omega\) to \(\mathcal X(\Omega,\mathcal C)\)</span></a>
+      <a href="#sec3">3. Symmetries and groups<span>Group axioms, symmetries, and examples</span></a>
+      <a href="#sec4">4. Group actions and representations<span>How transformations act on points and signals</span></a>
+      <a href="#sec5">5. Invariance<span>Constant output along group orbits</span></a>
+      <a href="#sec6">6. Equivariance<span>Output transforms consistently with input</span></a>
+      <a href="#sec7">7. Why deep nets prefer equivariance<span>Intermediate features should keep pose information</span></a>
+      <a href="#sec8">8. Group smoothing<span>Averaging over group orbits</span></a>
+      <a href="#sec9">9. Projection logic<span>Why approximation error is not worsened</span></a>
+      <a href="#sec10">10. Sample complexity<span>Orbit distance and the remaining curse of dimensionality</span></a>
+      <a href="#sec11">11. Scale separation<span>Coarse scales, local patches, and multiresolution structure</span></a>
+      <a href="#sec12">12. GDL blueprint<span>Equivariant layers, nonlinearities, pooling, and final invariance</span></a>
+      <a href="#sec13">13. Architecture map<span>CNNs, GNNs, Deep Sets, Transformers, mesh and spherical CNNs</span></a>
+      <a href="#sec14">14. Final checklist<span>Definitions, proofs, and exam-style reminders</span></a>
+    </div>
+  </section>
+
+  <section id="sec1">
+    <h2>1. Big picture: why geometric priors matter <span class="pill">motivation</span></h2>
+
+    <p>
+      In high-dimensional learning, the number of samples needed to learn a generic function can grow
+      exponentially with the input dimension. Geometric Deep Learning starts from the observation that
+      many real data types are not arbitrary vectors. They are <b>signals on structured domains</b>:
+      images on grids, molecular features on graphs, features on manifolds, or sets of particles.
+    </p>
+
+    <div class="one-liner">
+      The central idea: use the structure of the domain to restrict the hypothesis class without throwing away the true target function.
+    </div>
+
+    <div class="grid-3">
+      <div class="box cyan">
+        <b>Approximation error</b>
+        <p>How well the best function in the model class can approximate the true target \(f^\*\).</p>
+      </div>
+      <div class="box teal">
+        <b>Statistical error</b>
+        <p>How many samples are needed to choose a good hypothesis from the class.</p>
+      </div>
+      <div class="box amber">
+        <b>Optimization error</b>
+        <p>How well the training algorithm can actually find a good parameter setting.</p>
+      </div>
+    </div>
+
+    <p>
+      Geometric priors mainly aim to reduce statistical and computational difficulty by making the hypothesis
+      class smaller and better aligned with the task. The ideal situation is:
+    </p>
+
+    <div class="formula-card">
+      <div class="label">Ideal effect of geometric priors</div>
+      \[
+      \text{smaller hypothesis class}
+      \quad\Longrightarrow\quad
+      \text{lower statistical complexity}
+      \]
+      \[
+      \text{but still } f^\* \text{ remains inside or near the class}
+      \quad\Longrightarrow\quad
+      \text{no serious approximation penalty}.
+      \]
+    </div>
+
+    <div class="box rose">
+      <b>Warning.</b> A prior is useful only when it matches the problem. For example, translation invariance is useful for image classification, but not for tasks where absolute location is the label.
+    </div>
+  </section>
+
+  <section id="sec2">
+    <h2>2. Geometric domains and signals <span class="pill teal">domain first</span></h2>
+
+    <p>
+      The starting object is a <b>domain</b> \(\Omega\). It may be a grid, graph, set, sphere, manifold, or group.
+      A datum is then a <b>signal</b> on this domain.
+    </p>
+
+    <div class="formula-card">
+      <div class="label">Signal space</div>
+      \[
+      x:\Omega\to\mathcal C,
+      \qquad
+      \mathcal X(\Omega,\mathcal C)=\{x:\Omega\to\mathcal C\}.
+      \]
+      <p>
+        Here \(\mathcal C\) is the channel space. For an RGB image, \(\mathcal C=\mathbb R^3\).
+        For a molecular graph, \(\mathcal C\) may contain atom-type or node-feature channels.
+      </p>
+    </div>
+
+    <div class="compare">
+      <table>
+        <tr>
+          <th>Data type</th>
+          <th>Domain \(\Omega\)</th>
+          <th>Signal \(x(u)\)</th>
+          <th>Typical channels \(\mathcal C\)</th>
+        </tr>
+        <tr>
+          <td>Image</td>
+          <td>2D grid pixels</td>
+          <td>color value at pixel \(u\)</td>
+          <td>RGB, feature maps</td>
+        </tr>
+        <tr>
+          <td>Graph</td>
+          <td>vertices \(V\), sometimes \(V\times V\)</td>
+          <td>node or edge feature</td>
+          <td>atom type, degree, embedding vector</td>
+        </tr>
+        <tr>
+          <td>Point cloud</td>
+          <td>unordered set of points</td>
+          <td>feature attached to each point</td>
+          <td>coordinates, normals, colors</td>
+        </tr>
+        <tr>
+          <td>Manifold / mesh</td>
+          <td>surface points</td>
+          <td>scalar/vector/tensor feature</td>
+          <td>geometry, texture, tangent vector</td>
+        </tr>
+      </table>
+    </div>
+
+    <h3>Vector-space and Hilbert-space viewpoint</h3>
+    <p>
+      Signals can be added and scaled pointwise:
+    </p>
+    <div class="formula-card">
+      <div class="label">Pointwise linear structure</div>
+      \[
+      (\alpha x+\beta y)(u)=\alpha x(u)+\beta y(u).
+      \]
+    </div>
+
+    <p>
+      If \(\mathcal C\) has an inner product and \(\Omega\) has a measure \(\mu\), we get an inner product on signals:
+    </p>
+
+    <div class="formula-card">
+      <div class="label">Inner product on signal space</div>
+      \[
+      \langle x,y\rangle_{\mathcal X}
+      =
+      \int_{\Omega}
+      \langle x(u),y(u)\rangle_{\mathcal C}\,d\mu(u).
+      \]
+    </div>
+
+    <div class="box cyan">
+      <b>Why this matters.</b> Once signal spaces are Hilbert spaces, we can talk precisely about orthogonality, projections, energy, and \(L^2\)-errors. This is exactly what Lecture 4 uses when proving that group smoothing is an orthogonal projection.
+    </div>
+  </section>
+
+  <section id="sec3">
+    <h2>3. Symmetries and groups <span class="pill amber">formal language</span></h2>
+
+    <p>
+      A symmetry is a transformation that preserves the relevant structure. The symmetries of an object form a group.
+      In geometric deep learning, the important symmetries are often not symmetries of one single sample, but symmetries
+      of the <b>domain description</b> or of the <b>label function</b>.
+    </p>
+
+    <div class="formula-card">
+      <div class="label">Abstract group</div>
+      <p>A group is a pair \((\mathfrak G,\cdot)\), where \(\mathfrak G\) is a set and \(\cdot\) is a binary operation satisfying:</p>
+      \[
+      (gh)k=g(hk) \quad \text{associativity},
+      \]
+      \[
+      eg=ge=g \quad \text{identity},
+      \]
+      \[
+      gg^{-1}=g^{-1}g=e \quad \text{inverse}.
+      \]
+    </div>
+
+    <div class="box amber">
+      <b>Important distinction.</b> A group element \(g\in\mathfrak G\) is not the same thing as the group operation. In \((\mathbb Z,+)\), the elements are integers and the operation is addition. In a symmetry group of transformations, the elements are maps and the operation is composition.
+    </div>
+
+    <div class="compare">
+      <table>
+        <tr>
+          <th>Group</th>
+          <th>Elements</th>
+          <th>Operation</th>
+          <th>Typical GDL role</th>
+        </tr>
+        <tr>
+          <td>\((\mathbb Z,+)\)</td>
+          <td>integers</td>
+          <td>addition</td>
+          <td>discrete shifts</td>
+        </tr>
+        <tr>
+          <td>\(C_n\)</td>
+          <td>cyclic rotations</td>
+          <td>composition / modular addition</td>
+          <td>rotational symmetry</td>
+        </tr>
+        <tr>
+          <td>\(D_n\)</td>
+          <td>rotations and reflections of an \(n\)-gon</td>
+          <td>composition</td>
+          <td>dihedral symmetry</td>
+        </tr>
+        <tr>
+          <td>\(S_n\)</td>
+          <td>permutations of \(n\) objects</td>
+          <td>composition</td>
+          <td>sets and graphs</td>
+        </tr>
+        <tr>
+          <td>\(\mathbb R^d\)</td>
+          <td>continuous translations</td>
+          <td>vector addition</td>
+          <td>Euclidean translation symmetry</td>
+        </tr>
+        <tr>
+          <td>\(SO(3)\)</td>
+          <td>3D rotations</td>
+          <td>matrix multiplication</td>
+          <td>spherical and 3D data</td>
+        </tr>
+      </table>
+    </div>
+
+    <h3>The bijection property used in group averages</h3>
+    <p>
+      The group operation \((g,h)\mapsto gh\) does not have to be one-to-one as a map from pairs to elements.
+      For example, \(1+2=0+3=3\) in \((\mathbb Z,+)\). However, for a fixed \(h\), right multiplication
+      \(R_h(g)=gh\) is a bijection of \(\mathfrak G\) onto itself.
+    </p>
+
+    <div class="formula-card">
+      <div class="label">Right multiplication is bijective</div>
+      <p>If \(g_1h=g_2h\), then multiply on the right by \(h^{-1}\):</p>
+      \[
+      (g_1h)h^{-1}=(g_2h)h^{-1}
+      \quad\Rightarrow\quad
+      g_1( hh^{-1})=g_2( hh^{-1})
+      \quad\Rightarrow\quad
+      g_1=g_2.
+      \]
+      <p>This is the algebraic reason why sums over a finite group can be re-indexed by \(k=gh\).</p>
+    </div>
+  </section>
+
+  <section id="sec4">
+    <h2>4. Group actions and representations <span class="pill teal">from domain to signals</span></h2>
+
+    <p>
+      A group by itself is abstract. To use it on data, we need an <b>action</b>. A group action tells us how each group element transforms points of a space.
+    </p>
+
+    <div class="formula-card">
+      <div class="label">Group action on a domain</div>
+      \[
+      \mathfrak G\times \Omega\to \Omega,
+      \qquad
+      (g,u)\mapsto gu,
+      \]
+      satisfying
+      \[
+      e u=u,
+      \qquad
+      g(hu)=(gh)u.
+      \]
+    </div>
+
+    <h3>Action on signals: why the inverse appears</h3>
+    <p>
+      If \(x:\Omega\to\mathcal C\) is a signal and \(g\) acts on \(\Omega\), the induced action on signals is:
+    </p>
+
+    <div class="formula-card">
+      <div class="label">Regular action on signals</div>
+      \[
+      (gx)(u)=x(g^{-1}u).
+      \]
+    </div>
+
+    <p>
+      The inverse appears because the new value at location \(u\) should be the old value that came from the preimage \(g^{-1}u\).
+      For a translation by \(t\), this gives:
+    </p>
+
+    <div class="formula-card">
+      <div class="label">Translation example</div>
+      \[
+      (T_t x)(u)=x(u-t).
+      \]
+      <p>The translated signal at the new location \(u\) uses the old value at \(u-t\).</p>
+    </div>
+
+    <div class="figure">
+      <svg viewBox="0 0 940 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Domain action lifts to signal action">
+        <rect x="1" y="1" width="938" height="258" rx="16" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.08)"/>
+        <text x="70" y="42" fill="#d8fbff" font-size="18" font-family="Arial">Domain action</text>
+        <text x="520" y="42" fill="#fde7a3" font-size="18" font-family="Arial">Signal action</text>
+        <circle cx="140" cy="136" r="10" fill="#67e8f9"/>
+        <circle cx="260" cy="136" r="10" fill="#2dd4bf"/>
+        <line x1="153" y1="136" x2="244" y2="136" stroke="#cbd5e1" stroke-width="3" marker-end="url(#arrow)"/>
+        <text x="190" y="119" fill="#cbd5e1" font-size="15" font-family="Arial">u ↦ gu</text>
+        <rect x="510" y="90" width="90" height="90" rx="8" fill="rgba(103,232,249,0.12)" stroke="rgba(103,232,249,0.35)"/>
+        <rect x="690" y="90" width="90" height="90" rx="8" fill="rgba(251,191,36,0.12)" stroke="rgba(251,191,36,0.35)"/>
+        <line x1="605" y1="135" x2="684" y2="135" stroke="#cbd5e1" stroke-width="3" marker-end="url(#arrow)"/>
+        <text x="622" y="118" fill="#cbd5e1" font-size="15" font-family="Arial">x ↦ gx</text>
+        <text x="525" y="202" fill="#cbd5e1" font-size="14" font-family="Arial">(gx)(u)=x(g⁻¹u)</text>
+        <defs>
+          <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+            <path d="M2,2 L10,6 L2,10" fill="none" stroke="#cbd5e1" stroke-width="2"/>
+          </marker>
+        </defs>
+      </svg>
+      <div class="figure-caption">A transformation of the domain automatically induces a linear transformation of the signal space.</div>
+    </div>
+
+    <h3>Representation viewpoint</h3>
+    <p>
+      A group representation maps group elements to invertible linear transformations.
+      For finite-dimensional signal spaces, these transformations can be written as matrices.
+    </p>
+
+    <div class="formula-card">
+      <div class="label">Group representation</div>
+      \[
+      \rho:\mathfrak G\to GL(V),
+      \qquad
+      \rho(gh)=\rho(g)\rho(h).
+      \]
+      <p>
+        In GDL, \(V\) is often a signal or feature space. The map \(\rho(g)\) tells us how features transform under \(g\).
+      </p>
+    </div>
+  </section>
+
+  <section id="sec5">
+    <h2>5. Invariant functions <span class="pill amber">constant on orbits</span></h2>
+
+    <p>
+      A function is invariant if transforming the input by a group element does not change the output.
+    </p>
+
+    <div class="formula-card">
+      <div class="label">Invariant function</div>
+      \[
+      f(gx)=f(x),
+      \qquad
+      \forall g\in\mathfrak G,\;x\in\mathcal X.
+      \]
+    </div>
+
+    <p>
+      Invariance is appropriate when the target label should ignore certain transformations.
+      For example, an image classifier should usually classify a dog as a dog even after translation or rotation,
+      at least within the transformations assumed by the problem.
+    </p>
+
+    <h3>Orbits and quotient intuition</h3>
+    <div class="formula-card">
+      <div class="label">Group orbit</div>
+      \[
+      \mathfrak Gx=\{gx:g\in\mathfrak G\}.
+      \]
+      <p>
+        The orbit is the set of all transformed versions of \(x\). An invariant function is constant on each orbit.
+      </p>
+    </div>
+
+    <div class="figure">
+      <svg viewBox="0 0 940 270" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Invariant function constant on group orbits">
+        <rect x="1" y="1" width="938" height="268" rx="16" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.08)"/>
+        <ellipse cx="245" cy="135" rx="150" ry="60" fill="rgba(103,232,249,0.08)" stroke="rgba(103,232,249,0.32)" stroke-width="2"/>
+        <ellipse cx="675" cy="135" rx="150" ry="60" fill="rgba(251,191,36,0.08)" stroke="rgba(251,191,36,0.32)" stroke-width="2"/>
+        <circle cx="150" cy="135" r="9" fill="#67e8f9"/><circle cx="220" cy="105" r="9" fill="#67e8f9"/>
+        <circle cx="275" cy="155" r="9" fill="#67e8f9"/><circle cx="340" cy="132" r="9" fill="#67e8f9"/>
+        <circle cx="580" cy="135" r="9" fill="#fbbf24"/><circle cx="650" cy="105" r="9" fill="#fbbf24"/>
+        <circle cx="705" cy="155" r="9" fill="#fbbf24"/><circle cx="770" cy="132" r="9" fill="#fbbf24"/>
+        <text x="245" y="222" fill="#d8fbff" font-size="15" text-anchor="middle" font-family="Arial">orbit \(\mathfrak Gx\): same value \(f(x)\)</text>
+        <text x="675" y="222" fill="#fde7a3" font-size="15" text-anchor="middle" font-family="Arial">another orbit: another value</text>
+        <text x="245" y="72" fill="#cbd5e1" font-size="14" text-anchor="middle" font-family="Arial">all points identified by symmetry</text>
+        <text x="675" y="72" fill="#cbd5e1" font-size="14" text-anchor="middle" font-family="Arial">function may differ between orbits</text>
+      </svg>
+      <div class="figure-caption">Invariance means \(f\) is constant along each orbit, but it can take different values on different orbits.</div>
+    </div>
+
+    <div class="box cyan">
+      <b>Precise intuition.</b> Invariance does not mean the input is unchanged. It means the <i>output</i> is unchanged when the input moves inside the same orbit.
+    </div>
+  </section>
+
+  <section id="sec6">
+    <h2>6. Equivariant functions <span class="pill rose">consistent transformation</span></h2>
+
+    <p>
+      Equivariance is weaker and richer than invariance. An equivariant map does not keep the output fixed.
+      Instead, it makes the output transform in a predictable way when the input transforms.
+    </p>
+
+    <div class="formula-card">
+      <div class="label">Equivariant map</div>
+      \[
+      F(\rho_X(g)x)=\rho_Y(g)F(x),
+      \qquad
+      \forall g\in\mathfrak G.
+      \]
+      <p>
+        If the same group acts on both input space \(X\) and output space \(Y\), one often writes this informally as:
+      </p>
+      \[
+      F(gx)=gF(x).
+      \]
+    </div>
+
+    <div class="compare">
+      <table>
+        <tr>
+          <th>Property</th>
+          <th>Formula</th>
+          <th>Meaning</th>
+          <th>Typical use</th>
+        </tr>
+        <tr>
+          <td>Invariance</td>
+          <td>\(F(gx)=F(x)\)</td>
+          <td>Output does not change.</td>
+          <td>Final classification or global prediction.</td>
+        </tr>
+        <tr>
+          <td>Equivariance</td>
+          <td>\(F(gx)=gF(x)\)</td>
+          <td>Output changes in the same structured way.</td>
+          <td>Intermediate feature maps, segmentation, detection.</td>
+        </tr>
+      </table>
+    </div>
+
+    <h3>Translation equivariance of convolution</h3>
+    <p>
+      Let \(T_t\) be translation by \(t\), so \((T_t x)(u)=x(u-t)\). A convolutional layer \(C_k\) with kernel \(k\) satisfies:
+    </p>
+
+    <div class="formula-card">
+      <div class="label">Convolution is translation equivariant</div>
+      \[
+      C_k(T_t x)=T_t(C_k x).
+      \]
+      <p>
+        Intuitively: if an object shifts in the input, the activation pattern shifts in the feature map.
+        The detector is the same; only its location changes.
+      </p>
+    </div>
+
+    <div class="box amber">
+      <b>Why not automatically rotation equivariant?</b> A standard CNN shares filters across translations, not across rotations. Rotating the input does not generally rotate the feature maps in a controlled way unless the architecture builds in rotational symmetry.
+    </div>
+  </section>
+
+  <section id="sec7">
+    <h2>7. Why deep nets usually prefer equivariance before invariance <span class="pill violet">pose information</span></h2>
+
+    <p>
+      A central lesson from Lecture 3 is that early invariance can be harmful. To recognize whole objects,
+      a network often needs to recognize parts and their relative configuration. If intermediate features
+      become invariant too early, the network loses information about where parts are.
+    </p>
+
+    <div class="one-liner">
+      Final outputs often should be invariant; intermediate representations often should be equivariant.
+    </div>
+
+    <div class="grid-2">
+      <div class="box rose">
+        <b>Bad early invariance</b>
+        <p>
+          If a layer says only “eye exists” and “mouth exists” but discards their relative positions,
+          it may not distinguish a face from a scrambled collection of parts.
+        </p>
+      </div>
+      <div class="box teal">
+        <b>Good equivariance</b>
+        <p>
+          If the object shifts, the feature map shifts. The network preserves spatial organization,
+          so later layers can reason about part-whole structure.
+        </p>
+      </div>
+    </div>
+
+    <div class="formula-card">
+      <div class="label">Layerwise equivariance composes</div>
+      <p>If every layer is equivariant, their composition is equivariant.</p>
+      \[
+      F_1(\rho_0(g)x)=\rho_1(g)F_1(x),
+      \quad
+      F_2(\rho_1(g)y)=\rho_2(g)F_2(y).
+      \]
+      Then:
+      \[
+      (F_2\circ F_1)(\rho_0(g)x)
+      =
+      F_2(\rho_1(g)F_1(x))
+      =
+      \rho_2(g)F_2(F_1(x)).
+      \]
+    </div>
+
+    <div class="box cyan">
+      <b>Architectural message.</b> A good geometric deep network often keeps features equivariant through many layers, then applies pooling or averaging to become invariant only near the end.
+    </div>
+  </section>
+
+  <section id="sec8">
+    <h2>8. Group smoothing <span class="pill violet">averaging over orbits</span></h2>
+
+    <p>
+      Suppose \(\mathfrak G\) is a finite group and \(f:\mathcal X\to\mathbb R\) is any scalar-valued function.
+      Group smoothing creates a new function by averaging \(f\) over all transformed versions of the input.
+    </p>
+
+    <div class="formula-card">
+      <div class="label">Group smoothing operator</div>
+      \[
+      S_{\mathfrak G}f
+      =
+      \frac{1}{|\mathfrak G|}
+      \sum_{g\in\mathfrak G}f\circ g,
+      \]
+      equivalently
+      \[
+      (S_{\mathfrak G}f)(x)
+      =
+      \frac{1}{|\mathfrak G|}
+      \sum_{g\in\mathfrak G}f(gx).
+      \]
+    </div>
+
+    <h3>Proof that \(S_{\mathfrak G}f\) is invariant</h3>
+    <p>
+      We must show that for any \(h\in\mathfrak G\),
+      \((S_{\mathfrak G}f)(hx)=(S_{\mathfrak G}f)(x)\).
+    </p>
+
+    <div class="formula-card">
+      <div class="label">Invariance proof</div>
+      \[
+      (S_{\mathfrak G}f)(hx)
+      =
+      \frac{1}{|\mathfrak G|}
+      \sum_{g\in\mathfrak G}f(g(hx)).
+      \]
+      By the action property \(g(hx)=(gh)x\), so
+      \[
+      (S_{\mathfrak G}f)(hx)
+      =
+      \frac{1}{|\mathfrak G|}
+      \sum_{g\in\mathfrak G}f((gh)x).
+      \]
+      Since \(g\mapsto gh\) is a bijection of \(\mathfrak G\), set \(k=gh\):
+      \[
+      \frac{1}{|\mathfrak G|}
+      \sum_{g\in\mathfrak G}f((gh)x)
+      =
+      \frac{1}{|\mathfrak G|}
+      \sum_{k\in\mathfrak G}f(kx)
+      =
+      (S_{\mathfrak G}f)(x).
+      \]
+    </div>
+
+    <div class="box teal">
+      <b>Intuition.</b> Applying \(h\) before averaging only reorders the transformed copies. An average does not care about order.
+    </div>
+
+    <h3>Example: reflection group</h3>
+    <p>
+      If \(\mathfrak G=\{e,r\}\), where \(r\) is reflection, then:
+    </p>
+
+    <div class="formula-card">
+      <div class="label">Two-element group smoothing</div>
+      \[
+      (S_{\mathfrak G}f)(x)
+      =
+      \frac{1}{2}\bigl(f(x)+f(rx)\bigr).
+      \]
+      <p>This is reflection-invariant because replacing \(x\) by \(rx\) just swaps the two terms.</p>
+    </div>
+  </section>
+
+  <section id="sec9">
+    <h2>9. Projection logic: why approximation error is not worsened <span class="pill amber">orthogonal decomposition</span></h2>
+
+    <p>
+      Lecture 4 states that approximation error is not affected by group smoothing:
+    </p>
+
+    <div class="formula-card">
+      <div class="label">Approximation error identity</div>
+      \[
+      \inf_{f\in\mathcal F}\|f-f^\*\|^2
+      =
+      \inf_{f\in S_{\mathfrak G}\mathcal F}\|f-f^\*\|^2,
+      \]
+      assuming the target \(f^\*\) is \(\mathfrak G\)-invariant and \(S_{\mathfrak G}\mathcal F=\{S_{\mathfrak G}f:f\in\mathcal F\}\).
+    </div>
+
+    <p>
+      The logic is easiest to understand in \(L^2(\mathcal X)\). The smoothing operator \(S_{\mathfrak G}\)
+      is an orthogonal projection onto the subspace of invariant functions.
+    </p>
+
+    <h3>Step 1: \(S_{\mathfrak G}\) is idempotent</h3>
+    <p>
+      A projection satisfies \(S^2=S\). For group smoothing:
+    </p>
+    <div class="formula-card">
+      <div class="label">Idempotence</div>
+      \[
+      S_{\mathfrak G}^2f
+      =
+      S_{\mathfrak G}(S_{\mathfrak G}f)
+      =
+      S_{\mathfrak G}f,
+      \]
+      because \(S_{\mathfrak G}f\) is already invariant.
+    </div>
+
+    <h3>Step 2: Decompose any function</h3>
+    <div class="formula-card">
+      <div class="label">Invariant plus residual</div>
+      \[
+      f=S_{\mathfrak G}f+(I-S_{\mathfrak G})f.
+      \]
+      <p>
+        \(S_{\mathfrak G}f\) is the invariant component.
+        \((I-S_{\mathfrak G})f=f-S_{\mathfrak G}f\) is the residual fluctuation around the group average.
+      </p>
+    </div>
+
+    <h3>Step 3: Why the two parts are orthogonal</h3>
+    <p>
+      The cross term disappears because the invariant component and residual component are perpendicular in \(L^2\).
+      Intuitively, on every orbit, the residual has zero average.
+    </p>
+
+    <div class="formula-card">
+      <div class="label">Orbit-average intuition</div>
+      <p>On one orbit, suppose the values of \(f\) are \([2,4,6]\). The average is \(4\).</p>
+      \[
+      \text{invariant part}=[4,4,4],
+      \qquad
+      \text{residual}=[-2,0,2].
+      \]
+      \[
+      [4,4,4]\cdot[-2,0,2]
+      =
+      -8+0+8=0.
+      \]
+    </div>
+
+    <h3>Step 4: The Pythagorean identity</h3>
+    <p>
+      Since the two components are orthogonal, the \(L^2\)-norm decomposes as:
+    </p>
+
+    <div class="formula-card">
+      <div class="label">Pythagorean decomposition</div>
+      \[
+      \|f-g\|^2
+      =
+      \|S_{\mathfrak G}f-S_{\mathfrak G}g\|^2
+      +
+      \|(I-S_{\mathfrak G})f-(I-S_{\mathfrak G})g\|^2.
+      \]
+    </div>
+
+    <h3>Step 5: Apply it to an invariant target</h3>
+    <p>
+      If \(f^\*\) is invariant, then:
+    </p>
+
+    <div class="formula-card">
+      <div class="label">Invariant target</div>
+      \[
+      S_{\mathfrak G}f^\*=f^\*,
+      \qquad
+      (I-S_{\mathfrak G})f^\*=0.
+      \]
+      Therefore:
+      \[
+      \|f-f^\*\|^2
+      =
+      \|S_{\mathfrak G}f-f^\*\|^2
+      +
+      \|(I-S_{\mathfrak G})f\|^2.
+      \]
+    </div>
+
+    <div class="one-liner">
+      The non-invariant part is pure extra error when the target is invariant. Smoothing removes that part and cannot make the approximation worse.
+    </div>
+
+    <div class="box rose">
+      <b>Mathematical caution.</b> The exact equality of infima depends on how the norm and function class are defined. The robust message is that for every \(f\), the smoothed function \(S_{\mathfrak G}f\) is at least as close to an invariant target as \(f\) is.
+    </div>
+  </section>
+
+  <section id="sec10">
+    <h2>10. Sample complexity under invariance <span class="pill rose">helpful but not enough</span></h2>
+
+    <p>
+      If \(f\) is \(\beta\)-Lipschitz in ordinary input space, then:
+    </p>
+
+    <div class="formula-card">
+      <div class="label">Ordinary Lipschitz condition</div>
+      \[
+      |f(x)-f(x')|\leq \beta\|x-x'\|.
+      \]
+    </div>
+
+    <p>
+      For invariant functions, the relevant distance is not the direct distance between \(x\) and \(x'\).
+      Since \(x'\) and \(gx'\) are equivalent, we should compare \(x\) to the best-aligned transformed version of \(x'\).
+    </p>
+
+    <div class="formula-card">
+      <div class="label">Orbit distance</div>
+      \[
+      d_{\mathfrak G}(x,x')
+      =
+      \inf_{g\in\mathfrak G}\|x-gx'\|.
+      \]
+      \[
+      |f(x)-f(x')|
+      \leq
+      \beta\, d_{\mathfrak G}(x,x')
+      =
+      \beta\inf_{g\in\mathfrak G}\|x-gx'\|.
+      \]
+    </div>
+
+    <div class="figure">
+      <svg viewBox="0 0 940 310" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Orbit distance diagram">
+        <rect x="1" y="1" width="938" height="308" rx="16" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.08)"/>
+        <path d="M140,230 C230,100 330,110 410,220" fill="none" stroke="#fbbf24" stroke-width="4"/>
+        <path d="M530,245 C610,70 720,80 820,210" fill="none" stroke="#9ca3af" stroke-width="4"/>
+        <circle cx="275" cy="129" r="10" fill="#fbbf24"/>
+        <circle cx="352" cy="178" r="10" fill="#fbbf24"/>
+        <circle cx="650" cy="118" r="10" fill="#9ca3af"/>
+        <circle cx="735" cy="153" r="10" fill="#9ca3af"/>
+        <line x1="352" y1="178" x2="650" y2="118" stroke="#2dd4bf" stroke-width="4" marker-end="url(#arrow2)"/>
+        <line x1="275" y1="129" x2="735" y2="153" stroke="#fb7185" stroke-width="3" stroke-dasharray="8 8"/>
+        <text x="220" y="255" fill="#fde7a3" font-size="15" font-family="Arial">orbit of x</text>
+        <text x="640" y="255" fill="#cbd5e1" font-size="15" font-family="Arial">orbit of x'</text>
+        <text x="455" y="132" fill="#ccfbf1" font-size="14" font-family="Arial">shortest aligned distance</text>
+        <text x="470" y="98" fill="#ffd0d8" font-size="14" font-family="Arial">raw distance may be misleading</text>
+        <defs>
+          <marker id="arrow2" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+            <path d="M2,2 L10,6 L2,10" fill="none" stroke="#2dd4bf" stroke-width="2"/>
+          </marker>
+        </defs>
+      </svg>
+      <div class="figure-caption">Invariant learning compares orbits, not just raw points. Two inputs can be far in raw coordinates but close after a symmetry alignment.</div>
+    </div>
+
+    <h3>The sample-complexity message</h3>
+    <p>
+      The theorem in the lecture states that invariant learning can improve the effective sample size by a factor related to the group size:
+    </p>
+
+    <div class="formula-card">
+      <div class="label">Representative rate</div>
+      \[
+      \mathbb E\mathcal R(\tilde f)\lesssim (|\mathfrak G|n)^{-1/d}.
+      \]
+    </div>
+
+    <div class="grid-2">
+      <div class="box teal">
+        <b>Good news</b>
+        <p>
+          Invariance can reduce statistical error. Roughly, if the group has many transformations,
+          one sample represents information about many transformed versions.
+        </p>
+      </div>
+      <div class="box rose">
+        <b>Bad news</b>
+        <p>
+          The exponent is still \(-1/d\). In high dimension, this is still a cursed rate.
+          Therefore, invariance alone is not sufficient.
+        </p>
+      </div>
+    </div>
+
+    <div class="one-liner">
+      Symmetry gives a real gain, but scale separation and locality are needed to go further.
+    </div>
+  </section>
+
+  <section id="sec11">
+    <h2>11. Scale separation and multiresolution structure <span class="pill teal">beyond invariance</span></h2>
+
+    <p>
+      Lecture 4 argues that symmetry should be combined with scale separation.
+      Many real signals are not arbitrary high-dimensional objects: important information often appears
+      at coarse scales, local scales, or hierarchical compositions of both.
+    </p>
+
+    <h3>Case A: coarse scales dominate</h3>
+    <p>
+      Sometimes the target mostly depends on a coarsened version of the signal.
+      For example, distinguishing a beach from a mountain may not require every pixel-level detail.
+    </p>
+
+    <div class="formula-card">
+      <div class="label">Coarse-scale prior</div>
+      \[
+      f^\*(x)\approx \tilde f^\*(\tilde x),
+      \]
+      where \(\tilde x\) is a coarsened version of \(x\) on a smaller domain \(\tilde\Omega\), with
+      \[
+      |\tilde\Omega|\ll |\Omega|.
+      \]
+    </div>
+
+    <div class="box cyan">
+      <b>Why this helps.</b> If the relevant dimension is closer to \(|\tilde\Omega|\) than \(|\Omega|\), the curse of dimensionality is reduced.
+    </div>
+
+    <h3>Case B: local scales dominate</h3>
+    <p>
+      Sometimes the target depends on repeated local patterns. For example, texture recognition may depend on small patches
+      rather than the full image at once.
+    </p>
+
+    <div class="formula-card">
+      <div class="label">Local-patch prior</div>
+      \[
+      f^\*(x)\approx \sum_{u\in\Omega} g(x_u),
+      \]
+      where \(x_u\) is a local patch centered at \(u\).
+    </div>
+
+    <div class="box teal">
+      <b>Why this helps.</b> The relevant dimension is the patch dimension, not the full input dimension. Locality turns one huge problem into many shared smaller problems.
+    </div>
+
+    <h3>Multiresolution analysis</h3>
+    <p>
+      A multiresolution analysis decomposes a signal into coarse content plus details needed to reconstruct fine-scale information.
+      Wavelet filter banks are a classical implementation of this idea.
+    </p>
+
+    <div class="formula-card">
+      <div class="label">Coarse plus details</div>
+      \[
+      x
+      \quad\leadsto\quad
+      (\tilde x,\text{details}),
+      \]
+      where \(\tilde x\) is defined on a coarser domain and the details encode what is missing at the fine scale.
+    </div>
+
+    <div class="figure">
+      <svg viewBox="0 0 940 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Multiscale decomposition">
+        <rect x="1" y="1" width="938" height="318" rx="16" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.08)"/>
+        <rect x="70" y="80" width="130" height="130" rx="10" fill="rgba(103,232,249,0.12)" stroke="rgba(103,232,249,0.36)"/>
+        <text x="135" y="150" fill="#d8fbff" font-size="16" text-anchor="middle" font-family="Arial">fine signal x</text>
+        <line x1="210" y1="145" x2="310" y2="145" stroke="#cbd5e1" stroke-width="3" marker-end="url(#arrow3)"/>
+        <rect x="330" y="60" width="110" height="90" rx="10" fill="rgba(45,212,191,0.12)" stroke="rgba(45,212,191,0.36)"/>
+        <text x="385" y="108" fill="#ccfbf1" font-size="14" text-anchor="middle" font-family="Arial">coarse</text>
+        <rect x="330" y="180" width="110" height="70" rx="10" fill="rgba(251,191,36,0.12)" stroke="rgba(251,191,36,0.36)"/>
+        <text x="385" y="220" fill="#fde7a3" font-size="14" text-anchor="middle" font-family="Arial">details</text>
+        <line x1="450" y1="105" x2="570" y2="105" stroke="#cbd5e1" stroke-width="3" marker-end="url(#arrow3)"/>
+        <line x1="450" y1="215" x2="570" y2="215" stroke="#cbd5e1" stroke-width="3" marker-end="url(#arrow3)"/>
+        <rect x="590" y="55" width="90" height="70" rx="10" fill="rgba(45,212,191,0.10)" stroke="rgba(45,212,191,0.30)"/>
+        <rect x="700" y="80" width="70" height="50" rx="10" fill="rgba(45,212,191,0.10)" stroke="rgba(45,212,191,0.30)"/>
+        <rect x="590" y="180" width="90" height="45" rx="10" fill="rgba(251,191,36,0.10)" stroke="rgba(251,191,36,0.30)"/>
+        <rect x="700" y="200" width="70" height="35" rx="10" fill="rgba(251,191,36,0.10)" stroke="rgba(251,191,36,0.30)"/>
+        <text x="680" y="275" fill="#cbd5e1" font-size="14" text-anchor="middle" font-family="Arial">hierarchy of scales</text>
+        <defs>
+          <marker id="arrow3" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+            <path d="M2,2 L10,6 L2,10" fill="none" stroke="#cbd5e1" stroke-width="2"/>
+          </marker>
+        </defs>
+      </svg>
+      <div class="figure-caption">Scale separation decomposes the learning problem into coarse information and local/fine details.</div>
+    </div>
+
+    <div class="box rose">
+      <b>Limit of pure scale assumptions.</b> Coarse-only and local-only assumptions are often too strong. Real architectures use compositional hierarchies that combine local processing, coarsening, and global aggregation.
+    </div>
+  </section>
+
+  <section id="sec12">
+    <h2>12. The Geometric Deep Learning blueprint <span class="pill violet">constructive architecture</span></h2>
+
+    <p>
+      The GDL blueprint combines the two major priors:
+    </p>
+
+    <div class="grid-2">
+      <div class="box teal">
+        <b>Symmetry</b>
+        <p>Use equivariant layers so transformations of the input produce consistent transformations of the features.</p>
+      </div>
+      <div class="box amber">
+        <b>Scale separation</b>
+        <p>Use locality, nonlinearities, pooling, and hierarchical composition to reduce effective dimensionality.</p>
+      </div>
+    </div>
+
+    <h3>Why linear invariants alone are weak</h3>
+    <p>
+      A linear invariant map often collapses too much information. For example, group averaging gives:
+    </p>
+
+    <div class="formula-card">
+      <div class="label">Group average</div>
+      \[
+      Ax=\bar x
+      =
+      \frac{1}{|\mathfrak G|}
+      \sum_{g\in\mathfrak G}gx.
+      \]
+      <p>
+        This is invariant, but it may destroy discriminative structure. Therefore, we need richer equivariant features before final invariant pooling.
+      </p>
+    </div>
+
+    <h3>Core building blocks</h3>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div>
+          <b>Linear equivariant layer.</b>
+          \[
+          B(gx)=gB(x).
+          \]
+          Examples include convolutions on grids and message-passing/diffusion-like operators on graphs.
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div>
+          <b>Pointwise nonlinearity.</b>
+          \[
+          (\sigma x)(u)=\sigma(x(u)).
+          \]
+          If the group acts by moving positions, pointwise nonlinearities preserve equivariance.
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div>
+          <b>Local pooling / coarsening.</b>
+          Reduce spatial resolution while preserving the relevant symmetry structure approximately or exactly.
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div>
+          <b>Global invariant layer.</b>
+          Aggregate over the domain or group orbit to produce a final invariant prediction.
+        </div>
+      </div>
+    </div>
+
+    <div class="formula-card">
+      <div class="label">Blueprint schematic</div>
+      \[
+      x
+      \xrightarrow{\text{equivariant }B_1}
+      h_1
+      \xrightarrow{\sigma}
+      \sigma(h_1)
+      \xrightarrow{\text{pool}}
+      h_2
+      \xrightarrow{\text{equivariant }B_2}
+      \cdots
+      \xrightarrow{\text{global invariant pooling}}
+      y.
+      \]
+    </div>
+
+    <div class="one-liner">
+      Equivariance preserves structured information layer by layer; final invariance removes nuisance transformations only when the prediction is ready.
+    </div>
+  </section>
+
+  <section id="sec13">
+    <h2>13. Architecture map <span class="pill">domain, group, model</span></h2>
+
+    <p>
+      Many familiar neural architectures can be interpreted through the same template:
+      choose a domain, identify a symmetry group, use representations, and build equivariant/invariant maps.
+    </p>
+
+    <div class="compare">
+      <table>
+        <tr>
+          <th>Architecture</th>
+          <th>Domain \(\Omega\)</th>
+          <th>Symmetry group</th>
+          <th>Main equivariant operation</th>
+          <th>Final invariant operation</th>
+        </tr>
+        <tr>
+          <td>CNN</td>
+          <td>grid</td>
+          <td>translations</td>
+          <td>convolution</td>
+          <td>global pooling / classifier head</td>
+        </tr>
+        <tr>
+          <td>Group CNN</td>
+          <td>grid or group</td>
+          <td>translations + rotations/reflections</td>
+          <td>group convolution</td>
+          <td>pooling over group/domain</td>
+        </tr>
+        <tr>
+          <td>Spherical CNN</td>
+          <td>sphere / \(SO(3)\)</td>
+          <td>3D rotations</td>
+          <td>spherical/group convolution</td>
+          <td>rotation-invariant aggregation</td>
+        </tr>
+        <tr>
+          <td>Mesh / intrinsic CNN</td>
+          <td>manifold or mesh</td>
+          <td>isometries / gauge transformations</td>
+          <td>gauge-equivariant local operators</td>
+          <td>surface/global pooling</td>
+        </tr>
+        <tr>
+          <td>GNN</td>
+          <td>graph vertices</td>
+          <td>permutations of node order</td>
+          <td>message passing</td>
+          <td>readout pooling</td>
+        </tr>
+        <tr>
+          <td>Deep Sets</td>
+          <td>set</td>
+          <td>permutations</td>
+          <td>shared pointwise map</td>
+          <td>sum/mean/max pooling</td>
+        </tr>
+        <tr>
+          <td>Transformer</td>
+          <td>complete graph / sequence tokens</td>
+          <td>permutation or sequence symmetries depending on positional encoding</td>
+          <td>attention</td>
+          <td>CLS token / pooling / task head</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="box cyan">
+      <b>Unifying message.</b> These architectures differ in implementation, but they follow the same mathematical pattern: define how symmetries act on the data, then build layers compatible with that action.
+    </div>
+  </section>
+
+  <section id="sec14">
+    <h2>14. Final checklist <span class="pill amber">definitions and logic</span></h2>
+
+    <div class="compare">
+      <table>
+        <tr>
+          <th>Concept</th>
+          <th>Formula</th>
+          <th>Meaning</th>
+        </tr>
+        <tr>
+          <td>Signal</td>
+          <td>\(x:\Omega\to\mathcal C\)</td>
+          <td>A datum is a function on a structured domain.</td>
+        </tr>
+        <tr>
+          <td>Group</td>
+          <td>\((\mathfrak G,\cdot)\)</td>
+          <td>Set with associative operation, identity, and inverses.</td>
+        </tr>
+        <tr>
+          <td>Group action</td>
+          <td>\((g,u)\mapsto gu\)</td>
+          <td>How group elements transform domain points.</td>
+        </tr>
+        <tr>
+          <td>Signal action</td>
+          <td>\((gx)(u)=x(g^{-1}u)\)</td>
+          <td>How transformations act on functions defined on the domain.</td>
+        </tr>
+        <tr>
+          <td>Representation</td>
+          <td>\(\rho(gh)=\rho(g)\rho(h)\)</td>
+          <td>Linear realization of group elements on a vector space.</td>
+        </tr>
+        <tr>
+          <td>Invariance</td>
+          <td>\(f(gx)=f(x)\)</td>
+          <td>Output is unchanged along group orbits.</td>
+        </tr>
+        <tr>
+          <td>Equivariance</td>
+          <td>\(F(gx)=gF(x)\)</td>
+          <td>Output transforms consistently with input.</td>
+        </tr>
+        <tr>
+          <td>Group smoothing</td>
+          <td>\(S_{\mathfrak G}f(x)=\frac1{|\mathfrak G|}\sum_g f(gx)\)</td>
+          <td>Average over transformed versions of \(x\).</td>
+        </tr>
+        <tr>
+          <td>Orbit distance</td>
+          <td>\(\inf_g\|x-gx'\|\)</td>
+          <td>Distance after best symmetry alignment.</td>
+        </tr>
+        <tr>
+          <td>Scale separation</td>
+          <td>\(f^\*(x)\approx \tilde f^\*(\tilde x)\) or \(\sum_u g(x_u)\)</td>
+          <td>Learning depends on coarse or local/hierarchical structure.</td>
+        </tr>
+      </table>
+    </div>
+
+    <h3>Proof reminders</h3>
+    <div class="note-list">
+      <div class="note-item">
+        <b>To prove group smoothing is invariant:</b> compute \((S_{\mathfrak G}f)(hx)\), use \(g(hx)=(gh)x\), then re-index \(k=gh\). The re-indexing is valid because right multiplication by \(h\) is a bijection.
+      </div>
+      <div class="note-item">
+        <b>To understand \((I-S_{\mathfrak G})f\):</b> it is the residual after subtracting the orbit average. It has zero average on every orbit.
+      </div>
+      <div class="note-item">
+        <b>To understand the missing cross term:</b> \(S_{\mathfrak G}f\) and \((I-S_{\mathfrak G})f\) are orthogonal components, so the \(2\langle a,b\rangle\) term is zero.
+      </div>
+      <div class="note-item">
+        <b>To remember invariance vs equivariance:</b> invariant means “same output”; equivariant means “output moves consistently.”
+      </div>
+      <div class="note-item">
+        <b>To remember the Lecture 4 conclusion:</b> symmetry improves sample complexity, but high-dimensional learning still needs scale separation, locality, and compositionality.
+      </div>
+    </div>
+
+    <div class="one-liner">
+      The complete logic: domain structure gives symmetries; symmetries give group actions and representations; representations define invariant/equivariant maps; equivariant layers preserve structure; pooling creates final invariance; scale separation makes the model statistically and computationally efficient.
+    </div>
+  </section>
+
+  <footer>
+    Built as a single-file HTML study note with MathJax, tables, proof blocks, and inline SVG diagrams.
+  </footer>
+</div>
+</body>
+</html>
