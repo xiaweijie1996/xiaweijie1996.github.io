@@ -1,0 +1,1445 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Introduction to Quantum Physics — From Crisis to Wave Mechanics</title>
+
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)'], ['$', '$']],
+        displayMath: [['\\[', '\\]'], ['$$', '$$']],
+        tags: 'ams'
+      },
+      options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <style>
+    :root{
+      --bg:#09111a; --card:rgba(13,22,36,0.90); --text:#e7edf5; --muted:#9fb0c3;
+      --line:rgba(255,255,255,0.09); --line2:rgba(255,255,255,0.17);
+      --cyan:#67e8f9; --teal:#2dd4bf; --amber:#fbbf24;
+      --rose:#fb7185; --violet:#c084fc; --green:#4ade80;
+      --shadow:0 18px 60px rgba(0,0,0,0.34);
+    }
+    *{ box-sizing:border-box; }
+    html{ scroll-behavior:smooth; }
+    body{
+      margin:0; color:var(--text);
+      background:
+        radial-gradient(1100px 520px at 8% 0%, rgba(103,232,249,0.11), transparent 58%),
+        radial-gradient(900px 480px at 94% 0%, rgba(192,132,252,0.09), transparent 55%),
+        linear-gradient(180deg, var(--bg), #040a10);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      line-height:1.75;
+    }
+    a{ color:#c6f4ff; text-decoration:none; }
+    a:hover{ text-decoration:underline; }
+    .wrap{ max-width:1140px; margin:32px auto 90px; padding:0 18px; }
+
+    /* ── Hero ── */
+    header.hero{
+      background:
+        radial-gradient(860px 360px at 8% 0%, rgba(103,232,249,0.15), transparent 56%),
+        radial-gradient(720px 320px at 92% 5%, rgba(192,132,252,0.10), transparent 54%),
+        linear-gradient(180deg, rgba(11,19,31,0.97), rgba(9,16,26,0.94));
+      border:1px solid var(--line); border-radius:22px;
+      padding:30px 26px 24px; box-shadow:var(--shadow);
+    }
+    .hero h1{ margin:0 0 10px; font-size:32px; letter-spacing:.15px; line-height:1.2; }
+    .hero p{ margin:0; max-width:970px; color:var(--muted); font-size:15px; }
+    .hero-tags{ display:flex; flex-wrap:wrap; gap:8px; margin-top:16px; }
+    .tag{ padding:4px 10px; border-radius:999px; border:1px solid var(--line);
+      background:rgba(255,255,255,0.04); color:#d8fbff; font-size:12px; }
+    .tag.teal{ color:#ccfbf1; background:rgba(45,212,191,0.10); }
+    .tag.amber{ color:#fde7a3; background:rgba(251,191,36,0.10); }
+    .tag.rose{ color:#ffd0d8; background:rgba(251,113,133,0.10); }
+    .tag.violet{ color:#ead8ff; background:rgba(192,132,252,0.10); }
+    .tag.green{ color:#d1fae5; background:rgba(74,222,128,0.10); }
+
+    /* ── ToC ── */
+    .toc{ margin-top:18px; background:var(--card); border:1px solid var(--line);
+      border-radius:20px; padding:18px 20px; box-shadow:0 10px 36px rgba(0,0,0,0.20); }
+    .toc h2{ margin:0 0 12px; font-size:18px; }
+    .toc-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:9px 14px; }
+    .toc a{ display:block; padding:10px 12px; border-radius:12px;
+      border:1px solid rgba(255,255,255,0.07); background:rgba(255,255,255,0.03);
+      color:var(--text); font-size:14px; }
+    .toc a span{ display:block; color:var(--muted); font-size:11.5px; margin-top:2px; }
+
+    /* ── Sections ── */
+    section{ margin-top:18px; background:var(--card); border:1px solid var(--line);
+      border-radius:20px; padding:26px 24px; box-shadow:0 10px 36px rgba(0,0,0,0.20); }
+    h2{ margin:0 0 14px; font-size:21px; line-height:1.3; color:#f8fbff; }
+    h3{ margin:22px 0 8px; font-size:16px; color:#eff7ff; }
+    h4{ margin:14px 0 6px; font-size:14px; color:#d1f8ff; letter-spacing:.1px; }
+    p{ margin:9px 0; }
+    ul,ol{ margin:8px 0 10px 22px; }
+    li{ margin:5px 0; }
+    .muted{ color:var(--muted); }
+
+    /* ── Pills ── */
+    .pill{ display:inline-block; margin-left:8px; padding:2px 10px; border-radius:999px;
+      font-size:12px; border:1px solid var(--line); background:rgba(103,232,249,0.10);
+      color:#d8fbff; vertical-align:middle; }
+    .pill.teal{ background:rgba(45,212,191,0.12); color:#ccfbf1; }
+    .pill.amber{ background:rgba(251,191,36,0.12); color:#fde7a3; }
+    .pill.rose{ background:rgba(251,113,133,0.12); color:#ffd0d8; }
+    .pill.violet{ background:rgba(192,132,252,0.12); color:#ead8ff; }
+    .pill.green{ background:rgba(74,222,128,0.12); color:#d1fae5; }
+
+    /* ── Boxes ── */
+    .box{ margin:12px 0; padding:13px 15px; border-radius:14px;
+      border:1px solid var(--line); background:rgba(255,255,255,0.028); }
+    .box.cyan{ background:rgba(103,232,249,0.09); border-color:rgba(103,232,249,0.24); }
+    .box.teal{ background:rgba(45,212,191,0.09); border-color:rgba(45,212,191,0.24); }
+    .box.amber{ background:rgba(251,191,36,0.09); border-color:rgba(251,191,36,0.24); }
+    .box.rose{ background:rgba(251,113,133,0.09); border-color:rgba(251,113,133,0.24); }
+    .box.violet{ background:rgba(192,132,252,0.09); border-color:rgba(192,132,252,0.24); }
+    .box.green{ background:rgba(74,222,128,0.09); border-color:rgba(74,222,128,0.24); }
+    .one-liner{ margin:12px 0; padding:12px 15px; border-radius:14px;
+      border:1px dashed rgba(103,232,249,0.36); background:rgba(103,232,249,0.09);
+      color:#d8fbff; font-weight:650; }
+
+    /* ── Formula cards ── */
+    .fc{ margin:12px 0; padding:14px 16px; border-radius:16px;
+      border:1px solid var(--line2); background:rgba(10,20,34,0.78); overflow-x:auto; }
+    .fc .lbl{ display:inline-block; margin-bottom:8px; padding:2px 9px; border-radius:999px;
+      font-size:11px; color:#d8fbff; background:rgba(103,232,249,0.10);
+      border:1px solid rgba(103,232,249,0.22); letter-spacing:.25px; text-transform:uppercase; }
+    .fc.amber .lbl{ color:#fde7a3; background:rgba(251,191,36,0.10); border-color:rgba(251,191,36,0.28); }
+    .fc.teal .lbl{ color:#ccfbf1; background:rgba(45,212,191,0.10); border-color:rgba(45,212,191,0.28); }
+    .fc.rose .lbl{ color:#ffd0d8; background:rgba(251,113,133,0.10); border-color:rgba(251,113,133,0.28); }
+    .fc.violet .lbl{ color:#ead8ff; background:rgba(192,132,252,0.10); border-color:rgba(192,132,252,0.28); }
+    .fc.green .lbl{ color:#d1fae5; background:rgba(74,222,128,0.10); border-color:rgba(74,222,128,0.28); }
+
+    /* ── Derivation blocks ── */
+    .deriv{ border-left:3px solid rgba(103,232,249,0.45); padding:12px 16px;
+      margin:14px 0; background:rgba(10,20,34,0.55); border-radius:0 14px 14px 0; }
+    .deriv.amber{ border-left-color:rgba(251,191,36,0.50); }
+    .deriv.teal{ border-left-color:rgba(45,212,191,0.50); }
+    .deriv.rose{ border-left-color:rgba(251,113,133,0.50); }
+    .deriv.violet{ border-left-color:rgba(192,132,252,0.50); }
+    .deriv.green{ border-left-color:rgba(74,222,128,0.50); }
+    .dlabel{ font-size:11.5px; color:var(--cyan); font-weight:700;
+      letter-spacing:.3px; text-transform:uppercase; margin-bottom:6px; }
+    .deriv.amber .dlabel{ color:var(--amber); }
+    .deriv.teal .dlabel{ color:var(--teal); }
+    .deriv.rose .dlabel{ color:var(--rose); }
+    .deriv.violet .dlabel{ color:var(--violet); }
+    .deriv.green .dlabel{ color:var(--green); }
+
+    /* ── Step grid ── */
+    .steps{ display:grid; gap:10px; margin:12px 0; }
+    .step{ display:grid; grid-template-columns:38px 1fr; gap:12px; align-items:start;
+      padding:12px 14px; border-radius:14px; border:1px solid var(--line);
+      background:rgba(255,255,255,0.025); }
+    .snum{ width:38px; height:38px; display:flex; align-items:center; justify-content:center;
+      border-radius:50%; background:rgba(103,232,249,0.13); border:1px solid rgba(103,232,249,0.26);
+      color:#d8fbff; font-weight:700; font-size:15px; flex-shrink:0; }
+
+    /* ── Table ── */
+    table{ width:100%; border-collapse:collapse; margin:12px 0;
+      border:1px solid var(--line); border-radius:14px; overflow:hidden; }
+    th,td{ border:1px solid var(--line); padding:10px 13px; text-align:left; vertical-align:top; }
+    th{ background:rgba(255,255,255,0.05); font-weight:650; }
+    .grid-2{ display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:14px; align-items:start; }
+    .grid-3{ display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:12px; align-items:start; }
+    .mjx-container{ overflow-x:auto; overflow-y:hidden; margin:4px 0; }
+    footer{ margin-top:20px; color:var(--muted); font-size:13px; text-align:center; padding:8px; }
+    @media(max-width:740px){
+      .hero h1{ font-size:26px; }
+      section{ padding:20px 16px; }
+      .step{ grid-template-columns:32px 1fr; }
+      .snum{ width:32px; height:32px; }
+    }
+  </style>
+</head>
+
+<body>
+<div class="wrap">
+
+<!-- ═══════════════════════════════════ HERO ═══════════════════════════════════ -->
+<header class="hero">
+  <h1>Introduction to Quantum Physics</h1>
+  <p>
+    A rigorous self-contained note covering the historical motivation, the mathematical framework,
+    and the canonical exactly-solvable models of non-relativistic quantum mechanics.
+    Every derivation is shown step by step.
+  </p>
+  <div class="hero-tags">
+    <span class="tag">Quantum Mechanics</span>
+    <span class="tag teal">Schrödinger Equation</span>
+    <span class="tag amber">Wave Function</span>
+    <span class="tag rose">Uncertainty Principle</span>
+    <span class="tag violet">Operators</span>
+    <span class="tag green">Exactly Solvable Models</span>
+    <span class="tag">Tunnelling</span>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════ TOC ════════════════════════════════════ -->
+<nav class="toc">
+  <h2>Table of Contents</h2>
+  <div class="toc-grid">
+    <a href="#s1">1. Crisis of Classical Physics<span>Blackbody radiation, ultraviolet catastrophe, Planck</span></a>
+    <a href="#s2">2. Photons and the Photoelectric Effect<span>Einstein, \(E=h\nu\), stopping potential</span></a>
+    <a href="#s3">3. Compton Scattering<span>Photon momentum, wavelength shift derivation</span></a>
+    <a href="#s4">4. Wave–Particle Duality<span>de Broglie, double-slit, phase vs group velocity</span></a>
+    <a href="#s5">5. Wave Function & Probability<span>Born rule, normalisation, probability current</span></a>
+    <a href="#s6">6. The Schrödinger Equation<span>Motivation, TDSE, separation of variables, TISE</span></a>
+    <a href="#s7">7. Operators and Observables<span>Hermitian operators, commutators, expectation values</span></a>
+    <a href="#s8">8. Heisenberg Uncertainty Principle<span>Derivation from commutator \([\hat x,\hat p]=i\hbar\)</span></a>
+    <a href="#s9">9. Infinite Square Well<span>Full solution, energy quantisation, orthonormality</span></a>
+    <a href="#s10">10. Quantum Harmonic Oscillator<span>Ladder operators, spectrum, ground state wavefunction</span></a>
+    <a href="#s11">11. Quantum Tunnelling<span>Rectangular barrier, transmission coefficient</span></a>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════ §1 ════════════════════════════════════ -->
+<section id="s1">
+  <h2>1. Crisis of Classical Physics <span class="pill amber">historical motivation</span></h2>
+
+  <p>
+    Towards the end of the 19th century, classical physics seemed complete. Two phenomena shattered that confidence:
+    the spectrum of radiation emitted by a hot object (blackbody radiation) and the photoelectric effect.
+  </p>
+
+  <h3>Blackbody radiation</h3>
+  <p>
+    A <b>blackbody</b> is an idealised object that absorbs all incident radiation and re-emits
+    it purely as a function of its temperature \(T\). Experimentally, the energy density
+    \(u(\nu, T)\) (energy per unit volume per unit frequency) is a smooth curve peaked at a
+    frequency proportional to \(T\) (Wien's displacement law).
+  </p>
+
+  <h3>The Rayleigh–Jeans law and the ultraviolet catastrophe</h3>
+  <p>
+    Classical statistical mechanics treats each mode of the electromagnetic field as a harmonic oscillator.
+    The equipartition theorem assigns average energy \(k_BT\) to each mode (kinetic + potential).
+    The number of modes per unit volume in the frequency interval \([\nu, \nu+d\nu]\) is
+    \(g(\nu) = 8\pi\nu^2/c^3\), giving:
+  </p>
+
+  <div class="fc">
+    <div class="lbl">Rayleigh–Jeans law</div>
+    \[
+      u_\text{RJ}(\nu, T)
+      = g(\nu)\cdot k_B T
+      = \frac{8\pi\nu^2}{c^3}\,k_B T.
+    \]
+    <p class="muted">
+      This agrees with experiment at low frequencies but diverges as \(\nu\to\infty\).
+      Integrating over all \(\nu\) gives infinite total energy — the <em>ultraviolet catastrophe</em>.
+    </p>
+  </div>
+
+  <h3>Planck's quantum hypothesis (1900)</h3>
+  <p>
+    Max Planck proposed that each oscillator of frequency \(\nu\) can only hold energy
+    in discrete multiples of a minimum quantum:
+  </p>
+  <div class="fc amber">
+    <div class="lbl">Planck quantisation</div>
+    \[
+      E_n = n h \nu, \qquad n = 0, 1, 2, \ldots
+    \]
+    where \(h = 6.626\times10^{-34}\ \text{J·s}\) is <em>Planck's constant</em>.
+  </div>
+
+  <div class="deriv">
+    <div class="dlabel">Derivation of the Planck distribution</div>
+    <p>
+      Using the Boltzmann factor, the probability of the oscillator being in state \(n\) is
+      \(P_n = e^{-nh\nu/k_BT}/Z\), with partition function
+    </p>
+    \[
+      Z = \sum_{n=0}^\infty e^{-nh\nu/k_BT}
+        = \frac{1}{1 - e^{-h\nu/k_BT}}.
+    \]
+    <p>The average energy is then:</p>
+    \[
+      \langle E \rangle
+      = -\frac{\partial \ln Z}{\partial \beta}
+        \quad \bigl(\beta = 1/k_BT\bigr)
+      = \frac{h\nu}{e^{h\nu/k_BT} - 1}.
+    \]
+    <p>Multiplying by the mode density:</p>
+    \[
+      \boxed{u(\nu, T)
+      = \frac{8\pi h\nu^3}{c^3}\cdot\frac{1}{e^{h\nu/k_BT}-1}.}
+    \]
+  </div>
+
+  <div class="grid-2">
+    <div class="box teal">
+      <b>Low-frequency limit (\(h\nu \ll k_BT\)).</b>
+      \(e^{h\nu/k_BT}-1 \approx h\nu/k_BT\), so
+      \(u \approx (8\pi\nu^2/c^3)k_BT\) — recovers Rayleigh–Jeans. ✓
+    </div>
+    <div class="box amber">
+      <b>High-frequency limit (\(h\nu \gg k_BT\)).</b>
+      \(e^{h\nu/k_BT}\gg 1\), so \(u \approx (8\pi h\nu^3/c^3)e^{-h\nu/k_BT}\to 0\) —
+      the catastrophe is cured because quantum discreteness suppresses high-energy modes. ✓
+    </div>
+  </div>
+
+  <div class="box rose">
+    <b>Key conceptual shift.</b> Energy is not a continuous variable. An oscillator cannot
+    absorb an arbitrary amount of energy from the field; it can only receive whole quanta \(h\nu\).
+    At high frequency, \(h\nu \gg k_BT\), so thermal fluctuations cannot even excite the first level.
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ §2 ════════════════════════════════════ -->
+<section id="s2">
+  <h2>2. Photons and the Photoelectric Effect <span class="pill teal">Einstein 1905</span></h2>
+
+  <p>
+    Shining light on a metal surface ejects electrons. Classical wave theory predicts:
+    (i) any frequency should eventually eject electrons if the intensity is high enough,
+    (ii) the kinetic energy of emitted electrons should grow with intensity.
+    <em>Both predictions are wrong.</em>
+  </p>
+
+  <h3>Experimental facts</h3>
+  <ul>
+    <li>Electrons are emitted <em>only if</em> \(\nu > \nu_0\) (threshold frequency), regardless of intensity.</li>
+    <li>The maximum kinetic energy \(K_\text{max}\) depends on \(\nu\), not on intensity.</li>
+    <li>Emission is instantaneous (no delay to "charge up" the electron).</li>
+    <li>Intensity controls the <em>rate</em> of electron emission, not their energy.</li>
+  </ul>
+
+  <h3>Einstein's photon hypothesis</h3>
+  <p>
+    Einstein proposed that light consists of discrete quanta (photons), each carrying energy
+    \(E = h\nu\). When a photon is absorbed by the metal, it gives all its energy to a single electron.
+    Part of that energy is used to overcome the binding energy \(\phi\) (the <em>work function</em>),
+    and the rest becomes kinetic energy:
+  </p>
+
+  <div class="fc teal">
+    <div class="lbl">Photoelectric equation</div>
+    \[
+      K_\text{max} = h\nu - \phi.
+    \]
+  </div>
+
+  <div class="deriv teal">
+    <div class="dlabel">Stopping potential derivation</div>
+    <p>
+      To measure \(K_\text{max}\), apply a retarding voltage \(V_s\) (stopping potential)
+      until the most energetic electrons are just stopped:
+    </p>
+    \[
+      eV_s = K_\text{max} = h\nu - \phi.
+    \]
+    Rearranging:
+    \[
+      V_s = \frac{h}{e}\,\nu - \frac{\phi}{e}.
+    \]
+    <p>
+      This is a linear relation between \(V_s\) and \(\nu\). The slope \(h/e\) is universal
+      (same for all metals) and gives a direct measurement of \(h\).
+      The intercept \(-\phi/e\) depends on the metal.
+    </p>
+  </div>
+
+  <div class="box cyan">
+    <b>Photon momentum.</b> Combining \(E=h\nu\) with the relativistic relation \(E=pc\) for massless particles:
+    \[
+      p = \frac{E}{c} = \frac{h\nu}{c} = \frac{h}{\lambda}.
+    \]
+    This is the photon momentum — it will reappear in Compton scattering and de Broglie's hypothesis.
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ §3 ════════════════════════════════════ -->
+<section id="s3">
+  <h2>3. Compton Scattering <span class="pill violet">photon momentum confirmed</span></h2>
+
+  <p>
+    Arthur Compton (1923) scattered X-rays off free electrons and found that the scattered X-rays
+    had a longer wavelength than the incident ones. Classical wave theory predicts no change in
+    wavelength. The photon picture explains it perfectly via an elastic collision.
+  </p>
+
+  <h3>Setup</h3>
+  <p>
+    Let the incident photon have wavelength \(\lambda\) and travel along the \(x\)-axis.
+    After scattering, the photon leaves at angle \(\theta\) with wavelength \(\lambda'\),
+    and the electron recoils at angle \(\phi\).
+  </p>
+
+  <div class="deriv violet">
+    <div class="dlabel">Full derivation of the Compton formula</div>
+
+    <p><b>Photon four-momenta.</b></p>
+    \[
+      E_\gamma = \frac{hc}{\lambda}, \quad p_\gamma = \frac{h}{\lambda};
+      \qquad
+      E_{\gamma'} = \frac{hc}{\lambda'}, \quad p_{\gamma'} = \frac{h}{\lambda'}.
+    \]
+
+    <p><b>Conservation of energy</b> (electron initially at rest, so \(E_e = m_e c^2\)):</p>
+    \[
+      \frac{hc}{\lambda} + m_e c^2
+      = \frac{hc}{\lambda'} + E_e'.
+      \tag{1}
+    \]
+
+    <p><b>Conservation of momentum</b> (\(x\)- and \(y\)-components):</p>
+    \[
+      \frac{h}{\lambda} = \frac{h}{\lambda'}\cos\theta + p_e'\cos\phi,
+      \tag{2}
+    \]
+    \[
+      0 = \frac{h}{\lambda'}\sin\theta - p_e'\sin\phi.
+      \tag{3}
+    \]
+
+    <p><b>Eliminate the electron.</b> From (2) and (3):</p>
+    \[
+      p_e'\cos\phi = \frac{h}{\lambda} - \frac{h}{\lambda'}\cos\theta,
+      \qquad
+      p_e'\sin\phi = \frac{h}{\lambda'}\sin\theta.
+    \]
+    Squaring and adding:
+    \[
+      (p_e'c)^2
+      = \left(\frac{hc}{\lambda}\right)^2
+      - 2\frac{h^2c^2}{\lambda\lambda'}\cos\theta
+      + \left(\frac{hc}{\lambda'}\right)^2.
+      \tag{4}
+    \]
+
+    <p>From (1): \(E_e' = hc/\lambda - hc/\lambda' + m_ec^2\). Using \((E_e')^2 = (p_e'c)^2 + (m_ec^2)^2\):</p>
+    \[
+      (p_e'c)^2
+      = (E_e')^2 - (m_ec^2)^2
+      = \left(\frac{hc}{\lambda} - \frac{hc}{\lambda'} + m_ec^2\right)^2 - (m_ec^2)^2.
+      \tag{5}
+    \]
+
+    <p>Expanding (5) and equating with (4) (the \((hc/\lambda)^2\) and \((hc/\lambda')^2\) terms cancel):</p>
+    \[
+      -2\frac{h^2c^2}{\lambda\lambda'}\cos\theta
+      = -2\frac{h^2c^2}{\lambda\lambda'} + 2m_ec^2\left(\frac{hc}{\lambda} - \frac{hc}{\lambda'}\right).
+    \]
+    Dividing by \(2hc\):
+    \[
+      -\frac{h}{\lambda\lambda'}\cos\theta
+      = -\frac{h}{\lambda\lambda'} + m_ec\!\left(\frac{1}{\lambda} - \frac{1}{\lambda'}\right).
+    \]
+    Rearranging:
+    \[
+      \boxed{\Delta\lambda = \lambda' - \lambda = \frac{h}{m_ec}(1-\cos\theta) = \lambda_C(1-\cos\theta).}
+    \]
+  </div>
+
+  <div class="fc violet">
+    <div class="lbl">Compton wavelength</div>
+    \[
+      \lambda_C = \frac{h}{m_e c}
+      = \frac{6.626\times10^{-34}}{(9.109\times10^{-31})(2.998\times10^8)}
+      \approx 2.426 \times 10^{-12}\ \text{m}
+      = 2.426\ \text{pm}.
+    \]
+    <p class="muted">
+      The maximum shift is at \(\theta=180°\): \(\Delta\lambda_\text{max} = 2\lambda_C \approx 4.85\ \text{pm}\).
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ §4 ════════════════════════════════════ -->
+<section id="s4">
+  <h2>4. Wave–Particle Duality <span class="pill rose">de Broglie 1924</span></h2>
+
+  <p>
+    If light (classically a wave) behaves like a particle, perhaps particles (classically point masses)
+    behave like waves. Louis de Broglie proposed this symmetry in his 1924 PhD thesis.
+  </p>
+
+  <h3>de Broglie relations</h3>
+  <p>
+    By analogy with the photon (\(E=h\nu\) and \(p=h/\lambda\)), de Broglie proposed for
+    <em>any</em> particle:
+  </p>
+
+  <div class="fc rose">
+    <div class="lbl">de Broglie relations</div>
+    \[
+      \lambda = \frac{h}{p},
+      \qquad
+      \nu = \frac{E}{h},
+      \qquad
+      \text{or equivalently:}
+      \quad
+      \mathbf{p} = \hbar\mathbf{k},
+      \quad
+      E = \hbar\omega,
+    \]
+    where \(\hbar = h/(2\pi)\), \(k = 2\pi/\lambda\) is the wave number, and \(\omega = 2\pi\nu\).
+  </div>
+
+  <h3>Double-slit experiment</h3>
+  <p>
+    Davisson and Germer (1927) fired electrons at a crystal and observed diffraction patterns —
+    direct evidence that electrons have a wavelength. The same experiment has since been done
+    with neutrons, atoms, and even large molecules (C\(_{60}\) buckyballs).
+  </p>
+  <div class="box amber">
+    <b>The mystery.</b> Even when electrons are sent through the slits one at a time, an
+    interference pattern builds up over many detections. Each individual electron lands at one
+    definite spot, yet the statistical distribution shows wave-like interference.
+    The electron interferes with <em>itself</em>.
+  </div>
+
+  <h3>Phase velocity vs group velocity</h3>
+  <p>
+    A free particle is associated with a <em>wave packet</em>: a superposition of plane waves
+    centred around wave number \(k_0\). Two velocities matter:
+  </p>
+  <div class="fc">
+    <div class="lbl">Two velocities of a wave packet</div>
+    \[
+      v_\text{phase} = \frac{\omega}{k}
+      = \frac{E}{\hbar} \cdot \frac{\hbar}{p}
+      = \frac{E}{p}
+      = \frac{p^2/2m}{p} = \frac{p}{2m} = \frac{v_\text{particle}}{2},
+    \]
+    \[
+      v_\text{group} = \frac{d\omega}{dk}\bigg|_{k_0}
+      = \frac{dE/\hbar}{dp/\hbar}
+      = \frac{dE}{dp}
+      = \frac{d}{dp}\!\left(\frac{p^2}{2m}\right) = \frac{p}{m} = v_\text{particle}.
+    \]
+    <p class="muted">
+      The <em>group</em> velocity of the quantum wave packet equals the classical particle velocity.
+      The phase velocity has no direct physical meaning.
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ §5 ════════════════════════════════════ -->
+<section id="s5">
+  <h2>5. Wave Function and Probability <span class="pill green">Born interpretation</span></h2>
+
+  <p>
+    A quantum particle is described by a complex-valued <b>wave function</b>
+    \(\Psi(x,t)\). What is its physical meaning?
+  </p>
+
+  <h3>Born rule</h3>
+  <div class="fc green">
+    <div class="lbl">Born (1926)</div>
+    \[
+      P(x,t)\,dx = |\Psi(x,t)|^2\,dx
+    \]
+    is the probability of finding the particle between \(x\) and \(x+dx\) at time \(t\).
+  </div>
+
+  <p>
+    Since the particle must be <em>somewhere</em>, the total probability must equal one:
+  </p>
+
+  <div class="fc">
+    <div class="lbl">Normalisation condition</div>
+    \[
+      \int_{-\infty}^{+\infty} |\Psi(x,t)|^2\,dx = 1.
+    \]
+  </div>
+
+  <div class="box cyan">
+    <b>Why complex?</b> A real positive function cannot exhibit interference (you cannot have
+    \(f(x) + g(x) = 0\) if both are positive). Interference is essential for quantum mechanics —
+    it is what produces diffraction. The complex nature of \(\Psi\) allows the probability
+    amplitude to cancel or reinforce.
+  </div>
+
+  <h3>Probability current</h3>
+  <p>
+    Define the probability current \(j(x,t)\) via the <em>continuity equation</em>:
+  </p>
+
+  <div class="deriv green">
+    <div class="dlabel">Derivation of probability current</div>
+    <p>
+      Differentiating \(\rho = |\Psi|^2 = \Psi^*\Psi\) with respect to time and using the
+      Schrödinger equation (derived in §6):
+    </p>
+    \[
+      \frac{\partial\rho}{\partial t}
+      = \frac{\partial\Psi^*}{\partial t}\Psi + \Psi^*\frac{\partial\Psi}{\partial t}.
+    \]
+    From the TDSE: \(i\hbar\,\partial\Psi/\partial t = -(\hbar^2/2m)\,\partial^2\Psi/\partial x^2 + V\Psi\), so
+    \(\partial\Psi/\partial t = \frac{i\hbar}{2m}\partial^2\Psi/\partial x^2 - \frac{i}{\hbar}V\Psi\)
+    (and conjugate for \(\Psi^*\)). Substituting:
+    \[
+      \frac{\partial\rho}{\partial t}
+      = \frac{i\hbar}{2m}\!\left(
+          \Psi^*\frac{\partial^2\Psi}{\partial x^2}
+          - \Psi\frac{\partial^2\Psi^*}{\partial x^2}
+        \right)
+      = \frac{\partial}{\partial x}\!\left[
+          \frac{i\hbar}{2m}\!\left(
+            \Psi^*\frac{\partial\Psi}{\partial x}
+            - \Psi\frac{\partial\Psi^*}{\partial x}
+          \right)
+        \right].
+    \]
+    (The \(V\) terms cancel because \(V\) is real.) This is the <em>continuity equation</em>
+    \(\partial\rho/\partial t + \partial j/\partial x = 0\), with:
+  </div>
+
+  <div class="fc green">
+    <div class="lbl">Probability current</div>
+    \[
+      j(x,t)
+      = -\frac{i\hbar}{2m}
+        \!\left(\Psi^*\frac{\partial\Psi}{\partial x} - \Psi\frac{\partial\Psi^*}{\partial x}\right)
+      = \frac{\hbar}{m}\,\operatorname{Im}\!\left(\Psi^*\frac{\partial\Psi}{\partial x}\right).
+    \]
+  </div>
+
+  <div class="box teal">
+    <b>Normalisation is preserved in time.</b> The continuity equation guarantees
+    \(\frac{d}{dt}\int|\Psi|^2\,dx = 0\), so if \(\Psi\) is normalised at \(t=0\), it
+    stays normalised for all time — provided \(\Psi\to 0\) fast enough as \(|x|\to\infty\).
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ §6 ════════════════════════════════════ -->
+<section id="s6">
+  <h2>6. The Schrödinger Equation <span class="pill cyan">the central equation of QM</span></h2>
+
+  <h3>Motivation from plane waves</h3>
+  <p>
+    The simplest quantum state is a free particle moving with definite momentum \(p\) and energy
+    \(E = p^2/(2m)\). By de Broglie, it should behave as a plane wave:
+  </p>
+
+  <div class="fc">
+    <div class="lbl">Free-particle plane wave</div>
+    \[
+      \Psi(x,t) = A\,e^{i(kx - \omega t)},
+      \quad
+      k = \frac{p}{\hbar},
+      \quad
+      \omega = \frac{E}{\hbar}.
+    \]
+  </div>
+
+  <div class="deriv">
+    <div class="dlabel">Reading off operators from the plane wave</div>
+
+    <p><b>Time derivative:</b></p>
+    \[
+      \frac{\partial\Psi}{\partial t} = -i\omega\,\Psi
+      \implies
+      i\hbar\frac{\partial\Psi}{\partial t} = \hbar\omega\,\Psi = E\,\Psi.
+    \]
+    So the operation \(i\hbar\,\partial/\partial t\) acting on \(\Psi\) gives the energy \(E\) times \(\Psi\).
+
+    <p><b>First spatial derivative:</b></p>
+    \[
+      \frac{\partial\Psi}{\partial x} = ik\,\Psi
+      \implies
+      -i\hbar\frac{\partial\Psi}{\partial x} = \hbar k\,\Psi = p\,\Psi.
+    \]
+    So \(-i\hbar\,\partial/\partial x\) acting on \(\Psi\) returns the momentum \(p\).
+
+    <p><b>Second spatial derivative:</b></p>
+    \[
+      \frac{\partial^2\Psi}{\partial x^2} = -k^2\Psi
+      \implies
+      -\frac{\hbar^2}{2m}\frac{\partial^2\Psi}{\partial x^2}
+      = \frac{\hbar^2 k^2}{2m}\Psi = \frac{p^2}{2m}\Psi = K\,\Psi,
+    \]
+    where \(K = p^2/(2m)\) is the kinetic energy.
+  </div>
+
+  <p>
+    The classical energy conservation law is \(E = K + V = p^2/(2m) + V\).
+    Replacing each side by its operator action on \(\Psi\):
+  </p>
+
+  <div class="fc amber">
+    <div class="lbl">Time-dependent Schrödinger equation (TDSE)</div>
+    \[
+      i\hbar\frac{\partial\Psi}{\partial t}
+      =
+      -\frac{\hbar^2}{2m}\frac{\partial^2\Psi}{\partial x^2} + V(x,t)\,\Psi
+      =
+      \hat{H}\,\Psi.
+    \]
+  </div>
+
+  <div class="box rose">
+    <b>Status of this "derivation".</b>
+    The argument above is a plausibility argument, not a rigorous derivation.
+    The Schrödinger equation is a <em>postulate</em> of quantum mechanics — justified by
+    its agreement with experiment in every case tested for a century.
+  </div>
+
+  <h3>Separation of variables — Time-independent Schrödinger equation</h3>
+  <p>
+    When \(V = V(x)\) (no explicit time dependence), we look for solutions of the form
+    \(\Psi(x,t) = \psi(x)\,\phi(t)\):
+  </p>
+
+  <div class="deriv amber">
+    <div class="dlabel">Separation of variables</div>
+    <p>Substitute into TDSE and divide both sides by \(\psi\phi\):</p>
+    \[
+      i\hbar\frac{\phi'(t)}{\phi(t)}
+      =
+      \frac{1}{\psi(x)}\!\left[-\frac{\hbar^2}{2m}\psi''(x) + V(x)\psi(x)\right].
+    \]
+    <p>
+      The left side depends only on \(t\); the right side depends only on \(x\).
+      Both must equal the same constant — call it \(E\):
+    </p>
+    \[
+      i\hbar\phi' = E\phi
+      \quad\Longrightarrow\quad
+      \phi(t) = e^{-iEt/\hbar}.
+    \]
+    \[
+      -\frac{\hbar^2}{2m}\psi'' + V\psi = E\psi.
+    \]
+  </div>
+
+  <div class="fc teal">
+    <div class="lbl">Time-independent Schrödinger equation (TISE)</div>
+    \[
+      \hat{H}\,\psi(x)
+      =
+      \left[-\frac{\hbar^2}{2m}\frac{d^2}{dx^2} + V(x)\right]\psi(x)
+      =
+      E\,\psi(x).
+    \]
+    <p class="muted">
+      This is an <em>eigenvalue equation</em>: \(\psi\) is an eigenfunction of \(\hat H\) with eigenvalue \(E\).
+      The time-dependence is always the simple phase factor \(e^{-iEt/\hbar}\).
+    </p>
+  </div>
+
+  <div class="box green">
+    <b>Stationary states.</b> For a separable solution,
+    \(|\Psi|^2 = |\psi|^2|e^{-iEt/\hbar}|^2 = |\psi|^2\) —
+    the probability density is time-independent. These are called <em>stationary states</em>.
+    General solutions are superpositions of stationary states:
+    \[
+      \Psi(x,t) = \sum_n c_n\,\psi_n(x)\,e^{-iE_nt/\hbar},
+      \quad
+      \text{with } \sum_n|c_n|^2 = 1.
+    \]
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ §7 ════════════════════════════════════ -->
+<section id="s7">
+  <h2>7. Operators and Observables <span class="pill violet">the mathematical framework</span></h2>
+
+  <p>
+    In quantum mechanics, every physical observable is represented by a linear operator acting on the wave function.
+    The measurement postulate states that the only possible outcomes of a measurement are the
+    <em>eigenvalues</em> of the corresponding operator.
+  </p>
+
+  <h3>Fundamental operators</h3>
+
+  <div class="grid-2">
+    <div class="fc">
+      <div class="lbl">Position operator</div>
+      \[\hat{x}\,\psi = x\,\psi.\]
+      (Multiplication by \(x\).)
+    </div>
+    <div class="fc rose">
+      <div class="lbl">Momentum operator</div>
+      \[\hat{p} = -i\hbar\frac{\partial}{\partial x}.\]
+    </div>
+  </div>
+
+  <div class="deriv rose">
+    <div class="dlabel">Why this form for \(\hat{p}\)?</div>
+    <p>
+      For a plane wave \(\psi = e^{ipx/\hbar}\) (a state of definite momentum \(p\)):
+    </p>
+    \[
+      -i\hbar\frac{\partial}{\partial x}e^{ipx/\hbar}
+      = -i\hbar \cdot \frac{ip}{\hbar}\,e^{ipx/\hbar}
+      = p\,e^{ipx/\hbar}.
+    \]
+    <p>
+      So \(\hat{p}\,\psi = p\,\psi\): the operator returns the momentum as its eigenvalue. ✓
+    </p>
+  </div>
+
+  <div class="fc amber">
+    <div class="lbl">Hamiltonian (total energy operator)</div>
+    \[
+      \hat{H} = \frac{\hat{p}^2}{2m} + V(\hat{x})
+      = -\frac{\hbar^2}{2m}\frac{\partial^2}{\partial x^2} + V(x).
+    \]
+  </div>
+
+  <h3>Expectation values</h3>
+  <p>
+    The <b>expectation value</b> of an observable \(Q\) in state \(\Psi\) is the average
+    result over many identical measurements:
+  </p>
+  <div class="fc">
+    <div class="lbl">Expectation value</div>
+    \[
+      \langle \hat{Q} \rangle = \int_{-\infty}^{+\infty} \Psi^*(x,t)\,\hat{Q}\,\Psi(x,t)\,dx.
+    \]
+  </div>
+
+  <div class="box teal">
+    <b>Hermitian operators.</b> For a measurement result to be real, we need
+    \(\langle\hat{Q}\rangle\in\mathbb{R}\) for all \(\Psi\). This requires \(\hat{Q}\) to be
+    <em>Hermitian</em>: \(\hat{Q}^\dagger = \hat{Q}\), i.e.
+    \(\int\Psi^*(\hat{Q}\Phi)\,dx = \int(\hat{Q}\Psi)^*\Phi\,dx\) for all admissible \(\Psi,\Phi\).
+    Both \(\hat{x}\) and \(\hat{p}\) are Hermitian.
+  </div>
+
+  <h3>The canonical commutator</h3>
+
+  <div class="deriv violet">
+    <div class="dlabel">Explicit computation of \([\hat{x},\hat{p}]\)</div>
+    <p>
+      The commutator \([\hat{x},\hat{p}] = \hat{x}\hat{p} - \hat{p}\hat{x}\).
+      Let it act on an arbitrary function \(\psi(x)\):
+    </p>
+    \[
+      [\hat{x},\hat{p}]\,\psi
+      = x\!\left(-i\hbar\frac{\partial\psi}{\partial x}\right)
+        - \left(-i\hbar\frac{\partial}{\partial x}\right)(x\,\psi).
+    \]
+    Using the product rule on the second term:
+    \[
+      = -i\hbar x\psi' + i\hbar(\psi + x\psi')
+      = i\hbar\,\psi.
+    \]
+    Since this holds for all \(\psi\):
+  </div>
+
+  <div class="fc violet">
+    <div class="lbl">Canonical commutation relation</div>
+    \[
+      [\hat{x},\hat{p}] = i\hbar.
+    \]
+  </div>
+
+  <div class="box amber">
+    <b>Why commutators matter.</b>
+    Two observables can be <em>simultaneously measured with arbitrary precision</em> if and only if
+    their operators commute (\([\hat A,\hat B]=0\)). The non-zero commutator \([\hat x,\hat p]=i\hbar\)
+    is precisely what forbids knowing position and momentum simultaneously — the Heisenberg uncertainty principle.
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ §8 ════════════════════════════════════ -->
+<section id="s8">
+  <h2>8. Heisenberg Uncertainty Principle <span class="pill rose">derived from commutators</span></h2>
+
+  <h3>Standard deviation of an observable</h3>
+  <p>
+    For observable \(\hat{A}\), define \(\sigma_A^2 = \langle\hat{A}^2\rangle - \langle\hat{A}\rangle^2\).
+    The <em>generalised uncertainty principle</em> states:
+  </p>
+
+  <div class="fc rose">
+    <div class="lbl">Generalised uncertainty principle</div>
+    \[
+      \sigma_A\,\sigma_B \ge \frac{1}{2}\bigl|\langle[\hat{A},\hat{B}]\rangle\bigr|.
+    \]
+  </div>
+
+  <div class="deriv rose">
+    <div class="dlabel">Derivation sketch via Cauchy–Schwarz</div>
+
+    <p>Define shifted operators \(\hat{f} = \hat{A} - \langle A\rangle\), \(\hat{g} = \hat{B} - \langle B\rangle\).
+    Note \(\sigma_A^2 = \langle\hat{f}^2\rangle = \langle f|f\rangle\) and similarly for \(B\).</p>
+
+    <p><b>Cauchy–Schwarz inequality:</b>
+    For any two vectors \(|f\rangle, |g\rangle\) in a Hilbert space:
+    \(\langle f|f\rangle\langle g|g\rangle \ge |\langle f|g\rangle|^2\).
+    So:
+    </p>
+    \[
+      \sigma_A^2\sigma_B^2 \ge |\langle f|g\rangle|^2.
+    \]
+
+    <p>Write \(\langle f|g\rangle = \frac{1}{2}\langle[\hat f,\hat g]\rangle + \frac{1}{2}\langle\{\hat f,\hat g\}\rangle\),
+    where the commutator part is purely imaginary and the anti-commutator part is real.
+    Taking the modulus:</p>
+    \[
+      |\langle f|g\rangle|^2
+      \ge \left|\frac{1}{2}\langle[\hat f,\hat g]\rangle\right|^2
+       = \left|\frac{1}{2}\langle[\hat A,\hat B]\rangle\right|^2.
+    \]
+    Taking the square root gives the result.
+  </div>
+
+  <h3>Position–momentum uncertainty</h3>
+  <p>Applying to \(\hat{A}=\hat{x}\), \(\hat{B}=\hat{p}\) with \([\hat{x},\hat{p}]=i\hbar\):</p>
+
+  <div class="fc amber">
+    <div class="lbl">Heisenberg uncertainty principle</div>
+    \[
+      \sigma_x\,\sigma_p \ge \frac{\hbar}{2}.
+    \]
+  </div>
+
+  <div class="box cyan">
+    <b>Physical meaning.</b>
+    \(\sigma_x\) is the spread of position measurements and \(\sigma_p\) is the spread of
+    momentum measurements, both taken on identically prepared states.
+    This is <em>not</em> a statement about measurement disturbance — it is a fundamental property
+    of the quantum state itself. A state with perfectly definite position (\(\sigma_x=0\))
+    would require \(\sigma_p=\infty\), meaning the momentum is completely uncertain.
+  </div>
+
+  <h3>Energy–time uncertainty</h3>
+  <div class="fc">
+    <div class="lbl">Energy–time uncertainty</div>
+    \[
+      \sigma_E\,\Delta t \ge \frac{\hbar}{2},
+    \]
+    where \(\Delta t\) is the characteristic time for the expectation value of some observable to change appreciably.
+    This is not derived from a commutator (time is a parameter, not an operator in NRQM),
+    but follows from Fourier analysis of wave packets.
+  </div>
+
+  <h3>Minimum-uncertainty state</h3>
+  <p>
+    Equality holds in the uncertainty principle when \(\hat g|\psi\rangle = ic\,\hat f|\psi\rangle\)
+    for some real \(c\). For \(\hat x\) and \(\hat p\) this gives:
+  </p>
+  \[
+    \left(-i\hbar\frac{d}{dx} - \langle p\rangle\right)\psi = ic\bigl(x - \langle x\rangle\bigr)\psi.
+  \]
+  Solving: \(\psi(x) \propto \exp\!\left[-\frac{(x-\langle x\rangle)^2}{4\sigma_x^2} + \frac{i\langle p\rangle x}{\hbar}\right]\) — a
+  <b>Gaussian wave packet</b> is the minimum-uncertainty state.
+</section>
+
+<!-- ═══════════════════════════════════ §9 ════════════════════════════════════ -->
+<section id="s9">
+  <h2>9. Infinite Square Well <span class="pill green">first exact solution</span></h2>
+
+  <p>
+    The simplest bound-state problem: a particle confined to a box of length \(L\),
+    free inside and forbidden from escaping.
+  </p>
+
+  <div class="fc green">
+    <div class="lbl">Potential</div>
+    \[
+      V(x) =
+      \begin{cases}
+        0 & 0 < x < L, \\
+        +\infty & \text{otherwise}.
+      \end{cases}
+    \]
+  </div>
+
+  <h3>Boundary conditions</h3>
+  <p>
+    The wave function must be continuous everywhere. Since \(V=+\infty\) outside the well,
+    we must have \(\psi(x)=0\) for \(x\le 0\) and \(x\ge L\). Continuity then requires:
+  </p>
+  \[
+    \psi(0) = 0, \qquad \psi(L) = 0.
+  \]
+
+  <div class="deriv green">
+    <div class="dlabel">Solving the TISE inside the well</div>
+
+    <p>Inside (\(0 < x < L\)), \(V=0\), so the TISE is:</p>
+    \[
+      -\frac{\hbar^2}{2m}\psi'' = E\psi
+      \implies
+      \psi'' = -k^2\psi,
+      \quad
+      k = \frac{\sqrt{2mE}}{\hbar} \quad (E > 0).
+    \]
+
+    <p><b>General solution:</b></p>
+    \[
+      \psi(x) = A\sin(kx) + B\cos(kx).
+    \]
+
+    <p><b>Apply BC at \(x=0\):</b> \(\psi(0) = B = 0\), so \(B=0\).</p>
+    <p><b>Apply BC at \(x=L\):</b> \(\psi(L) = A\sin(kL) = 0\).</p>
+
+    <p>Since \(A\ne 0\) (otherwise \(\psi=0\) everywhere — not normalisable), we need:</p>
+    \[
+      \sin(kL) = 0
+      \implies
+      kL = n\pi,\ n = 1, 2, 3, \ldots
+      \implies
+      k_n = \frac{n\pi}{L}.
+    \]
+    (\(n=0\) is excluded since it gives \(\psi\equiv 0\). Negative \(n\) give the same states.)
+  </div>
+
+  <div class="fc green">
+    <div class="lbl">Energy quantisation</div>
+    \[
+      E_n = \frac{\hbar^2 k_n^2}{2m}
+      = \frac{n^2\pi^2\hbar^2}{2mL^2}
+      = n^2 E_1,
+      \qquad
+      E_1 = \frac{\pi^2\hbar^2}{2mL^2}.
+    \]
+    <p class="muted">
+      The energy is quantised — only discrete values are allowed. \(E_1 > 0\) is the
+      <em>zero-point energy</em>: the particle cannot be at rest inside the well, consistent with the uncertainty principle.
+    </p>
+  </div>
+
+  <h3>Normalisation</h3>
+
+  <div class="deriv teal">
+    <div class="dlabel">Finding the constant A</div>
+    \[
+      1 = \int_0^L |A\sin(k_n x)|^2\,dx
+      = A^2\int_0^L \sin^2\!\left(\frac{n\pi x}{L}\right)dx
+      = A^2 \cdot \frac{L}{2}.
+    \]
+    \[
+      \therefore \quad A = \sqrt{\frac{2}{L}}.
+    \]
+  </div>
+
+  <div class="fc teal">
+    <div class="lbl">Normalised energy eigenfunctions</div>
+    \[
+      \psi_n(x) =
+      \sqrt{\frac{2}{L}}\sin\!\left(\frac{n\pi x}{L}\right),
+      \quad
+      E_n = \frac{n^2\pi^2\hbar^2}{2mL^2},
+      \quad n = 1, 2, 3, \ldots
+    \]
+  </div>
+
+  <h3>Orthonormality</h3>
+
+  <div class="deriv">
+    <div class="dlabel">Proof that eigenstates are orthonormal</div>
+    \[
+      \int_0^L \psi_m^*(x)\,\psi_n(x)\,dx
+      = \frac{2}{L}\int_0^L \sin\!\left(\frac{m\pi x}{L}\right)\sin\!\left(\frac{n\pi x}{L}\right)dx.
+    \]
+    Using the identity \(2\sin A\sin B = \cos(A-B) - \cos(A+B)\):
+    \[
+      = \frac{1}{L}\int_0^L\!\left[\cos\!\left(\frac{(m-n)\pi x}{L}\right) - \cos\!\left(\frac{(m+n)\pi x}{L}\right)\right]dx.
+    \]
+    Both terms integrate to zero unless \(m=n\), in which case the first term gives 1 and the second gives 0:
+    \[
+      \int_0^L \psi_m^*\psi_n\,dx = \delta_{mn}.
+    \]
+  </div>
+
+  <h3>General state</h3>
+  <p>
+    An arbitrary initial wave function in the well can be expanded as:
+  </p>
+  <div class="fc">
+    <div class="lbl">Completeness expansion</div>
+    \[
+      \Psi(x,0) = \sum_{n=1}^\infty c_n\,\psi_n(x),
+      \qquad
+      c_n = \int_0^L \psi_n^*(x)\,\Psi(x,0)\,dx,
+      \qquad
+      \sum_{n=1}^\infty|c_n|^2 = 1.
+    \]
+    \[
+      \Psi(x,t) = \sum_{n=1}^\infty c_n\,\psi_n(x)\,e^{-iE_nt/\hbar}.
+    \]
+  </div>
+
+  <div class="box amber">
+    <b>Physical interpretation of \(|c_n|^2\).</b>
+    When the energy is measured, the probability of obtaining result \(E_n\) is \(|c_n|^2\).
+    After the measurement, the wave function collapses to \(\psi_n\).
+    The expectation value of energy is \(\langle E\rangle = \sum_n|c_n|^2 E_n\).
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ §10 ═══════════════════════════════════ -->
+<section id="s10">
+  <h2>10. Quantum Harmonic Oscillator <span class="pill amber">ladder operators</span></h2>
+
+  <p>
+    The harmonic oscillator — a particle in a parabolic potential \(V = \frac{1}{2}m\omega^2 x^2\) —
+    is arguably the most important exactly-solvable problem in all of physics.
+    It models vibrations of molecules, phonons in solids, photons in a cavity, and more.
+  </p>
+
+  <div class="fc amber">
+    <div class="lbl">TISE for the harmonic oscillator</div>
+    \[
+      -\frac{\hbar^2}{2m}\psi'' + \frac{1}{2}m\omega^2 x^2\,\psi = E\,\psi.
+    \]
+  </div>
+
+  <h3>Ladder (creation and annihilation) operators</h3>
+  <p>
+    Define two operators:
+  </p>
+  <div class="fc violet">
+    <div class="lbl">Ladder operators</div>
+    \[
+      \hat{a}_\pm
+      = \frac{1}{\sqrt{2m\hbar\omega}}\!\left(\mp i\hat{p} + m\omega\hat{x}\right)
+      = \frac{1}{\sqrt{2m\hbar\omega}}\!\left(\pm\hbar\frac{d}{dx} + m\omega x\right).
+    \]
+    \(\hat{a}_+\) is the <em>raising (creation)</em> operator; \(\hat{a}_-\) is the <em>lowering (annihilation)</em> operator.
+  </div>
+
+  <div class="deriv violet">
+    <div class="dlabel">Rewriting \(\hat{H}\) in terms of ladder operators</div>
+    <p>Compute \(\hat{a}_-\hat{a}_+\):</p>
+    \[
+      \hat{a}_-\hat{a}_+
+      = \frac{1}{2m\hbar\omega}(i\hat{p} + m\omega\hat{x})(-i\hat{p} + m\omega\hat{x})
+      = \frac{1}{2m\hbar\omega}\!\left(\hat{p}^2 + m^2\omega^2\hat{x}^2 + im\omega[\hat{x},\hat{p}]\right).
+    \]
+    Using \([\hat{x},\hat{p}]=i\hbar\):
+    \[
+      = \frac{1}{\hbar\omega}\!\left(\frac{\hat{p}^2}{2m} + \frac{m\omega^2\hat{x}^2}{2}\right) - \frac{1}{2}
+      = \frac{\hat{H}}{\hbar\omega} - \frac{1}{2}.
+    \]
+    Similarly, \(\hat{a}_+\hat{a}_- = \hat{H}/(\hbar\omega) + 1/2\).
+    Therefore:
+    \[
+      \hat{H} = \hbar\omega\!\left(\hat{a}_-\hat{a}_+ - \frac{1}{2}\right)
+              = \hbar\omega\!\left(\hat{a}_+\hat{a}_- + \frac{1}{2}\right)
+              = \hbar\omega\!\left(\hat{N} + \frac{1}{2}\right),
+    \]
+    where \(\hat{N} = \hat{a}_+\hat{a}_-\) is the <em>number operator</em>.
+    The commutator of the ladder operators:
+    \[
+      [\hat{a}_-,\hat{a}_+] = 1.
+    \]
+  </div>
+
+  <div class="deriv amber">
+    <div class="dlabel">Why \(\hat{a}_\pm\) raise/lower the energy</div>
+    <p>
+      If \(\hat{H}\psi = E\psi\), consider \(\hat{a}_+\psi\):
+    </p>
+    \[
+      \hat{H}(\hat{a}_+\psi)
+      = \hbar\omega\!\left(\hat{a}_+\hat{a}_- + \tfrac{1}{2}\right)\hat{a}_+\psi
+      = \hbar\omega\,\hat{a}_+\!\left(\hat{a}_-\hat{a}_+ + \tfrac{1}{2}\right)\psi
+        + \hbar\omega\,\hat{a}_+[\hat{a}_-,\hat{a}_+]\psi.
+    \]
+    Wait — let's use the simpler route: use \([\hat H, \hat a_+] = \hbar\omega\,\hat a_+\) (provable from ladder algebra):
+    \[
+      \hat{H}(\hat{a}_+\psi)
+      = ([\hat{H},\hat{a}_+] + \hat{a}_+\hat{H})\psi
+      = \hbar\omega\,\hat{a}_+\psi + \hat{a}_+(E\psi)
+      = (E + \hbar\omega)\,(\hat{a}_+\psi).
+    \]
+    So \(\hat{a}_+\psi\) is an eigenstate of \(\hat{H}\) with energy \(E + \hbar\omega\). ✓
+    Similarly, \(\hat{a}_-\psi\) has energy \(E - \hbar\omega\).
+  </div>
+
+  <h3>Energy spectrum</h3>
+  <p>
+    Lowering cannot go on forever — the energy is bounded below by \(V_\text{min}=0\).
+    There must be a ground state \(\psi_0\) annihilated by \(\hat{a}_-\):
+  </p>
+
+  <div class="deriv green">
+    <div class="dlabel">Ground state from \(\hat{a}_-\psi_0 = 0\)</div>
+    \[
+      \frac{1}{\sqrt{2m\hbar\omega}}\!\left(\hbar\frac{d}{dx} + m\omega x\right)\psi_0 = 0
+      \implies
+      \frac{d\psi_0}{dx} = -\frac{m\omega}{\hbar}\,x\,\psi_0.
+    \]
+    This is a first-order linear ODE. Separating variables:
+    \[
+      \ln\psi_0 = -\frac{m\omega}{2\hbar}x^2 + \text{const}
+      \implies
+      \psi_0(x) = A\,e^{-m\omega x^2/(2\hbar)}.
+    \]
+    Normalising (\(\int e^{-m\omega x^2/\hbar}dx = \sqrt{\pi\hbar/m\omega}\)):
+    \[
+      \psi_0(x) = \left(\frac{m\omega}{\pi\hbar}\right)^{1/4} e^{-m\omega x^2/(2\hbar)}.
+    \]
+    The ground state energy: \(\hat{H}\psi_0 = \hbar\omega(\hat{N}+\tfrac{1}{2})\psi_0 = \tfrac{1}{2}\hbar\omega\,\psi_0\).
+  </div>
+
+  <div class="fc green">
+    <div class="lbl">Complete energy spectrum</div>
+    \[
+      E_n = \left(n + \frac{1}{2}\right)\hbar\omega,
+      \qquad n = 0, 1, 2, \ldots
+    \]
+    \[
+      \psi_n = \frac{1}{\sqrt{n!}}\,(\hat{a}_+)^n\,\psi_0.
+    \]
+  </div>
+
+  <div class="box rose">
+    <b>Zero-point energy.</b>
+    The ground state energy \(E_0 = \tfrac{1}{2}\hbar\omega \ne 0\).
+    Even at absolute zero temperature, a quantum oscillator always vibrates.
+    This is a direct consequence of the uncertainty principle:
+    a perfectly motionless particle at \(x=0\) would have \(\sigma_x = \sigma_p = 0\), violating
+    \(\sigma_x\sigma_p\ge\hbar/2\).
+  </div>
+
+  <h3>Matrix elements (ladder operator action)</h3>
+  <div class="fc violet">
+    <div class="lbl">Explicit ladder action on energy eigenstates</div>
+    \[
+      \hat{a}_+|n\rangle = \sqrt{n+1}\,|n+1\rangle,
+      \qquad
+      \hat{a}_-|n\rangle = \sqrt{n}\,|n-1\rangle,
+      \qquad
+      \hat{N}|n\rangle = n|n\rangle.
+    \]
+    \[
+      \hat{x} = \sqrt{\frac{\hbar}{2m\omega}}\,(\hat{a}_+ + \hat{a}_-),
+      \qquad
+      \hat{p} = i\sqrt{\frac{m\hbar\omega}{2}}\,(\hat{a}_+ - \hat{a}_-).
+    \]
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ §11 ═══════════════════════════════════ -->
+<section id="s11">
+  <h2>11. Quantum Tunnelling <span class="pill rose">classically forbidden motion</span></h2>
+
+  <p>
+    A classical particle with energy \(E < V_0\) approaching a potential barrier of height \(V_0\)
+    is always reflected. In quantum mechanics, the wave function penetrates the barrier and there is
+    a non-zero probability of the particle emerging on the other side — <em>tunnelling</em>.
+  </p>
+
+  <h3>Rectangular barrier setup</h3>
+  <div class="fc rose">
+    <div class="lbl">Potential</div>
+    \[
+      V(x) =
+      \begin{cases}
+        0 & x < 0, \\
+        V_0 & 0 \le x \le a, \\
+        0 & x > a.
+      \end{cases}
+      \qquad 0 < E < V_0.
+    \]
+  </div>
+
+  <h3>Wave function in each region</h3>
+
+  <div class="deriv rose">
+    <div class="dlabel">Three-region analysis</div>
+
+    <p><b>Region I (\(x < 0\)):</b> \(V=0\), so \(\psi'' = -k^2\psi\) with \(k=\sqrt{2mE}/\hbar\).
+    Incident wave (rightward) plus reflected wave (leftward):</p>
+    \[
+      \psi_\text{I}(x) = A\,e^{ikx} + B\,e^{-ikx}.
+    \]
+
+    <p><b>Region II (\(0 \le x \le a\)):</b> \(V=V_0 > E\), so \(\psi'' = +\kappa^2\psi\)
+    with \(\kappa = \sqrt{2m(V_0-E)}/\hbar > 0\). Real exponentials:</p>
+    \[
+      \psi_\text{II}(x) = C\,e^{\kappa x} + D\,e^{-\kappa x}.
+    \]
+
+    <p><b>Region III (\(x > a\)):</b> \(V=0\) again. Only rightward-travelling wave
+    (no source of a leftward wave on the right):</p>
+    \[
+      \psi_\text{III}(x) = F\,e^{ikx}.
+    \]
+  </div>
+
+  <h3>Matching conditions</h3>
+
+  <div class="deriv">
+    <div class="dlabel">Continuity of \(\psi\) and \(\psi'\) at \(x=0\) and \(x=a\)</div>
+
+    <p>At \(x=0\): \(\psi_\text{I}=\psi_\text{II}\) and \(\psi_\text{I}'=\psi_\text{II}'\):</p>
+    \[
+      A + B = C + D, \tag{i}
+    \]
+    \[
+      ik(A - B) = \kappa(C - D). \tag{ii}
+    \]
+
+    <p>At \(x=a\): \(\psi_\text{II}=\psi_\text{III}\) and \(\psi_\text{II}'=\psi_\text{III}'\):</p>
+    \[
+      Ce^{\kappa a} + De^{-\kappa a} = Fe^{ika}, \tag{iii}
+    \]
+    \[
+      \kappa(Ce^{\kappa a} - De^{-\kappa a}) = ikFe^{ika}. \tag{iv}
+    \]
+
+    <p>Set \(A=1\) (unit incident amplitude). The four equations determine \(B,C,D,F\).
+    The algebra is lengthy; the result for the transmission amplitude is:</p>
+    \[
+      F = \frac{e^{-ika}}{\cosh(\kappa a) + \frac{i}{2}\!\left(\frac{\kappa}{k}-\frac{k}{\kappa}\right)\!\sinh(\kappa a)}.
+    \]
+  </div>
+
+  <h3>Transmission coefficient</h3>
+
+  <div class="fc rose">
+    <div class="lbl">Exact transmission coefficient</div>
+    \[
+      T = |F|^2 = \left[1 + \frac{(k^2+\kappa^2)^2}{4k^2\kappa^2}\sinh^2(\kappa a)\right]^{-1}.
+    \]
+  </div>
+
+  <div class="deriv amber">
+    <div class="dlabel">Thick-barrier approximation (\(\kappa a \gg 1\))</div>
+    <p>When \(\kappa a \gg 1\), \(\sinh(\kappa a) \approx \frac{1}{2}e^{\kappa a}\), so:</p>
+    \[
+      T \approx \frac{16k^2\kappa^2}{(k^2+\kappa^2)^2}\,e^{-2\kappa a}
+             = 16\,\frac{E}{V_0}\!\left(1-\frac{E}{V_0}\right) e^{-2\kappa a}.
+    \]
+    <p>
+      The dominant factor is the exponential decay \(e^{-2\kappa a}\), where
+      \(\kappa = \sqrt{2m(V_0-E)}/\hbar\). The prefactor is slowly varying and \(\sim 1\).
+    </p>
+  </div>
+
+  <div class="box teal">
+    <b>WKB generalisation.</b>
+    For a smoothly varying barrier \(V(x)\), the Wentzel–Kramers–Brillouin approximation gives:
+    \[
+      T \approx \exp\!\left(-\frac{2}{\hbar}\int_{x_1}^{x_2}\sqrt{2m(V(x)-E)}\,dx\right),
+    \]
+    where \(x_1, x_2\) are the classical turning points where \(V(x)=E\).
+  </div>
+
+  <h3>Physical examples of tunnelling</h3>
+  <div class="grid-3">
+    <div class="box cyan">
+      <b>Alpha decay.</b> An alpha particle tunnels through the Coulomb barrier of the nucleus.
+      The exponential sensitivity of \(T\) to \(\kappa a\) explains the enormous range of
+      nuclear lifetimes (from nanoseconds to billions of years).
+    </div>
+    <div class="box violet">
+      <b>Scanning tunnelling microscope (STM).</b> A metallic tip is held nanometres above a
+      surface. Electrons tunnel across the vacuum gap; the exponential dependence on gap width
+      gives atomic-scale height resolution.
+    </div>
+    <div class="box amber">
+      <b>Tunnel diodes and Josephson junctions.</b>
+      Semiconductor tunnel diodes exploit band-to-band tunnelling.
+      Josephson junctions (two superconductors separated by a thin insulator) are the building
+      blocks of superconducting qubits.
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ SUMMARY ═══════════════════════════════════ -->
+<section>
+  <h2>Summary — Key Equations at a Glance</h2>
+  <div style="overflow-x:auto">
+  <table>
+    <tr>
+      <th>Concept</th>
+      <th>Formula</th>
+      <th>What it says</th>
+    </tr>
+    <tr>
+      <td>Planck quantisation</td>
+      <td>\(E_n = nh\nu\)</td>
+      <td>Oscillator energy is discrete</td>
+    </tr>
+    <tr>
+      <td>Photon energy</td>
+      <td>\(E = h\nu = \hbar\omega\)</td>
+      <td>Light comes in quanta</td>
+    </tr>
+    <tr>
+      <td>Photon momentum</td>
+      <td>\(p = h/\lambda = \hbar k\)</td>
+      <td>Photon carries momentum</td>
+    </tr>
+    <tr>
+      <td>Photoelectric effect</td>
+      <td>\(K_\text{max} = h\nu - \phi\)</td>
+      <td>Energy conservation with photon</td>
+    </tr>
+    <tr>
+      <td>Compton shift</td>
+      <td>\(\Delta\lambda = \lambda_C(1-\cos\theta)\)</td>
+      <td>Photon–electron elastic collision</td>
+    </tr>
+    <tr>
+      <td>de Broglie wavelength</td>
+      <td>\(\lambda = h/p\)</td>
+      <td>Particles have wave character</td>
+    </tr>
+    <tr>
+      <td>Born rule</td>
+      <td>\(P(x,t)dx = |\Psi|^2\,dx\)</td>
+      <td>Probability from amplitude squared</td>
+    </tr>
+    <tr>
+      <td>TDSE</td>
+      <td>\(i\hbar\,\partial_t\Psi = \hat{H}\Psi\)</td>
+      <td>Quantum equation of motion</td>
+    </tr>
+    <tr>
+      <td>TISE</td>
+      <td>\(\hat{H}\psi = E\psi\)</td>
+      <td>Energy eigenvalue equation</td>
+    </tr>
+    <tr>
+      <td>Momentum operator</td>
+      <td>\(\hat{p} = -i\hbar\,\partial_x\)</td>
+      <td>Momentum as differential operator</td>
+    </tr>
+    <tr>
+      <td>Canonical commutator</td>
+      <td>\([\hat{x},\hat{p}] = i\hbar\)</td>
+      <td>Foundation of uncertainty</td>
+    </tr>
+    <tr>
+      <td>Heisenberg uncertainty</td>
+      <td>\(\sigma_x\sigma_p \ge \hbar/2\)</td>
+      <td>Fundamental limit on precision</td>
+    </tr>
+    <tr>
+      <td>Infinite well energies</td>
+      <td>\(E_n = n^2\pi^2\hbar^2/(2mL^2)\)</td>
+      <td>Quantised levels in a box</td>
+    </tr>
+    <tr>
+      <td>Harmonic oscillator energies</td>
+      <td>\(E_n = (n+\tfrac{1}{2})\hbar\omega\)</td>
+      <td>Equally spaced spectrum</td>
+    </tr>
+    <tr>
+      <td>Tunnelling (thick barrier)</td>
+      <td>\(T \approx e^{-2\kappa a}\)</td>
+      <td>Exponential barrier penetration</td>
+    </tr>
+  </table>
+  </div>
+</section>
+
+<footer>
+  Introduction to Quantum Physics — Study note. Mathematics rendered with MathJax.
+  &nbsp;|&nbsp; <a href="index.html">← Back to Physics Notes</a>
+</footer>
+
+</div>
+</body>
+</html>
